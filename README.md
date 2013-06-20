@@ -4,7 +4,7 @@ Lispino
 A small LISP interpreter written in C++.  
 At the moment it supports only a small subset of LISP.  
 
-Thus the only instructions that you can try are: 
+Thus the only instructions that you can try are:  
 1. basic math operations  
 > (+ x y)  
 > (* x y)  
