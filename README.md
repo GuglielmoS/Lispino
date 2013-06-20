@@ -9,11 +9,9 @@ Thus the only instructions that you can try are:
 > (+ x y)  
 > (* x y)  
 > (dec x)  
-  
 2. functions definition  
 > (def (square x) (* x x))  
 > (square y)  
-  
 3. variables definition  
 > (def x 3)  
 > (def y 5)  
