@@ -26,22 +26,6 @@ LObject* LLambda::call(vector<LObject*>& argValues) {
     return env->eval(body);
 }
 
-LType LLambda::getType() const {
-    return LAMBDA;
-}
-
-Environment* LLambda::getEnv() {
-   return env;
-}
-
-LObject* LLambda::getBody() {
-   return body;
-}
-
-vector<LObject*>& LLambda::getArgs() {
-    return args;
-}
-
 string LLambda::prettyString() const {
     return "GENERIC-LAMBDA";
 }

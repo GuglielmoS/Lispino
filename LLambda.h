@@ -12,23 +12,52 @@
 
 using namespace std;
 
+// forward declarations for getting happy the compiler
 class Environment;
 
 class LLambda : public LObject {
 
-    vector<LObject*> args;
-    LObject *body; 
+    // the environment in which the code will be executed
     Environment* env;
 
+    // the arguments required for the execution
+    vector<LObject*> args;
+
+    // the code to execute
+    LObject *body; 
+
 public:
-    
+
     LLambda(vector<LObject*>& args, LObject *body, Environment *parentEnv);
+
+    /**
+     * Getters
+     */
+    
+    LType getType() const {
+        return LAMBDA;
+    }
+
+    Environment* getEnv() const {
+        return env;
+    }
+
+    LObject* getBody() {
+        return body;
+    }
+
+    vector<LObject*>& getArgs() {
+        return args;
+    }
+
+    /**
+     * Substitutes the values given as arguments in the code defined in the
+     * field 'body'. Thus it evaluates and returns the code in the local environment.
+     */
     LObject* call(vector<LObject*>& argValues);
-    LType getType() const;
-    Environment* getEnv();
-    LObject* getBody();
-    vector<LObject*>& getArgs();
+    
     string prettyString() const;
+
     ~LLambda();
 };
 

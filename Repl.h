@@ -5,9 +5,8 @@
 #include <iostream>
 #include <string>
 
-#include "LObject.h"
-#include "LNilObject.h"
 #include "Environment.h"
+#include "LispinoException.h"
 
 using namespace std;
 
@@ -16,22 +15,27 @@ class Repl {
 public:
 
     static int run() {
-        Environment *env = new Environment();
+        Environment env;
         
         bool terminated = false;
         while (not terminated) {
-            cout << "> ";
-
             string inputExpr;
-            getline(cin, inputExpr);
-        
-            if (inputExpr == "quit")
-                terminated = true;
-            else
-                cout << "\t" << env->eval(inputExpr) << endl;
-        }
 
-        delete env;
+            cout << "> ";
+            getline(cin, inputExpr);
+
+            if (inputExpr == "(quit)")
+                terminated = true;
+            else {
+                cout << "\t";
+
+                try {
+                    cout << env.eval(inputExpr) << endl;
+                } catch (LispinoException& e) {
+                    cout << "[ERROR] " << e.what() << endl;
+                }
+            }
+        }
 
         return 0;
     }

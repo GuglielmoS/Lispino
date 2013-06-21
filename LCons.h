@@ -47,46 +47,10 @@ public:
         return CONS;
     }
 
-    string prettyStringHelper(bool parentheses = true) const {
-        if (first == 0) {
-            return LNilObject().prettyString();
-        }
-        else {
-            stringstream buf;
-            
-            if (parentheses)
-                buf << "(";
-            
-            buf << first->prettyString();
-            
-            if (next != 0) {
-                if (next->isCons()) {
-                    buf << " ";
-                    buf << dynamic_cast<LCons*>(next)->prettyStringHelper(false);
-                }
-                else {
-                    buf << " . ";
-                    buf << next->prettyString();
-                }
-            }
-            
-            if (parentheses)
-                buf << ")";
+    string prettyStringHelper(bool parentheses = true) const;
+    string prettyString() const;
+    ~LCons();
 
-            return buf.str();
-        }
-    }
-
-    string prettyString() const {
-        return prettyStringHelper();
-    }
-
-    ~LCons() {
-        if (first != 0)
-            delete first;
-        if (next != 0)
-            delete next;
-    }
 };
 
 #endif // __LCONS__

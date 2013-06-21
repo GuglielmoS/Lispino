@@ -30,7 +30,7 @@ public:
     }
 
     virtual LType getType() const = 0;
-    virtual string prettyString() const = 0;    
+    virtual string prettyString() const = 0;
 
     friend ostream& operator<<(ostream& out, LObject* obj) {
         out << obj->prettyString();

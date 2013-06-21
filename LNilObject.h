@@ -1,6 +1,6 @@
-#ifndef __LNILOBJECT__
+#ifndef __LNIL_OBJECT__
 
-#define __LNILOBJECT__
+#define __LNIL_OBJECT__
 
 #include <string>
 
@@ -27,4 +27,4 @@ public:
 
 };
 
-#endif // __LNILOBJECT__
+#endif // __LNIL_OBJECT__
