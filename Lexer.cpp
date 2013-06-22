@@ -7,13 +7,20 @@ void Lexer::tokenize(string& input, vector<string>& tokens) {
         if (*it == ' ' || *it == '\t' || *it == '\n') {
             ++it; 
             continue;
-        } else if (*it == '(') {
+        } 
+        else if (*it == '(') {
             tokens.push_back("(");
             ++it;
-        } else if (*it == ')') {
+        }
+        else if (*it == ')') {
             tokens.push_back(")");
             ++it;
-        } else if (*it == '\"') {
+        }
+        else if (*it == '\'') {
+            tokens.push_back("'");
+            ++it;
+        }
+        else if (*it == '\"') {
             stringstream buf;
             
             buf << "\"";
@@ -33,8 +40,10 @@ void Lexer::tokenize(string& input, vector<string>& tokens) {
             ++it;
 
             tokens.push_back(buf.str());
-        } else {
+        }
+        else {
             stringstream buf;
+
             while (it != input.end() &&
                     *it != ' ' && *it != '\t' && *it != '\n' && 
                     *it != '(' && *it != ')') {

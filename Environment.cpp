@@ -1,15 +1,39 @@
 #include "Environment.h"
 
-BuiltinFunction* Environment::findBuiltinFunc(const string& funcName) const {
-    int pos = -1;
-    for (unsigned int i = 0; i < builtinFunctions.size(); i++) {
-        if (builtinFunctions[i]->getName() == funcName) {
-            pos = i;
-            break;
+void Environment::addBuiltinFunctions() {
+    builtinFunctions.push_back(new BuiltinSum("+"));
+    builtinFunctions.push_back(new BuiltinProduct("*"));
+    builtinFunctions.push_back(new BuiltinDecrement("dec"));
+    builtinFunctions.push_back(new BuiltinCar("car"));
+    builtinFunctions.push_back(new BuiltinCdr("cdr"));
+}
+
+BuiltinFunction* Environment::findBuiltinFunc(const string& funcName) const 
+    throw (EnvironmentException) {
+
+    for (unsigned int i = 0; i < builtinFunctions.size(); i++)
+        if (builtinFunctions[i]->getName() == funcName)
+            return builtinFunctions[i];
+
+    if (parent != 0)
+        return parent->findBuiltinFunc(funcName);
+
+    throw BuiltinFunctionNotFoundException();
+}
+
+void Environment::applyEnv(vector<LObject*>& args) throw (EnvironmentException) {
+    for (unsigned int i = 0; i < args.size(); i++) {
+        if (args[i]->isAtom()) {
+            LAtom* curAtom = dynamic_cast<LAtom*>(args[i]);
+
+            if (curAtom->isSymbol()) {
+                LObject *curValue = valueOf(dynamic_cast<LSymbol*>(curAtom)); 
+                
+                delete args[i];
+                args[i] = curValue;
+            }
         }
     }
-
-    return (pos == -1) ? 0 : builtinFunctions[pos];
 }
 
 void Environment::extractArguments(const LCons *operands, vector<LObject*>& args, bool withEval) 
@@ -26,16 +50,23 @@ void Environment::extractArguments(const LCons *operands, vector<LObject*>& args
             curOp = dynamic_cast<LCons*>(nextOp);
         }
         else {
-            if (not nextOp->isNIL()) {
-                if (withEval)
-                    args.push_back(evalExpr(nextOp));
-                else
-                    args.push_back(nextOp);
-            }
+            if (not nextOp->isNIL())
+                args.push_back(withEval ? evalExpr(nextOp) : nextOp);
 
             break;
         }
     }
+}
+
+LObject* Environment::evalExpr(LObject *expr) throw (EnvironmentException) {
+    if (expr->isAtom())
+        return evalAtom(dynamic_cast<LAtom*>(expr));
+    else if (expr->isCons())
+        return evalCons(dynamic_cast<LCons*>(expr));
+    else if (expr->isLambda())
+        return expr;
+    else
+        return expr;
 }
 
 LObject* Environment::evalAtom(LAtom *expr) throw (EnvironmentException) {
@@ -51,85 +82,87 @@ LObject* Environment::evalCons(LCons *expr) throw (EnvironmentException) {
     
     if (firstArg->isAtom()) {
         if (dynamic_cast<LAtom*>(firstArg)->isSymbol()) {
-            string funcName = dynamic_cast<LSymbol*>(firstArg)->getValue();
+            LSymbol *funcSymbol = dynamic_cast<LSymbol*>(firstArg);
+            string funcName = funcSymbol->getValue();
             LCons *operands = dynamic_cast<LCons*>(cdr(list));
-            
-            // defines function                    
+
+            // defines function
             if (funcName == "def") {
                 return define(operands, cdr(operands));
+            }
+            else if (funcName == "lambda") {
+                if (car(operands)->isCons() and cdr(operands)->isCons())
+                    return defineLambda(dynamic_cast<LCons*>(car(operands)),
+                                        dynamic_cast<LCons*>(car(dynamic_cast<LCons*>(cdr(operands)))));
+                else
+                    throw InvalidArgumentException();
             }
             else if (funcName == "quote") {
                 return quote(operands);
             }
             else {
-                BuiltinFunction* builtinFunc = findBuiltinFunc(funcName);
-
-                if (builtinFunc != 0) {
-                    vector<LObject*> args;
-
-                    extractArguments(operands, args);
-                    applyEnv(args);
-
-                    return builtinFunc->apply(args);
-                }
-                else {
-                    map<string,LObject*>::iterator it = symTable.find(funcName);
-
-                    // tries to apply an environment function                            
-                    if (it != symTable.end()) {
-                        if (it->second->isLambda()) {
-                            vector<LObject*> args;
-                            LLambda *lambda = dynamic_cast<LLambda*>(it->second); 
-
-                            extractArguments(operands, args);
-                            applyEnv(args); 
-
-                            return lambda->call(args);
-                        }
-                    }
-                    
-                    throw InvalidFunctionException();
-                }
+                return tryFunctionApplication(funcSymbol, operands);
             }
         }
-        else {
-            return list;
+    }
+    else if (firstArg->isCons()) {
+        LCons *consExpr = dynamic_cast<LCons*>(firstArg);
+
+        if (cdr(list)->isCons()) {
+            LCons *operands = dynamic_cast<LCons*>(cdr(list));
+            LObject *result = evalCons(consExpr);
+
+            if (result->isLambda()) {
+                vector<LObject*> args;
+                extractArguments(operands, args);
+
+                return dynamic_cast<LLambda*>(result)->call(args);
+            }
         }
     }
-    else {
-        return list;
+
+    throw InvalidFunctionCallException();
+}
+
+LObject* Environment::tryFunctionApplication(LSymbol *symbol, LCons *operands)
+    throw (EnvironmentException) {
+
+    try {
+        return tryBuiltinFunction(symbol, operands);
+    }
+    catch (BuiltinFunctionNotFoundException& e) {
+        return tryLambda(symbol, operands);
     }
 }
 
-LObject* Environment::evalExpr(LObject *expr) throw (EnvironmentException) {
-    if (expr->isAtom())
-        return evalAtom(dynamic_cast<LAtom*>(expr));
-    else if (expr->isCons())
-        return evalCons(dynamic_cast<LCons*>(expr));
-    else if (expr->isLambda())
-        return expr;
+LObject* Environment::tryLambda(LSymbol *symbol, LCons *operands) throw (EnvironmentException) {
+    LObject *result = valueOf(symbol);
+
+    if (result->isLambda()) {
+        vector<LObject*> args;
+        LLambda *lambda = dynamic_cast<LLambda*>(result); 
+
+        extractArguments(operands, args);
+        applyEnv(args);
+
+        return lambda->call(args);
+    }
     else
-        return expr;
+        throw InvalidFunctionException();
 }
 
-LObject* Environment::quote(LCons* operands) throw (EnvironmentException) {
-    if (car(operands)->isAtom()) {
-        LAtom* atomValue = dynamic_cast<LAtom*>(car(operands)); 
-        
-        if (atomValue->isSymbol() && cdr(operands)->isNIL())
-            return atomValue;
-        else
-            throw InvalidQuoteException();
-    }
-    else if (car(operands)->isCons() && cdr(operands)->isNIL()) {
-        return car(operands);
-    }
-    else {
-        throw InvalidQuoteException();
-    }
+LObject* Environment::tryBuiltinFunction(LSymbol *symbol, LCons *operands) throw (EnvironmentException) {
+    BuiltinFunction* builtinFunc = findBuiltinFunc(symbol->getValue());
+
+    vector<LObject*> args;
+
+    extractArguments(operands, args);
+    applyEnv(args);
+
+    return builtinFunc->apply(args);
 }
 
-LObject* Environment::defineFunction(LCons *funcArgs, LObject *body) throw (EnvironmentException) {
+LSymbol* Environment::defineFunction(LCons *funcArgs, LObject *body) throw (EnvironmentException) {
     if (car(funcArgs)->isAtom() and cdr(funcArgs)->isCons()) {
         LAtom *atomValue = dynamic_cast<LAtom*>(car(funcArgs));
         LCons *argsValue = dynamic_cast<LCons*>(cdr(funcArgs));
@@ -155,7 +188,14 @@ LObject* Environment::defineFunction(LCons *funcArgs, LObject *body) throw (Envi
     throw InvalidFunctionException();
 }
 
-LObject* Environment::defineSymbol(LSymbol *symbol, LObject *value) throw (EnvironmentException) {
+LLambda* Environment::defineLambda(LCons *operands, LCons *body) throw (EnvironmentException) {
+    vector<LObject*> args;
+    extractArguments(operands, args, false);
+
+    return new LLambda(args, body, this);
+}
+
+LSymbol* Environment::defineSymbol(LSymbol *symbol, LObject *value) throw (EnvironmentException) {
     LObject *symValue = value;
 
     if (value->isCons()) {
@@ -182,24 +222,20 @@ LObject* Environment::define(LCons *args, LObject *body) throw (EnvironmentExcep
     throw InvalidFunctionException();
 }
 
-void Environment::addBuiltinFunctions() {
-    builtinFunctions.push_back(new BuiltinSum("+"));
-    builtinFunctions.push_back(new BuiltinProduct("*"));
-    builtinFunctions.push_back(new BuiltinDecrement("dec"));
-}
-
-void Environment::applyEnv(vector<LObject*>& args) throw (EnvironmentException) {
-    for (unsigned int i = 0; i < args.size(); i++) {
-        if (args[i]->isAtom()) {
-            LAtom* curAtom = dynamic_cast<LAtom*>(args[i]);
-
-            if (curAtom->isSymbol()) {
-                LObject *curValue = valueOf(dynamic_cast<LSymbol*>(curAtom)); 
-                    
-                delete args[i];
-                args[i] = curValue;
-            }
-        }
+LObject* Environment::quote(LCons* operands) throw (EnvironmentException) {
+    if (car(operands)->isAtom()) {
+        LAtom* atomValue = dynamic_cast<LAtom*>(car(operands));
+        
+        if (atomValue->isSymbol() && cdr(operands)->isNIL())
+            return atomValue;
+        else
+            throw InvalidQuoteException();
+    }
+    else if (car(operands)->isCons() && cdr(operands)->isNIL()) {
+        return car(operands);
+    }
+    else {
+        throw InvalidQuoteException();
     }
 }
 
@@ -215,7 +251,7 @@ LObject* Environment::valueOf(LSymbol* symbol) throw (EnvironmentException) {
     if (symbol != 0) {
         string symName = symbol->getValue();
         map<string,LObject*>::iterator it = symTable.find(symName);
-
+        
         if (it != symTable.end()) {
             return it->second;
         }
@@ -226,8 +262,8 @@ LObject* Environment::valueOf(LSymbol* symbol) throw (EnvironmentException) {
                 throw UndefinedSymbolException();
         }
     }
-
-    throw UndefinedSymbolException();
+    else
+        throw UndefinedSymbolException();
 }
 
 LObject* Environment::eval(string& inputExpr) throw (LispinoException) {

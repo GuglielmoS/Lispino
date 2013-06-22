@@ -25,6 +25,8 @@
 #include "BuiltinSum.h"
 #include "BuiltinProduct.h"
 #include "BuiltinDecrement.h"
+#include "BuiltinCar.h"
+#include "BuiltinCdr.h"
 
 // exceptions
 #include "LispinoException.h"
@@ -33,6 +35,9 @@
 #include "UndefinedFunctionException.h"
 #include "InvalidQuoteException.h"
 #include "InvalidFunctionException.h"
+#include "BuiltinFunctionNotFoundException.h"
+#include "InvalidArgumentException.h"
+#include "InvalidFunctionCallException.h"
 
 using namespace std;
 
@@ -54,7 +59,6 @@ class Environment {
 
     // builtin functions helpers
     void addBuiltinFunctions();
-    BuiltinFunction* findBuiltinFunc(const string& funcName) const;
 
     // environment helpers
     void applyEnv(vector<LObject*>& args) throw (EnvironmentException);
@@ -65,11 +69,22 @@ class Environment {
     LObject* evalAtom(LAtom *expr) throw (EnvironmentException);
     LObject* evalCons(LCons *expr) throw (EnvironmentException);
 
+    // functions application
+    LObject* tryFunctionApplication(LSymbol *symbol, LCons *operands) throw (EnvironmentException);
+    LObject* tryLambda(LSymbol* symbol, LCons *operands) throw (EnvironmentException);
+    LObject* tryBuiltinFunction(LSymbol *symbol, LCons *operands) throw (EnvironmentException);
+
     // special definitions
     LObject* define(LCons *args, LObject *body) throw (EnvironmentException);
-    LObject* defineFunction(LCons *funcArgs, LObject *body) throw (EnvironmentException);
-    LObject* defineSymbol(LSymbol *symbol, LObject *value) throw (EnvironmentException);
+    LSymbol* defineFunction(LCons *funcArgs, LObject *body) throw (EnvironmentException);
+    LSymbol* defineSymbol(LSymbol *symbol, LObject *value) throw (EnvironmentException);
+    LLambda* defineLambda(LCons* operands, LCons* body) throw (EnvironmentException);
     LObject* quote(LCons* operands) throw (EnvironmentException);
+
+protected:
+
+    // method for searching builtin functions
+    BuiltinFunction* findBuiltinFunc(const string& funcName) const throw (EnvironmentException);
 
 public:
 
@@ -77,9 +92,7 @@ public:
         addBuiltinFunctions();
     }
 
-    Environment(Environment *parent) : parent(parent) {
-        addBuiltinFunctions();
-    }
+    Environment(Environment *parent) : parent(parent) {}
 
     // setter for the father environment
     void setParentEnv(Environment* env);

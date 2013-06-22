@@ -43,6 +43,11 @@ class Parser {
     static int parseInteger(string& token) throw (ParserException);
     static double parseDouble(string& token) throw (ParserException);
 
+    /**
+     * helpers
+     */
+    static LCons* quote(LObject *expr);
+
 public:
     
     /**

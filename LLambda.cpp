@@ -3,6 +3,7 @@
 
 LLambda::LLambda(vector<LObject*>& args, LObject *body, Environment *parentEnv) :
     args(args), body(body) {
+
     env = new Environment(parentEnv);
 }
 
@@ -18,7 +19,8 @@ LObject* LLambda::call(vector<LObject*>& argValues) {
                 env->bind(dynamic_cast<LSymbol*>(args[i]), argValues[i]);
         }
         else {
-            cout << "NON-SYMBOL ARGUMENT NAME - INVALID!" << endl;
+            cout << "NON-ATOM ARGUMENT NAME - INVALID!" << endl;
+            cout << "ARG: " << args[i] << endl;
             return LNilObject::getNIL();
         }
     }

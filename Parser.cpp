@@ -1,5 +1,9 @@
 #include "Parser.h"
 
+LCons* Parser::quote(LObject *expr) {
+    return new LCons(new LSymbol("quote"), new LCons(expr));
+}
+
 LObject* Parser::parseExpr(vector<string>& tokens) throw (ParserException) {
     if (tokens.size() > 0) {
         // gets the first token
@@ -13,6 +17,8 @@ LObject* Parser::parseExpr(vector<string>& tokens) throw (ParserException) {
             return parseList(tokens);
         else if (curToken[0] == ')')
             throw UnmatchedCloseParenthesisException();
+        else if (curToken[0] == '\'')
+            return quote(parseExpr(tokens));
         else
             return parseAtom(curToken);
     }
