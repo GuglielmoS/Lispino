@@ -16,7 +16,7 @@ Arithmetic expressions
 ```
 
 Variables
----------------------
+---------
 ```
 > (def x 1)
     x
@@ -44,7 +44,7 @@ Lambdas
 ```
 
 Functions
----------------------
+---------
 ```
 > (def (square x) (* x x))
     square
@@ -54,4 +54,21 @@ Functions
     25
 > (double 5)
     10
+```
+
+Lists
+-----
+```
+> '(A B C D)
+    (A B C D)
+> '(A . B)
+    (A . B)
+> '(A B C . D)
+    (A B C . D)
+> (car '(A B C D))
+    A
+> (cdr '(A B C D))
+    (B C D)
+> (car (cdr (cdr '(A B C D))))
+    C
 ```

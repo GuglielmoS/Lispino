@@ -91,11 +91,13 @@ LObject* Environment::evalCons(LCons *expr) throw (EnvironmentException) {
                 return define(operands, cdr(operands));
             }
             else if (funcName == "lambda") {
-                if (car(operands)->isCons() and cdr(operands)->isCons())
-                    return defineLambda(dynamic_cast<LCons*>(car(operands)),
-                                        dynamic_cast<LCons*>(car(dynamic_cast<LCons*>(cdr(operands)))));
-                else
-                    throw InvalidArgumentException();
+                if (car(operands)->isCons() and cdr(operands)->isCons()) {
+                    if (car(dynamic_cast<LCons*>(cdr(operands)))->isCons())
+                        return defineLambda(dynamic_cast<LCons*>(car(operands)),
+                                            dynamic_cast<LCons*>(car(dynamic_cast<LCons*>(cdr(operands)))));
+                }
+                
+                throw InvalidArgumentException();
             }
             else if (funcName == "quote") {
                 return quote(operands);
@@ -153,7 +155,6 @@ LObject* Environment::tryLambda(LSymbol *symbol, LCons *operands) throw (Environ
 
 LObject* Environment::tryBuiltinFunction(LSymbol *symbol, LCons *operands) throw (EnvironmentException) {
     BuiltinFunction* builtinFunc = findBuiltinFunc(symbol->getValue());
-
     vector<LObject*> args;
 
     extractArguments(operands, args);
@@ -165,9 +166,10 @@ LObject* Environment::tryBuiltinFunction(LSymbol *symbol, LCons *operands) throw
 LSymbol* Environment::defineFunction(LCons *funcArgs, LObject *body) throw (EnvironmentException) {
     if (car(funcArgs)->isAtom() and cdr(funcArgs)->isCons()) {
         LAtom *atomValue = dynamic_cast<LAtom*>(car(funcArgs));
-        LCons *argsValue = dynamic_cast<LCons*>(cdr(funcArgs));
+        LCons *argValues = dynamic_cast<LCons*>(cdr(funcArgs));
 
         if (atomValue->isSymbol()) {
+            LSymbol *funcSymbol = dynamic_cast<LSymbol*>(atomValue);
             string funcName = dynamic_cast<LSymbol*>(atomValue)->getValue();
 
             if (body->isCons()) {
@@ -175,10 +177,17 @@ LSymbol* Environment::defineFunction(LCons *funcArgs, LObject *body) throw (Envi
                 
                 // gets the parameters
                 vector<LObject*> args;
-                extractArguments(argsValue, args, false);
-                
+                extractArguments(argValues, args, false);
+
+                for (unsigned int i = 0; i < args.size(); i++) {
+                    if (not args[i]->isAtom())
+                        throw InvalidFunctionException();
+                    else if (not dynamic_cast<LAtom*>(args[i])->isSymbol())
+                        throw InvalidFunctionException();
+                }
+
                 // adds the lambda to the environment
-                symTable[funcName] = new LLambda(args, funcBody, this);
+                bind(funcSymbol, new LLambda(args, funcBody, this));
                 
                 return new LSymbol(funcName);
             }
@@ -206,7 +215,7 @@ LSymbol* Environment::defineSymbol(LSymbol *symbol, LObject *value) throw (Envir
     }
 
     // adds the symbol to the symbols table
-    symTable[symbol->getValue()] = evalExpr(symValue);
+    bind(symbol, evalExpr(symValue));
 
     return new LSymbol(symbol->getValue());
 }
@@ -243,8 +252,15 @@ void Environment::setParentEnv(Environment* env) {
     parent = env;
 }
 
-void Environment::bind(LSymbol* symName, LObject* value) {
-    symTable[symName->getValue()] = value;
+void Environment::bind(LSymbol* symbol, LObject* value) {
+    try { 
+        LObject* oldValue = valueOf(symbol);
+        delete oldValue;
+    }
+    catch (UndefinedSymbolException& e) { /* DO NOTHING */ }
+
+    // update the value
+    symTable[symbol->getValue()] = value;
 }
 
 LObject* Environment::valueOf(LSymbol* symbol) throw (EnvironmentException) {
@@ -276,5 +292,6 @@ LObject* Environment::eval(LObject* expr) throw (LispinoException) {
 
 Environment::~Environment() {
     builtinFunctions.clear();
+    symTable.clear();
 }
 
