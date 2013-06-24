@@ -2,19 +2,56 @@ Lispino
 =======
 
 A small LISP interpreter written in C++.  
-At the moment it supports only a small subset of LISP.  
+Currently it supports only a small subset of LISP.  
 
-Thus the only instructions that you can try are:  
-1.  basic math operations  
-> (+ x y)  
-> (* x y)  
-> (dec x)  
+Arithmetic expressions
+----------------------
+```
+> (+ 1 2)
+    3  
+> (* 2 3)
+    6  
+> (dec 5)
+    4
+```
 
-2.  functions definition  
-> (def (square x) (* x x))  
-> (square y)  
+Variables
+---------------------
+```
+> (def x 1)
+    x
+> (def y 5)
+    y
+> (def z (+ x y))
+    z
+> z
+    6
+> (+ x y z)
+    12
+```
 
-3.  variables definition  
-> (def x 3)  
-> (def y 5)  
-> (def z (+ x y))  
+Lambdas
+-------
+```
+> (def make-adder (lambda (x) (lambda (y) (+ x y)))))
+    make-adder
+> (def add-one (make-adder 1))
+    add-one
+> (def add-two (make-adder 2))
+    add-two
+> (add-one (add-two 0))
+    3
+```
+
+Functions
+---------------------
+```
+> (def (square x) (* x x))
+    square
+> (def (double x) (+ x x))
+    double
+> (square 5)
+    25
+> (double 5)
+    10
+```
