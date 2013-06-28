@@ -88,11 +88,8 @@ protected:
 
 public:
 
-    Environment() : parent(0) {
-        addBuiltinFunctions();
-    }
-
-    Environment(Environment *parent) : parent(parent) {}
+    Environment();
+    Environment(Environment *parent);
 
     // setter for the father environment
     void setParentEnv(Environment* env);

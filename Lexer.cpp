@@ -1,5 +1,7 @@
 #include "Lexer.h"
 
+using namespace std;
+
 void Lexer::tokenize(string& input, vector<string>& tokens) {
     string::iterator it = input.begin();
     

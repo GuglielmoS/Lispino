@@ -6,13 +6,11 @@
 #include <sstream>
 #include <string>
 
-using namespace std;
-
 class Lexer {
 
 public:
     
-    static void tokenize(string& input, vector<string>& tokens);
+    static void tokenize(std::string& input, std::vector<std::string>& tokens);
 
 };
 

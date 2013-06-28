@@ -11,18 +11,13 @@ class LNilObject : public LObject {
 
 public:
 
+    LType getType() const;
+    std::string prettyString() const;
+
     static LNilObject* getNIL() {
         static LNilObject obj;
 
         return &obj;
-    }
-
-    LType getType() const {
-        return NIL;
-    }
-
-    string prettyString() const {
-        return "NIL";
     }
 
 };

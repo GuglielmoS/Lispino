@@ -1,5 +1,9 @@
 #include "Environment.h"
 
+Environment::Environment() : parent(0) { addBuiltinFunctions(); }
+
+Environment::Environment(Environment *parent) : parent(parent) {}
+
 void Environment::addBuiltinFunctions() {
     builtinFunctions.push_back(new BuiltinSum("+"));
     builtinFunctions.push_back(new BuiltinProduct("*"));

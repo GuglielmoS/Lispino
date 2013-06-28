@@ -26,7 +26,7 @@ public:
 
             if (inputExpr == "(quit)")
                 terminated = true;
-            else {
+            else if (inputExpr != "") {
                 cout << "\t";
 
                 try {

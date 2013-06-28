@@ -8,33 +8,18 @@
 #include "LType.h"
 #include "LAtomType.h"
 
-using namespace std;
-
 class LAtom : public LObject {
 
 public:
 
-    LType getType() const {
-        return ATOM;
-    }
+    bool isInteger() const;
+    bool isDouble() const;
+    bool isSymbol() const;
+    bool isString() const;
 
-    bool isInteger() const {
-        return getAtomType() == INTEGER;
-    }
-
-    bool isDouble() const {
-        return getAtomType() == DOUBLE;
-    }
-
-    bool isSymbol() const {
-        return getAtomType() == SYMBOL;
-    }
-
-    bool isString() const {
-        return getAtomType() == STRING;
-    }
-
+    LType getType() const;
     virtual LAtomType getAtomType() const = 0;
+
 };
 
 #endif // __LATOM__
