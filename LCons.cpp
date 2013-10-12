@@ -7,7 +7,7 @@ LObject* LCons::tryLambdaCall(LambdaExpression *lambda, LObject *argsVal, Enviro
     std::vector<LSymbol*> *argsNames = lambda->getArgumentsNames();
 
     if (argsVal == 0 and argsNames == 0)
-        return lambda->eval(env, tempEnv);    
+        return lambda->eval(env, tempEnv);
     else if (argsVal != 0 and not argsVal->isCons())
         throw InvalidFunctionCallException();
 
@@ -48,10 +48,18 @@ LObject* LCons::eval(Environment& env) throw (EvalException) {
     if (first != 0) {
         if (first->isSymbol()) {
             std::string curArg = dynamic_cast<LSymbol*>(first)->getValue();
-            LObject* envVal = env.lookup(curArg);
 
-            if (envVal->isLambda())
-                return tryLambdaCall(dynamic_cast<LambdaExpression*>(envVal), next, env);                   
+            // try builtin functions first
+            try {
+                return env.lookupBuiltinFunction(curArg)->eval(next, env);
+            } catch (UndefinedBuiltinFunctionException& e) {
+                // since no builtin function exists, it tries to find a lambda to execute in 
+                // the overlying environment
+                LObject* envVal = env.lookup(curArg);
+
+                if (envVal->isLambda())
+                    return tryLambdaCall(dynamic_cast<LambdaExpression*>(envVal), next, env); 
+            }
         }
         else if (first->isLambda()) {
             return tryLambdaCall(dynamic_cast<LambdaExpression*>(first), next, env);
@@ -62,15 +70,6 @@ LObject* LCons::eval(Environment& env) throw (EvalException) {
     }
 
     throw InvalidFunctionCallException();
-}
-
-LObject* LCons::clone() const {
-    LCons* clonedObj = new LCons(first->clone());
-
-    if (next != 0)
-        clonedObj->setCdr(next->clone());
-
-    return clonedObj;
 }
 
 string LCons::prettyStringHelper(bool parentheses) const {

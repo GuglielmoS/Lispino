@@ -1,5 +1,20 @@
 #include "Environment.h"
 
+// exceptions
+#include "UndefinedSymbolException.h"
+#include "UndefinedBuiltinFunctionException.h"
+
+std::map<std::string, BuiltinFunction*> Environment::builtinFunctions = Environment::initializeBuiltins();
+
+BuiltinFunction* Environment::lookupBuiltinFunction(std::string& funcName) {
+    std::map<std::string, BuiltinFunction*>::iterator it = builtinFunctions.find(funcName);
+    
+    if (it != builtinFunctions.end())
+        return it->second;
+
+    throw UndefinedBuiltinFunctionException();
+}
+
 Environment* Environment::extendsWith(Environment& env) const {
     Environment *finalEnv = new Environment();
 

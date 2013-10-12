@@ -20,10 +20,11 @@ int Repl::run() {
         else if (inputExpr == "env-dump") {
             std::map<std::string, LObject*> *symbolsTable = env.getSymbolsTable();
             
-            cout << "[ENV DUMP]" << endl;
+            cout << "[ENV DUMP:" << endl;
             for(map<string, LObject*>::iterator it = symbolsTable->begin(); 
                 it != symbolsTable->end(); ++it) 
               cout << "\t" << it->first << " = " << it->second << endl;
+            cout << "]" << endl;
         }
         else if (inputExpr != "") {
             time_t start, end;
@@ -38,13 +39,7 @@ int Repl::run() {
             time(&start);
 
             try {
-                LObject *result = Parser::parse(inputExpr)->eval(env);
-
-                cout << result << endl;
-
-                //if (not result->isNIL())
-                //    delete result;
-
+                cout << Parser::parse(inputExpr)->eval(env) << endl;
             } catch (LispinoException& e) {
                 cout << "[RUNTIME-ERROR: "
                      << e.what()

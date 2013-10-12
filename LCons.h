@@ -13,6 +13,7 @@
 
 #include "EvalException.h"
 #include "InvalidFunctionCallException.h"
+#include "UndefinedBuiltinFunctionException.h"
 
 using namespace std;
 
@@ -45,8 +46,6 @@ public:
     LType getType() const {
         return CONS;
     }
-
-    LObject* clone() const;
 
     LObject* tryLambdaCall(LambdaExpression *lambda, LObject *argsVal, Environment& env) throw (EvalException);
     LObject* eval(Environment& env) throw (EvalException);

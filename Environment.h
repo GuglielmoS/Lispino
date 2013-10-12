@@ -5,17 +5,33 @@
 #include <map>
 
 #include "LObject.h"
-#include "UndefinedSymbolException.h"
+
+// builtin functions
+class BuiltinFunction;
+
+#include "BuiltinSum.h"
 
 class Environment {
 
     std::map<std::string, LObject*> symbolsTable;
+
+    static std::map<std::string, BuiltinFunction*> initializeBuiltins() {
+        std::map<std::string, BuiltinFunction*> m;
+        m["+"] = new BuiltinSum();
+        //m[3] = 4;
+        //m[5] = 6;
+        return m;
+    }
+
+    static std::map<std::string, BuiltinFunction*> builtinFunctions;
 
 public:
 
     std::map<std::string, LObject*>* getSymbolsTable() {
         return &symbolsTable;
     }
+
+    static BuiltinFunction* lookupBuiltinFunction(std::string& funcName);
 
     LObject* lookup(std::string& sym);
     LObject* lookup(std::string* sym);
