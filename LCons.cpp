@@ -29,7 +29,7 @@ LObject* LCons::tryLambdaCall(LambdaExpression *lambda, LObject *argsVal, Enviro
     /*
     cout << "LAMBDA ARGS: ";
     for (int i = 0; i < argsNames->size(); i++) cout << argsNames->at(i) << " ";
-    cout << endl;
+    cout << endl
 
     cout << "AD-HOC ENV DUMP:" << endl;
     std::map<std::string, LObject*> *symbolsTable = tempEnv.getSymbolsTable();
@@ -37,7 +37,7 @@ LObject* LCons::tryLambdaCall(LambdaExpression *lambda, LObject *argsVal, Enviro
         it != symbolsTable->end(); ++it) 
       cout << "\t" << it->first << " = " << it->second << endl;
     */
-
+  
     if (currentArg == argsNames->size())
         return lambda->eval(env, tempEnv);
 

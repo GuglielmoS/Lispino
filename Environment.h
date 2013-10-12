@@ -10,6 +10,7 @@
 class BuiltinFunction;
 
 #include "BuiltinSum.h"
+#include "BuiltinSub.h"
 
 class Environment {
 
@@ -18,7 +19,7 @@ class Environment {
     static std::map<std::string, BuiltinFunction*> initializeBuiltins() {
         std::map<std::string, BuiltinFunction*> m;
         m["+"] = new BuiltinSum();
-        //m[3] = 4;
+        m["-"] = new BuiltinSub();
         //m[5] = 6;
         return m;
     }

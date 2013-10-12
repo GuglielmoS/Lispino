@@ -156,12 +156,19 @@ LObject* Parser::parseDefineExpression(vector<string>& tokens) throw (ParserExce
 
         string symbolName = dynamic_cast<LSymbol*>(first)->getValue();
 
-        if (not args->isCons())
+        if (not args->isCons() && not args->isNIL())
             throw MalformedDefineException();
 
-        LCons *argsCons = dynamic_cast<LCons*>(args);
-        return new DefineExpression(symbolName,
-                                    new LambdaExpression(extractArgs(argsCons), parseExpr(tokens)));
+        if (args->isNIL()) {
+            vector<LSymbol*> *temp = new vector<LSymbol*>();
+            return new DefineExpression(symbolName,
+                                        new LambdaExpression(temp, parseExpr(tokens)));
+        }
+        else {
+            LCons *argsCons = dynamic_cast<LCons*>(args);
+            return new DefineExpression(symbolName,
+                                        new LambdaExpression(extractArgs(argsCons), parseExpr(tokens)));
+        }
     }
     // otherwise it can only be a variable definition
     else if (header->isSymbol()) {
