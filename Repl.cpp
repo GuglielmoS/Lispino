@@ -1,5 +1,9 @@
 #include "Repl.h"
 
+#include <map>
+#include <string>
+#include "LObject.h"
+
 int Repl::run() {
     cout.precision(15);
 
@@ -13,6 +17,14 @@ int Repl::run() {
 
         if (inputExpr == "(quit)" or inputExpr == "quit")
             terminated = true;
+        else if (inputExpr == "env-dump") {
+            std::map<std::string, LObject*> *symbolsTable = env.getSymbolsTable();
+            
+            cout << "[ENV DUMP]" << endl;
+            for(map<string, LObject*>::iterator it = symbolsTable->begin(); 
+                it != symbolsTable->end(); ++it) 
+              cout << "\t" << it->first << " = " << it->second << endl;
+        }
         else if (inputExpr != "") {
             time_t start, end;
             double dif = 0.0;
@@ -30,11 +42,11 @@ int Repl::run() {
 
                 cout << result << endl;
 
-                if (not result->isNIL())
-                    delete result;
+                //if (not result->isNIL())
+                //    delete result;
 
             } catch (LispinoException& e) {
-                cout << "[ERROR: "
+                cout << "[RUNTIME-ERROR: "
                      << e.what()
                      << "]"
                      << endl;

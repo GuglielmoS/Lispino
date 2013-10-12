@@ -13,6 +13,10 @@ class Environment {
 
 public:
 
+    std::map<std::string, LObject*>* getSymbolsTable() {
+        return &symbolsTable;
+    }
+
     LObject* lookup(std::string& sym);
     LObject* lookup(std::string* sym);
     LObject* bind(std::string& sym, LObject* value);

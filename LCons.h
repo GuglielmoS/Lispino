@@ -30,11 +30,22 @@ public:
     LCons(LObject* first, LObject* second) :
         first(first), next(second) {}
     
-    void setCar(LObject *obj);
-    void setCdr(LObject *obj);
-    bool isEmpty() const;
+    void setCar(LObject* obj) {
+        first = obj;
+    }
 
-    LType getType() const;
+    void setCdr(LObject* obj) {
+        next = obj;
+    }
+
+    bool isEmpty() const {
+        return first == 0;
+    }
+
+    LType getType() const {
+        return CONS;
+    }
+
     LObject* clone() const;
 
     LObject* tryLambdaCall(LambdaExpression *lambda, LObject *argsVal, Environment& env) throw (EvalException);

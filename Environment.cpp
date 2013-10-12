@@ -11,7 +11,7 @@ Environment* Environment::extendsWith(Environment& env) const {
 
 LObject* Environment::lookup(std::string& symName) {
     std::map<std::string, LObject*>::iterator it = symbolsTable.find(symName);
-        
+    
     if (it != symbolsTable.end())
         return it->second;
         
@@ -19,14 +19,8 @@ LObject* Environment::lookup(std::string& symName) {
 }
 
 LObject* Environment::lookup(std::string* symbol) {
-    if (symbol != 0) {
-        std::string symName = *symbol;
-
-        std::map<std::string, LObject*>::iterator it = symbolsTable.find(symName);
-        
-        if (it != symbolsTable.end())
-            return it->second;
-    }
+    if (symbol != 0)
+        return lookup(*symbol);
     
     throw UndefinedSymbolException();
 }

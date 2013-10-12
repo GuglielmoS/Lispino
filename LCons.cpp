@@ -1,21 +1,5 @@
 #include "LCons.h"
 
-void LCons::setCar(LObject* obj) {
-    first = obj;
-}
-
-void LCons::setCdr(LObject* obj) {
-    next = obj;
-}
-
-bool LCons::isEmpty() const {
-    return first == 0;
-}
-
-LType LCons::getType() const {
-    return CONS;
-}
-
 LObject* LCons::tryLambdaCall(LambdaExpression *lambda, LObject *argsVal, Environment& env)
     throw (EvalException) {
     
@@ -33,11 +17,26 @@ LObject* LCons::tryLambdaCall(LambdaExpression *lambda, LObject *argsVal, Enviro
         LObject *temp = next;
         while (temp->isCons() && currentArg < argsNames->size()) {
             std::string curArg = argsNames->at(currentArg)->getValue();
-            tempEnv.bind(curArg, car(dynamic_cast<LCons*>(temp))); 
+            tempEnv.bind(curArg, car(dynamic_cast<LCons*>(temp))->eval(env)); 
             temp = cdr(dynamic_cast<LCons*>(temp));
             currentArg++;
         }
+
+        if (not temp->isNIL())
+            throw InvalidFunctionCallException();
     }
+
+    /*
+    cout << "LAMBDA ARGS: ";
+    for (int i = 0; i < argsNames->size(); i++) cout << argsNames->at(i) << " ";
+    cout << endl;
+
+    cout << "AD-HOC ENV DUMP:" << endl;
+    std::map<std::string, LObject*> *symbolsTable = tempEnv.getSymbolsTable();
+    for(map<string, LObject*>::iterator it = symbolsTable->begin(); 
+        it != symbolsTable->end(); ++it) 
+      cout << "\t" << it->first << " = " << it->second << endl;
+    */
 
     if (currentArg == argsNames->size())
         return lambda->eval(env, tempEnv);
@@ -56,6 +55,9 @@ LObject* LCons::eval(Environment& env) throw (EvalException) {
         }
         else if (first->isLambda()) {
             return tryLambdaCall(dynamic_cast<LambdaExpression*>(first), next, env);
+        }
+        else if (first->isCons()) {
+            return tryLambdaCall(dynamic_cast<LambdaExpression*>(first->eval(env)), next, env);
         }
     }
 

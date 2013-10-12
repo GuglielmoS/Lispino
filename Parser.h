@@ -20,13 +20,17 @@
 #include "LSymbol.h"
 #include "IfExpression.h"
 #include "QuoteExpression.h"
+#include "LambdaExpression.h"
+#include "DefineExpression.h"
 
 // exceptions
 #include "ParserException.h"
 #include "MalformedIfException.h"
 #include "MalformedQuoteException.h"
+#include "MalformedDefineException.h"
 #include "MalformedLambdaException.h"
 #include "EmptyExpressionException.h"
+#include "InvalidEndOfExpressionException.h"
 #include "UnbalancedParenthesesException.h"
 #include "UnmatchedCloseParenthesisException.h"
 
@@ -43,6 +47,7 @@ class Parser {
      * Specific parsers for each type involved in the language.
      */
     static LObject* parseList(vector<string>& tokens) throw (ParserException, TokenizerException);
+    static LObject* parseDefineExpression(vector<string>& tokens) throw (ParserException,TokenizerException); 
     static LObject* parseIfExpression(vector<string>& tokens) throw (ParserException, TokenizerException); 
     static LObject* parseLambdaExpression(vector<string>& tokens) throw (ParserException, TokenizerException);   
     static LObject* parseAtom(string& token) throw (ParserException, TokenizerException);
@@ -52,7 +57,7 @@ class Parser {
     /**
      * helpers
      */
-    static LCons* quote(LObject *expr);
+    static vector<LSymbol*>* extractArgs(LCons *list);
 
 public:
     

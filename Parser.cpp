@@ -1,5 +1,25 @@
 #include "Parser.h"
 
+vector<LSymbol*>* Parser::extractArgs(LCons *list) {
+    // allocate a vector with the formal arguments
+    vector<LSymbol*> *args = new vector<LSymbol*>();
+    LObject *temp = list;
+
+    if (temp->isCons() && not car(dynamic_cast<LCons*>(temp))->isNIL()) {
+        while (temp->isCons()) {
+            LObject *cur = car(dynamic_cast<LCons*>(temp));
+
+            if (not cur->isSymbol())
+                throw MalformedLambdaException();
+
+            args->push_back(dynamic_cast<LSymbol*>(cur));
+            temp = cdr(dynamic_cast<LCons*>(temp));
+        }
+    }
+
+    return args;
+}
+
 LObject* Parser::parseExpr(vector<string>& tokens) throw (ParserException, TokenizerException) {
     if (tokens.size() > 0) {
         // gets the first token
@@ -73,6 +93,20 @@ LObject* Parser::parseList(vector<string>& tokens) throw (ParserException, Token
             tokens.erase(tokens.begin());
             return parseLambdaExpression(tokens);
         }
+        else if (tokens[0] == "def") {
+            tokens.erase(tokens.begin());
+
+            LObject *defineExpr = parseDefineExpression(tokens);
+
+            if (tokens.size() == 0 || tokens[0] != ")") {
+                delete defineExpr;
+                throw UnbalancedParenthesesException();
+            }
+            else
+                tokens.erase(tokens.begin());
+
+            return defineExpr;
+        }        
         else if (tokens[0] == ".") {
             tokens.erase(tokens.begin());
             improperList = true;
@@ -109,6 +143,37 @@ LObject* Parser::parseList(vector<string>& tokens) throw (ParserException, Token
     return startPtr; 
 }
 
+LObject* Parser::parseDefineExpression(vector<string>& tokens) throw (ParserException, TokenizerException) {
+    LObject *header = parseExpr(tokens);
+
+    // if is a cons, it must be a function definition
+    if (header->isCons()) {
+        LObject *first = car(dynamic_cast<LCons*>(header));
+        LObject *args = cdr(dynamic_cast<LCons*>(header));
+
+        if (not first->isSymbol())
+            throw MalformedDefineException();
+
+        string symbolName = dynamic_cast<LSymbol*>(first)->getValue();
+
+        if (not args->isCons())
+            throw MalformedDefineException();
+
+        LCons *argsCons = dynamic_cast<LCons*>(args);
+        return new DefineExpression(symbolName,
+                                    new LambdaExpression(extractArgs(argsCons), parseExpr(tokens)));
+    }
+    // otherwise it can only be a variable definition
+    else if (header->isSymbol()) {
+        string symbolName = dynamic_cast<LSymbol*>(header)->getValue();
+        return new DefineExpression(symbolName, parseExpr(tokens));
+    }
+    // the define can't be parsed because it's malformed
+    else {
+        throw MalformedDefineException();
+    }
+}
+
 LObject* Parser::parseIfExpression(vector<string>& tokens) throw (ParserException, TokenizerException) {
     LObject *predicate = parseExpr(tokens);
     LObject *subsequentBody = 0, *alternativeBody = 0;
@@ -138,23 +203,11 @@ LObject* Parser::parseLambdaExpression(vector<string>& tokens) throw (ParserExce
 
     body = car(dynamic_cast<LCons*>(body));
 
-    // allocate a vector with the formal arguments
-    vector<LSymbol*> *args = new vector<LSymbol*>();
     LObject *temp = car(dynamic_cast<LCons*>(lambdaList));
+    if (not temp->isCons())
+        throw MalformedLambdaException();
 
-    if (temp->isCons() && not car(dynamic_cast<LCons*>(temp))->isNIL()) {
-        while (temp->isCons()) {
-            LObject *cur = car(dynamic_cast<LCons*>(temp));
-
-            if (not cur->isSymbol())
-                throw MalformedLambdaException();
-
-            args->push_back(dynamic_cast<LSymbol*>(cur));
-            temp = cdr(dynamic_cast<LCons*>(temp));
-        }
-    }
-
-    return new LambdaExpression(args, body);
+    return new LambdaExpression(extractArgs(dynamic_cast<LCons*>(temp)), body);
 }
 
 LObject* Parser::parseAtom(string& token) throw (ParserException, TokenizerException) {
@@ -192,5 +245,12 @@ LObject* Parser::parse(string& input) throw (ParserException, TokenizerException
     if (tokens.size() == 0)
         throw EmptyExpressionException();
     
-    return parseExpr(tokens);
+    LObject *expr = parseExpr(tokens);
+
+    if (tokens.size() > 0) {
+        delete expr;
+        throw InvalidEndOfExpressionException();
+    }
+
+    return expr;
 }
