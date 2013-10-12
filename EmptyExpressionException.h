@@ -7,7 +7,7 @@
 class EmptyExpressionException : public ParserException {
 
     virtual const char* what() const throw() {
-        return "An empty expression cannot be evaluated";
+        return "An empty expression cannot be parsed";
     }
 
 };

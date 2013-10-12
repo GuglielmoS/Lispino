@@ -4,12 +4,12 @@
 
 #include <string>
 
-#include "LAtom.h"
-#include "LAtomType.h"
+#include "LObject.h"
+#include "EvalException.h"
 
 using namespace std;
 
-class LString : public LAtom {
+class LString : public LObject {
     
     string *value;
     
@@ -18,8 +18,8 @@ public:
     LString() : value(new string("")) {}
     LString(const string& val) : value(new string(val)) {}
 
-    LAtomType getAtomType() const {
-        return STRING;
+    LType getType() const {
+        return ATOM_STRING;
     }
 
     string prettyString() const {
@@ -28,6 +28,14 @@ public:
 
     string getValue() {
         return *value;
+    }
+
+    LObject* clone() const {
+        return new LString(*value);
+    }
+
+    LObject* eval(Environment& env) throw (EvalException) {
+        return this;
     }
 
     ~LString() {

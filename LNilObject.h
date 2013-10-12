@@ -7,12 +7,11 @@
 #include "LObject.h"
 #include "LType.h"
 
+#include "EvalException.h"
+
 class LNilObject : public LObject {
 
 public:
-
-    LType getType() const;
-    std::string prettyString() const;
 
     static LNilObject* getNIL() {
         static LNilObject obj;
@@ -20,6 +19,23 @@ public:
         return &obj;
     }
 
+    LType getType() const {
+        return NIL;
+    }
+
+    LObject* clone() const {
+        return LNilObject::getNIL();
+    }
+
+    std::string prettyString() const {
+        return "NIL";
+    }
+
+    LObject* eval(Environment& env) throw (EvalException) {
+        return LNilObject::getNIL();
+    }
+
+    //~LNilObject() {}
 };
 
 #endif // __LNIL_OBJECT__

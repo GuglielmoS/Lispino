@@ -8,20 +8,24 @@
 #include <string>
 
 // tokens
-#include "Lexer.h"
+#include "Tokenizer.h"
 
 // objects
 #include "LObject.h"
 #include "LNilObject.h"
 #include "LCons.h"
-#include "LAtom.h"
 #include "LString.h"
 #include "LInteger.h"
 #include "LDouble.h"
 #include "LSymbol.h"
+#include "IfExpression.h"
+#include "QuoteExpression.h"
 
 // exceptions
 #include "ParserException.h"
+#include "MalformedIfException.h"
+#include "MalformedQuoteException.h"
+#include "MalformedLambdaException.h"
 #include "EmptyExpressionException.h"
 #include "UnbalancedParenthesesException.h"
 #include "UnmatchedCloseParenthesisException.h"
@@ -33,13 +37,15 @@ class Parser {
     /**
      * Parser for a generic expression.
      */
-    static LObject* parseExpr(vector<string>& tokens) throw (ParserException); 
+    static LObject* parseExpr(vector<string>& tokens) throw (ParserException, TokenizerException); 
 
     /**
      * Specific parsers for each type involved in the language.
      */
-    static LCons* parseList(vector<string>& tokens) throw (ParserException);
-    static LAtom* parseAtom(string& token) throw (ParserException);
+    static LObject* parseList(vector<string>& tokens) throw (ParserException, TokenizerException);
+    static LObject* parseIfExpression(vector<string>& tokens) throw (ParserException, TokenizerException); 
+    static LObject* parseLambdaExpression(vector<string>& tokens) throw (ParserException, TokenizerException);   
+    static LObject* parseAtom(string& token) throw (ParserException, TokenizerException);
     static int parseInteger(string& token) throw (ParserException);
     static double parseDouble(string& token) throw (ParserException);
 
@@ -54,7 +60,7 @@ public:
      * Parses and returns an object which represents the expression given
      * as argument.
      */
-    static LObject* parse(string& input) throw (ParserException);
+    static LObject* parse(string& input) throw (ParserException, TokenizerException);
 };
 
 #endif // __PARSER__

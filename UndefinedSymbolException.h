@@ -3,28 +3,14 @@
 #define __UNDEFINED_SYMBOL_EXCEPTION__
 
 #include <sstream>
-#include "EnvironmentException.h"
+#include "EvalException.h"
 
 using namespace std;
 
-class UndefinedSymbolException : public EnvironmentException {
-
-    /*
-    const string symbolName;
-
-    UndefinedSymbolException() : symbolName("") {}
-    UndefinedSymbolException(const string& str) : symbolName(string(str)) {} 
-    */
+class UndefinedSymbolException : public EvalException {
 
     virtual const char* what() const throw() {
-        /*
-        stringstream ss;
-        ss <<"\"" + symbolName + "\" - undefined symbol";
-
-        return ss.str().c_str();
-        */
-
-        return "undefined symbol";
+        return "Undefined symbol";
     }
 
 };

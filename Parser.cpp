@@ -1,10 +1,6 @@
 #include "Parser.h"
 
-LCons* Parser::quote(LObject *expr) {
-    return new LCons(new LSymbol("quote"), new LCons(expr));
-}
-
-LObject* Parser::parseExpr(vector<string>& tokens) throw (ParserException) {
+LObject* Parser::parseExpr(vector<string>& tokens) throw (ParserException, TokenizerException) {
     if (tokens.size() > 0) {
         // gets the first token
         string curToken = tokens.front();
@@ -18,7 +14,7 @@ LObject* Parser::parseExpr(vector<string>& tokens) throw (ParserException) {
         else if (curToken[0] == ')')
             throw UnmatchedCloseParenthesisException();
         else if (curToken[0] == '\'')
-            return quote(parseExpr(tokens));
+            return new QuoteExpression(parseExpr(tokens));
         else
             return parseAtom(curToken);
     }
@@ -27,7 +23,7 @@ LObject* Parser::parseExpr(vector<string>& tokens) throw (ParserException) {
     }
 }
 
-LCons* Parser::parseList(vector<string>& tokens) throw (ParserException) {
+LObject* Parser::parseList(vector<string>& tokens) throw (ParserException, TokenizerException) {
     LCons* startPtr = new LCons();
     LCons* curCons = startPtr;
     bool setCar = true,
@@ -42,9 +38,42 @@ LCons* Parser::parseList(vector<string>& tokens) throw (ParserException) {
             finalParenFound = true;
             break;
         }
+        else if (tokens[0] == "if") {
+            tokens.erase(tokens.begin());
+            LObject* ifExpr = parseIfExpression(tokens);
+            
+            if (tokens.size() == 0 || tokens[0] != ")") {
+                delete ifExpr;
+                throw UnbalancedParenthesesException();
+            }
+            else
+                tokens.erase(tokens.begin());
+            
+            return ifExpr;
+        }
+        else if (tokens[0] == "quote") {
+            tokens.erase(tokens.begin());
 
-        // if it's an improper list
-        if (tokens[0] == ".") {
+            LObject* quotedExpr = parseExpr(tokens);
+            
+            if (tokens.size() == 0) {
+                delete quotedExpr;
+                throw UnbalancedParenthesesException();
+            }
+            else if (tokens[0] != ")") {
+                delete quotedExpr;
+                throw MalformedQuoteException();
+            }
+            else
+                tokens.erase(tokens.begin());
+            
+            return new QuoteExpression(quotedExpr);
+        }
+        else if (tokens[0] == "lambda") {
+            tokens.erase(tokens.begin());
+            return parseLambdaExpression(tokens);
+        }
+        else if (tokens[0] == ".") {
             tokens.erase(tokens.begin());
             improperList = true;
         }
@@ -72,7 +101,6 @@ LCons* Parser::parseList(vector<string>& tokens) throw (ParserException) {
 
     if (not finalParenFound) {
         delete startPtr;
-
         throw UnbalancedParenthesesException();
     }
     else
@@ -81,7 +109,55 @@ LCons* Parser::parseList(vector<string>& tokens) throw (ParserException) {
     return startPtr; 
 }
 
-LAtom* Parser::parseAtom(string& token) throw (ParserException) {
+LObject* Parser::parseIfExpression(vector<string>& tokens) throw (ParserException, TokenizerException) {
+    LObject *predicate = parseExpr(tokens);
+    LObject *subsequentBody = 0, *alternativeBody = 0;
+
+    if (tokens.size() > 0) {
+        subsequentBody = parseExpr(tokens);
+    
+        if (tokens.size() > 0)
+            alternativeBody = parseExpr(tokens);
+
+        return new IfExpression(predicate, subsequentBody, alternativeBody);
+    }
+
+    throw MalformedIfException();
+}
+
+LObject* Parser::parseLambdaExpression(vector<string>& tokens) throw (ParserException, TokenizerException) {
+    LObject *lambdaList = parseList(tokens);
+
+    if (not lambdaList->isCons())
+        throw MalformedLambdaException();
+    
+    LObject *body = cdr(dynamic_cast<LCons*>(lambdaList));
+
+    if (not body->isCons())
+        throw MalformedLambdaException();
+
+    body = car(dynamic_cast<LCons*>(body));
+
+    // allocate a vector with the formal arguments
+    vector<LSymbol*> *args = new vector<LSymbol*>();
+    LObject *temp = car(dynamic_cast<LCons*>(lambdaList));
+
+    if (temp->isCons() && not car(dynamic_cast<LCons*>(temp))->isNIL()) {
+        while (temp->isCons()) {
+            LObject *cur = car(dynamic_cast<LCons*>(temp));
+
+            if (not cur->isSymbol())
+                throw MalformedLambdaException();
+
+            args->push_back(dynamic_cast<LSymbol*>(cur));
+            temp = cdr(dynamic_cast<LCons*>(temp));
+        }
+    }
+
+    return new LambdaExpression(args, body);
+}
+
+LObject* Parser::parseAtom(string& token) throw (ParserException, TokenizerException) {
     if (token[0] == '\"') {
         return new LString(token.substr(1, token.length()-2));
     }
@@ -92,7 +168,11 @@ LAtom* Parser::parseAtom(string& token) throw (ParserException) {
             return new LInteger(parseInteger(token));
     }
     else {
-        return new LSymbol(token);
+        if (token == "nil" || token == "NIL") {
+            return LNilObject::getNIL();
+        } else {
+            return new LSymbol(token);
+        }
     }
 }
 
@@ -104,10 +184,10 @@ double Parser::parseDouble(string& token) throw (ParserException) {
     return atof(token.c_str());
 }
 
-LObject* Parser::parse(string& input) throw (ParserException) {
+LObject* Parser::parse(string& input) throw (ParserException, TokenizerException) {
     vector<string> tokens;
 
-    Lexer::tokenize(input, tokens);
+    Tokenizer::tokenize(input, tokens);
 
     if (tokens.size() == 0)
         throw EmptyExpressionException();

@@ -1,8 +1,12 @@
-#include "Lexer.h"
+#include "Tokenizer.h"
+
+#include <iostream>
 
 using namespace std;
 
-void Lexer::tokenize(string& input, vector<string>& tokens) {
+void Tokenizer::tokenize(string& input, vector<string>& tokens) 
+    throw (TokenizerException) {
+
     string::iterator it = input.begin();
     
     while (it != input.end()) {
@@ -38,6 +42,9 @@ void Lexer::tokenize(string& input, vector<string>& tokens) {
                 ++it;
             }
             
+            if (*it != '\"')
+                throw MalformedStringException();
+
             buf << "\"";
             ++it;
 

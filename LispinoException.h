@@ -4,6 +4,6 @@
 
 #include <exception>
 
-class LispinoException : public exception {};
+class LispinoException : public std::exception {};
 
 #endif // __LISPINO_EXCEPTION__

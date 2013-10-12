@@ -4,7 +4,9 @@
 
 #include <iostream>
 #include <string>
+#include <ctime>
 
+#include "Parser.h"
 #include "Environment.h"
 #include "LispinoException.h"
 
@@ -14,31 +16,7 @@ class Repl {
 
 public:
 
-    static int run() {
-        Environment env;
-        
-        bool terminated = false;
-        while (not terminated) {
-            string inputExpr;
-
-            cout << "> ";
-            getline(cin, inputExpr);
-
-            if (inputExpr == "(quit)")
-                terminated = true;
-            else if (inputExpr != "") {
-                cout << "\t";
-
-                try {
-                    cout << env.eval(inputExpr) << endl;
-                } catch (LispinoException& e) {
-                    cout << "[ERROR] " << e.what() << endl;
-                }
-            }
-        }
-
-        return 0;
-    }
+    static int run();
 
 };
 

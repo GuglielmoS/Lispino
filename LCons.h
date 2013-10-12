@@ -1,12 +1,22 @@
 #ifndef __LCONS__
-
 #define __LCONS__
 
+#include <sstream>
 #include <string>
+
+#include "Environment.h"
 
 #include "LObject.h"
 #include "LNilObject.h"
-#include "LType.h"
+#include "LSymbol.h"
+#include "LambdaExpression.h"
+
+#include "EvalException.h"
+#include "InvalidFunctionCallException.h"
+
+using namespace std;
+
+class LambdaExpression;
 
 class LCons : public LObject {
     
@@ -22,8 +32,13 @@ public:
     
     void setCar(LObject *obj);
     void setCdr(LObject *obj);
-    LType getType() const;
     bool isEmpty() const;
+
+    LType getType() const;
+    LObject* clone() const;
+
+    LObject* tryLambdaCall(LambdaExpression *lambda, LObject *argsVal, Environment& env) throw (EvalException);
+    LObject* eval(Environment& env) throw (EvalException);
 
     std::string prettyStringHelper(bool parentheses = true) const;
     std::string prettyString() const;

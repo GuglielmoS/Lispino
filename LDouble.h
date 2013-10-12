@@ -5,12 +5,12 @@
 #include <sstream>
 #include <string>
 
-#include "LAtom.h"
-#include "LAtomType.h"
+#include "LObject.h"
+#include "EvalException.h"
 
 using namespace std;
 
-class LDouble : public LAtom {
+class LDouble : public LObject {
     
     double value;
     
@@ -19,8 +19,8 @@ public:
     LDouble() : value(0.0) {}
     LDouble(double val) : value(val) {}
 
-    LAtomType getAtomType() const {
-        return DOUBLE;
+    LType getType() const {
+        return ATOM_DOUBLE;
     }
 
     string prettyString() const {
@@ -33,6 +33,14 @@ public:
 
     double getValue() {
         return value;
+    }
+
+    LObject* clone() const {
+        return new LDouble(value);
+    }
+
+    LObject* eval(Environment& env) throw (EvalException) {
+        return const_cast<LDouble*>(this);
     }
 
 };

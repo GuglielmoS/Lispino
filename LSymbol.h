@@ -1,32 +1,37 @@
 #ifndef __LSYMBOL__
-
 #define __LSYMBOL__
 
 #include <string>
 
-#include "LAtom.h"
-#include "LAtomType.h"
+#include "LObject.h"
+#include "EvalException.h"
 
-using namespace std;
+class LSymbol : public LObject {
 
-class LSymbol : public LAtom {
-    
-    string *value;
+    std::string *value;
 
 public:
     
-    LSymbol(const string& val) : value(new string(val)) {}
+    LSymbol(const std::string& val) : value(new std::string(val)) {}
 
-    LAtomType getAtomType() const {
-        return SYMBOL;
+    LType getType() const {
+        return ATOM_SYMBOL;
     }
 
-    string prettyString() const {
+    std::string prettyString() const {
         return *value;
     }
 
-    string getValue() {
+    std::string getValue() {
         return *value;
+    }
+
+    LObject* clone() const {
+        return new LSymbol(*value);
+    }
+
+    LObject* eval(Environment& env) throw (EvalException) {
+        return env.lookup(*value);
     }
 
     ~LSymbol() {

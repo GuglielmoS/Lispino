@@ -5,12 +5,13 @@
 #include <sstream>
 #include <string>
 
-#include "LAtom.h"
-#include "LAtomType.h"
+#include "LObject.h"
+
+#include "EvalException.h"
 
 using namespace std;
 
-class LInteger : public LAtom {
+class LInteger : public LObject {
     
     int value;
     
@@ -19,8 +20,8 @@ public:
     LInteger() : value(0) {}
     LInteger(int val) : value(val) {}
 
-    LAtomType getAtomType() const {
-        return INTEGER;
+    LType getType() const {
+        return ATOM_INTEGER;
     }
 
     string prettyString() const {
@@ -33,6 +34,14 @@ public:
 
     int getValue() {
         return value;
+    }
+
+    LObject* clone() const {
+        return new LInteger(value);
+    }
+
+    LObject* eval(Environment& env) throw (EvalException) {
+        return this;
     }
 
 };
