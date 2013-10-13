@@ -1,23 +1,40 @@
 #include "LCons.h"
 
+#include "Closure.h"
+#include "LambdaExpression.h"
+
+LObject* LCons::tryClosureCall(Closure *closure, LObject *argsVal, Environment& env)
+    throw (EvalException) {
+
+    Environment *finalEnv = closure->getEnv()->extendsWith(env);
+    LObject *result = tryLambdaCall(closure->getBody(), argsVal, *finalEnv);
+    delete finalEnv;
+
+    return result;
+}
+
 LObject* LCons::tryLambdaCall(LambdaExpression *lambda, LObject *argsVal, Environment& env)
     throw (EvalException) {
     
-    Environment tempEnv;
     std::vector<LSymbol*> *argsNames = lambda->getArgumentsNames();
 
     if (argsVal == 0 and argsNames == 0)
-        return lambda->eval(env, tempEnv);
+        return lambda->eval(env);
     else if (argsVal != 0 and not argsVal->isCons())
         throw InvalidFunctionCallException();
 
-    // extend the new environment with the arguments
+    // build a new environment with the arguments related to their specific lambda name
+    Environment tempEnv;
     int currentArg = 0;
+
     if (argsNames->size() > 0) {
         LObject *temp = next;
         while (temp->isCons() && currentArg < argsNames->size()) {
             std::string curArg = argsNames->at(currentArg)->getValue();
-            tempEnv.bind(curArg, car(dynamic_cast<LCons*>(temp))->eval(env)); 
+            LObject* curResult = car(dynamic_cast<LCons*>(temp))->eval(env);
+
+            tempEnv.bind(curArg, curResult);
+            
             temp = cdr(dynamic_cast<LCons*>(temp));
             currentArg++;
         }
@@ -26,20 +43,15 @@ LObject* LCons::tryLambdaCall(LambdaExpression *lambda, LObject *argsVal, Enviro
             throw InvalidFunctionCallException();
     }
 
-    /*
-    cout << "LAMBDA ARGS: ";
-    for (int i = 0; i < argsNames->size(); i++) cout << argsNames->at(i) << " ";
-    cout << endl
+    // extend the new environment with the arguments and then eval the lambda
+    if (currentArg == argsNames->size()) {
+        Environment *finalEnv = tempEnv.extendsWith(env);
+        LObject* lambdaResult = lambda->eval(*finalEnv);
 
-    cout << "AD-HOC ENV DUMP:" << endl;
-    std::map<std::string, LObject*> *symbolsTable = tempEnv.getSymbolsTable();
-    for(map<string, LObject*>::iterator it = symbolsTable->begin(); 
-        it != symbolsTable->end(); ++it) 
-      cout << "\t" << it->first << " = " << it->second << endl;
-    */
-  
-    if (currentArg == argsNames->size())
-        return lambda->eval(env, tempEnv);
+        delete finalEnv;
+
+        return lambdaResult;
+    }
 
     throw InvalidFunctionCallException(); 
 }
@@ -59,13 +71,21 @@ LObject* LCons::eval(Environment& env) throw (EvalException) {
 
                 if (envVal->isLambda())
                     return tryLambdaCall(dynamic_cast<LambdaExpression*>(envVal), next, env); 
+                else if (envVal->isClosure()) {
+                    return tryClosureCall(dynamic_cast<Closure*>(envVal), next, env);
+                }
             }
         }
         else if (first->isLambda()) {
             return tryLambdaCall(dynamic_cast<LambdaExpression*>(first), next, env);
         }
         else if (first->isCons()) {
-            return tryLambdaCall(dynamic_cast<LambdaExpression*>(first->eval(env)), next, env);
+            LObject *tempResult = first->eval(env);
+
+            if (tempResult->isLambda())
+                return tryLambdaCall(dynamic_cast<LambdaExpression*>(tempResult), next, env);
+            else if (tempResult->isClosure())
+                return tryClosureCall(dynamic_cast<Closure*>(tempResult), next, env);
         }
     }
 

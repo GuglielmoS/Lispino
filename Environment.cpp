@@ -18,8 +18,8 @@ BuiltinFunction* Environment::lookupBuiltinFunction(std::string& funcName) {
 Environment* Environment::extendsWith(Environment& env) const {
     Environment *finalEnv = new Environment();
 
-    finalEnv->symbolsTable.insert(env.symbolsTable.begin(), env.symbolsTable.end());
     finalEnv->symbolsTable.insert(symbolsTable.begin(), symbolsTable.end());
+    finalEnv->symbolsTable.insert(env.symbolsTable.begin(), env.symbolsTable.end());
 
     return finalEnv;
 }
@@ -41,6 +41,11 @@ LObject* Environment::lookup(std::string* symbol) {
 }
 
 LObject* Environment::bind(std::string& symbol, LObject* value) {
+    try {
+        LObject* oldValue = lookup(symbol);
+        delete oldValue;
+    } catch (UndefinedSymbolException& e) { /* DO NOTHING */ }
+
     symbolsTable[symbol] = value;
 
     return value;

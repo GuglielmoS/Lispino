@@ -56,6 +56,14 @@ public:
         return getType() == NIL;
     }
 
+    bool isBuiltinFunction() const {
+        return getType() == BUILTIN_FUNCTION;
+    }
+
+    bool isClosure() const {
+        return getType() == CLOSURE;
+    }
+
     virtual LType getType() const = 0;
     virtual std::string prettyString() const = 0;
     virtual LObject* eval(Environment& env) throw (EvalException) = 0;

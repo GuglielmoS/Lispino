@@ -9,7 +9,6 @@
 #include "LObject.h"
 #include "LNilObject.h"
 #include "LSymbol.h"
-#include "LambdaExpression.h"
 
 #include "EvalException.h"
 #include "InvalidFunctionCallException.h"
@@ -17,6 +16,7 @@
 
 using namespace std;
 
+class Closure;
 class LambdaExpression;
 
 class LCons : public LObject {
@@ -47,6 +47,7 @@ public:
         return CONS;
     }
 
+    LObject* tryClosureCall(Closure *closure, LObject *argsVal, Environment& env) throw (EvalException);
     LObject* tryLambdaCall(LambdaExpression *lambda, LObject *argsVal, Environment& env) throw (EvalException);
     LObject* eval(Environment& env) throw (EvalException);
 

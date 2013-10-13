@@ -1,7 +1,10 @@
 #include "DefineExpression.h"
 
 LObject* DefineExpression::eval(Environment& env) throw (EvalException) {
-    return env.bind(*name, body->eval(env));
+    if (body->isLambda() or body->isClosure())
+        return env.bind(*name, body);
+    else
+        return env.bind(*name, body->eval(env));
 }
 
 DefineExpression::~DefineExpression() {

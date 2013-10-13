@@ -8,6 +8,8 @@
 #include "LCons.h"
 #include "LSymbol.h"
 
+#include "Closure.h"
+
 class LambdaExpression : public LObject {
 
     LObject *body;
@@ -15,20 +17,17 @@ class LambdaExpression : public LObject {
 
 public:
 
-    LambdaExpression(std::vector<LSymbol*> *args, LObject *body) : args(args), body(body) {}
+    LambdaExpression(std::vector<LSymbol*> *args, LObject *body) : 
+        args(args), body(body) {}
 
     LType getType() const {
         return LAMBDA_EXPRESSION;
     }
 
     std::string prettyString() const {
-        return "#LAMBDA";
+        return "#<LAMBDA>";
     }
     
-    LObject* clone() const {
-        return const_cast<LambdaExpression*>(this);
-    }
-
     std::vector<LSymbol*>* getArgumentsNames() {
         return args;
     }
