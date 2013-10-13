@@ -16,6 +16,7 @@ class Repl {
 
 public:
 
+    static string humanTime(double time_spent);
     static int run();
 
 };

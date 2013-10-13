@@ -44,56 +44,56 @@ Variables
 ---------
 ```
 > (def x 1)
-    x
+1
 > (def y 5)
-    y
+5
 > (def z (+ x y))
-    z
+6
 > z
-    6
+6
 > (+ x y z)
-    12
+12
 ```
 
 Closures
 -------
 ```
-> (def make-adder (lambda (x) (lambda (y) (+ x y)))))
-    make-adder
+> (def make-adder (lambda (x) (lambda (y) (+ x y))))
+#<LAMBDA>  
 > (def add-one (make-adder 1))
-    add-one
+#<CLOSURE>  
 > (def add-two (make-adder 2))
-    add-two
+#<CLOSURE>  
 > (add-one (add-two 0))
-    3
+3  
 ```
 
 Functions definition syntax
 ---------------------------
 ```
 > (def (square x) (* x x))
-    square
+#<LAMBDA>  
 > (def (double x) (+ x x))
-    double
+#<LAMBDA>  
 > (square 5)
-    25
+25
 > (double 5)
-    10
+10  
 ```
 
 Lists
 -----
 ```
 > '(A B C D)
-    (A B C D)
+(A B C D)
 > '(A . B)
-    (A . B)
+(A . B)
 > '(A B C . D)
-    (A B C . D)
+(A B C . D)
 > (car '(A B C D))
-    A
+A
 > (cdr '(A B C D))
-    (B C D)
+(B C D)
 > (car (cdr (cdr '(A B C D))))
-    C
+C
 ```

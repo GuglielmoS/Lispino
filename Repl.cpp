@@ -2,7 +2,32 @@
 
 #include <map>
 #include <string>
+#include <sstream>
 #include "LObject.h"
+
+string Repl::humanTime(double time_spent) {
+    stringstream buf;
+    string unit;
+
+    if (time_spent > 0.001)
+        unit = "secs";
+    else if (time_spent > 0.000001) {
+        time_spent *= 1000.0;
+        unit = "ms";
+    }
+    else if (time_spent > 0.000000001) {
+        time_spent *= 1000000.0;
+        unit = "us";
+    }
+    else {
+        time_spent *= 1000000000.0;
+        unit = "ns";
+    }
+    
+    buf << time_spent << " " << unit;
+
+    return buf.str();
+}
 
 int Repl::run() {
     cout.precision(15);
@@ -53,8 +78,8 @@ int Repl::run() {
 
             if (timeIt)
                 cout << "[EXECUTION-TIME: "
-                     << fixed << time_spent
-                     << " seconds]"
+                     << humanTime(time_spent)
+                     << "]"
                      << endl;
         }
     }
