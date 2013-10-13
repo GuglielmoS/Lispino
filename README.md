@@ -4,15 +4,40 @@ Lispino
 A small LISP interpreter written in C++.  
 Currently it supports only a small subset of LISP.  
 
+REPL commands
+-------------
+```
+> quit  
+Exits from the REPL  
+> time-it <code>  
+Shows the execution time of the provided code  
+```
+
+Examples
+--------
+Factorial
+```
+> (def (fact n) (if (= n 0) 1 (* n (fact (- n 1)))))
+#<LAMBDA>  
+> (fact 5)  
+120  
+> (fact 20)  
+2432902008176640000  
+```
+
 Arithmetic expressions
 ----------------------
 ```
 > (+ 1 2)
-    3  
+3  
 > (* 2 3)
-    6  
-> (dec 5)
-    4
+6  
+> (* 1 2 3 4)
+24  
+> (/ 1 2)
+0  
+> (/ 1.0 2)
+0.5  
 ```
 
 Variables
@@ -30,7 +55,7 @@ Variables
     12
 ```
 
-Lambdas
+Closures
 -------
 ```
 > (def make-adder (lambda (x) (lambda (y) (+ x y)))))
@@ -43,8 +68,8 @@ Lambdas
     3
 ```
 
-Functions
----------
+Functions definition syntax
+---------------------------
 ```
 > (def (square x) (* x x))
     square

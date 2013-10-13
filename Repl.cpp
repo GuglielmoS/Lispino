@@ -15,7 +15,7 @@ int Repl::run() {
         cout << "> ";
         getline(cin, inputExpr);
 
-        if (inputExpr == "(quit)" or inputExpr == "quit")
+        if (inputExpr == "quit")
             terminated = true;
         else if (inputExpr == "env-dump") {
             std::map<std::string, LObject*> *symbolsTable = env.getSymbolsTable();
