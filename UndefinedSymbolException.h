@@ -1,11 +1,7 @@
-#ifndef __UNDEFINED_SYMBOL_EXCEPTION__
+#ifndef __UNDEFINED_SYMBOL_EXCEPTION_H__
+#define __UNDEFINED_SYMBOL_EXCEPTION_H__
 
-#define __UNDEFINED_SYMBOL_EXCEPTION__
-
-#include <sstream>
 #include "EvalException.h"
-
-using namespace std;
 
 class UndefinedSymbolException : public EvalException {
 
@@ -15,4 +11,4 @@ class UndefinedSymbolException : public EvalException {
 
 };
 
-#endif // __UNDEFINED_SYMBOL_EXCEPTION__
+#endif // __UNDEFINED_SYMBOL_EXCEPTION_H__

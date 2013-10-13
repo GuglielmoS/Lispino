@@ -1,9 +1,11 @@
 #ifndef __ENVIRONMENT_H__
 #define __ENVIRONMENT_H__
 
+// c++
 #include <string>
 #include <map>
 
+// lisp objects
 #include "LObject.h"
 
 // builtin functions
@@ -22,10 +24,24 @@ class BuiltinFunction;
 #include "BuiltinCar.h"
 #include "BuiltinCdr.h"
 
+/**
+ * This class represents a generic environment in which objects can be stored.
+ * It exposes the methods 'lookup' and 'bind' for getting and putting objects
+ * respectively.
+ * The method 'extendsWith' is a helper that merges the current environment with
+ * another one, and then return the pointer to the created environment.
+ *
+ * Since there can be several objects which are predefined and don't need to be
+ * duplicated in every environment, there is a static map which allow the storing
+ * of these kind of objects (BuiltinFunctions).
+ */
 class Environment {
 
     std::map<std::string, LObject*> symbolsTable;
 
+    /**
+     * Initializes a map with the builtin functions and then returns it.
+     */
     static std::map<std::string, BuiltinFunction*> initializeBuiltins() {
         std::map<std::string, BuiltinFunction*> m;
         

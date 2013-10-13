@@ -1,5 +1,4 @@
 #ifndef __DIVISION_BY_ZERO_EXCEPTION__ 
-
 #define __DIVISION_BY_ZERO_EXCEPTION__
 
 #include "EvalException.h"

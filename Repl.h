@@ -1,13 +1,18 @@
-#ifndef __REPL__
+#ifndef __REPL_H__
+#define __REPL_H__
 
-#define __REPL__
-
+// c++
 #include <iostream>
 #include <string>
 #include <ctime>
 
+// parsing
 #include "Parser.h"
+
+// evaluation
 #include "Environment.h"
+
+// exceptions
 #include "LispinoException.h"
 
 using namespace std;
@@ -21,5 +26,4 @@ public:
 
 };
 
-#endif // __REPL__
-
+#endif // __REPL_H__

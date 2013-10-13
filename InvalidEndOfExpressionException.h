@@ -1,6 +1,5 @@
-#ifndef __INVALID_END_OF_EXPRESSION_EXCEPTION__ 
-
-#define __INVALID_END_OF_EXPRESSION_EXCEPTION__
+#ifndef __INVALID_END_OF_EXPRESSION_EXCEPTION_H__
+#define __INVALID_END_OF_EXPRESSION_EXCEPTION_H__
 
 #include "ParserException.h"
 
@@ -12,6 +11,6 @@ class InvalidEndOfExpressionException : public ParserException {
 
 };
 
-#endif // __INVALID_END_OF_EXPRESSION_EXCEPTION__
+#endif // __INVALID_END_OF_EXPRESSION_EXCEPTION_H__
 
 

@@ -1,9 +1,13 @@
-#ifndef __LSYMBOL__
-#define __LSYMBOL__
+#ifndef __LSYMBOL_H__
+#define __LSYMBOL_H__
 
+// c++
 #include <string>
 
+// lisp objects
 #include "LObject.h"
+
+// execptions
 #include "EvalException.h"
 
 class LSymbol : public LObject {

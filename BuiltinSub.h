@@ -7,6 +7,8 @@ class BuiltinSub : public BuiltinFunction {
 
 public:
 
+    std::string prettyString() const { return "#<BUILTIN-FUNCTION:SUB>"; }
+
     LObject* eval(LObject* args, Environment& env) const throw (EvalException);
 
 };

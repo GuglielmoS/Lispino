@@ -7,6 +7,8 @@ class BuiltinEqual : public BuiltinFunction {
 
 public:
 
+    std::string prettyString() const { return "#<BUILTIN-FUNCTION:EQUAL>"; }
+
     LObject* eval(LObject* args, Environment& env) const throw (EvalException);
 
 };

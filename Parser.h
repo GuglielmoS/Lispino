@@ -1,16 +1,16 @@
-#ifndef __PARSER__
+#ifndef __PARSER_H__
+#define __PARSER_H__
 
-#define __PARSER__
-
+// c++
 #include <cstdlib>
 #include <vector>
 #include <sstream>
 #include <string>
 
-// tokens
+// tokenization
 #include "Tokenizer.h"
 
-// objects
+// lisp objects
 #include "LObject.h"
 #include "LNilObject.h"
 #include "LCons.h"
@@ -44,7 +44,7 @@ class Parser {
     static LObject* parseExpr(vector<string>& tokens) throw (ParserException, TokenizerException); 
 
     /**
-     * Specific parsers for each type involved in the language.
+     * Specific parsers for every type involved in the language.
      */
     static LObject* parseList(vector<string>& tokens) throw (ParserException, TokenizerException);
     static LObject* parseDefineExpression(vector<string>& tokens) throw (ParserException,TokenizerException); 
@@ -68,5 +68,5 @@ public:
     static LObject* parse(string& input) throw (ParserException, TokenizerException);
 };
 
-#endif // __PARSER__
+#endif // __PARSER_H__
 

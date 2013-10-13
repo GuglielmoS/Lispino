@@ -1,11 +1,7 @@
-#ifndef __UNDEFINED_BUILTIN_FUNCTION_EXCEPTION__
+#ifndef __UNDEFINED_BUILTIN_FUNCTION_EXCEPTION_H__
+#define __UNDEFINED_BUILTIN_FUNCTION_EXCEPTION_H__
 
-#define __UNDEFINED_BUILTIN_FUNCTION_EXCEPTION__
-
-#include <sstream>
 #include "EvalException.h"
-
-using namespace std;
 
 class UndefinedBuiltinFunctionException : public EvalException {
 
@@ -15,4 +11,4 @@ class UndefinedBuiltinFunctionException : public EvalException {
 
 };
 
-#endif // __UNDEFINED_BUILTIN_FUNCTION_EXCEPTION__
+#endif // __UNDEFINED_BUILTIN_FUNCTION_EXCEPTION_H__

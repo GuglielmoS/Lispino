@@ -1,37 +1,34 @@
-#ifndef __LSTRING__
+#ifndef __LSTRING_H__
+#define __LSTRING_H__
 
-#define __LSTRING__
-
+// c++
 #include <string>
 
+// lisp objects
 #include "LObject.h"
-#include "EvalException.h"
 
-using namespace std;
+// exceptions
+#include "EvalException.h"
 
 class LString : public LObject {
     
-    string *value;
+    std::string *value;
     
 public:
     
-    LString() : value(new string("")) {}
-    LString(const string& val) : value(new string(val)) {}
+    LString() : value(new std::string("")) {}
+    LString(const std::string& val) : value(new std::string(val)) {}
 
     LType getType() const {
         return ATOM_STRING;
     }
 
-    string prettyString() const {
+    std::string prettyString() const {
         return "\"" + (*value) + "\"";
     }
 
-    string getValue() {
+    std::string getValue() {
         return *value;
-    }
-
-    LObject* clone() const {
-        return new LString(*value);
     }
 
     LObject* eval(Environment& env) throw (EvalException) {
@@ -44,5 +41,5 @@ public:
 
 };
 
-#endif // __LSTRING__
+#endif // __LSTRING_H__
 

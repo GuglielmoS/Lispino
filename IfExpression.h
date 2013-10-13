@@ -1,6 +1,7 @@
 #ifndef __IF_EXPRESION_H__
 #define __IF_EXPRESION_H__
 
+// lisp objects
 #include "LObject.h"
 #include "LNilObject.h"
 
@@ -20,7 +21,7 @@ public:
     }
 
     std::string prettyString() const {
-        return "#IF-EXPRESSION";
+        return "#<IF-EXPRESSION>";
     }
 
     LObject* clone() const {

@@ -1,9 +1,11 @@
 #include "BuiltinEqual.h"
 
+// lisp objects
 #include "LCons.h"
 #include "LDouble.h"
 #include "LInteger.h"
 
+// execptions
 #include "InvalidArgumentTypeException.h"
 
 LObject* BuiltinEqual::eval(LObject* args, Environment& env) const throw (EvalException) {

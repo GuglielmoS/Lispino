@@ -1,5 +1,5 @@
-#ifndef __MALFORMED_DEFINE_EXCEPTION__
-#define __MALFORMED_DEFINE_EXCEPTION__
+#ifndef __MALFORMED_DEFINE_EXCEPTION_H__
+#define __MALFORMED_DEFINE_EXCEPTION_H__
 
 #include "ParserException.h"
 
@@ -11,5 +11,4 @@ class MalformedDefineException : public ParserException {
 
 };
 
-#endif // __MALFORMED_DEFINE_EXCEPTION__
-
+#endif // __MALFORMED_DEFINE_EXCEPTION_H__

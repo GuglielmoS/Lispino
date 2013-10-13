@@ -1,9 +1,8 @@
-#ifndef __TOKENIZER_EXCEPTION__
-
-#define __TOKENIZER_EXCEPTION__
+#ifndef __TOKENIZER_EXCEPTION_H__
+#define __TOKENIZER_EXCEPTION_H__
 
 #include "LispinoException.h"
 
 class TokenizerException : public LispinoException {};
 
-#endif // __TOKENIZER_EXCEPTION__
+#endif // __TOKENIZER_EXCEPTION_H__

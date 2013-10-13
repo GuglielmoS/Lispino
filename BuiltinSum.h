@@ -7,6 +7,8 @@ class BuiltinSum : public BuiltinFunction {
 
 public:
 
+    std::string prettyString() const { return "#<BUILTIN-FUNCTION:SUM>"; }
+
     LObject* eval(LObject* args, Environment& env) const throw (EvalException);
 
 };

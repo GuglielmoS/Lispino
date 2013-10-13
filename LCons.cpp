@@ -57,36 +57,37 @@ LObject* LCons::tryLambdaCall(LambdaExpression *lambda, LObject *argsVal, Enviro
 }
 
 LObject* LCons::eval(Environment& env) throw (EvalException) {
-    if (first != 0) {
-        if (first->isSymbol()) {
-            std::string curArg = dynamic_cast<LSymbol*>(first)->getValue();
+    if (isEmpty())
+        return LNilObject::getNIL();
 
-            // try builtin functions first
-            try {
-                return env.lookupBuiltinFunction(curArg)->eval(next, env);
-            } catch (UndefinedBuiltinFunctionException& e) {
-                // since no builtin function exists, it tries to find a lambda to execute in 
-                // the overlying environment
-                LObject* envVal = env.lookup(curArg);
+    if (first->isSymbol()) {
+        std::string curArg = dynamic_cast<LSymbol*>(first)->getValue();
 
-                if (envVal->isLambda())
-                    return tryLambdaCall(dynamic_cast<LambdaExpression*>(envVal), next, env); 
-                else if (envVal->isClosure()) {
-                    return tryClosureCall(dynamic_cast<Closure*>(envVal), next, env);
-                }
+        // try builtin functions first
+        try {
+            return env.lookupBuiltinFunction(curArg)->eval(next, env);
+        } catch (UndefinedBuiltinFunctionException& e) {
+            // since no builtin function exists, it tries to find a lambda to execute in 
+            // the overlying environment
+            LObject* envVal = env.lookup(curArg);
+
+            if (envVal->isLambda())
+                return tryLambdaCall(dynamic_cast<LambdaExpression*>(envVal), next, env); 
+            else if (envVal->isClosure()) {
+                return tryClosureCall(dynamic_cast<Closure*>(envVal), next, env);
             }
         }
-        else if (first->isLambda()) {
-            return tryLambdaCall(dynamic_cast<LambdaExpression*>(first), next, env);
-        }
-        else if (first->isCons()) {
-            LObject *tempResult = first->eval(env);
+    }
+    else if (first->isLambda()) {
+        return tryLambdaCall(dynamic_cast<LambdaExpression*>(first), next, env);
+    }
+    else if (first->isCons()) {
+        LObject *tempResult = first->eval(env);
 
-            if (tempResult->isLambda())
-                return tryLambdaCall(dynamic_cast<LambdaExpression*>(tempResult), next, env);
-            else if (tempResult->isClosure())
-                return tryClosureCall(dynamic_cast<Closure*>(tempResult), next, env);
-        }
+        if (tempResult->isLambda())
+            return tryLambdaCall(dynamic_cast<LambdaExpression*>(tempResult), next, env);
+        else if (tempResult->isClosure())
+            return tryClosureCall(dynamic_cast<Closure*>(tempResult), next, env);
     }
 
     throw InvalidFunctionCallException();

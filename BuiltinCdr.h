@@ -7,6 +7,8 @@ class BuiltinCdr : public BuiltinFunction {
 
 public:
 
+    std::string prettyString() const { return "#<BUILTIN-FUNCTION:CDR>"; }
+
     LObject* eval(LObject* args, Environment& env) const throw (EvalException);
 
 };

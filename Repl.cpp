@@ -1,8 +1,11 @@
 #include "Repl.h"
 
+// c++
 #include <map>
 #include <string>
 #include <sstream>
+
+// lisp objects
 #include "LObject.h"
 
 string Repl::humanTime(double time_spent) {
@@ -30,16 +33,18 @@ string Repl::humanTime(double time_spent) {
 }
 
 int Repl::run() {
-    cout.precision(15);
-
     Environment env;
     bool terminated = false;
+
+    // Read - Eval - Print - Loop
     while (not terminated) {
         string inputExpr;
 
+        // gets the expression
         cout << "> ";
         getline(cin, inputExpr);
 
+        // evaluates the expression
         if (inputExpr == "quit")
             terminated = true;
         else if (inputExpr == "env-dump") {
@@ -55,15 +60,17 @@ int Repl::run() {
             clock_t begin, end;
             double time_spent;
 
-
+            // if the execution time must be shown
             bool timeIt = false;
             if (inputExpr.find("time-it ") == 0) {
                 inputExpr = inputExpr.substr(7, inputExpr.size()-7);
                 timeIt = true;
             }
 
+            // for timing
             begin = clock();
 
+            // parsing and evaluation
             try {
                 cout << Parser::parse(inputExpr)->eval(env) << endl;
             } catch (LispinoException& e) {
@@ -73,9 +80,11 @@ int Repl::run() {
                      << endl;
             }
             
+            // calcuates the elapsed time
             end = clock();
             time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 
+            // shows the time
             if (timeIt)
                 cout << "[EXECUTION-TIME: "
                      << humanTime(time_spent)

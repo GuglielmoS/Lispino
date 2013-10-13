@@ -1,14 +1,13 @@
 #ifndef __CLOSURE_H__
 #define __CLOSURE_H__
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <map>
-
+// lisp objects
 #include "LObject.h"
+
+// for using 'extendsWith'
 #include "Environment.h"
 
+// for the declaring the body type
 class LambdaExpression;
 
 class Closure : public LObject {
@@ -24,19 +23,19 @@ public:
     }
 
     LType getType() const {
-        return CLOSURE;
+        return CLOSURE; 
     }
 
-    Environment* getEnv() {
+    std::string prettyString() const {
+        return "#<CLOSURE>"; 
+    }
+
+    Environment* getEnv() { 
         return closureEnv;
     }
 
     LambdaExpression* getBody() {
         return body;
-    }
-
-    std::string prettyString() const {
-        return "#<CLOSURE>";
     }
     
     LObject* eval(Environment& env) throw (EvalException);

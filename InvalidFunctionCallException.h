@@ -1,6 +1,5 @@
-#ifndef __INVALID_FUNCTION_CALL_EXCEPTION__ 
-
-#define __INVALID_FUNCTION_CALL_EXCEPTION__
+#ifndef __INVALID_FUNCTION_CALL_EXCEPTION_H__
+#define __INVALID_FUNCTION_CALL_EXCEPTION_H__
 
 #include "EvalException.h"
 
@@ -12,7 +11,4 @@ class InvalidFunctionCallException : public EvalException {
 
 };
 
-#endif // __INVALID_FUNCTION_CALL_EXCEPTION__
-
-
-
+#endif // __INVALID_FUNCTION_CALL_EXCEPTION_H__

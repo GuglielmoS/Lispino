@@ -1,6 +1,5 @@
-#ifndef __MALFORMED_STRING_EXCEPTION__
-
-#define __MALFORMED_STRING_EXCEPTION__
+#ifndef __MALFORMED_STRING_EXCEPTION_H__
+#define __MALFORMED_STRING_EXCEPTION_H__
 
 #include "TokenizerException.h"
 
@@ -12,5 +11,4 @@ class MalformedStringException : public TokenizerException {
 
 };
 
-#endif // __MALFORMED_STRING_EXCEPTION__
-
+#endif // __MALFORMED_STRING_EXCEPTION_H__

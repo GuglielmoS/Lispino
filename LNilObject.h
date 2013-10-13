@@ -1,12 +1,13 @@
-#ifndef __LNIL_OBJECT__
+#ifndef __LNILOBJECT_H__
+#define __LNILOBJECT_H__
 
-#define __LNIL_OBJECT__
-
+// c++
 #include <string>
 
+// lisp objects 
 #include "LObject.h"
-#include "LType.h"
 
+// exceptions
 #include "EvalException.h"
 
 class LNilObject : public LObject {
@@ -23,10 +24,6 @@ public:
         return NIL;
     }
 
-    LObject* clone() const {
-        return LNilObject::getNIL();
-    }
-
     std::string prettyString() const {
         return "NIL";
     }
@@ -34,8 +31,6 @@ public:
     LObject* eval(Environment& env) throw (EvalException) {
         return LNilObject::getNIL();
     }
-
-    //~LNilObject() {}
 };
 
-#endif // __LNIL_OBJECT__
+#endif // __LNILOBJECT_H__

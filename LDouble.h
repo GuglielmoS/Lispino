@@ -1,11 +1,14 @@
-#ifndef __LDOUBLE__
+#ifndef __LDOUBLE_H__
+#define __LDOUBLE_H__
 
-#define __LDOUBLE__
-
+// c++
 #include <sstream>
 #include <string>
 
+// lisp objects
 #include "LObject.h"
+
+// exceptions
 #include "EvalException.h"
 
 using namespace std;
@@ -53,5 +56,5 @@ public:
 
 };
 
-#endif // __LDOUBLE__ 
+#endif // __LDOUBLE_H__ 
 

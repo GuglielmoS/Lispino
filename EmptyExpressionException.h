@@ -1,6 +1,5 @@
-#ifndef __EMPTY_EXPRESSION_EXCEPTION__
-
-#define __EMPTY_EXPRESSION_EXCEPTION__
+#ifndef __EMPTY_EXPRESSION_EXCEPTION_H__
+#define __EMPTY_EXPRESSION_EXCEPTION_H__
 
 #include "ParserException.h"
 
@@ -12,5 +11,5 @@ class EmptyExpressionException : public ParserException {
 
 };
 
-#endif // __EMPTY_EXPRESSION_EXCEPTION__
+#endif // __EMPTY_EXPRESSION_EXCEPTION_H__
 

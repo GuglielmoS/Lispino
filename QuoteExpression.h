@@ -1,6 +1,7 @@
 #ifndef __QUOTE_EXPRESION_H__
 #define __QUOTE_EXPRESION_H__
 
+// lisp objects
 #include "LObject.h"
 #include "LNilObject.h"
 

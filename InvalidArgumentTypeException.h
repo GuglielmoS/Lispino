@@ -1,6 +1,5 @@
-#ifndef __INVALID_ARGUMENT_TYPE_EXCEPTION__ 
-
-#define __INVALID_ARGUMENT_TYPE_EXCEPTION__
+#ifndef __INVALID_ARGUMENT_TYPE_EXCEPTION_H__ 
+#define __INVALID_ARGUMENT_TYPE_EXCEPTION_H__
 
 #include "EvalException.h"
 
@@ -12,6 +11,6 @@ class InvalidArgumentTypeException : public EvalException {
 
 };
 
-#endif // __INVALID_ARGUMENT_TYPE_EXCEPTION__
+#endif // __INVALID_ARGUMENT_TYPE_EXCEPTION_H__
 
 

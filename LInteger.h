@@ -1,15 +1,15 @@
-#ifndef __LINTEGER__
+#ifndef __LINTEGER_H__
+#define __LINTEGER_H__
 
-#define __LINTEGER__
-
+// c++
 #include <sstream>
 #include <string>
 
+// lisp objects
 #include "LObject.h"
 
+// exceptions
 #include "EvalException.h"
-
-using namespace std;
 
 class LInteger : public LObject {
     
@@ -24,8 +24,8 @@ public:
         return ATOM_INTEGER;
     }
 
-    string prettyString() const {
-        stringstream buf;
+    std::string prettyString() const {
+        std::stringstream buf;
 
         buf << value;
 
@@ -54,4 +54,4 @@ public:
 
 };
 
-#endif // __LINTEGER__
+#endif // __LINTEGER_H__

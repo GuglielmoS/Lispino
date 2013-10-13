@@ -1,6 +1,5 @@
-#ifndef __UNMATCHED_CLOSE_PARENTHESIS__
-
-#define __UNMATCHED_CLOSE_PARENTHESIS__
+#ifndef __UNMATCHED_CLOSE_PARENTHESIS_H__
+#define __UNMATCHED_CLOSE_PARENTHESIS_H__
 
 #include "ParserException.h"
 
@@ -12,5 +11,4 @@ class UnmatchedCloseParenthesisException : public ParserException {
 
 };
 
-#endif // __UNMATCHED_CLOSE_PARENTHESIS__
-
+#endif // __UNMATCHED_CLOSE_PARENTHESIS_H__

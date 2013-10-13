@@ -1,6 +1,5 @@
-#ifndef __UNBALANCED_PARENTHESES_EXCEPTION__
-
-#define __UNBALANCED_PARENTHESES_EXCEPTION__
+#ifndef __UNBALANCED_PARENTHESES_EXCEPTION_H__
+#define __UNBALANCED_PARENTHESES_EXCEPTION_H__
 
 #include "ParserException.h"
 
@@ -12,4 +11,4 @@ class UnbalancedParenthesesException : public ParserException {
 
 };
 
-#endif // __UNBALANCED_PARENTHESES_EXCEPTION__
+#endif // __UNBALANCED_PARENTHESES_EXCEPTION_H__

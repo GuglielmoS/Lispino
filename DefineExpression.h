@@ -1,9 +1,11 @@
 #ifndef __DEFINE_EXPRESSION_H__
 #define __DEFINE_EXPRESSION_H__
 
+// c++
 #include <string>
 #include <vector>
 
+// lisp objects
 #include "LObject.h"
 #include "LCons.h"
 #include "LSymbol.h"
@@ -23,7 +25,7 @@ public:
     }
 
     std::string prettyString() const {
-        return "#FUNCTION";
+        return "#<DEFINE-EXPRESSION>";
     }
     
     LObject* clone() const {

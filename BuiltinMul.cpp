@@ -1,14 +1,17 @@
 #include "BuiltinMul.h"
 
+// lisp objects
 #include "LCons.h"
 #include "LDouble.h"
 #include "LInteger.h"
 
+// exceptions
 #include "InvalidArgumentTypeException.h"
 
 LObject* BuiltinMul::eval(LObject* args, Environment& env) const throw (EvalException) {
-    double result = 1.0;
     bool areAllInteger = true;
+
+    double result = 1.0;
 
     if (args == 0)
         throw InvalidArgumentTypeException();    

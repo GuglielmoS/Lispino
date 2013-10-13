@@ -1,16 +1,19 @@
 #include "BuiltinDiv.h"
 
+// lisp objects
 #include "LCons.h"
 #include "LDouble.h"
 #include "LInteger.h"
 
+// exceptions
 #include "DivisionByZeroException.h"
 #include "InvalidArgumentTypeException.h"
 
 LObject* BuiltinDiv::eval(LObject* args, Environment& env) const throw (EvalException) {
-    double result = 0.0;
     bool isFirst = true;
     bool areAllInteger = true;
+
+    double result = 0.0;
 
     if (args == 0)
         throw InvalidArgumentTypeException();
