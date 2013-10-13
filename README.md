@@ -15,7 +15,23 @@ Shows the execution time of the provided code
 
 Examples
 --------
-Factorial
+List length:  
+```
+> (def (length lst) (if lst (+ 1 (length (cdr lst))) 0))
+#<LAMBDA>  
+> (length '())  
+0  
+> (length nil)  
+0  
+> (length '(A))  
+1  
+> (length '(A B C))  
+3  
+> (length '((A B) C))  
+2  
+```
+
+Factorial:
 ```
 > (def (fact n) (if (= n 0) 1 (* n (fact (- n 1)))))
 #<LAMBDA>  
@@ -23,6 +39,32 @@ Factorial
 120  
 > (fact 20)  
 2432902008176640000  
+```
+
+Recursive exponentiation:
+```
+> (def (exp b n) (if (= n 0) 1 (* b (exp b (- n 1)))))  
+#<LAMBDA>
+> (exp 2 0) 
+1  
+> (exp 2 1)  
+2  
+> (exp 2 2)
+4  
+> (exp 3 3)  
+27  
+```
+
+Higher Order Functions:
+```
+> (def (apply-fn fn x) (fn x))  
+#<LAMBDA>  
+> (def (square x) (* x x))  
+#<LAMBDA>  
+> (apply-fn square 2)  
+> 4  
+> (apply-fn square 4)  
+> 16  
 ```
 
 Arithmetic expressions
