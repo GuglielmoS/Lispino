@@ -47,6 +47,8 @@ public:
         return CONS;
     }
 
+    bool equals(const LObject* otherObj) const;    
+
     LObject* tryClosureCall(Closure *closure, LObject *argsVal, Environment& env) throw (EvalException);
     LObject* tryLambdaCall(LambdaExpression *lambda, LObject *argsVal, Environment& env) throw (EvalException);
     LObject* eval(Environment& env) throw (EvalException);

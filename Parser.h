@@ -51,7 +51,7 @@ class Parser {
     static LObject* parseIfExpression(vector<string>& tokens) throw (ParserException, TokenizerException); 
     static LObject* parseLambdaExpression(vector<string>& tokens) throw (ParserException, TokenizerException);   
     static LObject* parseAtom(string& token) throw (ParserException, TokenizerException);
-    static int parseInteger(string& token) throw (ParserException);
+    static long int parseInteger(string& token) throw (ParserException);
     static double parseDouble(string& token) throw (ParserException);
 
     /**

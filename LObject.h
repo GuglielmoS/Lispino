@@ -64,6 +64,10 @@ public:
         return getType() == CLOSURE;
     }
 
+    virtual bool equals(const LObject* otherObj) const {
+        return this == otherObj;
+    }
+
     virtual LType getType() const = 0;
     virtual std::string prettyString() const = 0;
     virtual LObject* eval(Environment& env) throw (EvalException) = 0;

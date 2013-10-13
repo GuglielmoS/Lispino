@@ -1,18 +1,19 @@
-#include "BuiltinSub.h"
+#include "BuiltinDiv.h"
 
 #include "LCons.h"
 #include "LDouble.h"
 #include "LInteger.h"
 
+#include "DivisionByZeroException.h"
 #include "InvalidArgumentTypeException.h"
 
-LObject* BuiltinSub::eval(LObject* args, Environment& env) const throw (EvalException) {
+LObject* BuiltinDiv::eval(LObject* args, Environment& env) const throw (EvalException) {
     double result = 0.0;
     bool isFirst = true;
     bool areAllInteger = true;
 
     if (args == 0)
-        return const_cast<BuiltinSub*>(this);
+        return const_cast<BuiltinDiv*>(this);
 
     while (args->isCons()) {
         LObject *current = car(dynamic_cast<LCons*>(args))->eval(env);
@@ -22,8 +23,14 @@ LObject* BuiltinSub::eval(LObject* args, Environment& env) const throw (EvalExce
                 isFirst = false;
                 result = dynamic_cast<LInteger*>(current)->getValue();
             }
-            else
-                result -= dynamic_cast<LInteger*>(current)->getValue();
+            else {
+                int temp = dynamic_cast<LInteger*>(current)->getValue();
+
+                if (temp != 0)
+                    result /= temp;
+                else
+                    throw DivisionByZeroException();
+            }
         }
         else {
             if (current->isDouble()) {
@@ -33,8 +40,14 @@ LObject* BuiltinSub::eval(LObject* args, Environment& env) const throw (EvalExce
                     isFirst = false;
                     result = dynamic_cast<LDouble*>(current)->getValue();
                 }
-                else
-                    result -= dynamic_cast<LDouble*>(current)->getValue();
+                else {
+                    int temp = dynamic_cast<LDouble*>(current)->getValue();
+
+                    if (temp != 0)
+                        result /= temp;
+                    else
+                        throw DivisionByZeroException();
+                }
             }
             else
                 throw InvalidArgumentTypeException();

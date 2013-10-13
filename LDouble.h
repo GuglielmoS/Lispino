@@ -35,8 +35,16 @@ public:
         return value;
     }
 
-    LObject* clone() const {
-        return new LDouble(value);
+    bool equals(const LObject* otherObj) const {
+        if (getType() != otherObj->getType())
+            return false;
+
+        const LDouble *otherDouble = dynamic_cast<const LDouble*>(otherObj);
+
+        if (value != otherDouble->value)
+            return false;
+
+        return true;
     }
 
     LObject* eval(Environment& env) throw (EvalException) {

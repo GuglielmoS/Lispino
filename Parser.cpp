@@ -236,8 +236,8 @@ LObject* Parser::parseAtom(string& token) throw (ParserException, TokenizerExcep
     }
 }
 
-int Parser::parseInteger(string& token) throw (ParserException) {
-    return atoi(token.c_str());
+long int Parser::parseInteger(string& token) throw (ParserException) {
+    return atol(token.c_str());
 }
 
 double Parser::parseDouble(string& token) throw (ParserException) {

@@ -9,8 +9,14 @@
 // builtin functions
 class BuiltinFunction;
 
+// arithmetics operators
 #include "BuiltinSum.h"
 #include "BuiltinSub.h"
+#include "BuiltinMul.h"
+#include "BuiltinDiv.h"
+
+// boolean operators
+#include "BuiltinEqual.h"
 
 class Environment {
 
@@ -20,7 +26,9 @@ class Environment {
         std::map<std::string, BuiltinFunction*> m;
         m["+"] = new BuiltinSum();
         m["-"] = new BuiltinSub();
-        //m[5] = 6;
+        m["*"] = new BuiltinMul();
+        m["/"] = new BuiltinDiv();
+        m["="] = new BuiltinEqual();
         return m;
     }
 

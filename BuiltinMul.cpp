@@ -1,4 +1,4 @@
-#include "BuiltinSum.h"
+#include "BuiltinMul.h"
 
 #include "LCons.h"
 #include "LDouble.h"
@@ -6,22 +6,22 @@
 
 #include "InvalidArgumentTypeException.h"
 
-LObject* BuiltinSum::eval(LObject* args, Environment& env) const throw (EvalException) {
-    double result = 0.0;
+LObject* BuiltinMul::eval(LObject* args, Environment& env) const throw (EvalException) {
+    double result = 1.0;
     bool areAllInteger = true;
 
     if (args == 0)
-        return const_cast<BuiltinSum*>(this);
+        return const_cast<BuiltinMul*>(this);
 
     while (args->isCons()) {
         LObject *current = car(dynamic_cast<LCons*>(args))->eval(env);
         
         if (current->isInteger()) {
-            result += dynamic_cast<LInteger*>(current)->getValue();
+            result *= dynamic_cast<LInteger*>(current)->getValue();
         }
         else {
             if (current->isDouble()) {
-                result += dynamic_cast<LDouble*>(current)->getValue();
+                result *= dynamic_cast<LDouble*>(current)->getValue();
                 areAllInteger = false;
             }
             else

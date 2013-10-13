@@ -27,8 +27,9 @@ int Repl::run() {
             cout << "]" << endl;
         }
         else if (inputExpr != "") {
-            time_t start, end;
-            double dif = 0.0;
+            clock_t begin, end;
+            double time_spent;
+
 
             bool timeIt = false;
             if (inputExpr.find("time-it ") == 0) {
@@ -36,7 +37,7 @@ int Repl::run() {
                 timeIt = true;
             }
 
-            time(&start);
+            begin = clock();
 
             try {
                 cout << Parser::parse(inputExpr)->eval(env) << endl;
@@ -47,14 +48,12 @@ int Repl::run() {
                      << endl;
             }
             
-            time(&end);
-
-            dif = difftime(end,start);
-            float seconds = (float)(end - start) / CLOCKS_PER_SEC;
+            end = clock();
+            time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 
             if (timeIt)
                 cout << "[EXECUTION-TIME: "
-                     << fixed << seconds
+                     << fixed << time_spent
                      << " seconds]"
                      << endl;
         }

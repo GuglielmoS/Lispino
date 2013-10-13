@@ -122,6 +122,22 @@ string LCons::prettyStringHelper(bool parentheses) const {
     }
 }
 
+bool LCons::equals(const LObject* otherObj) const {
+    if (getType() != otherObj->getType())
+        return false;
+
+    const LCons* otherCons = dynamic_cast<const LCons*>(otherObj);
+
+    if (not first->equals(otherCons->first))
+        return false;
+
+    if (not next->equals(otherCons->next))
+        return false;
+
+    return true;
+}
+
+
 string LCons::prettyString() const {
     return prettyStringHelper();
 }
