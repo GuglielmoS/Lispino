@@ -11,8 +11,8 @@ LObject* BuiltinMul::eval(LObject* args, Environment& env) const throw (EvalExce
     bool areAllInteger = true;
 
     if (args == 0)
-        return const_cast<BuiltinMul*>(this);
-
+        throw InvalidArgumentTypeException();    
+    
     while (args->isCons()) {
         LObject *current = car(dynamic_cast<LCons*>(args))->eval(env);
         

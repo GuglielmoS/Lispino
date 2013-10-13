@@ -12,7 +12,7 @@ LObject* BuiltinSub::eval(LObject* args, Environment& env) const throw (EvalExce
     bool areAllInteger = true;
 
     if (args == 0)
-        return const_cast<BuiltinSub*>(this);
+        throw InvalidArgumentTypeException();
 
     while (args->isCons()) {
         LObject *current = car(dynamic_cast<LCons*>(args))->eval(env);

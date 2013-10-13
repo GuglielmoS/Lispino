@@ -11,8 +11,8 @@ LObject* BuiltinEqual::eval(LObject* args, Environment& env) const throw (EvalEx
     bool isFirst = true;
 
     if (args == 0)
-        return const_cast<BuiltinEqual*>(this);
-
+        throw InvalidArgumentTypeException();
+    
     while (args->isCons()) {
         LObject *current = car(dynamic_cast<LCons*>(args))->eval(env);
     

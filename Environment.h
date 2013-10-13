@@ -15,8 +15,12 @@ class BuiltinFunction;
 #include "BuiltinMul.h"
 #include "BuiltinDiv.h"
 
-// boolean operators
+// booleans and equality operators
 #include "BuiltinEqual.h"
+
+// list operators
+#include "BuiltinCar.h"
+#include "BuiltinCdr.h"
 
 class Environment {
 
@@ -24,11 +28,20 @@ class Environment {
 
     static std::map<std::string, BuiltinFunction*> initializeBuiltins() {
         std::map<std::string, BuiltinFunction*> m;
+        
+        // arithmetics
         m["+"] = new BuiltinSum();
         m["-"] = new BuiltinSub();
         m["*"] = new BuiltinMul();
         m["/"] = new BuiltinDiv();
+
+        // equality and booleans
         m["="] = new BuiltinEqual();
+
+        // list 
+        m["car"] = new BuiltinCar();
+        m["cdr"] = new BuiltinCdr();
+
         return m;
     }
 
