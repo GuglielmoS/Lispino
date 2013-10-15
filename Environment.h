@@ -21,6 +21,7 @@ class BuiltinFunction;
 #include "BuiltinEqual.h"
 
 // list operators
+#include "BuiltinCons.h"
 #include "BuiltinCar.h"
 #include "BuiltinCdr.h"
 
@@ -55,6 +56,7 @@ class Environment {
         m["="] = new BuiltinEqual();
 
         // list 
+        m["cons"] = new BuiltinCons();
         m["car"] = new BuiltinCar();
         m["cdr"] = new BuiltinCdr();
 
