@@ -40,6 +40,28 @@ Factorial:
 > (fact 20)  
 2432902008176640000  
 ```
+  
+Fibonacci:  
+```
+> (def (fib n) (if (= n 0) 1 (if (= n 1) 1 (+ (fib (- n 1)) (fib (- n 2))))))
+#<LAMBDA>
+> (fib 0)
+1
+> (fib 1)
+1
+> (fib 2)
+2
+> (fib 3)
+3
+> (fib 4)
+5
+> (fib 5)
+8
+> (fib 6)
+13
+> (fib 7)
+21
+```
 
 Recursive exponentiation:
 ```
