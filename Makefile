@@ -2,14 +2,14 @@ OPTIMIZATION=2
 STANDARD=c++11
 CC=g++ -std=$(STANDARD) -O$(OPTIMIZATION) -Wall
 
-bin/lispino: src/main.o src/Tokenizer.o src/Token.o src/Parser.o src/Lambda.o src/List.o src/Symbol.o src/VM.o src/Environment.o src/Closure.o Object.o
+bin/lispino: src/main.o src/Tokenizer.o src/Token.o src/Parser.o src/Lambda.o src/List.o src/Symbol.o src/VM.o src/Environment.o src/Closure.o src/Object.o src/Interpreter.o
 	$(CC) -o $@ $^
 
 test: bin/all_tests
 	bin/all_tests
 
 bin/all_tests: test/tokenizer_tests.o test/parser_tests.o test/interpreter_tests.o test/main_tests.o src/Tokenizer.o src/Token.o src/Parser.o src/Lambda.o src/List.o src/Symbol.o src/VM.o src/Environment.o src/Closure.o src/Object.o
-	g++ -o $@ -Wall -std=c++11 $^ -lgtest -pthread
+	$(CC) -o $@ $^ -lgtest -pthread
 
 bin/tokenizer_tests: test/tokenizer_tests.o test/main_tests.o src/Tokenizer.o src/Token.o
 	$(CC) -o $@ $^ -lgtest -pthread
