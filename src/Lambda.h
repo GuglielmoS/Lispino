@@ -61,6 +61,11 @@ namespace Lispino {
                 return body;
             }
 
+            void mark() {
+                Object::mark();
+                body->mark();
+            }
+
             bool isLambda() const {
                 return true;
             }

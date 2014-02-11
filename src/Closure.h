@@ -44,6 +44,11 @@ namespace Lispino {
                 return env.get();
             }
 
+            void mark() {
+                Object::mark();
+                lambda->mark();
+            }
+
             bool isClosure() const {
                 return true;
             }

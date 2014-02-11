@@ -46,6 +46,12 @@ namespace Lispino {
                 return value;
             }
 
+            void mark() {
+                Object::mark();
+                name->mark();
+                value->mark();
+            }
+
             bool isDefine() const {
                 return true;
             }

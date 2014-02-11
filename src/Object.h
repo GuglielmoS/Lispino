@@ -54,7 +54,7 @@ namespace Lispino {
              */
 
             // this is virtual because it's easier to recursively
-            // mark objects when dealing with lists
+            // mark objects by overriding this method
             virtual void mark();
             void unmark(); 
             bool isMarked() const;

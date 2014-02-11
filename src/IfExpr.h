@@ -63,6 +63,13 @@ namespace Lispino {
                 return alternative;
             }
 
+            void mark() {
+                Object::mark();
+                condition->mark();
+                consequent->mark();
+                alternative->mark();
+            }
+
             bool isIfExpr() const {
                 return true;
             }

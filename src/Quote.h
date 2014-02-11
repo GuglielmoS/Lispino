@@ -35,6 +35,11 @@ namespace Lispino {
                 return value;
             }
 
+            void mark() {
+                Object::mark();
+                value->mark();
+            }
+
             bool isQuote() const {
                 return true;
             }

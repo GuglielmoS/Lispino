@@ -8,7 +8,7 @@ Object* Closure::apply(std::vector<Object*> actualArgs) {
     if (formalArgs.size() != actualArgs.size())
         throw std::runtime_error("Invalid function call, wrong number of arguments");
 
-    /*
+   /* 
     std::cout << std::endl;
     std::cout << "CLOSURE APPLICATION:" << std::endl;
     std::cout << "  ARGUMENTS: ";
@@ -25,6 +25,11 @@ Object* Closure::apply(std::vector<Object*> actualArgs) {
         std::cout << "  ENCLOSING ENV: " << env->getParentEnv()->summary() << std::endl;
     std::cout << "  ENV:           " << env->summary() << std::endl;
     std::cout << "  ENV ADDRESS: " << env.get() << std::endl;
+
+    std::cout << std::endl;
+    std::cout << "LAMBDA BODY: " << lambda->getBody() << std::endl;
+    std::cout << "IS LAMBDA BODY AN IF? " << lambda->getBody()->isIfExpr() << std::endl;
+    std::cout << "I hope so!\n";
     */
 
     return lambda->getBody()->eval(*env);

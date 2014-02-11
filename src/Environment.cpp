@@ -4,6 +4,7 @@
 #include "builtin/Cdr.h"
 #include "builtin/Cons.h"
 #include "builtin/Add.h"
+#include "builtin/Sub.h"
 #include "builtin/Equal.h"
 
 using namespace Lispino;
@@ -17,6 +18,7 @@ std::map<std::string, std::unique_ptr<BuiltinFunction>> Environment::initializeB
     bindings["cdr"]  = std::unique_ptr<BuiltinFunction>(new BuiltinCdr());
     bindings["cons"] = std::unique_ptr<BuiltinFunction>(new BuiltinCons());
     bindings["+"]    = std::unique_ptr<BuiltinFunction>(new BuiltinAdd());
+    bindings["-"]    = std::unique_ptr<BuiltinFunction>(new BuiltinSub());
     bindings["="]    = std::unique_ptr<BuiltinFunction>(new BuiltinEqual());
 
     return bindings;
