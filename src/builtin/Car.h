@@ -2,7 +2,7 @@
 #define __BUILTIN_CAR_H__
 
 #include "BuiltinFunction.h"
-#include "VM.h"
+#include "../VM.h"
 
 namespace Lispino {
     

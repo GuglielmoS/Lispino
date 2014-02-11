@@ -3,7 +3,7 @@
 
 #include "Object.h"
 #include "Symbol.h"
-#include "BuiltinFunction.h"
+#include "builtin/BuiltinFunction.h"
 
 #include <map>
 #include <string>

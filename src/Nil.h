@@ -13,6 +13,13 @@ namespace Lispino {
                 return this;
             }
 
+            bool equals(Object *obj) const {
+                if (this == obj)
+                    return true;
+                else
+                    return obj->isNil();
+            }
+
             bool isNil() const {
                 return true;
             }

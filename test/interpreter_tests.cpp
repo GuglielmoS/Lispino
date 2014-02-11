@@ -160,3 +160,28 @@ TEST(InterpreterTests, Closure) {
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(3, static_cast<IntNumber*>(expr)->getValue());
 }
+
+TEST(InterpreterTests, BuiltinEqual) {
+    std::stringstream stream("(= 0 0) (= 0 1) (= 2 2) (= 2.0 2) (= 0.5 0.5) (= 1 \"a\")");
+    Parser parser(&stream);
+
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr()->eval());
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+}

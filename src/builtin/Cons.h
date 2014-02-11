@@ -2,7 +2,7 @@
 #define __BUILTIN_CONS_H__
 
 #include "BuiltinFunction.h"
-#include "VM.h"
+#include "../VM.h"
 
 namespace Lispino {
     

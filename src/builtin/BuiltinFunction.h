@@ -1,7 +1,7 @@
 #ifndef __BUILTIN_FUNCTION_H__
 #define __BUILTIN_FUNCTION_H__
 
-#include "Object.h"
+#include "../Object.h"
 
 #include <vector>
 

@@ -1,9 +1,10 @@
 #include "Environment.h"
 
-#include "BuiltinCar.h"
-#include "BuiltinCdr.h"
-#include "BuiltinCons.h"
-#include "BuiltinAdd.h"
+#include "builtin/Car.h"
+#include "builtin/Cdr.h"
+#include "builtin/Cons.h"
+#include "builtin/Add.h"
+#include "builtin/Equal.h"
 
 using namespace Lispino;
 
@@ -15,7 +16,8 @@ std::map<std::string, std::unique_ptr<BuiltinFunction>> Environment::initializeB
     bindings["car"]  = std::unique_ptr<BuiltinFunction>(new BuiltinCar());
     bindings["cdr"]  = std::unique_ptr<BuiltinFunction>(new BuiltinCdr());
     bindings["cons"] = std::unique_ptr<BuiltinFunction>(new BuiltinCons());
-    bindings["+"]  = std::unique_ptr<BuiltinFunction>(new BuiltinAdd());
+    bindings["+"]    = std::unique_ptr<BuiltinFunction>(new BuiltinAdd());
+    bindings["="]    = std::unique_ptr<BuiltinFunction>(new BuiltinEqual());
 
     return bindings;
 }

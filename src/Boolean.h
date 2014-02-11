@@ -18,6 +18,15 @@ namespace Lispino {
                 return this;
             }
 
+            bool equals(Object *obj) const {
+                if (this == obj)
+                    return true;
+                else if (obj->isBoolean())
+                    return static_cast<Boolean*>(obj)->value == value;
+                else
+                    return false;
+            }
+
             void setValue(bool value) {
                 this->value = value;
             }

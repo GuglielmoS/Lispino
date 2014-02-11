@@ -21,6 +21,15 @@ namespace Lispino {
                 return this;
             }
 
+            bool equals(Object *obj) const {
+                if (this == obj)
+                    return true;
+                else if (obj->isIntNumber())
+                    return static_cast<IntNumber*>(obj)->value == value;
+                else
+                    return false;
+            }
+
             void setValue(long int value) {
                 this->value = value;
             }

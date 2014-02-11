@@ -18,6 +18,15 @@ namespace Lispino {
 
             Object* eval(Environment& env);
 
+            bool equals(Object *obj) const {
+                if (this == obj)
+                    return true;
+                else if (obj->isSymbol())
+                    return static_cast<Symbol*>(obj)->value == value;
+                else
+                    return false;
+            }
+
             std::string getValue() const {
                 return value;
             }

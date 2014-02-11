@@ -20,7 +20,16 @@ namespace Lispino {
             Object* eval(Environment& env) {
                 return this;
             }
-            
+
+            bool equals(Object *obj) const {
+                if (this == obj)
+                    return true;
+                else if (obj->isString())
+                    return static_cast<String*>(obj)->value == value;
+                else
+                    return false;
+            }
+
             void setValue(std::string value) {
                 this->value = value;
             }

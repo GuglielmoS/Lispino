@@ -20,6 +20,16 @@ namespace Lispino {
                 return env.put(name, value->isLambda() ? value : value->eval(env));
             }
 
+            bool equals(Object *obj) const {
+                if (this == obj)
+                    return true;
+                else if (obj->isDefine()) {
+                    Define *define = static_cast<Define*>(obj);
+                    return define->name->equals(name) && define->value->equals(value);
+                } else
+                    return false;
+            }
+
             void setName(Symbol *name) {
                 this->name = name;
             }

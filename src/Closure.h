@@ -25,6 +25,13 @@ namespace Lispino {
 
             Object* apply(std::vector<Object*> actualArgs);
 
+            bool equals(Object *obj) const {
+                // Two closure are never equals.
+                // only when the pointers have the same address
+                // we can return true
+                return obj == this;
+            }
+
             void setLambda(Lambda *lambda) {
                 this->lambda = lambda;
             }

@@ -2,9 +2,9 @@
 #define __BUILTIN_ADD_H__
 
 #include "BuiltinFunction.h"
-#include "VM.h"
-#include "IntNumber.h"
-#include "FloatNumber.h"
+#include "../VM.h"
+#include "../IntNumber.h"
+#include "../FloatNumber.h"
 
 namespace Lispino {
     

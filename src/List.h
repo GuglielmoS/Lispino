@@ -23,6 +23,38 @@ namespace Lispino {
 
             Object* eval(Environment& env);
 
+            bool equals(Object *obj) const {
+                if (this == obj)
+                    return true;
+                else if (obj->isList()) {
+                    List *lst = static_cast<List*>(obj);
+
+                    if (head == nullptr) {
+                        if (lst->head != nullptr)
+                            return false;
+                    } else {
+                        if (lst->head == nullptr)
+                            return false;
+                        else if (!head->equals(lst->head))
+                            return false;
+                    }
+                    
+                    if (tail == nullptr) {
+                        if (lst->tail != nullptr)
+                            return false;
+                    } else {
+                        if (lst->tail == nullptr)
+                            return false;
+                        else if (!tail->equals(lst->tail))
+                            return false;
+                    }
+
+                    return true;
+                } else
+                    return false;
+            }
+
+
             void setFirst(Object *first) {
                 this->head = first;
             }

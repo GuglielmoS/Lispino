@@ -21,6 +21,15 @@ namespace Lispino {
                 return this;
             }
 
+            bool equals(Object *obj) const {
+                if (this == obj)
+                    return true;
+                else if (obj->isFloatNumber())
+                    return static_cast<FloatNumber*>(obj)->value == value;
+                else
+                    return false;
+            }
+
             void setValue(float value) {
                 this->value = value;
             }
