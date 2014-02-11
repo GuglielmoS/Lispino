@@ -144,6 +144,8 @@ Object* Parser::dispatch(Token *token) {
         case TokenType::STRING:       return allocator.createString(token->getString());
         case TokenType::INT_NUMBER:   return allocator.createIntNumber(token->getIntNumber());
         case TokenType::FLOAT_NUMBER: return allocator.createFloatNumber(token->getFloatNumber());
+        case TokenType::BOOL_TRUE:    return allocator.createBoolean(true);
+        case TokenType::BOOL_FALSE:   return allocator.createBoolean(false);
         case TokenType::OPEN_PAREN:   return parseList();
         default:                      return nullptr;
     }

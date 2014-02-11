@@ -6,6 +6,7 @@
 #include "../src/String.h"
 #include "../src/IntNumber.h"
 #include "../src/FloatNumber.h"
+#include "../src/Boolean.h"
 #include "../src/List.h"
 #include "../src/Lambda.h"
 #include "../src/Define.h"
@@ -87,6 +88,25 @@ TEST(ParserTests, FloatNumbers) {
     ASSERT_TRUE(expr->isFloatNumber());
     num = static_cast<FloatNumber*>(expr);
     ASSERT_FLOAT_EQ(42.05, num->getValue());
+}
+
+TEST(ParserTests, Booleans) {
+    std::stringstream stream("true TrUE false FalSe");
+    Parser parser(&stream);
+    
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr());
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    expr = parser.parseExpr();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    expr = parser.parseExpr();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    expr = parser.parseExpr();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
 }
 
 TEST(ParserTests, Strings) {

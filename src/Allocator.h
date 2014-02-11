@@ -7,6 +7,7 @@
 #include "Symbol.h"
 #include "IntNumber.h"
 #include "FloatNumber.h"
+#include "Boolean.h"
 #include "List.h"
 #include "String.h"
 #include "Lambda.h"
@@ -53,6 +54,13 @@ namespace Lispino {
                 num->setValue(value);
 
                 return num;
+            }
+
+            Boolean* createBoolean(bool value) {
+                Boolean *boolean = static_cast<Boolean*>(memory.allocate(Object::BOOLEAN));
+                boolean->setValue(value);
+
+                return boolean;
             }
 
             List* createList(Object* first, Object* rest) {

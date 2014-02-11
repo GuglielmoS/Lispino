@@ -82,10 +82,10 @@ int Interpreter::repl() {
 
             // shows the time
             if (timeIt) {
-                std::cout << ";; Parsing Time:            " << parsingTime << std::endl;
-                std::cout << ";; Evaluation Time:         " << evaluationTime << std::endl;
-                std::cout << ";; Garbage Collection Time: " << garbageCollectionTime << std::endl;
-                std::cout << ";; Total Time:              " << totalTime << std::endl;
+                std::cout << ";; Parsing Time:            " << humanTime(parsingTime) << std::endl;
+                std::cout << ";; Evaluation Time:         " << humanTime(evaluationTime) << std::endl;
+                std::cout << ";; Garbage Collection Time: " << humanTime(garbageCollectionTime) << std::endl;
+                std::cout << ";; Total Time:              " << humanTime(totalTime) << std::endl;
             }
         }
     }

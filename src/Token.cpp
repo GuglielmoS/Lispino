@@ -15,6 +15,8 @@ std::map<std::string, TokenType> Token::initializeReservedKeywords() {
     bindings["lambda"] = TokenType::LAMBDA;
     bindings["define"] = TokenType::DEFINE;
     bindings["quote"] = TokenType::QUOTE;
+    bindings["true"] = TokenType::BOOL_TRUE;
+    bindings["false"] = TokenType::BOOL_FALSE;
 
     return bindings;
 }

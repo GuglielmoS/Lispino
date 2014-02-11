@@ -5,6 +5,7 @@
 #include "Symbol.h"
 #include "IntNumber.h"
 #include "FloatNumber.h"
+#include "Boolean.h"
 #include "List.h"
 #include "String.h"
 #include "Lambda.h"
@@ -30,9 +31,6 @@ namespace Lispino {
             MemoryNode(Object* obj, MemoryNode* next) : object(obj), next(next) {}
         };
         
-        // maximum number of allocated objects before calling to the garbage collector
-        static const unsigned int GC_NUM_OBJECTS_THRESHOLD = 0;
-
         // reference to the garbage collector
         GarbageCollector &gc;
 
@@ -83,10 +81,6 @@ namespace Lispino {
 
             Memory(GarbageCollector& gc) : gc(gc), first(nullptr), allocatedObjects(0) {}
 
-            size_t getAllocatedObjects() const {
-                return allocatedObjects;
-            }
-
             Object* allocate(Object::ObjectType type) {
                 Object *allocatedObject = nullptr;
 
@@ -102,6 +96,9 @@ namespace Lispino {
                         break;
                     case Object::FLOAT_NUMBER:
                         allocatedObject = new FloatNumber();
+                        break;
+                    case Object::BOOLEAN:
+                        allocatedObject = new Boolean();
                         break;
                     case Object::STRING:
                         allocatedObject = new String();
@@ -122,10 +119,9 @@ namespace Lispino {
                         allocatedObject = new Define();
                         break;
                     default:
-                        std::cerr << "[MEMORY-allocate ERROR] invalid ObjectType!" << std::cerr;
-                        exit(EXIT_FAILURE);
+                        throw std::runtime_error("[MEMORY-allocate ERROR] invalid ObjectType!");
                 }
-        
+
                 // add the allocated object to the memory linked list
                 MemoryNode *newNode = new MemoryNode(allocatedObject, first);
                 first = newNode;
@@ -135,15 +131,14 @@ namespace Lispino {
 
                 return allocatedObject;
             }
+
+            size_t getAllocatedObjects() const {
+                return allocatedObjects;
+            }
             
             size_t cleanup() {
-                // call the garbage collector if needed
-                //if (allocatedObjects > GC_NUM_OBJECTS_THRESHOLD) {
-                    gc.collect();
-                    return releaseUnusedObjects();
-                //}
-
-                //return 0;
+                gc.collect();
+                return releaseUnusedObjects();
             }
 
             ~Memory() {

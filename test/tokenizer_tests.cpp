@@ -128,6 +128,30 @@ TEST(TokenizerTests, FloatNumbers) {
     ASSERT_EQ(EOS, token->getType());
 }
 
+TEST(TokenizerTests, Booleans) {
+    std::stringstream stream;
+
+    // add some text to the input stream
+    stream << "true TrUe false FalSE";
+
+    // create the tokenizer
+    Tokenizer tokenizer(&stream);
+
+    // check the presence of the numbers
+    std::unique_ptr<Token> token(tokenizer.next()); 
+    ASSERT_EQ(BOOL_TRUE, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(BOOL_TRUE, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(BOOL_FALSE, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(BOOL_FALSE, token->getType());
+
+    // check the End Of Stream (EOS)
+    token.reset(tokenizer.next());
+    ASSERT_EQ(EOS, token->getType());
+}
+
 TEST(TokenizerTests, Strings) {
     std::stringstream stream;
 

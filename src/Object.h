@@ -7,7 +7,6 @@ namespace Lispino {
 
     class Environment;
 
-    
     class Object {
         
         // flag used for garbage collection
@@ -23,6 +22,7 @@ namespace Lispino {
                 SYMBOL, 
                 STRING,
                 INT_NUMBER, FLOAT_NUMBER,
+                BOOLEAN,
                 LAMBDA,
                 CLOSURE
             };
@@ -84,6 +84,10 @@ namespace Lispino {
             }
 
             virtual bool isFloatNumber() const {
+                return false;
+            }
+
+            virtual bool isBoolean() const {
                 return false;
             }
 
