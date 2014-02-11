@@ -20,6 +20,7 @@ namespace Lispino {
                     LAMBDA,
                     DEFINE,
                     QUOTE,
+                    IF,
                     BOOL_TRUE, BOOL_FALSE,
                     //RESERVED_KEYWORDS_END__,
                     UNKNOWN};

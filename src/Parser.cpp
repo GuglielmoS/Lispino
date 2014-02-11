@@ -100,6 +100,34 @@ Object* Parser::parseQuote() {
     return quote;
 }
 
+Object* Parser::parseIf() {
+    // parse the condition
+    Object *condition = parseExpr();
+
+    // parse the consequent expression
+    Object *consequent = parseExpr();
+
+    // parse the alternative if needed
+    Object *alternative = nullptr;
+    std::unique_ptr<Token> token(tokenizer.next());
+    if (token->getType() != TokenType::CLOSE_PAREN)
+        alternative = dispatch(token.get());
+    else
+        alternative = allocator.createNil();
+
+    // create the object
+    Object *ifObj = allocator.createIf(condition, consequent, alternative);
+
+    // check for the final paren ')'
+    if (alternative != nullptr) {
+        token.reset(tokenizer.next());
+        if (token->getType() != TokenType::CLOSE_PAREN)
+            throw std::runtime_error("PARSER - invalid DEFINE arguments, missing ')'");
+    }
+
+    return ifObj;
+}
+
 Object* Parser::parseList() { 
     std::unique_ptr<Token> token(tokenizer.next());
     Object *head = nullptr;
@@ -110,6 +138,7 @@ Object* Parser::parseList() {
         case TokenType::LAMBDA:      return parseLambda();
         case TokenType::DEFINE:      return parseDefine();
         case TokenType::QUOTE:       return parseQuote();
+        case TokenType::IF:          return parseIf();
         default:                     head = dispatch(token.get());
     }
 

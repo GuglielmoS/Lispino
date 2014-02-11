@@ -11,6 +11,7 @@
 #include "../src/Lambda.h"
 #include "../src/Define.h"
 #include "../src/Quote.h"
+#include "../src/IfExpr.h"
 
 // GTest headers
 #include <gtest/gtest.h>
@@ -245,4 +246,21 @@ TEST(ParserTests, Quotes) {
     Quote *quote = static_cast<Quote*>(expr);
     ASSERT_TRUE(quote->getValue()->isSymbol());
     ASSERT_EQ("a", static_cast<Symbol*>(quote->getValue())->getValue());
+}
+
+TEST(ParserTests, IfExpr) {
+    std::stringstream stream("(if true 0 1)");
+    Parser parser(&stream);
+    
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr());
+
+    ASSERT_TRUE(expr->isIfExpr());
+    IfExpr *ifObj = static_cast<IfExpr*>(expr);
+    ASSERT_TRUE(ifObj->getCondition()->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(ifObj->getCondition())->isTrue());
+    ASSERT_TRUE(ifObj->getConsequent()->isIntNumber());
+    ASSERT_EQ(0, static_cast<IntNumber*>(ifObj->getConsequent())->getValue());
+    ASSERT_TRUE(ifObj->getAlternative()->isIntNumber());
+    ASSERT_EQ(1, static_cast<IntNumber*>(ifObj->getAlternative())->getValue());
 }

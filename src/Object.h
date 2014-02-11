@@ -23,6 +23,7 @@ namespace Lispino {
                 STRING,
                 INT_NUMBER, FLOAT_NUMBER,
                 BOOLEAN,
+                IF,
                 LAMBDA,
                 CLOSURE
             };
@@ -107,6 +108,10 @@ namespace Lispino {
             }
 
             virtual bool isDefine() const {
+                return false;
+            }
+
+            virtual bool isIfExpr() const {
                 return false;
             }
 

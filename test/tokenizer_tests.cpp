@@ -128,30 +128,6 @@ TEST(TokenizerTests, FloatNumbers) {
     ASSERT_EQ(EOS, token->getType());
 }
 
-TEST(TokenizerTests, Booleans) {
-    std::stringstream stream;
-
-    // add some text to the input stream
-    stream << "true TrUe false FalSE";
-
-    // create the tokenizer
-    Tokenizer tokenizer(&stream);
-
-    // check the presence of the numbers
-    std::unique_ptr<Token> token(tokenizer.next()); 
-    ASSERT_EQ(BOOL_TRUE, token->getType());
-    token.reset(tokenizer.next());
-    ASSERT_EQ(BOOL_TRUE, token->getType());
-    token.reset(tokenizer.next());
-    ASSERT_EQ(BOOL_FALSE, token->getType());
-    token.reset(tokenizer.next());
-    ASSERT_EQ(BOOL_FALSE, token->getType());
-
-    // check the End Of Stream (EOS)
-    token.reset(tokenizer.next());
-    ASSERT_EQ(EOS, token->getType());
-}
-
 TEST(TokenizerTests, Strings) {
     std::stringstream stream;
 
@@ -183,6 +159,8 @@ TEST(TokenizerTests, ReservedKeywords) {
     stream << "Nil NIL NiL nil" << std::endl;
     stream << "LamBdA LAMBDA lambda" << std::endl;
     stream << "QuoTE qUote quote" << std::endl;
+    stream << "IF iF if If" << std::endl;
+    stream << "true TrUe false FalSE";
 
     // create the tokenizer
     Tokenizer tokenizer(&stream);
@@ -220,6 +198,26 @@ TEST(TokenizerTests, ReservedKeywords) {
     ASSERT_EQ(QUOTE, token->getType());
     token.reset(tokenizer.next());
     ASSERT_EQ(QUOTE, token->getType());
+
+    // check the IF keyword
+    token.reset(tokenizer.next());
+    ASSERT_EQ(IF, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(IF, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(IF, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(IF, token->getType());
+
+    // check the BOOLEAN keywords
+    token.reset(tokenizer.next());
+    ASSERT_EQ(BOOL_TRUE, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(BOOL_TRUE, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(BOOL_FALSE, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(BOOL_FALSE, token->getType());
 
     // check the End Of Stream (EOS)
     token.reset(tokenizer.next());

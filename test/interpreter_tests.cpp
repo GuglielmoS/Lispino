@@ -185,3 +185,16 @@ TEST(InterpreterTests, BuiltinEqual) {
     ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
 }
+
+TEST(InterpreterTests, IfExpr) {
+    std::stringstream stream("(if true 0 1) (if false 0 1)");
+    Parser parser(&stream);
+
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr()->eval());
+    ASSERT_TRUE(expr->isIntNumber());
+    ASSERT_EQ(0, static_cast<IntNumber*>(expr)->getValue());
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isIntNumber());
+    ASSERT_EQ(1, static_cast<IntNumber*>(expr)->getValue());
+}

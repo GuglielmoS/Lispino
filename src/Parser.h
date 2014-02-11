@@ -17,6 +17,7 @@ namespace Lispino {
         Allocator &allocator;
         Tokenizer tokenizer;
 
+        Object* parseIf();
         Object* parseList();
         Object* parseLambda();
         Object* parseDefine();

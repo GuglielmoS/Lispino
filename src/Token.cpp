@@ -11,12 +11,13 @@ std::map<std::string, TokenType> Token::reservedKeywords = Token::initializeRese
 std::map<std::string, TokenType> Token::initializeReservedKeywords() {
     static std::map<std::string, TokenType> bindings;
     
-    bindings["nil"] = TokenType::NIL;
+    bindings["nil"]    = TokenType::NIL;
     bindings["lambda"] = TokenType::LAMBDA;
     bindings["define"] = TokenType::DEFINE;
-    bindings["quote"] = TokenType::QUOTE;
-    bindings["true"] = TokenType::BOOL_TRUE;
-    bindings["false"] = TokenType::BOOL_FALSE;
+    bindings["quote"]  = TokenType::QUOTE;
+    bindings["true"]   = TokenType::BOOL_TRUE;
+    bindings["false"]  = TokenType::BOOL_FALSE;
+    bindings["if"]     = TokenType::IF;
 
     return bindings;
 }

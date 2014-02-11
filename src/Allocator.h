@@ -12,6 +12,7 @@
 #include "String.h"
 #include "Lambda.h"
 #include "Closure.h"
+#include "IfExpr.h"
 
 namespace Lispino {
 
@@ -104,6 +105,15 @@ namespace Lispino {
 
             Nil* createNil() {
                 return static_cast<Nil*>(memory.allocate(Object::NIL));
+            }
+
+            IfExpr* createIf(Object* condition, Object* consequent, Object* alternative) {
+                IfExpr *ifObj = static_cast<IfExpr*>(memory.allocate(Object::IF));
+                ifObj->setCondition(condition);
+                ifObj->setConsequent(consequent);
+                ifObj->setAlternative(alternative);
+                    
+                return ifObj;
             }
 
     };

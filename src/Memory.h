@@ -14,6 +14,7 @@
 #include "Nil.h"
 #include "Quote.h"
 #include "Define.h"
+#include "IfExpr.h"
 
 #include <iostream>
 #include <memory>
@@ -117,6 +118,9 @@ namespace Lispino {
                         break;
                     case Object::DEFINE:
                         allocatedObject = new Define();
+                        break;
+                    case Object::IF:
+                        allocatedObject = new IfExpr();
                         break;
                     default:
                         throw std::runtime_error("[MEMORY-allocate ERROR] invalid ObjectType!");
