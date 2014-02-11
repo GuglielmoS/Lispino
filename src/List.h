@@ -38,7 +38,7 @@ namespace Lispino {
                         else if (!head->equals(lst->head))
                             return false;
                     }
-                    
+
                     if (tail == nullptr) {
                         if (lst->tail != nullptr)
                             return false;

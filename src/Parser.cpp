@@ -106,33 +106,37 @@ Object* Parser::parseList() {
      
     // check if the current token is a reserved keyword
     switch (token->getType()) {
-        case TokenType::CLOSE_PAREN: return nullptr;
+        case TokenType::CLOSE_PAREN: return allocator.createList(nullptr,nullptr);
         case TokenType::LAMBDA:      return parseLambda();
         case TokenType::DEFINE:      return parseDefine();
         case TokenType::QUOTE:       return parseQuote();
         default:                     head = dispatch(token.get());
     }
 
-    // parse the tail if needed
-    Object *result = nullptr;
-    token.reset(tokenizer.next());
-    switch (token->getType()) {
-        case TokenType::OPEN_PAREN:
-            result = allocator.createList(head, allocator.createList(parseList(), nullptr));
-            break;
-        case TokenType::CLOSE_PAREN:
-            return allocator.createList(head, nullptr);
-        case TokenType::DOT:
-            result = allocator.createList(head, parseExpr());
-            break;
-        default: 
-            return allocator.createList(head, allocator.createList(dispatch(token.get()), parseList()));
-    }
+    // create the final list
+    List *result = allocator.createList(head, nullptr);
+    List *current = result;
+    bool improperList = false;
 
-    // check for the final paren ')'
+    // parse the tail if needed
     token.reset(tokenizer.next());
-    if (token->getType() != TokenType::CLOSE_PAREN)
-        throw std::runtime_error("PARSER - invalid LIST arguments, missing ')'");
+    while (token->getType() != TokenType::CLOSE_PAREN) {
+        if (token->getType() == TokenType::DOT) {
+            improperList = true;
+            token.reset(tokenizer.next());
+        }
+
+        if (improperList) {
+            current->setRest(dispatch(token.get()));
+            improperList = false;
+        }
+        else {
+            current->setRest(allocator.createList(dispatch(token.get()), nullptr));
+            current = static_cast<List*>(current->getRest());
+        }
+        
+        token.reset(tokenizer.next());
+    }
 
     return result;
 }
@@ -147,7 +151,8 @@ Object* Parser::dispatch(Token *token) {
         case TokenType::BOOL_TRUE:    return allocator.createBoolean(true);
         case TokenType::BOOL_FALSE:   return allocator.createBoolean(false);
         case TokenType::OPEN_PAREN:   return parseList();
-        default:                      return nullptr;
+        case TokenType::EOS:          return nullptr;
+        default:                      throw std::runtime_error("PARSER - dispatch failed");
     }
 }
 

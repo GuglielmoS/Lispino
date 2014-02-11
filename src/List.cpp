@@ -96,7 +96,7 @@ std::vector<Object*> List::extractArguments(Environment& env) {
 Object* List::eval(Environment& env) {
     if (head == nullptr)
         return VM::getAllocator().createNil();
-
+    
     std::vector<Object*> args = extractArguments(env);
 
     /*

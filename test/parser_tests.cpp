@@ -147,7 +147,7 @@ TEST(ParserTests, Lists) {
     ASSERT_EQ(2, static_cast<IntNumber*>(lst->getFirst())->getValue());
 
     // third element
-    ASSERT_NE(nullptr, lst->getRest());
+    ASSERT_NE(lst->getRest(), nullptr);
     ASSERT_TRUE(lst->getRest()->isList());
     lst = static_cast<List*>(lst->getRest());
     ASSERT_TRUE(lst->getFirst()->isIntNumber());
