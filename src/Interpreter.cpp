@@ -100,14 +100,11 @@ int Interpreter::execute(std::string filename) {
     if (inputStream.is_open()) {
         Parser parser(&inputStream);
 
-        std::string lastVal;
         Object *currentExpr = nullptr;
         while ((currentExpr = parser.parseExpr()) != nullptr) {
-            lastVal = currentExpr->eval()->toString();
+            currentExpr->eval()->toString();
             VM::getMemory().cleanup();
         }
-
-        std::cout << lastVal << std::endl;
 
         inputStream.close();
 

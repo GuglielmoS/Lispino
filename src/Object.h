@@ -115,6 +115,10 @@ namespace Lispino {
                 return false;
             }
 
+            virtual bool isBuiltinFunction() const {
+                return false;
+            }
+
     };
 };
 

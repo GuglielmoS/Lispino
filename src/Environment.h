@@ -80,6 +80,9 @@ namespace Lispino {
             }
 
             Object* get(Symbol* key) {
+                if (isBuiltinFunction(key))
+                    return getBuiltinFunction(key);
+
                 std::map<Symbol*,Object*,SymbolComparator>::iterator iter = frame.find(key);
                 if (iter == frame.end()) {
                     if (enclosingEnv != nullptr)

@@ -97,26 +97,12 @@ Object* List::eval(Environment& env) {
     if (head == nullptr)
         return VM::getAllocator().createNil();
     
+    Object *op = head->eval(env);
     std::vector<Object*> args = extractArguments(env);
 
-    /*
-    std::cout << "GENERAL INSPECTION:\n";
-    inspect(this);
-
-    std::cout << "OPERANDS: ";
-    for (unsigned int i = 0; i < args.size(); i++)
-        std::cout << args[i]->toString() << ", ";
-    std::cout << std::endl;
-    */
-    
-    if (head->isSymbol()) {
-        Symbol *sym = static_cast<Symbol*>(head);
-        if (env.isBuiltinFunction(sym))
-            return env.getBuiltinFunction(sym)->apply(args);
-    }
-
-    Object *op = head->eval(env);
-    if (op->isLambda())
+    if (op->isBuiltinFunction())
+        return static_cast<BuiltinFunction*>(op)->apply(args);
+    else if (op->isLambda())
         return static_cast<Closure*>(op->eval(env))->apply(args);
     else if (op->isClosure())
         return static_cast<Closure*>(op)->apply(args);
