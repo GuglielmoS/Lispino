@@ -5,5 +5,8 @@
 using namespace Lispino;
 
 int main(int argc, char *argv[]) {
-    return Interpreter().repl(); 
+    if (argc == 1)
+        return Interpreter::repl(); 
+    else
+        return Interpreter::execute(argv[1]);
 }

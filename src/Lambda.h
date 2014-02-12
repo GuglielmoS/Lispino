@@ -53,7 +53,7 @@ namespace Lispino {
                 this->arguments = arguments;
             }
 
-            std::vector<std::string> getArguments() const {
+            std::vector<std::string>& getArguments() {
                 return arguments;
             }
 

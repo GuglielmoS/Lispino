@@ -10,7 +10,7 @@ namespace Lispino {
         
         public:
 
-            Object* apply(std::vector<Object*> args) {
+            Object* apply(std::vector<Object*>& args) {
                 if (args.size() != 1)
                     return VM::getAllocator().createNil();
 

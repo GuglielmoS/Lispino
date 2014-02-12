@@ -54,20 +54,19 @@ namespace Lispino {
                     return false;
             }
 
-
-            void setFirst(Object *first) {
+            inline void setFirst(Object *first) {
                 this->head = first;
             }
 
-            void setRest(Object *rest) {
+            inline void setRest(Object *rest) {
                 this->tail = rest;
             }
 
-            Object* getFirst() {
+            inline Object* getFirst() {
                 return head;
             }
 
-            Object* getRest() {
+            inline Object* getRest() {
                 return tail;
             }
 

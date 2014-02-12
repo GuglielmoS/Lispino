@@ -101,6 +101,24 @@ TEST(InterpreterTests, BuiltinAdd) {
     ASSERT_FLOAT_EQ(1.5, static_cast<FloatNumber*>(expr)->getValue());
 }
 
+TEST(InterpreterTests, BuiltinSub) {
+    std::stringstream stream("(- 1 1) (- 1 (- 1 (- 1 1))) (- 1 0.5)");
+    Parser parser(&stream);
+
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr()->eval());
+    ASSERT_TRUE(expr->isIntNumber());
+    ASSERT_EQ(0, static_cast<IntNumber*>(expr)->getValue());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isIntNumber());
+    ASSERT_EQ(0, static_cast<IntNumber*>(expr)->getValue());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isFloatNumber());
+    ASSERT_EQ(0.5, static_cast<FloatNumber*>(expr)->getValue());
+}
+
 TEST(InterpreterTests, Environment) {
     std::stringstream stream("(define x 1) (define y 2) (define z (cons x y))");
     Parser parser(&stream);

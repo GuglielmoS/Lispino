@@ -72,7 +72,7 @@ namespace Lispino {
                 return lst;
             }
 
-            Lambda* createLambda(Object* body, std::vector<std::string> arguments) {
+            Lambda* createLambda(Object* body, std::vector<std::string>& arguments) {
                 Lambda *lambda = static_cast<Lambda*>(memory.allocate(Object::LAMBDA));
                 lambda->setBody(body);
                 lambda->setArguments(arguments);

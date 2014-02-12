@@ -10,7 +10,7 @@ namespace Lispino {
         
         public:
 
-            Object* apply(std::vector<Object*> args) {
+            Object* apply(std::vector<Object*>& args) {
                 if (args.size() != 2)
                     throw std::runtime_error("CONS: wrong number of arguments!");
 

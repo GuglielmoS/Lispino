@@ -11,7 +11,7 @@ namespace Lispino {
     
         public:
     
-            virtual Object* apply(std::vector<Object*> args) = 0;
+            virtual Object* apply(std::vector<Object*>& args) = 0;
 
     };
 };

@@ -23,7 +23,7 @@ namespace Lispino {
                 return this;
             }
 
-            Object* apply(std::vector<Object*> actualArgs);
+            Object* apply(std::vector<Object*>& actualArgs);
 
             bool equals(Object *obj) const {
                 // Two closure are never equals.
