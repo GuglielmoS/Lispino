@@ -35,3 +35,41 @@ std::map<std::string, std::unique_ptr<BuiltinFunction>> Environment::initializeB
 
     return bindings;
 }
+
+Object* Environment::update(Symbol* key, Object* value) {
+    std::map<Symbol*,Object*,SymbolComparator>::iterator iter = frame.find(key);
+    
+    if (iter == frame.end()) {
+        if (enclosingEnv != nullptr)
+            enclosingEnv->update(key, value);
+        else
+            throw std::out_of_range("Environment update failed with key: " + key->toString());
+    } else
+        frame[key] = value;
+
+    return value;
+}
+
+Object* Environment::put(Symbol* key, Object* value) {
+    frame[key] = value;
+
+    return value;
+}
+
+Object* Environment::get(Symbol* key) {
+    // check for builtin functions
+    std::map<std::string, std::unique_ptr<BuiltinFunction>>::iterator bf_iter = builtinFunctions.find(key->getValue());
+    if (bf_iter != builtinFunctions.end())
+        return bf_iter->second.get();
+
+    // check for environment values
+    std::map<Symbol*,Object*,SymbolComparator>::iterator iter = frame.find(key);
+    if (iter == frame.end()) {
+        if (enclosingEnv != nullptr)
+            return enclosingEnv->get(key);
+
+        throw std::out_of_range("Environment lookup failed with key: " + key->toString());
+    }
+
+    return iter->second;
+}

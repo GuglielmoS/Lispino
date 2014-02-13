@@ -29,42 +29,42 @@ namespace Lispino {
                 return memory;
             }
 
-            Symbol* createSymbol(std::string value) {
+            inline Symbol* createSymbol(std::string value) {
                 Symbol *symbol = static_cast<Symbol*>(memory.allocate(Object::SYMBOL));
                 symbol->setValue(value);
 
                 return symbol;
             }
 
-            String* createString(std::string value) {
+            inline String* createString(std::string value) {
                 String *str = static_cast<String*>(memory.allocate(Object::STRING));
                 str->setValue(value);
 
                 return str;
             }
 
-            IntNumber* createIntNumber(long int value) {
+            inline IntNumber* createIntNumber(long int value) {
                 IntNumber *num = static_cast<IntNumber*>(memory.allocate(Object::INT_NUMBER));
                 num->setValue(value);
 
                 return num;
             }
 
-            FloatNumber* createFloatNumber(float value) {
+            inline FloatNumber* createFloatNumber(float value) {
                 FloatNumber *num = static_cast<FloatNumber*>(memory.allocate(Object::FLOAT_NUMBER));
                 num->setValue(value);
 
                 return num;
             }
 
-            Boolean* createBoolean(bool value) {
+            inline Boolean* createBoolean(bool value) {
                 Boolean *boolean = static_cast<Boolean*>(memory.allocate(Object::BOOLEAN));
                 boolean->setValue(value);
 
                 return boolean;
             }
 
-            List* createList(Object* first, Object* rest) {
+            inline List* createList(Object* first, Object* rest) {
                 List *lst = static_cast<List*>(memory.allocate(Object::LIST));
                 lst->setFirst(first);
                 lst->setRest(rest);
@@ -72,7 +72,7 @@ namespace Lispino {
                 return lst;
             }
 
-            Lambda* createLambda(Object* body, std::vector<std::string>& arguments) {
+            inline Lambda* createLambda(Object* body, std::vector<std::string>& arguments) {
                 Lambda *lambda = static_cast<Lambda*>(memory.allocate(Object::LAMBDA));
                 lambda->setBody(body);
                 lambda->setArguments(arguments);
@@ -80,7 +80,7 @@ namespace Lispino {
                 return lambda;
             }
 
-            Closure* createClosure(Lambda *lambda, Environment *env) {
+            inline Closure* createClosure(Lambda *lambda, Environment *env) {
                 Closure *closure = static_cast<Closure*>(memory.allocate(Object::CLOSURE));
                 closure->setLambda(lambda);
                 closure->setEnv(env);
@@ -88,7 +88,7 @@ namespace Lispino {
                 return closure;
             }
 
-            Define* createDefine(std::string name, Object* value) {
+            inline Define* createDefine(std::string name, Object* value) {
                 Define *define = static_cast<Define*>(memory.allocate(Object::DEFINE));
                 define->setName(createSymbol(name));
                 define->setValue(value);
@@ -96,18 +96,18 @@ namespace Lispino {
                 return define;
             }
 
-            Quote* createQuote(Object* value) {
+            inline Quote* createQuote(Object* value) {
                 Quote *quote = static_cast<Quote*>(memory.allocate(Object::QUOTE));
                 quote->setValue(value);
 
                 return quote;
             }
 
-            Nil* createNil() {
+            inline Nil* createNil() {
                 return static_cast<Nil*>(memory.allocate(Object::NIL));
             }
 
-            IfExpr* createIf(Object* condition, Object* consequent, Object* alternative) {
+            inline IfExpr* createIf(Object* condition, Object* consequent, Object* alternative) {
                 IfExpr *ifObj = static_cast<IfExpr*>(memory.allocate(Object::IF));
                 ifObj->setCondition(condition);
                 ifObj->setConsequent(consequent);

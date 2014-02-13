@@ -51,10 +51,10 @@ int Interpreter::repl(bool verbose) {
         else if (inputExpr != "") {
             clock_t begin, end;
             double totalTime, parsingTime, evaluationTime, garbageCollectionTime;
+            std::stringstream stream(inputExpr);
 
             // *** PARSING ***
             begin = clock();
-            std::stringstream stream(inputExpr);
             Object *expr = Parser(stream).parse();
             end = clock();
             parsingTime = (double)(end - begin) / CLOCKS_PER_SEC;
@@ -66,8 +66,9 @@ int Interpreter::repl(bool verbose) {
             evaluationTime = (double)(end - begin) / CLOCKS_PER_SEC;
             
             // *** GARBAGE COLLECTION ***
+            size_t totalObjects = VM::getMemory().getAllocatedObjects();
             begin = clock();
-            VM::getMemory().cleanup();
+            size_t removedObjects = VM::getMemory().cleanup();
             end = clock();
             garbageCollectionTime = (double)(end - begin) / CLOCKS_PER_SEC;
 
@@ -76,10 +77,13 @@ int Interpreter::repl(bool verbose) {
 
             // shows the time
             if (verbose) {
-                std::cout << ";; Parsing Time:            " << humanTime(parsingTime) << std::endl;
-                std::cout << ";; Evaluation Time:         " << humanTime(evaluationTime) << std::endl;
-                std::cout << ";; Garbage Collection Time: " << humanTime(garbageCollectionTime) << std::endl;
-                std::cout << ";; Total Time:              " << humanTime(totalTime) << std::endl;
+                std::cout << ";; Timing report" << std::endl;
+                std::cout << "     + Parsing Time:            " << parsingTime << std::endl;
+                std::cout << "     + Evaluation Time:         " << evaluationTime << std::endl;
+                std::cout << "     + Garbage Collection Time: " << garbageCollectionTime << std::endl;
+                std::cout << "     Total Time:                " << totalTime << std::endl;
+                std::cout << ";; Memory report" << std::endl;
+                std::cout << "     Garbage collected objects " <<  removedObjects << "/" << totalObjects << std::endl;
             }
         }
     }

@@ -27,11 +27,11 @@ namespace Lispino {
                     return false;
             }
 
-            std::string getValue() const {
+            inline std::string getValue() const {
                 return value;
             }
 
-            void setValue(std::string value) {
+            inline void setValue(std::string value) {
                 this->value = value;
             }
 
