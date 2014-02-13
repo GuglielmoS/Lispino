@@ -35,19 +35,3 @@ std::map<std::string, std::unique_ptr<BuiltinFunction>> Environment::initializeB
 
     return bindings;
 }
-
-bool Environment::isBuiltinFunction(Symbol* symbol) {
-    std::map<std::string, std::unique_ptr<BuiltinFunction>>::iterator iter;
-    iter = builtinFunctions.find(symbol->getValue());
-    return iter != builtinFunctions.end();
-}
-
-BuiltinFunction* Environment::getBuiltinFunction(Symbol* symbol) {
-    std::map<std::string, std::unique_ptr<BuiltinFunction>>::iterator iter;
-    iter = builtinFunctions.find(symbol->getValue());
-
-    if (iter != builtinFunctions.end())
-        return iter->second.get();
-    
-    throw std::out_of_range("Invalid builtin function: " + symbol->toString());
-}

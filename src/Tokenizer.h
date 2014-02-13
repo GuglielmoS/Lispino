@@ -12,7 +12,7 @@ namespace Lispino {
     class Tokenizer {
         
         // the reference to the stream from which the tokens will be parsed
-        std::istream* stream;
+        std::istream &stream;
 
         // eat all the spaces
         void skipSpaces();
@@ -28,7 +28,7 @@ namespace Lispino {
 
         public:
         
-            Tokenizer(std::istream* inputStream) : stream(inputStream) {}
+            Tokenizer(std::istream& inputStream) : stream(inputStream) {}
 
             // parses and returns the next token
             Token* next();

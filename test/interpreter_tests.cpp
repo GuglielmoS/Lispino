@@ -21,7 +21,7 @@ using namespace Lispino;
 
 TEST(InterpreterTests, NIL) {
     std::stringstream stream("nil");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
@@ -30,7 +30,7 @@ TEST(InterpreterTests, NIL) {
 
 TEST(InterpreterTests, BuiltinCar) {
     std::stringstream stream("(car (QUOTE (1 2 3))) (car) (car nil)");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
@@ -46,7 +46,7 @@ TEST(InterpreterTests, BuiltinCar) {
 
 TEST(InterpreterTests, BuiltinCdr) {
     std::stringstream stream("(cdr (QUOTE (1 2 3))) (cdr) (cdr nil)");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
@@ -63,7 +63,7 @@ TEST(InterpreterTests, BuiltinCdr) {
 
 TEST(InterpreterTests, BuiltinCons) {
     std::stringstream stream("(cons 1 2) (cons 1 (cons 2 nil))");
-    Parser parser(&stream);
+    Parser parser(stream);
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
@@ -85,7 +85,7 @@ TEST(InterpreterTests, BuiltinCons) {
 
 TEST(InterpreterTests, BuiltinAdd) {
     std::stringstream stream("(+ 1 1) (+ 1 (+ 1 (+ 1 1))) (+ 1 0.5)");
-    Parser parser(&stream);
+    Parser parser(stream);
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
@@ -103,7 +103,7 @@ TEST(InterpreterTests, BuiltinAdd) {
 
 TEST(InterpreterTests, BuiltinSub) {
     std::stringstream stream("(- 1 1) (- 1 (- 1 (- 1 1))) (- 1 0.5)");
-    Parser parser(&stream);
+    Parser parser(stream);
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
@@ -121,7 +121,7 @@ TEST(InterpreterTests, BuiltinSub) {
 
 TEST(InterpreterTests, BuiltinMul) {
     std::stringstream stream("(* 0 1) (* 1 (* 2 (* 3 4))) (* 1 0.5)");
-    Parser parser(&stream);
+    Parser parser(stream);
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
@@ -139,7 +139,7 @@ TEST(InterpreterTests, BuiltinMul) {
 
 TEST(InterpreterTests, BuiltinDiv) {
     std::stringstream stream("(/ 0 1) (/ 1 2) (/ 4 2)");
-    Parser parser(&stream);
+    Parser parser(stream);
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
@@ -157,7 +157,7 @@ TEST(InterpreterTests, BuiltinDiv) {
 
 TEST(InterpreterTests, BuiltinRemainder) {
     std::stringstream stream("(remainder 1 2) (remainder 5 2) (remainder 4 2)");
-    Parser parser(&stream);
+    Parser parser(stream);
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
@@ -175,7 +175,7 @@ TEST(InterpreterTests, BuiltinRemainder) {
 
 TEST(InterpreterTests, BuiltinDisplay) {
     std::stringstream stream("(display 1 2 3) (display \"(+ 1 1) = \" (+ 1 1))");
-    Parser parser(&stream);
+    Parser parser(stream);
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
@@ -189,7 +189,7 @@ TEST(InterpreterTests, BuiltinDisplay) {
 
 TEST(InterpreterTests, Environment) {
     std::stringstream stream("(define x 1) (define y 2) (define z (cons x y))");
-    Parser parser(&stream);
+    Parser parser(stream);
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
@@ -212,7 +212,7 @@ TEST(InterpreterTests, Environment) {
 
 TEST(InterpreterTests, Closure) {
     std::stringstream stream("(define (make-adder n) (lambda (x) (+ n x))) (define add-one (make-adder 1)) (define add-two (make-adder 2)) (add-one 0) (add-two 0) (add-one 0) (add-one (add-two 0))");
-    Parser parser(&stream);
+    Parser parser(stream);
 
     // check 'make-adder'
     Object *expr(parser.parseExpr()->eval());
@@ -249,7 +249,7 @@ TEST(InterpreterTests, Closure) {
 
 TEST(InterpreterTests, BuiltinEqual) {
     std::stringstream stream("(= 0 0) (= 0 1) (= 2 2) (= 2.0 2) (= 0.5 0.5) (= 1 \"a\")");
-    Parser parser(&stream);
+    Parser parser(stream);
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
@@ -274,7 +274,7 @@ TEST(InterpreterTests, BuiltinEqual) {
 
 TEST(InterpreterTests, BuiltinGreaterThan) {
     std::stringstream stream("(> 0 0) (> 0 1) (> 1 0) (> 2.1 2)");
-    Parser parser(&stream);
+    Parser parser(stream);
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
@@ -293,7 +293,7 @@ TEST(InterpreterTests, BuiltinGreaterThan) {
 
 TEST(InterpreterTests, IfExpr) {
     std::stringstream stream("(if true 0 1) (if false 0 1)");
-    Parser parser(&stream);
+    Parser parser(stream);
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());

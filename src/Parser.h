@@ -8,7 +8,6 @@
 
 // Standard C++ headers
 #include <iostream>
-#include <vector>
 
 namespace Lispino {
 
@@ -26,10 +25,10 @@ namespace Lispino {
 
         public:
 
-            Parser(std::istream* inputStream) : allocator(VM::getAllocator()), tokenizer(inputStream) {}
+            Parser(std::istream& inputStream) : allocator(VM::getAllocator()), tokenizer(inputStream) {}
 
             Object* parseExpr();
-            std::vector<Object*>* parse();
+            Object* parse();
 
     };
 };

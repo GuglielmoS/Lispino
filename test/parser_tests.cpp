@@ -23,7 +23,7 @@ using namespace Lispino;
 
 TEST(ParserTests, NIL) {
     std::stringstream stream("nil");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
@@ -32,7 +32,7 @@ TEST(ParserTests, NIL) {
 
 TEST(ParserTests, Symbols) {
     std::stringstream stream("example-test symbol-123");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
@@ -49,7 +49,7 @@ TEST(ParserTests, Symbols) {
 
 TEST(ParserTests, IntNumbers) {
     std::stringstream stream("0 12 345 42");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
@@ -76,7 +76,7 @@ TEST(ParserTests, IntNumbers) {
 
 TEST(ParserTests, FloatNumbers) {
     std::stringstream stream("0.1 42.05");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
@@ -93,7 +93,7 @@ TEST(ParserTests, FloatNumbers) {
 
 TEST(ParserTests, Booleans) {
     std::stringstream stream("true TrUE false FalSe");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
@@ -112,7 +112,7 @@ TEST(ParserTests, Booleans) {
 
 TEST(ParserTests, Strings) {
     std::stringstream stream("\"plain string\" \"string with \\\"escape\\\"\"");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
@@ -129,7 +129,7 @@ TEST(ParserTests, Strings) {
 
 TEST(ParserTests, Lists) {
     std::stringstream stream("(1 2 3) (a . b)");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
@@ -155,7 +155,7 @@ TEST(ParserTests, Lists) {
     ASSERT_EQ(3, static_cast<IntNumber*>(lst->getFirst())->getValue());
 
     // list end
-    ASSERT_EQ(nullptr, lst->getRest());
+    ASSERT_TRUE(lst->getRest()->isNil());
 
     // check the improper list
     expr = parser.parseExpr();
@@ -169,7 +169,7 @@ TEST(ParserTests, Lists) {
 
 TEST(ParserTests, Lambdas) {
     std::stringstream stream("(lambda (x) (+ x x))");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
@@ -201,7 +201,7 @@ TEST(ParserTests, Lambdas) {
 
 TEST(ParserTests, Defines) {
     std::stringstream stream("(define (square x) (* x x))");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
@@ -237,7 +237,7 @@ TEST(ParserTests, Defines) {
 
 TEST(ParserTests, Quotes) {
     std::stringstream stream("(quote a)");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
@@ -250,7 +250,7 @@ TEST(ParserTests, Quotes) {
 
 TEST(ParserTests, IfExpr) {
     std::stringstream stream("(if true 0 1)");
-    Parser parser(&stream);
+    Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());

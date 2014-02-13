@@ -31,8 +31,6 @@ namespace Lispino {
         public:
 
             static std::map<std::string, std::unique_ptr<BuiltinFunction>> initializeBuiltinFunctions();
-            static bool isBuiltinFunction(Symbol* symbol);
-            static BuiltinFunction* getBuiltinFunction(Symbol* symbol);
 
             Environment() : enclosingEnv(nullptr) {}
             Environment(Environment* env) : enclosingEnv(env) {}
@@ -80,9 +78,12 @@ namespace Lispino {
             }
 
             Object* get(Symbol* key) {
-                if (isBuiltinFunction(key))
-                    return getBuiltinFunction(key);
+                // check for builtin functions
+                std::map<std::string, std::unique_ptr<BuiltinFunction>>::iterator bf_iter = builtinFunctions.find(key->getValue());
+                if (bf_iter != builtinFunctions.end())
+                    return bf_iter->second.get();
 
+                // check for environment values
                 std::map<Symbol*,Object*,SymbolComparator>::iterator iter = frame.find(key);
                 if (iter == frame.end()) {
                     if (enclosingEnv != nullptr)

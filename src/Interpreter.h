@@ -11,7 +11,7 @@ namespace Lispino {
     
         public:
 
-            static int repl();
+            static int repl(bool verbose=false);
             static int execute(std::string filename);
 
     };

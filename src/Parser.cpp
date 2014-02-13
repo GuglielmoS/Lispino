@@ -9,6 +9,7 @@
 #include "Define.h"
 #include "Quote.h"
 
+#include <vector>
 #include <memory>
 
 using namespace Lispino;
@@ -134,7 +135,7 @@ Object* Parser::parseList() {
      
     // check if the current token is a reserved keyword
     switch (token->getType()) {
-        case TokenType::CLOSE_PAREN: return allocator.createList(nullptr,nullptr);
+        case TokenType::CLOSE_PAREN: return allocator.createList(allocator.createNil(), allocator.createNil());
         case TokenType::LAMBDA:      return parseLambda();
         case TokenType::DEFINE:      return parseDefine();
         case TokenType::QUOTE:       return parseQuote();
@@ -143,7 +144,7 @@ Object* Parser::parseList() {
     }
 
     // create the final list
-    List *result = allocator.createList(head, nullptr);
+    List *result = allocator.createList(head, allocator.createNil());
     List *current = result;
     bool improperList = false;
 
@@ -160,7 +161,7 @@ Object* Parser::parseList() {
             improperList = false;
         }
         else {
-            current->setRest(allocator.createList(dispatch(token.get()), nullptr));
+            current->setRest(allocator.createList(dispatch(token.get()), allocator.createNil()));
             current = static_cast<List*>(current->getRest());
         }
         
@@ -190,13 +191,13 @@ Object* Parser::parseExpr() {
     return dispatch(token.get());
 }
 
-std::vector<Object*>* Parser::parse() {
-    Object *currentExpr = nullptr;
-    std::vector<Object*> *expressions = new std::vector<Object*>();
+Object* Parser::parse() {
+    Object *expr = parseExpr();
 
-    while ((currentExpr = parseExpr()) != nullptr) {
-        expressions->push_back(currentExpr);
-    }
+    // check for the End Of Stream
+    std::unique_ptr<Token> token(tokenizer.next());
+    if (token->getType() != TokenType::EOS)
+        throw std::runtime_error("PARSER - missing End Of Stream!");
 
-    return expressions;
+    return expr;
 }

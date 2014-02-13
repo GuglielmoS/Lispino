@@ -10,10 +10,10 @@ std::string List::toStringHelper(bool parentheses) const {
     if (parentheses)
         buf << "(";
 
-    if (head != nullptr)
+    if (!head->isNil())
         buf << head->toString();
 
-    if (tail != nullptr) {
+    if (!tail->isNil()) {
         if (tail->isList() || tail->isQuote() || tail->isDefine() || tail->isLambda())
             buf << " ";
         else
@@ -35,9 +35,9 @@ void inspect(List *lst, int level=0) {
     std::string indent = "";
     for (int i = 0; i < level; i++) indent += " ";
 
-    if (lst != nullptr) {
+    if (!lst->isNil()) {
         std::cout << indent << "-> ";
-        if (lst->getFirst() != nullptr) {
+        if (!lst->getFirst()->isNil()) {
             if (lst->getFirst()->isList()) {
                 std::cout << std::endl;
                 inspect(static_cast<List*>(lst->getFirst()), level+1);
@@ -49,7 +49,7 @@ void inspect(List *lst, int level=0) {
         }
 
         std::cout << indent << "-> ";
-        if (lst->getRest() != nullptr) {
+        if (!lst->getRest()->isNil()) {
             if (lst->getRest()->isList()) {
                 std::cout << std::endl;
                 inspect(static_cast<List*>(lst->getRest()), level+1);
@@ -62,50 +62,52 @@ void inspect(List *lst, int level=0) {
     }
 }
 
-std::vector<Object*> List::extractArguments(Environment& env) {
-    std::vector<Object*> args;
+Object* List::eval(Environment& env) {
+    if (head->isNil())
+        return VM::getAllocator().createNil();
+    
+    // extract the arguments if needed
+    if (!cachedArgs) {
+        cachedArgs = true;
 
-    if (tail != nullptr) {
-        List *current = nullptr;
+        if (tail != nullptr) {
+            List *current = nullptr;
 
-        if (tail->isList())
-            current = static_cast<List*>(tail);
-        else {
-            args.push_back(tail->eval(env));
-            return args;
-        }
+            if (tail->isList()) {
+                current = static_cast<List*>(tail);
 
-        while (current != nullptr) {
-            if (current->head != nullptr) {
-                args.push_back(current->head->eval(env));
-                if (current->tail != nullptr) {
-                    if (current->tail->isList())
-                        current = static_cast<List*>(current->tail);
-                    else {
-                        args.push_back(current->tail->eval(env));
-                        break;
-                    }
-                } else break;
-            } else break;
+                while (!current->isNil()) {
+                    if (current->head != nullptr) {
+                        args.push_back(current->head);
+                        if (!current->tail->isNil()) {
+                            if (current->tail->isList())
+                                current = static_cast<List*>(current->tail);
+                            else {
+                                args.push_back(current->tail);
+                                break;
+                            }
+                        } else break;
+                    } else break;
+                }
+            }
+            else if (!tail->isNil()) {
+                args.push_back(tail);
+            }
         }
     }
 
-    return args;
-}
+    // evaluate the arguments
+    std::vector<Object*> evaluatedArgs;
+    for (unsigned int i = 0; i < args.size(); i++)
+        evaluatedArgs.push_back(args[i]->eval(env));
 
-Object* List::eval(Environment& env) {
-    if (head == nullptr)
-        return VM::getAllocator().createNil();
-    
     Object *op = head->eval(env);
-    std::vector<Object*> args = extractArguments(env);
-
     if (op->isBuiltinFunction())
-        return static_cast<BuiltinFunction*>(op)->apply(args);
+        return static_cast<BuiltinFunction*>(op)->apply(evaluatedArgs);
     else if (op->isLambda())
-        return static_cast<Closure*>(op->eval(env))->apply(args);
+        return static_cast<Closure*>(op->eval(env))->apply(evaluatedArgs);
     else if (op->isClosure())
-        return static_cast<Closure*>(op)->apply(args);
-    
-    throw std::runtime_error("Invalid function call, the operator cannot be used: " + op->toString());
+        return static_cast<Closure*>(op)->apply(evaluatedArgs);
+    else 
+        throw std::runtime_error("Invalid function call, the operator cannot be used: " + op->toString());
 }

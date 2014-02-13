@@ -17,7 +17,7 @@ TEST(TokenizerTests, SkipSpaces) {
     stream << "    \t \t  \n  " << std::endl << " te\tst \n";
 
     // create the tokenizer
-    Tokenizer tokenizer(&stream);
+    Tokenizer tokenizer(stream);
 
     // check the presence of the two symbols (te,st)
     std::unique_ptr<Token> token(tokenizer.next()); 
@@ -39,7 +39,7 @@ TEST(TokenizerTests, Delimiters) {
     stream << "().";
 
     // create the tokenizer
-    Tokenizer tokenizer(&stream);
+    Tokenizer tokenizer(stream);
 
     // check the presence of the delimiters
     std::unique_ptr<Token> token(tokenizer.next()); 
@@ -61,7 +61,7 @@ TEST(TokenizerTests, Symbols) {
     stream << "abc123 de_boh this-is-a-symbol";
 
     // create the tokenizer
-    Tokenizer tokenizer(&stream);
+    Tokenizer tokenizer(stream);
 
     // check the presence of the symbols
     std::unique_ptr<Token> token(tokenizer.next()); 
@@ -88,7 +88,7 @@ TEST(TokenizerTests, IntNumbers) {
     stream << "12345 54321";
 
     // create the tokenizer
-    Tokenizer tokenizer(&stream);
+    Tokenizer tokenizer(stream);
 
     // check the presence of the numbers
     std::unique_ptr<Token> token(tokenizer.next()); 
@@ -110,7 +110,7 @@ TEST(TokenizerTests, FloatNumbers) {
     stream << "1.5 0.1 15.0001";
 
     // create the tokenizer
-    Tokenizer tokenizer(&stream);
+    Tokenizer tokenizer(stream);
 
     // check the presence of the numbers
     std::unique_ptr<Token> token(tokenizer.next()); 
@@ -135,7 +135,7 @@ TEST(TokenizerTests, Strings) {
     stream << "\"Plain string\" \"String with \\\"escape\\\"\"";
 
     // create the tokenizer
-    Tokenizer tokenizer(&stream);
+    Tokenizer tokenizer(stream);
 
     // check the presence of the symbols
     std::unique_ptr<Token> token(tokenizer.next()); 
@@ -163,7 +163,7 @@ TEST(TokenizerTests, ReservedKeywords) {
     stream << "true TrUe false FalSE";
 
     // create the tokenizer
-    Tokenizer tokenizer(&stream);
+    Tokenizer tokenizer(stream);
 
     // check the DEFINE keyword
     std::unique_ptr<Token> token(tokenizer.next()); 

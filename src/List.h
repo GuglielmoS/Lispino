@@ -13,13 +13,15 @@ namespace Lispino {
         Object *head;
         Object *tail;
 
+        bool cachedArgs;
+        std::vector<Object*> args;
+
         std::string toStringHelper(bool parentheses) const;
-        std::vector<Object*> extractArguments(Environment& env);
 
         public:
 
-            List() : head(nullptr), tail(nullptr) {}
-            List(Object* head, Object* tail) : head(head), tail(tail) {}
+            List() : head(nullptr), tail(nullptr), cachedArgs(false) {}
+            List(Object* head, Object* tail) : head(head), tail(tail), cachedArgs(false) {}
 
             Object* eval(Environment& env);
 
@@ -60,6 +62,7 @@ namespace Lispino {
 
             inline void setRest(Object *rest) {
                 this->tail = rest;
+                cachedArgs = false;
             }
 
             inline Object* getFirst() {
@@ -79,10 +82,10 @@ namespace Lispino {
                 Object::mark();
 
                 // mark its sub-components
-                if (head != nullptr)
-                    head->mark();
-                if (tail != nullptr)
-                    tail->mark();
+                head->mark();
+                tail->mark();
+                for (unsigned int i = 0; i < args.size(); i++)
+                    args[i]->mark();
             }
 
             std::string toString() const {

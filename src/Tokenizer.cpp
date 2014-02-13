@@ -13,8 +13,8 @@
 using namespace Lispino;
 
 void Tokenizer::skipSpaces() {
-    while (isspace((char)stream->get())) { /* DO NOTHING */ }
-    stream->unget();
+    while (isspace((char)stream.get())) { /* DO NOTHING */ }
+    stream.unget();
 }
 
 bool Tokenizer::isdelimiter(char ch) const {
@@ -22,14 +22,14 @@ bool Tokenizer::isdelimiter(char ch) const {
 }
 
 Token* Tokenizer::delimiter() {
-    int ch = stream->get();
+    int ch = stream.get();
     switch (ch) {
         case EOF: return new Token(TokenType::EOS);
         case '(': return new Token(TokenType::OPEN_PAREN);
         case ')': return new Token(TokenType::CLOSE_PAREN);
         case '.': return new Token(TokenType::DOT);
     }
-    stream->unget();
+    stream.unget();
 
     return nullptr;
 }
@@ -37,14 +37,14 @@ Token* Tokenizer::delimiter() {
 Token* Tokenizer::symbol() {
     std::stringstream buffer;
     
-    char ch = stream->get();
+    char ch = stream.get();
     if (!isdigit(ch)) {
         while (!isspace(ch) && !isdelimiter(ch) && ch != '"') {
             buffer << ch;
-            ch = stream->get();
+            ch = stream.get();
         }
     }
-    stream->unget();
+    stream.unget();
 
     return (buffer.str().size() == 0) ? nullptr : new Token(TokenType::SYMBOL, buffer.str());
 }
@@ -54,7 +54,7 @@ Token* Tokenizer::number() {
     bool isFloat = false;
     char ch;
 
-    while (isdigit(ch = stream->get()))
+    while (isdigit(ch = stream.get()))
         buffer << ch;
     
     // if this is a float
@@ -62,12 +62,12 @@ Token* Tokenizer::number() {
         isFloat = true;
         buffer << ch;
         
-        while (isdigit(ch = stream->get()))
+        while (isdigit(ch = stream.get()))
             buffer << ch;
     }
     
     // recover the stream status
-    stream->unget();
+    stream.unget();
 
     if (buffer.str().size() == 0) 
         return nullptr;
@@ -78,16 +78,16 @@ Token* Tokenizer::number() {
 Token* Tokenizer::string() {
     std::stringstream buffer;
 
-    char ch = stream->get();
+    char ch = stream.get();
 
     if (ch != '"') {
-        stream->unget();
+        stream.unget();
         return nullptr;
     }
 
     bool escape = false;
     while (true) {
-        ch = stream->get();
+        ch = stream.get();
 
         if (ch == '\\')
             escape = true;

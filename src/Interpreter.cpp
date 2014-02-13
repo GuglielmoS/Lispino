@@ -34,7 +34,7 @@ std::string Interpreter::humanTime(double time_spent) {
     return buf.str();
 }
 
-int Interpreter::repl() {
+int Interpreter::repl(bool verbose) {
     bool terminated = false;
 
     // Read - Eval - Print - Loop
@@ -52,17 +52,10 @@ int Interpreter::repl() {
             clock_t begin, end;
             double totalTime, parsingTime, evaluationTime, garbageCollectionTime;
 
-            // if the execution time must be shown
-            bool timeIt = false;
-            if (inputExpr.find("time-it ") == 0) {
-                inputExpr = inputExpr.substr(7, inputExpr.size()-7);
-                timeIt = true;
-            }
-
             // *** PARSING ***
             begin = clock();
             std::stringstream stream(inputExpr);
-            Object *expr = Parser(&stream).parseExpr();
+            Object *expr = Parser(stream).parse();
             end = clock();
             parsingTime = (double)(end - begin) / CLOCKS_PER_SEC;
             
@@ -82,7 +75,7 @@ int Interpreter::repl() {
             totalTime = parsingTime + evaluationTime + garbageCollectionTime;
 
             // shows the time
-            if (timeIt) {
+            if (verbose) {
                 std::cout << ";; Parsing Time:            " << humanTime(parsingTime) << std::endl;
                 std::cout << ";; Evaluation Time:         " << humanTime(evaluationTime) << std::endl;
                 std::cout << ";; Garbage Collection Time: " << humanTime(garbageCollectionTime) << std::endl;
@@ -98,7 +91,7 @@ int Interpreter::execute(std::string filename) {
     std::ifstream inputStream(filename);
     
     if (inputStream.is_open()) {
-        Parser parser(&inputStream);
+        Parser parser(inputStream);
 
         Object *currentExpr = nullptr;
         while ((currentExpr = parser.parseExpr()) != nullptr) {

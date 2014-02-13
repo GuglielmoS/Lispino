@@ -41,7 +41,9 @@ namespace Lispino {
             virtual Object* eval(Environment& env) = 0;
 
             /// compares the current object with another one
-            virtual bool equals(Object *obj) const = 0;
+            virtual bool equals(Object *obj) const {
+                return this == obj;
+            }
 
             /// provides a string representation for the object
             virtual std::string toString() const = 0;
