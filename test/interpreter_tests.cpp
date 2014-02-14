@@ -291,6 +291,25 @@ TEST(InterpreterTests, BuiltinGreaterThan) {
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
 }
 
+TEST(InterpreterTests, BuiltinLowerThan) {
+    std::stringstream stream("(< 0 0) (< 1 0) (< 0 1) (< 2 2.1)");
+    Parser parser(stream);
+
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr()->eval());
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+}
+
 TEST(InterpreterTests, IfExpr) {
     std::stringstream stream("(if true 0 1) (if false 0 1)");
     Parser parser(stream);

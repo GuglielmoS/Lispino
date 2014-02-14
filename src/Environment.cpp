@@ -12,6 +12,7 @@
 #include "builtin/Newline.h"
 #include "builtin/Equal.h"
 #include "builtin/GreaterThan.h"
+#include "builtin/LowerThan.h"
 
 using namespace Lispino;
 
@@ -30,6 +31,7 @@ std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> Environment::i
     bindings["remainder"] = std::unique_ptr<BuiltinFunction>(new BuiltinRemainder());
     bindings["="]         = std::unique_ptr<BuiltinFunction>(new BuiltinEqual());
     bindings[">"]         = std::unique_ptr<BuiltinFunction>(new BuiltinGreaterThan());
+    bindings["<"]         = std::unique_ptr<BuiltinFunction>(new BuiltinLowerThan());
     bindings["display"]   = std::unique_ptr<BuiltinFunction>(new BuiltinDisplay());
     bindings["newline"]   = std::unique_ptr<BuiltinFunction>(new BuiltinNewline());
 
@@ -64,12 +66,13 @@ Object* Environment::get(Symbol* key) {
 
     // check for environment values
     std::unordered_map<std::string, std::pair<Symbol*, Object*>>::iterator iter = frame.find(key->getValue());
-    if (iter == frame.end()) {
-        if (enclosingEnv != nullptr)
-            return enclosingEnv->get(key);
+    if (iter != frame.end())
+        return (iter->second).second;
 
-        throw std::out_of_range("Environment lookup failed with key: " + key->toString());
-    }
+    // check in the parent environment
+    if (enclosingEnv != nullptr)
+        return enclosingEnv->get(key);
 
-    return (iter->second).second;
+    // the lookup has failed, thus signal an error
+    throw std::out_of_range("Environment lookup failed with key: " + key->toString());
 }

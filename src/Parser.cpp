@@ -123,7 +123,7 @@ Object* Parser::parseIf() {
     if (alternative != nullptr) {
         token.reset(tokenizer.next());
         if (token->getType() != TokenType::CLOSE_PAREN)
-            throw std::runtime_error("PARSER - invalid DEFINE arguments, missing ')'");
+            throw std::runtime_error("PARSER - invalid IF arguments, missing ')'");
     }
 
     return ifObj;
