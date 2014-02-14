@@ -27,7 +27,7 @@ namespace Lispino {
                     return false;
             }
 
-            inline std::string getValue() const {
+            std::string& getValue() {
                 return value;
             }
 

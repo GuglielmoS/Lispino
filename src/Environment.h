@@ -14,17 +14,10 @@
 
 namespace Lispino {
     
-    class SymbolComparator {
-        public:
-            bool operator()(const Symbol* sym1, const Symbol* sym2) const {
-                return sym1->getValue() < sym2->getValue();
-            }
-    };
-
     class Environment {   
 
         Environment *enclosingEnv;
-        std::map<Symbol*, Object*, SymbolComparator> frame;
+        std::unordered_map<std::string, std::pair<Symbol*, Object*>> frame;
 
         // builtin functions
         static std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> builtinFunctions;
@@ -36,11 +29,11 @@ namespace Lispino {
             Environment() : enclosingEnv(nullptr) {}
             Environment(Environment* env) : enclosingEnv(env) {}
 
-            inline std::map<Symbol*, Object*, SymbolComparator>* lookupTable() {
-                return &frame;
+            inline std::unordered_map<std::string, std::pair<Symbol*, Object*>>& lookupTable() {
+                return frame;
             }
 
-            inline std::map<Symbol*, Object*, SymbolComparator>::iterator iterator() {
+            inline std::unordered_map<std::string, std::pair<Symbol*, Object*>>::iterator iterator() {
                 return frame.begin(); 
             }
 

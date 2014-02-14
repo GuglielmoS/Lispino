@@ -37,7 +37,7 @@ std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> Environment::i
 }
 
 Object* Environment::update(Symbol* key, Object* value) {
-    std::map<Symbol*, Object*, SymbolComparator>::iterator iter = frame.find(key);
+    std::unordered_map<std::string, std::pair<Symbol*, Object*>>::iterator iter = frame.find(key->getValue());
     
     if (iter == frame.end()) {
         if (enclosingEnv != nullptr)
@@ -45,13 +45,13 @@ Object* Environment::update(Symbol* key, Object* value) {
         else
             throw std::out_of_range("Environment update failed with key: " + key->toString());
     } else
-        frame[key] = value;
+        frame[key->getValue()] = std::make_pair(key,value);
 
     return value;
 }
 
 Object* Environment::put(Symbol* key, Object* value) {
-    frame[key] = value;
+    frame[key->getValue()] = std::make_pair(key,value);
 
     return value;
 }
@@ -63,7 +63,7 @@ Object* Environment::get(Symbol* key) {
         return bf_iter->second.get();
 
     // check for environment values
-    std::map<Symbol*, Object*, SymbolComparator>::iterator iter = frame.find(key);
+    std::unordered_map<std::string, std::pair<Symbol*, Object*>>::iterator iter = frame.find(key->getValue());
     if (iter == frame.end()) {
         if (enclosingEnv != nullptr)
             return enclosingEnv->get(key);
@@ -71,5 +71,5 @@ Object* Environment::get(Symbol* key) {
         throw std::out_of_range("Environment lookup failed with key: " + key->toString());
     }
 
-    return iter->second;
+    return (iter->second).second;
 }

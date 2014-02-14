@@ -11,16 +11,16 @@ namespace Lispino {
         Environment &globalEnv;
 
         void markVisibleObjects(Environment& env) {
-            std::map<Symbol*, Object*, SymbolComparator>::iterator iter;
+            std::unordered_map<std::string, std::pair<Symbol*, Object*>>::iterator iter;
 
-            for (iter = env.lookupTable()->begin(); iter != env.lookupTable()->end(); ++iter) {
+            for (iter = env.lookupTable().begin(); iter != env.lookupTable().end(); ++iter) {
                 // mark the current key-value pair
-                iter->first->mark();
-                iter->second->mark();
+                (iter->second).first->mark();
+                (iter->second).second->mark();
 
                 // mark the sub-environment if needed
-                if (iter->second->isClosure())
-                    markVisibleObjects(*static_cast<Closure*>(iter->second)->getEnv());
+                if ((iter->second).second->isClosure())
+                    markVisibleObjects(*static_cast<Closure*>((iter->second).second)->getEnv());
             }
         }
 
