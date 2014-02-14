@@ -11,7 +11,7 @@ namespace Lispino {
         Environment &globalEnv;
 
         void markVisibleObjects(Environment& env) {
-            std::map<Symbol*,Object*>::iterator iter;
+            std::map<Symbol*, Object*, SymbolComparator>::iterator iter;
 
             for (iter = env.lookupTable()->begin(); iter != env.lookupTable()->end(); ++iter) {
                 // mark the current key-value pair

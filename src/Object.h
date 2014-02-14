@@ -17,9 +17,9 @@ namespace Lispino {
             enum ObjectType {
                 NIL,
                 DEFINE,
-                QUOTE, 
+                QUOTE,
                 LIST,
-                SYMBOL, 
+                SYMBOL,
                 STRING,
                 INT_NUMBER, FLOAT_NUMBER,
                 BOOLEAN,
@@ -30,26 +30,24 @@ namespace Lispino {
 
             Object() : markFlag(false) {}
 
-            // evaluate the object in the global environment
-            Object* eval();
-
             /*
-             * Abstract methods
+             * Evaluation
              */
+
+            /// evaluate the object in the global environment
+            Object* eval();
 
             /// evaluates the object accordingly to the provided environment
             virtual Object* eval(Environment& env) = 0;
 
+            /*
+             * Equality
+             */
+
             /// compares the current object with another one
-            virtual bool equals(Object *obj) const {
+            virtual bool equals(Object* obj) const {
                 return this == obj;
             }
-
-            /// provides a string representation for the object
-            virtual std::string toString() const = 0;
-
-            /// default destructor
-            virtual ~Object() { /* DO NOTHING */ }
 
             /*
              * Garbage collection related methods 
@@ -64,6 +62,9 @@ namespace Lispino {
             /*
              * Useful methods 
              */
+
+            /// provides a string representation for the object
+            virtual std::string toString() const = 0;
 
             virtual bool isNil() const {
                 return false;
@@ -120,6 +121,9 @@ namespace Lispino {
             virtual bool isBuiltinFunction() const {
                 return false;
             }
+
+            /// default destructor
+            virtual ~Object() { /* DO NOTHING */ }
 
     };
 };

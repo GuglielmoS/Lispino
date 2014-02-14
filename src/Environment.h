@@ -6,6 +6,7 @@
 #include "builtin/BuiltinFunction.h"
 
 #include <map>
+#include <unordered_map>
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -19,41 +20,27 @@ namespace Lispino {
                 return sym1->getValue() < sym2->getValue();
             }
     };
-   
+
     class Environment {   
 
         Environment *enclosingEnv;
         std::map<Symbol*, Object*, SymbolComparator> frame;
 
         // builtin functions
-        static std::map<std::string, std::unique_ptr<BuiltinFunction>> builtinFunctions;
+        static std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> builtinFunctions;
 
         public:
 
-            static std::map<std::string, std::unique_ptr<BuiltinFunction>> initializeBuiltinFunctions();
+            static std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> initializeBuiltinFunctions();
 
             Environment() : enclosingEnv(nullptr) {}
             Environment(Environment* env) : enclosingEnv(env) {}
 
-            std::string summary() {
-                std::stringstream buffer;
-
-                buffer << "{"; 
-
-                std::map<Symbol*,Object*,SymbolComparator>::iterator iter;
-                for (iter = frame.begin(); iter != frame.end(); ++iter)
-                    buffer << iter->first->toString() << ": " << iter->second->toString() << ", ";
-                
-                buffer << "}";
-
-                return buffer.str();
-            }
-
-            inline std::map<Symbol*,Object*,SymbolComparator>* lookupTable() {
+            inline std::map<Symbol*, Object*, SymbolComparator>* lookupTable() {
                 return &frame;
             }
 
-            inline std::map<Symbol*,Object*,SymbolComparator>::iterator iterator() {
+            inline std::map<Symbol*, Object*, SymbolComparator>::iterator iterator() {
                 return frame.begin(); 
             }
 
@@ -61,9 +48,6 @@ namespace Lispino {
             Object* put(Symbol* key, Object* value);
             Object* get(Symbol* key);
 
-            Environment* getParentEnv() {
-                return enclosingEnv;
-            }
     };
 };
 

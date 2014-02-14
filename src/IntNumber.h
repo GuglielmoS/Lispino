@@ -29,7 +29,7 @@ namespace Lispino {
                 else
                     return false;
             }
-
+                
             void setValue(long int value) {
                 this->value = value;
             }

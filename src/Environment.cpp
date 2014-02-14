@@ -15,10 +15,10 @@
 
 using namespace Lispino;
 
-std::map<std::string, std::unique_ptr<BuiltinFunction>> Environment::builtinFunctions = Environment::initializeBuiltinFunctions();
+std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> Environment::builtinFunctions = Environment::initializeBuiltinFunctions();
 
-std::map<std::string, std::unique_ptr<BuiltinFunction>> Environment::initializeBuiltinFunctions() {
-    std::map<std::string, std::unique_ptr<BuiltinFunction>> bindings;
+std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> Environment::initializeBuiltinFunctions() {
+    std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> bindings;
 
     bindings["car"]       = std::unique_ptr<BuiltinFunction>(new BuiltinCar());
     bindings["cdr"]       = std::unique_ptr<BuiltinFunction>(new BuiltinCdr());
@@ -37,7 +37,7 @@ std::map<std::string, std::unique_ptr<BuiltinFunction>> Environment::initializeB
 }
 
 Object* Environment::update(Symbol* key, Object* value) {
-    std::map<Symbol*,Object*,SymbolComparator>::iterator iter = frame.find(key);
+    std::map<Symbol*, Object*, SymbolComparator>::iterator iter = frame.find(key);
     
     if (iter == frame.end()) {
         if (enclosingEnv != nullptr)
@@ -58,12 +58,12 @@ Object* Environment::put(Symbol* key, Object* value) {
 
 Object* Environment::get(Symbol* key) {
     // check for builtin functions
-    std::map<std::string, std::unique_ptr<BuiltinFunction>>::iterator bf_iter = builtinFunctions.find(key->getValue());
+    std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>>::iterator bf_iter = builtinFunctions.find(key->getValue());
     if (bf_iter != builtinFunctions.end())
         return bf_iter->second.get();
 
     // check for environment values
-    std::map<Symbol*,Object*,SymbolComparator>::iterator iter = frame.find(key);
+    std::map<Symbol*, Object*, SymbolComparator>::iterator iter = frame.find(key);
     if (iter == frame.end()) {
         if (enclosingEnv != nullptr)
             return enclosingEnv->get(key);
