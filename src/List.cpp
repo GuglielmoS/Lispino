@@ -37,6 +37,7 @@ Object* List::eval(Environment& env) {
     
     // extract the arguments if needed
     if (!cachedArgs) {
+        args.clear();
         cachedArgs = true;
 
         if (tail != nullptr) {
@@ -65,20 +66,22 @@ Object* List::eval(Environment& env) {
         }
     }
 
-    // evaluate the arguments
-    std::vector<Object*> evaluatedArgs;
-    for (unsigned int i = 0; i < args.size(); i++)
-        evaluatedArgs.push_back(args[i]->eval(env));
-
     Object *op = head->eval(env);
     if (op->isBuiltinFunction())
-        return static_cast<BuiltinFunction*>(op)->apply(evaluatedArgs);
-    else if (op->isLambda())
-        return static_cast<Closure*>(op->eval(env))->apply(evaluatedArgs);
-    else if (op->isClosure())
-        return static_cast<Closure*>(op)->apply(evaluatedArgs);
-    else 
-        throw std::runtime_error("Invalid function call, the operator cannot be used: " + op->toString());
+        return static_cast<BuiltinFunction*>(op)->apply(args, env);
+    else {
+        // evaluate the arguments
+        std::vector<Object*> evaluatedArgs;
+        for (unsigned int i = 0; i < args.size(); i++)
+            evaluatedArgs.push_back(args[i]->eval(env));
+
+        if (op->isLambda())
+            return static_cast<Closure*>(op->eval(env))->apply(evaluatedArgs);
+        else if (op->isClosure())
+            return static_cast<Closure*>(op)->apply(evaluatedArgs);
+        else
+            throw std::runtime_error("Invalid function call, the operator cannot be used: " + op->toString());
+    }
 }
 
 int List::compare(Object* obj) {

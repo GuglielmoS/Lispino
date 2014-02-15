@@ -10,14 +10,15 @@ namespace Lispino {
         
         public:
 
-            Object* apply(std::vector<Object*>& args) {
+            Object* apply(std::vector<Object*>& args, Environment& env) {
                 if (args.size() != 1)
                     return VM::getAllocator().createNil();
 
-                if (!args[0]->isList())
+                Object *value = args[0]->eval(env);
+                if (!value->isList())
                     return VM::getAllocator().createNil();
-
-                return static_cast<List*>(args[0])->getFirst();
+                else
+                    return static_cast<List*>(value)->getFirst();
             }
 
     };

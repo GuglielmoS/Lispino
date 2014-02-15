@@ -9,7 +9,7 @@ namespace Lispino {
         
         public:
 
-            Object* apply(std::vector<Object*>& args);
+            Object* apply(std::vector<Object*>& args, Environment& env);
 
     };
 };

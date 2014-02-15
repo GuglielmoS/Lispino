@@ -10,7 +10,7 @@ namespace Lispino {
         
         public:
 
-            Object* apply(std::vector<Object*>& args) {
+            Object* apply(std::vector<Object*>& args, Environment& env) {
                 if (args.size() != 0)
                     throw std::runtime_error("newline: wrong number of arguments!");
             

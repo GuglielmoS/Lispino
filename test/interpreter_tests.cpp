@@ -143,16 +143,16 @@ TEST(InterpreterTests, BuiltinDiv) {
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
-    ASSERT_TRUE(expr->isFloatNumber());
-    ASSERT_FLOAT_EQ(0.0f, static_cast<FloatNumber*>(expr)->getValue());
+    ASSERT_TRUE(expr->isIntNumber());
+    ASSERT_EQ(0, static_cast<IntNumber*>(expr)->getValue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isFloatNumber());
-    ASSERT_FLOAT_EQ(0.5f, static_cast<FloatNumber*>(expr)->getValue());
+    ASSERT_TRUE(expr->isIntNumber());
+    ASSERT_EQ(0, static_cast<IntNumber*>(expr)->getValue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isFloatNumber());
-    ASSERT_FLOAT_EQ(2.0f, static_cast<FloatNumber*>(expr)->getValue());
+    ASSERT_TRUE(expr->isIntNumber());
+    ASSERT_EQ(2, static_cast<IntNumber*>(expr)->getValue());
 }
 
 TEST(InterpreterTests, BuiltinRemainder) {
@@ -248,32 +248,29 @@ TEST(InterpreterTests, Closure) {
 }
 
 TEST(InterpreterTests, BuiltinEqual) {
-    std::stringstream stream("(= 0 0) (= 0 1) (= 2 2) (= 2.0 2) (= 0.5 0.5) (= 1 \"a\")");
+    std::stringstream stream("(= 0 0) (= 0 1) (= 2 2) (= 0.5 0.5)");
     Parser parser(stream);
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
     ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
-    expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
-    expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
 }
 
 TEST(InterpreterTests, BuiltinGreaterThan) {
-    std::stringstream stream("(> 0 0) (> 0 1) (> 1 0) (> 2.1 2)");
+    std::stringstream stream("(> 0 0) (> 0 1) (> 1 0) (> 2.1 2) (> 2.1 1.9) (> 1 0.5)");
     Parser parser(stream);
 
     // parse the stream and check the expressions
@@ -283,6 +280,12 @@ TEST(InterpreterTests, BuiltinGreaterThan) {
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
@@ -292,7 +295,7 @@ TEST(InterpreterTests, BuiltinGreaterThan) {
 }
 
 TEST(InterpreterTests, BuiltinLowerThan) {
-    std::stringstream stream("(< 0 0) (< 1 0) (< 0 1) (< 2 2.1)");
+    std::stringstream stream("(< 0 0) (< 1 0) (< 0 1) (< 2 2.1) (< 1.9 2.1) (< 0.5 1)");
     Parser parser(stream);
 
     // parse the stream and check the expressions
@@ -302,6 +305,12 @@ TEST(InterpreterTests, BuiltinLowerThan) {
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());

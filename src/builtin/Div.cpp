@@ -3,13 +3,13 @@
 
 using namespace Lispino;
 
-Object* BuiltinDiv::apply(std::vector<Object*>& args) {
+Object* BuiltinDiv::apply(std::vector<Object*>& args, Environment& env) {
     if (args.size() <= 1)
         throw std::runtime_error("/: wrong number of arguments!");
 
-    Object* result = args[0];
+    Object* result = args[0]->eval(env);
     for (unsigned int i = 1; i < args.size(); i++)
-        result = result->div(args[i]);
+        result = result->div(args[i]->eval(env));
 
     return result;
 }

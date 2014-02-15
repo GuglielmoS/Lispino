@@ -15,11 +15,7 @@ namespace Lispino {
                 return this;
             }
 
-            virtual Object* apply(std::vector<Object*>& args) = 0;
-
-            bool equals(Object* obj) const {
-                return this == obj;
-            }
+            virtual Object* apply(std::vector<Object*>& args, Environment& env) = 0;
 
             bool isBuiltinFunction() const {
                 return true;

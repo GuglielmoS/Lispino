@@ -6,10 +6,10 @@
 namespace Lispino {
     
     class BuiltinAdd : public BuiltinFunction {
-        
+ 
         public:
 
-            Object* apply(std::vector<Object*>& args);
+            Object* apply(std::vector<Object*>& args, Environment& env);
 
     };
 };
