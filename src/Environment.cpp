@@ -15,6 +15,7 @@
 #include "builtin/GreaterEqualThan.h"
 #include "builtin/LowerThan.h"
 #include "builtin/LowerEqualThan.h"
+#include "builtin/NullPredicate.h"
 
 using namespace Lispino;
 
@@ -23,6 +24,9 @@ std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> Environment::b
 std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> Environment::initializeBuiltinFunctions() {
     std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> bindings;
 
+    // common predicates
+    bindings["null?"] = std::unique_ptr<BuiltinFunction>(new BuiltinNullPredicate());
+    
     // list
     bindings["car"]       = std::unique_ptr<BuiltinFunction>(new BuiltinCar());
     bindings["cdr"]       = std::unique_ptr<BuiltinFunction>(new BuiltinCdr());
@@ -42,7 +46,7 @@ std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> Environment::i
     bindings["<"]         = std::unique_ptr<BuiltinFunction>(new BuiltinLowerThan());
     bindings["<="]        = std::unique_ptr<BuiltinFunction>(new BuiltinLowerEqualThan());
 
-    // utils
+    // I/O utils
     bindings["display"]   = std::unique_ptr<BuiltinFunction>(new BuiltinDisplay());
     bindings["newline"]   = std::unique_ptr<BuiltinFunction>(new BuiltinNewline());
 
