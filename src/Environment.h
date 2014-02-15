@@ -21,11 +21,10 @@ namespace Lispino {
 
         // builtin functions
         static std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> builtinFunctions;
+        static std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> initializeBuiltinFunctions();
 
         public:
-
-            static std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> initializeBuiltinFunctions();
-
+            
             Environment() : enclosingEnv(nullptr) {}
             Environment(Environment* env) : enclosingEnv(env) {}
 

@@ -17,41 +17,18 @@ namespace Lispino {
             String() : value("") {}
             String(std::string value) : value(value) {}
 
-            Object* eval(Environment& env) {
-                return this;
-            }
+            Object* eval(Environment& env);
 
-            bool equals(Object *obj) const {
-                if (this == obj)
-                    return true;
-                else if (obj->isString())
-                    return static_cast<String*>(obj)->value == value;
-                else
-                    return false;
-            }
+            int compare(Object* obj);
+            int compareString(String* obj);
 
-            void setValue(std::string value) {
-                this->value = value;
-            }
+            void setValue(std::string value);
+            std::string getValue() const;
 
-            std::string getValue() const {
-                return value;
-            }
+            bool isAtom() const;
+            bool isString() const;
 
-            bool isAtom() const {
-                return true;
-            }
-
-            bool isString() const {
-                return true;
-            }
-
-            std::string toString() const {
-                std::stringstream buf;
-                buf << "\"" << value << "\"";
-                return buf.str();
-            }
-
+            std::string toString() const;
     };
 };
 

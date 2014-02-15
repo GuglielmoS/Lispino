@@ -28,17 +28,6 @@ namespace Lispino {
                     return alternative->eval(env);
             }
 
-            bool equals(Object *obj) const {
-                if (this == obj)
-                    return true;
-                else if (obj->isIfExpr()) {
-                    return static_cast<IfExpr*>(obj)->condition->equals(condition) &&
-                           static_cast<IfExpr*>(obj)->consequent->equals(consequent) &&
-                           static_cast<IfExpr*>(obj)->alternative->equals(alternative);
-                } else
-                    return false;
-            }
-
             void setCondition(Object* condition) {
                 this->condition = condition;
             }

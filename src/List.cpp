@@ -31,37 +31,6 @@ std::string List::toStringHelper(bool parentheses) const {
     return buf.str();   
 } 
 
-void inspect(List *lst, int level=0) {
-    std::string indent = "";
-    for (int i = 0; i < level; i++) indent += " ";
-
-    if (!lst->isNil()) {
-        std::cout << indent << "-> ";
-        if (!lst->getFirst()->isNil()) {
-            if (lst->getFirst()->isList()) {
-                std::cout << std::endl;
-                inspect(static_cast<List*>(lst->getFirst()), level+1);
-            }
-            else
-                std::cout << indent << " " << lst->getFirst()->toString();
-
-            std::cout << std::endl;
-        }
-
-        std::cout << indent << "-> ";
-        if (!lst->getRest()->isNil()) {
-            if (lst->getRest()->isList()) {
-                std::cout << std::endl;
-                inspect(static_cast<List*>(lst->getRest()), level+1);
-            }
-            else
-                std::cout << indent << " " << lst->getRest()->toString();
-
-            std::cout << std::endl;
-        }
-    }
-}
-
 Object* List::eval(Environment& env) {
     if (head->isNil())
         return VM::getAllocator().createNil();
@@ -110,4 +79,49 @@ Object* List::eval(Environment& env) {
         return static_cast<Closure*>(op)->apply(evaluatedArgs);
     else 
         throw std::runtime_error("Invalid function call, the operator cannot be used: " + op->toString());
+}
+
+int List::compare(Object* obj) {
+    return obj->compareList(this);
+}
+
+int List::compareList(List* obj) {
+    if (obj == this) return 0;
+    else             return -1;
+}
+
+void List::setFirst(Object *first) {
+    this->head = first;
+}
+
+void List::setRest(Object *rest) {
+    this->tail = rest;
+    cachedArgs = false;
+}
+
+Object* List::getFirst() {
+    return head;
+}
+
+Object* List::getRest() {
+    return tail;
+}
+
+bool List::isList() const {
+    return true;
+}
+
+void List::mark() {
+    // mark the current object
+    Object::mark();
+
+    // mark its sub-components
+    head->mark();
+    tail->mark();
+    for (unsigned int i = 0; i < args.size(); i++)
+        args[i]->mark();
+}
+
+std::string List::toString() const {
+    return toStringHelper(true);
 }

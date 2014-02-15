@@ -17,41 +17,34 @@ namespace Lispino {
             IntNumber() : value(0) {}
             IntNumber(long int value) : value(value) {}
 
-            Object* eval(Environment& env) {
-                return this;
-            }
+            Object* eval(Environment& env);
 
-            bool equals(Object *obj) const {
-                if (this == obj)
-                    return true;
-                else if (obj->isIntNumber())
-                    return static_cast<IntNumber*>(obj)->value == value;
-                else
-                    return false;
-            }
-                
-            void setValue(long int value) {
-                this->value = value;
-            }
+            int compare(Object* obj);
+            int compareInt(IntNumber* obj);
+            int compareFloat(FloatNumber* obj);
 
-            long int getValue() const {
-                return value;
-            }
+            Object* add(Object* obj);
+            Object* addInt(IntNumber* obj);
+            Object* addFloat(FloatNumber* obj);
+            Object* sub(Object* obj);
+            Object* subInt(IntNumber* obj);
+            Object* subFloat(FloatNumber* obj);
+            Object* mul(Object* obj);
+            Object* mulInt(IntNumber* obj);
+            Object* mulFloat(FloatNumber* obj);
+            Object* div(Object* obj);
+            Object* divInt(IntNumber* obj);
+            Object* divFloat(FloatNumber* obj);
+            Object* remainder(Object* obj);
+            Object* remainderInt(IntNumber* obj);
 
-            bool isAtom() const {
-                return true;
-            }
+            void setValue(long int value);
+            long int getValue() const;
 
-            bool isIntNumber() const {
-                return true;
-            }
+            bool isAtom() const;
+            bool isIntNumber() const;
 
-            std::string toString() const {
-                std::stringstream buf;
-                buf << value;
-                return buf.str();
-            }
-
+            std::string toString() const;
     };
 };
 

@@ -2,10 +2,18 @@
 #define __OBJECT_H__
 
 #include <string>
+#include <stdexcept>
 
 namespace Lispino {
 
     class Environment;
+    class IntNumber;
+    class FloatNumber;
+    class Symbol;
+    class String;
+    class Boolean;
+    class Nil;
+    class List;
 
     class Object {
         
@@ -44,10 +52,35 @@ namespace Lispino {
              * Equality
              */
 
-            /// compares the current object with another one
-            virtual bool equals(Object* obj) const {
-                return this == obj;
-            }
+            virtual int compare(Object* obj);
+            virtual int compareNil(Nil* obj);
+            virtual int compareList(List* obj);
+            virtual int compareInt(IntNumber* obj);
+            virtual int compareFloat(FloatNumber* obj);
+            virtual int compareSymbol(Symbol* obj);
+            virtual int compareString(String* obj);
+            virtual int compareBoolean(Boolean* obj);
+
+            /*
+             * Commoin operations between objects
+             */
+            
+            virtual Object* add(Object* obj);
+            virtual Object* addInt(IntNumber* obj);
+            virtual Object* addFloat(FloatNumber* obj);
+            virtual Object* addString(String* obj);
+            virtual Object* sub(Object* obj);
+            virtual Object* subInt(IntNumber* obj);
+            virtual Object* subFloat(FloatNumber* obj);
+            virtual Object* mul(Object* obj);
+            virtual Object* mulInt(IntNumber* obj);
+            virtual Object* mulFloat(FloatNumber* obj);
+            virtual Object* div(Object* obj);
+            virtual Object* divInt(IntNumber* obj);
+            virtual Object* divFloat(FloatNumber* obj);
+            virtual Object* remainder(Object* obj);
+            virtual Object* remainderInt(IntNumber* obj);
+            virtual Object* remainderFloat(FloatNumber* obj);
 
             /*
              * Garbage collection related methods 
@@ -63,64 +96,23 @@ namespace Lispino {
              * Useful methods 
              */
 
+            virtual bool isNil() const;
+            virtual bool isAtom() const;
+            virtual bool isList() const;
+            virtual bool isLambda() const;
+            virtual bool isClosure() const;
+            virtual bool isIntNumber() const;
+            virtual bool isFloatNumber() const;
+            virtual bool isBoolean() const;
+            virtual bool isSymbol() const;
+            virtual bool isString() const;
+            virtual bool isQuote() const;
+            virtual bool isDefine() const;
+            virtual bool isIfExpr() const;
+            virtual bool isBuiltinFunction() const;
+
             /// provides a string representation for the object
             virtual std::string toString() const = 0;
-
-            virtual bool isNil() const {
-                return false;
-            }
-
-            virtual bool isAtom() const {
-                return false;
-            }
-
-            virtual bool isList() const {
-                return false;
-            }
-
-            virtual bool isLambda() const {
-                return false;
-            }
-
-            virtual bool isClosure() const {
-                return false;
-            }
-
-            virtual bool isIntNumber() const {
-                return false;
-            }
-
-            virtual bool isFloatNumber() const {
-                return false;
-            }
-
-            virtual bool isBoolean() const {
-                return false;
-            }
-
-            virtual bool isSymbol() const {
-                return false;
-            }
-
-            virtual bool isString() const {
-                return false;
-            }
-
-            virtual bool isQuote() const {
-                return false;
-            }
-
-            virtual bool isDefine() const {
-                return false;
-            }
-
-            virtual bool isIfExpr() const {
-                return false;
-            }
-
-            virtual bool isBuiltinFunction() const {
-                return false;
-            }
 
             /// default destructor
             virtual ~Object() { /* DO NOTHING */ }

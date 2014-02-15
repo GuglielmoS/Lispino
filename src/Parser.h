@@ -2,9 +2,9 @@
 #define __PARSER_H__
 
 // Internal headers
-#include "Tokenizer.h"
-#include "Object.h"
 #include "VM.h"
+#include "Object.h"
+#include "Tokenizer.h"
 
 // Standard C++ headers
 #include <iostream>

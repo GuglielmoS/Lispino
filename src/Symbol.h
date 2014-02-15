@@ -18,35 +18,16 @@ namespace Lispino {
 
             Object* eval(Environment& env);
 
-            bool equals(Object *obj) const {
-                if (this == obj)
-                    return true;
-                else if (obj->isSymbol())
-                    return static_cast<Symbol*>(obj)->value == value;
-                else
-                    return false;
-            }
+            int compare(Object* obj);
+            int compareSymbol(Symbol* obj);
 
-            std::string& getValue() {
-                return value;
-            }
+            void setValue(std::string value);
+            std::string& getValue();
+            
+            bool isAtom() const;
+            bool isSymbol() const;
 
-            inline void setValue(std::string value) {
-                this->value = value;
-            }
-
-            bool isAtom() const {
-                return true;
-            }
-
-            bool isSymbol() const {
-                return true;
-            }
-
-            std::string toString() const {
-                return value;
-            }
-
+            std::string toString() const;
     };
 };
 

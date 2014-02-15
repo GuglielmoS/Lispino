@@ -23,9 +23,7 @@ namespace Lispino {
         Environment globalEnv;
     
         // default private constructor
-        VM() : memory(gc), allocator(memory), gc(globalEnv) {
-            Environment::initializeBuiltinFunctions();
-        }
+        VM() : memory(gc), allocator(memory), gc(globalEnv) {}
 
         // singleton instance
         static VM instance;

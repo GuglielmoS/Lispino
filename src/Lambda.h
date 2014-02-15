@@ -23,28 +23,6 @@ namespace Lispino {
 
             Object* eval(Environment& env);
 
-            bool equals(Object *obj) const {
-                if (this == obj)
-                    return true;
-                else if (obj->isLambda()) {
-                    Lambda *lambda = static_cast<Lambda*>(obj);
-
-                    if (!lambda->body->equals(body))
-                        return false;
-
-                    if (lambda->arguments.size() != arguments.size())
-                        return false;
-
-                    for (unsigned int i = 0; i < arguments.size(); i++) {
-                        if (arguments[i] != lambda->arguments[i])
-                            return false;
-                    }
-                    
-                    return true;
-                } else
-                    return false;
-            } 
-
             void setBody(Object* body) {
                 this->body = body;
             }

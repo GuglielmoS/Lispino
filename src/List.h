@@ -25,73 +25,19 @@ namespace Lispino {
 
             Object* eval(Environment& env);
 
-            bool equals(Object *obj) const {
-                if (this == obj)
-                    return true;
-                else if (obj->isList()) {
-                    List *lst = static_cast<List*>(obj);
+            int compare(Object* obj);
+            int compareList(List* obj);
 
-                    if (head == nullptr) {
-                        if (lst->head != nullptr)
-                            return false;
-                    } else {
-                        if (lst->head == nullptr)
-                            return false;
-                        else if (!head->equals(lst->head))
-                            return false;
-                    }
+            void setFirst(Object *first);
+            void setRest(Object *rest);
+            Object* getFirst();
+            Object* getRest();
 
-                    if (tail == nullptr) {
-                        if (lst->tail != nullptr)
-                            return false;
-                    } else {
-                        if (lst->tail == nullptr)
-                            return false;
-                        else if (!tail->equals(lst->tail))
-                            return false;
-                    }
+            void mark();
 
-                    return true;
-                } else
-                    return false;
-            }
+            bool isList() const;
 
-            inline void setFirst(Object *first) {
-                this->head = first;
-            }
-
-            inline void setRest(Object *rest) {
-                this->tail = rest;
-                cachedArgs = false;
-            }
-
-            inline Object* getFirst() {
-                return head;
-            }
-
-            inline Object* getRest() {
-                return tail;
-            }
-
-            bool isList() const {
-                return true;
-            }
-
-            void mark() {
-                // mark the current object
-                Object::mark();
-
-                // mark its sub-components
-                head->mark();
-                tail->mark();
-                for (unsigned int i = 0; i < args.size(); i++)
-                    args[i]->mark();
-            }
-
-            std::string toString() const {
-                return toStringHelper(true);
-            }
-
+            std::string toString() const;
     };
 };
 

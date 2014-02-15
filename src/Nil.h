@@ -13,11 +13,36 @@ namespace Lispino {
                 return this;
             }
 
-            bool equals(Object *obj) const {
-                if (this == obj)
-                    return true;
-                else
-                    return obj->isNil();
+            int compare(Object* obj) {
+                return obj->compareNil(this);
+            }
+
+            int compareNil(Nil* obj) {
+                return 0;
+            }
+
+            int compareList(List* obj) {
+                return -1;
+            }
+
+            int compareInt(IntNumber* obj) {
+                return -1;
+            }
+
+            int compareFloat(FloatNumber* obj) {
+                return -1;
+            }
+
+            int compareSymbol(Symbol* obj) {
+                return -1;
+            }
+
+            int compareString(String* obj) {
+                return -1;
+            }
+            
+            int compareBoolean(Boolean* obj) {
+                return -1;
             }
 
             bool isNil() const {
