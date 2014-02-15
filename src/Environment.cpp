@@ -12,6 +12,7 @@
 #include "builtin/Newline.h"
 #include "builtin/Equal.h"
 #include "builtin/GreaterThan.h"
+#include "builtin/GreaterEqualThan.h"
 #include "builtin/LowerThan.h"
 
 using namespace Lispino;
@@ -31,6 +32,7 @@ std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> Environment::i
     bindings["remainder"] = std::unique_ptr<BuiltinFunction>(new BuiltinRemainder());
     bindings["="]         = std::unique_ptr<BuiltinFunction>(new BuiltinEqual());
     bindings[">"]         = std::unique_ptr<BuiltinFunction>(new BuiltinGreaterThan());
+    bindings[">="]        = std::unique_ptr<BuiltinFunction>(new BuiltinGreaterEqualThan());
     bindings["<"]         = std::unique_ptr<BuiltinFunction>(new BuiltinLowerThan());
     bindings["display"]   = std::unique_ptr<BuiltinFunction>(new BuiltinDisplay());
     bindings["newline"]   = std::unique_ptr<BuiltinFunction>(new BuiltinNewline());
