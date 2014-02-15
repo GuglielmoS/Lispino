@@ -16,6 +16,8 @@
 #include "builtin/LowerThan.h"
 #include "builtin/LowerEqualThan.h"
 #include "builtin/NullPredicate.h"
+#include "builtin/TruePredicate.h"
+#include "builtin/FalsePredicate.h"
 
 using namespace Lispino;
 
@@ -26,29 +28,31 @@ std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> Environment::i
 
     // common predicates
     bindings["null?"] = std::unique_ptr<BuiltinFunction>(new BuiltinNullPredicate());
-    
+    bindings["true?"] = std::unique_ptr<BuiltinFunction>(new BuiltinTruePredicate());
+    bindings["false?"] = std::unique_ptr<BuiltinFunction>(new BuiltinFalsePredicate());
+
     // list
-    bindings["car"]       = std::unique_ptr<BuiltinFunction>(new BuiltinCar());
-    bindings["cdr"]       = std::unique_ptr<BuiltinFunction>(new BuiltinCdr());
-    bindings["cons"]      = std::unique_ptr<BuiltinFunction>(new BuiltinCons());
+    bindings["car"] = std::unique_ptr<BuiltinFunction>(new BuiltinCar());
+    bindings["cdr"] = std::unique_ptr<BuiltinFunction>(new BuiltinCdr());
+    bindings["cons"] = std::unique_ptr<BuiltinFunction>(new BuiltinCons());
 
     // maths
-    bindings["+"]         = std::unique_ptr<BuiltinFunction>(new BuiltinAdd());
-    bindings["-"]         = std::unique_ptr<BuiltinFunction>(new BuiltinSub());
-    bindings["*"]         = std::unique_ptr<BuiltinFunction>(new BuiltinMul());
-    bindings["/"]         = std::unique_ptr<BuiltinFunction>(new BuiltinDiv());
+    bindings["+"] = std::unique_ptr<BuiltinFunction>(new BuiltinAdd());
+    bindings["-"] = std::unique_ptr<BuiltinFunction>(new BuiltinSub());
+    bindings["*"] = std::unique_ptr<BuiltinFunction>(new BuiltinMul());
+    bindings["/"] = std::unique_ptr<BuiltinFunction>(new BuiltinDiv());
     bindings["remainder"] = std::unique_ptr<BuiltinFunction>(new BuiltinRemainder());
 
     // equality
-    bindings["="]         = std::unique_ptr<BuiltinFunction>(new BuiltinEqual());
-    bindings[">"]         = std::unique_ptr<BuiltinFunction>(new BuiltinGreaterThan());
-    bindings[">="]        = std::unique_ptr<BuiltinFunction>(new BuiltinGreaterEqualThan());
-    bindings["<"]         = std::unique_ptr<BuiltinFunction>(new BuiltinLowerThan());
-    bindings["<="]        = std::unique_ptr<BuiltinFunction>(new BuiltinLowerEqualThan());
+    bindings["="] = std::unique_ptr<BuiltinFunction>(new BuiltinEqual());
+    bindings[">"] = std::unique_ptr<BuiltinFunction>(new BuiltinGreaterThan());
+    bindings[">="] = std::unique_ptr<BuiltinFunction>(new BuiltinGreaterEqualThan());
+    bindings["<"] = std::unique_ptr<BuiltinFunction>(new BuiltinLowerThan());
+    bindings["<="] = std::unique_ptr<BuiltinFunction>(new BuiltinLowerEqualThan());
 
     // I/O utils
-    bindings["display"]   = std::unique_ptr<BuiltinFunction>(new BuiltinDisplay());
-    bindings["newline"]   = std::unique_ptr<BuiltinFunction>(new BuiltinNewline());
+    bindings["display"] = std::unique_ptr<BuiltinFunction>(new BuiltinDisplay());
+    bindings["newline"] = std::unique_ptr<BuiltinFunction>(new BuiltinNewline());
 
     return bindings;
 }

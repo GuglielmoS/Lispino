@@ -395,6 +395,50 @@ TEST(InterpreterTests, BuiltinNullPredicate) {
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
 }
 
+TEST(InterpreterTests, BuiltinTruePredicate) {
+    std::stringstream stream("(true? true) (true? false) (true? (= 0 0)) (true? (= 0 1))");
+    Parser parser(stream);
+
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr()->eval());
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+}
+
+TEST(InterpreterTests, BuiltinFalsePredicate) {
+    std::stringstream stream("(false? false) (false? true) (false? (= 0 1)) (false? (= 0 0))");
+    Parser parser(stream);
+
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr()->eval());
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+}
+
 TEST(InterpreterTests, IfExpr) {
     std::stringstream stream("(if true 0 1) (if false 0 1)");
     Parser parser(stream);
