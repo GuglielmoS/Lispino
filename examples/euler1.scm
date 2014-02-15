@@ -4,7 +4,7 @@
     (cons start (range (+ start 1) end))))
 
 (define (euler1 values acc)
-  (if (= values nil)
+  (if (null? values)
     acc
     (if (= (remainder (car values) 3) 0)
       (euler1 (cdr values) (+ (car values) acc))

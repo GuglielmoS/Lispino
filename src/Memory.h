@@ -31,12 +31,18 @@ namespace Lispino {
 
             MemoryNode(Object* obj, MemoryNode* next) : object(obj), next(next) {}
         };
-        
+
         // reference to the garbage collector
         GarbageCollector &gc;
 
         // pointer to the first object in memory
         MemoryNode *first;
+
+        // instance of frequently used objects that don't change their value
+        // Nil, True and False
+        Nil *nilInstance;
+        Boolean *trueInstance;
+        Boolean *falseInstance;
 
         // number of objects stored
         size_t allocatedObjects;
@@ -80,15 +86,28 @@ namespace Lispino {
 
         public:
 
-            Memory(GarbageCollector& gc) : gc(gc), first(nullptr), allocatedObjects(0) {}
+            Memory(GarbageCollector& gc) : gc(gc), first(nullptr), allocatedObjects(0) {
+                nilInstance = new Nil();
+                trueInstance = new Boolean(true);
+                falseInstance = new Boolean(false);
+            }
+
+            inline Nil* getNilInstance() {
+                return nilInstance;
+            }
+
+            inline Boolean* getTrueInstance() {
+                return trueInstance;
+            }
+
+            inline Boolean* getFalseInstance() {
+                return falseInstance;
+            }
 
             Object* allocate(Object::ObjectType type) {
                 Object *allocatedObject = nullptr;
 
                 switch (type) {
-                    case Object::NIL:
-                        allocatedObject = new Nil();
-                        break;
                     case Object::SYMBOL:
                         allocatedObject = new Symbol();
                         break;
@@ -97,9 +116,6 @@ namespace Lispino {
                         break;
                     case Object::FLOAT_NUMBER:
                         allocatedObject = new FloatNumber();
-                        break;
-                    case Object::BOOLEAN:
-                        allocatedObject = new Boolean();
                         break;
                     case Object::STRING:
                         allocatedObject = new String();
@@ -146,13 +162,18 @@ namespace Lispino {
             }
 
             ~Memory() {
+                // delete the objects stored in the virtual memory
                 MemoryNode *current = first;
-                
                 while (current != nullptr) {
                     MemoryNode *temp = current;
                     current = current->next;
                     delete temp;
                 }
+
+                // delete the cached instances
+                delete nilInstance;
+                delete trueInstance;
+                delete falseInstance;
             }
     };
 };

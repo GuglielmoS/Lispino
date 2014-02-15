@@ -2,7 +2,7 @@ OPTIMIZATION=3
 STANDARD=c++11
 CC=g++ -std=$(STANDARD) -O$(OPTIMIZATION) -Wall
 
-bin/lispino: src/main.o src/Tokenizer.o src/Token.o src/Parser.o src/Object.o src/Lambda.o src/IntNumber.o src/FloatNumber.o src/List.o src/Symbol.o src/String.o src/VM.o src/Environment.o src/Closure.o src/Interpreter.o src/builtin/Add.o src/builtin/Sub.o src/builtin/Mul.o src/builtin/Div.o src/builtin/Remainder.o src/builtin/LowerThan.o src/builtin/LowerEqualThan.o src/builtin/GreaterThan.o src/builtin/GreaterEqualThan.o src/builtin/Equal.o src/builtin/NullPredicate.o
+bin/lispino: src/main.o src/Tokenizer.o src/Token.o src/Parser.o src/Object.o src/Lambda.o src/IntNumber.o src/FloatNumber.o src/List.o src/Symbol.o src/String.o src/VM.o src/Environment.o src/Closure.o src/Interpreter.o src/builtin/Add.o src/builtin/Sub.o src/builtin/Mul.o src/builtin/Div.o src/builtin/Remainder.o src/builtin/LowerThan.o src/builtin/LowerEqualThan.o src/builtin/GreaterThan.o src/builtin/GreaterEqualThan.o src/builtin/Equal.o src/builtin/NullPredicate.o src/builtin/TruePredicate.o src/builtin/FalsePredicate.o
 	$(CC) -o $@ $^
 
 test: bin/all_tests

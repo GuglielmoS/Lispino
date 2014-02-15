@@ -58,10 +58,7 @@ namespace Lispino {
             }
 
             inline Boolean* createBoolean(bool value) {
-                Boolean *boolean = static_cast<Boolean*>(memory.allocate(Object::BOOLEAN));
-                boolean->setValue(value);
-
-                return boolean;
+                return value ? memory.getTrueInstance() : memory.getFalseInstance();
             }
 
             inline List* createList(Object* first, Object* rest) {
@@ -104,7 +101,7 @@ namespace Lispino {
             }
 
             inline Nil* createNil() {
-                return static_cast<Nil*>(memory.allocate(Object::NIL));
+                return memory.getNilInstance();
             }
 
             inline IfExpr* createIf(Object* condition, Object* consequent, Object* alternative) {
