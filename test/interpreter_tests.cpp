@@ -29,23 +29,17 @@ TEST(InterpreterTests, NIL) {
 }
 
 TEST(InterpreterTests, BuiltinCar) {
-    std::stringstream stream("(car (QUOTE (1 2 3))) (car) (car nil)");
+    std::stringstream stream("(car (QUOTE (1 2 3))) (car nil)");
     Parser parser(stream);
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(1, static_cast<IntNumber*>(expr)->getValue());
-
-    expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isNil());
-
-    expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isNil());
 }
 
 TEST(InterpreterTests, BuiltinCdr) {
-    std::stringstream stream("(cdr (QUOTE (1 2 3))) (cdr) (cdr nil)");
+    std::stringstream stream("(cdr (QUOTE (1 2 3)))");
     Parser parser(stream);
     
     // parse the stream and check the expressions
@@ -53,12 +47,6 @@ TEST(InterpreterTests, BuiltinCdr) {
     ASSERT_TRUE(expr->isList());
     ASSERT_TRUE(static_cast<List*>(expr)->getFirst()->isIntNumber());
     ASSERT_EQ(2, static_cast<IntNumber*>(static_cast<List*>(expr)->getFirst())->getValue());
-
-    expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isNil());
-
-    expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isNil());
 }
 
 TEST(InterpreterTests, BuiltinCons) {
