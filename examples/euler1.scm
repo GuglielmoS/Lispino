@@ -12,4 +12,5 @@
         (euler1 (cdr values) (+ (car values) acc))
         (euler1 (cdr values) acc)))))
 
-(display "Euler 1 result: " (euler1 (range 0 1000) 0) (newline))
+(display "Euler 1 result: " (euler1 (range 0 1000) 0))
+(newline)

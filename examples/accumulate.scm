@@ -19,5 +19,7 @@
 (define (sum-integers-below n)
   (sum id 1 inc n))
 
-(display "factorial of 5 = " (factorial 5) (newline))
-(display "sum integers below 10 = " (sum-integers-below 10) (newline))
+(display "factorial of 5 = " (factorial 5))
+(newline)
+(display "sum integers below 10 = " (sum-integers-below 10))
+(newline)
