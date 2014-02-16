@@ -10,6 +10,10 @@ Object* FloatNumber::eval(Environment& env) {
     return this;
 }
 
+Object* FloatNumber::negate() {
+    return VM::getAllocator().createFloatNumber(-value);
+}
+
 int FloatNumber::compare(Object* obj) {
     if (obj == this) return 0;
     else             return obj->compareFloat(this);

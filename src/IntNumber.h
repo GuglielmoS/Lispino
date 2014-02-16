@@ -19,6 +19,8 @@ namespace Lispino {
 
             Object* eval(Environment& env);
 
+            Object* negate();
+
             int compare(Object* obj);
             int compareInt(IntNumber* obj);
             int compareFloat(FloatNumber* obj);

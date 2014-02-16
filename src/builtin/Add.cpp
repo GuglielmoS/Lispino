@@ -4,7 +4,7 @@
 using namespace Lispino;
 
 Object* BuiltinAdd::apply(std::vector<Object*>& args, Environment& env) {
-    if (args.size() <= 1)
+    if (args.size() == 0)
         throw std::runtime_error("+: wrong number of arguments!");
 
     Object* result = args[0]->eval(env);

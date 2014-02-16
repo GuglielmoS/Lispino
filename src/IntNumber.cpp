@@ -8,6 +8,10 @@ Object* IntNumber::eval(Environment& env) {
     return this;
 }
 
+Object* IntNumber::negate() {
+    return VM::getAllocator().createIntNumber(-value);
+}
+
 int IntNumber::compare(Object* obj) {
     if (obj == this) return 0;
     else             return obj->compareInt(this);

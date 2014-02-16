@@ -68,6 +68,7 @@ namespace Lispino {
              * Commoin operations between objects
              */
             
+            virtual Object* negate();
             virtual Object* add(Object* obj);
             virtual Object* addInt(IntNumber* obj);
             virtual Object* addFloat(FloatNumber* obj);

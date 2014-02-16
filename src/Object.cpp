@@ -7,6 +7,10 @@ Object* Object::eval() {
     return eval(VM::getGlobalEnv());
 }
 
+Object* Object::negate() {
+    throw std::runtime_error("negate: invalid data type!");
+}
+
 int Object::compare(Object* obj) {
     throw std::runtime_error("compare: invalid data types!");
 }
