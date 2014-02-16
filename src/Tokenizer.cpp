@@ -52,8 +52,25 @@ Token* Tokenizer::symbol() {
 
 Token* Tokenizer::number() {
     std::stringstream buffer;
-    bool isFloat = false;
-    char ch;
+    bool isFloat = false, negate = false;
+
+    char ch = stream.get();
+    if (ch == '-') {
+        negate = true;
+
+        if (isdigit(ch = stream.get()))
+            buffer << ch;
+        else {
+            stream.unget();
+            stream.putback('-');
+            return nullptr;
+        }
+    } else if (isdigit(ch)) {
+        buffer << ch;
+    } else {
+        stream.unget();
+        return nullptr;
+    }
 
     while (isdigit(ch = stream.get()))
         buffer << ch;
@@ -66,14 +83,18 @@ Token* Tokenizer::number() {
         while (isdigit(ch = stream.get()))
             buffer << ch;
     }
-    
+
     // recover the stream status
     stream.unget();
 
     if (buffer.str().size() == 0) 
         return nullptr;
-    else
-        return new Token(isFloat ? FLOAT_NUMBER : INT_NUMBER, buffer.str());
+    else {
+        if (isFloat)
+            return new Token((float)(negate ? -atof(buffer.str().c_str()) : atof(buffer.str().c_str())));
+        else
+            return new Token(negate ? -atol(buffer.str().c_str()) : atol(buffer.str().c_str()));
+    }
 }
 
 Token* Tokenizer::string() {
@@ -121,9 +142,9 @@ Token* Tokenizer::next() {
     // try to parse the next token
     if ((currentToken = delimiter()) != nullptr)
         return currentToken;
-    else if ((currentToken = symbol()) != nullptr)
-        return currentToken;
     else if ((currentToken = number()) != nullptr)
+        return currentToken;
+    else if ((currentToken = symbol()) != nullptr)
         return currentToken;
     else if ((currentToken = string()) != nullptr)
         return currentToken;

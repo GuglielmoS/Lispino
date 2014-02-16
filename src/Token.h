@@ -29,6 +29,8 @@ namespace Lispino {
 
         TokenType type;
         std::string rawValue;
+        long int intValue;
+        float floatValue;
 
         // it contains all the reserved keywords and their relative TokenType
         static std::map<std::string, TokenType> reservedKeywords;
@@ -39,7 +41,13 @@ namespace Lispino {
         public:
 
             Token(TokenType type) :
-                type(type), rawValue(std::string()) {}
+                type(type), rawValue(std::string()), intValue(0), floatValue(0.0) {}
+
+            Token(long int value) :
+                type(INT_NUMBER), rawValue(std::string()), intValue(value), floatValue(0.0) {}
+
+            Token(float value) :
+                type(FLOAT_NUMBER), rawValue(std::string()), intValue(0), floatValue(value) {}
 
             Token(TokenType type, std::string value);
 
@@ -56,11 +64,11 @@ namespace Lispino {
             }
 
             long int getIntNumber() const {
-                return atol(rawValue.c_str());
+                return intValue;
             }
 
             float getFloatNumber() const {
-                return atof(rawValue.c_str());
+                return floatValue;
             }
 
     };

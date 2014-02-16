@@ -87,7 +87,7 @@ TEST(TokenizerTests, IntNumbers) {
     std::stringstream stream;
 
     // add some text to the input stream
-    stream << "12345 54321";
+    stream << "12345 54321 -1";
 
     // create the tokenizer
     Tokenizer tokenizer(stream);
@@ -99,6 +99,9 @@ TEST(TokenizerTests, IntNumbers) {
     token.reset(tokenizer.next());
     ASSERT_EQ(INT_NUMBER, token->getType());
     ASSERT_EQ(54321, token->getIntNumber());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(INT_NUMBER, token->getType());
+    ASSERT_EQ(-1, token->getIntNumber());
 
     // check the End Of Stream (EOS)
     token.reset(tokenizer.next());
