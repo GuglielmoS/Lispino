@@ -1,18 +1,8 @@
 #ifndef __ALLOCATOR_H__
 #define __ALLOCATOR_H__
 
-#include "Environment.h"
 #include "Memory.h"
-#include "Object.h"
-#include "Symbol.h"
-#include "IntNumber.h"
-#include "FloatNumber.h"
-#include "Boolean.h"
-#include "List.h"
-#include "String.h"
-#include "Lambda.h"
-#include "Closure.h"
-#include "IfExpr.h"
+#include "Environment.h"
 
 namespace Lispino {
 
@@ -111,6 +101,13 @@ namespace Lispino {
                 ifObj->setAlternative(alternative);
                     
                 return ifObj;
+            }
+
+            inline Sequence* createSequence(std::vector<Object*>& expressions) {
+                Sequence *seq = static_cast<Sequence*>(memory.allocate(Object::SEQUENCE));
+                seq->setValue(expressions);
+
+                return seq;
             }
 
     };

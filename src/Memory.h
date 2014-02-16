@@ -15,6 +15,7 @@
 #include "Quote.h"
 #include "Define.h"
 #include "IfExpr.h"
+#include "Sequence.h"
 
 #include <iostream>
 #include <memory>
@@ -137,6 +138,9 @@ namespace Lispino {
                         break;
                     case Object::IF:
                         allocatedObject = new IfExpr();
+                        break;
+                    case Object::SEQUENCE:
+                        allocatedObject = new Sequence();
                         break;
                     default:
                         throw std::runtime_error("[MEMORY-allocate ERROR] invalid ObjectType!");

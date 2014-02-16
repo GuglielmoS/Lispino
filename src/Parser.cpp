@@ -1,13 +1,4 @@
 #include "Parser.h"
-#include "Nil.h"
-#include "List.h"
-#include "String.h"
-#include "Symbol.h"
-#include "IntNumber.h"
-#include "FloatNumber.h"
-#include "Lambda.h"
-#include "Define.h"
-#include "Quote.h"
 
 #include <vector>
 #include <memory>
@@ -75,13 +66,26 @@ Object* Parser::parseDefine() {
         throw std::runtime_error("PARSER - invalid DEFINE arguments, missing SYMBOL");
     }
 
-    // parse the define value
-    Object *value = parseExpr();
+    // parse the define expressions
+    std::vector<Object*> expressions;
+    token.reset(tokenizer.next());
+    while (token->getType() != TokenType::CLOSE_PAREN) {
+        expressions.push_back(dispatch(token.get()));
+        token.reset(tokenizer.next());
+    }
 
     // check for the final paren ')'
-    token.reset(tokenizer.next());
     if (token->getType() != TokenType::CLOSE_PAREN)
-        throw std::runtime_error("PARSER - invalid DEFINE arguments, missing ')'");
+        throw std::runtime_error("PARSER - invalid DEFINE body, missing ')'");
+
+    // create and optimize the define body if possible
+    Object* value = nullptr;
+    if (expressions.size() == 0)
+        throw std::runtime_error("PARSER - invalid DEFINE body, it's empty!");
+    else if (expressions.size() == 1)
+        value = expressions[0];
+    else
+        value = allocator.createSequence(expressions);
 
     // return the proper definition object
     if (isFunction)

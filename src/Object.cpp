@@ -39,6 +39,10 @@ int Object::compareBoolean(Boolean* obj) {
     throw std::runtime_error("compare: invalid data types!");
 }
 
+int Object::compareSequence(Sequence* obj) {
+    throw std::runtime_error("compare: invalid data types!");
+}
+
 Object* Object::add(Object* obj) {
     throw std::runtime_error("+: invalid data types!");
 }
@@ -168,5 +172,9 @@ bool Object::isIfExpr() const {
 }
 
 bool Object::isBuiltinFunction() const {
+    return false;
+}
+
+bool Object::isSequence() const {
     return false;
 }

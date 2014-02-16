@@ -14,6 +14,7 @@ namespace Lispino {
     class Boolean;
     class Nil;
     class List;
+    class Sequence;
 
     class Object {
         
@@ -33,7 +34,8 @@ namespace Lispino {
                 BOOLEAN,
                 IF,
                 LAMBDA,
-                CLOSURE
+                CLOSURE,
+                SEQUENCE
             };
 
             Object() : markFlag(false) {}
@@ -60,6 +62,7 @@ namespace Lispino {
             virtual int compareSymbol(Symbol* obj);
             virtual int compareString(String* obj);
             virtual int compareBoolean(Boolean* obj);
+            virtual int compareSequence(Sequence* obj);
 
             /*
              * Commoin operations between objects
@@ -110,6 +113,7 @@ namespace Lispino {
             virtual bool isDefine() const;
             virtual bool isIfExpr() const;
             virtual bool isBuiltinFunction() const;
+            virtual bool isSequence() const;
 
             /// provides a string representation for the object
             virtual std::string toString() const = 0;

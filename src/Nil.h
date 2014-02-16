@@ -45,6 +45,10 @@ namespace Lispino {
                 return -1;
             }
 
+            int compareSequence(Sequence* obj) {
+                return -1;
+            }
+
             bool isNil() const {
                 return true;
             }

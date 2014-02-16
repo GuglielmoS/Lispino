@@ -93,5 +93,5 @@ Object* Environment::get(Symbol* key) {
         return enclosingEnv->get(key);
 
     // the lookup has failed, thus signal an error
-    throw std::out_of_range("Environment lookup failed with key: " + key->toString());
+    throw std::out_of_range("Environment lookup failed with [key = " + key->toString() + "]");
 }
