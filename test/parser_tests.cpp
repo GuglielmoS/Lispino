@@ -236,7 +236,7 @@ TEST(ParserTests, Defines) {
 }
 
 TEST(ParserTests, Quotes) {
-    std::stringstream stream("(quote a)");
+    std::stringstream stream("(quote a) 'a '(1 2 3)");
     Parser parser(stream);
     
     // parse the stream and check the expressions
@@ -246,6 +246,29 @@ TEST(ParserTests, Quotes) {
     Quote *quote = static_cast<Quote*>(expr);
     ASSERT_TRUE(quote->getValue()->isSymbol());
     ASSERT_EQ("a", static_cast<Symbol*>(quote->getValue())->getValue());
+
+    expr = parser.parseExpr();
+    ASSERT_TRUE(expr->isQuote());
+    quote = static_cast<Quote*>(expr);
+    ASSERT_TRUE(quote->getValue()->isSymbol());
+    ASSERT_EQ("a", static_cast<Symbol*>(quote->getValue())->getValue());
+
+    expr = parser.parseExpr();
+    ASSERT_TRUE(expr->isQuote());
+    quote = static_cast<Quote*>(expr);
+    ASSERT_TRUE(quote->getValue()->isList());
+    List *lst = static_cast<List*>(quote->getValue());
+    ASSERT_TRUE(lst->getFirst()->isIntNumber());
+    ASSERT_EQ(1, static_cast<IntNumber*>(lst->getFirst())->getValue());
+    ASSERT_TRUE(lst->getRest()->isList());
+    lst = static_cast<List*>(lst->getRest());
+    ASSERT_TRUE(lst->getFirst()->isIntNumber());
+    ASSERT_EQ(2, static_cast<IntNumber*>(lst->getFirst())->getValue());
+    ASSERT_TRUE(lst->getRest()->isList());
+    lst = static_cast<List*>(lst->getRest());
+    ASSERT_TRUE(lst->getFirst()->isIntNumber());
+    ASSERT_EQ(3, static_cast<IntNumber*>(lst->getFirst())->getValue());
+    ASSERT_TRUE(lst->getRest()->isNil());
 }
 
 TEST(ParserTests, IfExpr) {

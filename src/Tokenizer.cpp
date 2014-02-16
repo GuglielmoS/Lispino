@@ -18,16 +18,17 @@ void Tokenizer::skipSpaces() {
 }
 
 bool Tokenizer::isdelimiter(char ch) const {
-    return ch == EOF || ch == '(' || ch == ')' || ch == '.';
+    return ch == EOF || ch == '(' || ch == ')' || ch == '.' || ch == '\'';
 }
 
 Token* Tokenizer::delimiter() {
     int ch = stream.get();
     switch (ch) {
-        case EOF: return new Token(TokenType::EOS);
-        case '(': return new Token(TokenType::OPEN_PAREN);
-        case ')': return new Token(TokenType::CLOSE_PAREN);
-        case '.': return new Token(TokenType::DOT);
+        case EOF:  return new Token(EOS);
+        case '(':  return new Token(OPEN_PAREN);
+        case ')':  return new Token(CLOSE_PAREN);
+        case '.':  return new Token(DOT);
+        case '\'': return new Token(SMART_QUOTE);
     }
     stream.unget();
 
@@ -46,7 +47,7 @@ Token* Tokenizer::symbol() {
     }
     stream.unget();
 
-    return (buffer.str().size() == 0) ? nullptr : new Token(TokenType::SYMBOL, buffer.str());
+    return (buffer.str().size() == 0) ? nullptr : new Token(SYMBOL, buffer.str());
 }
 
 Token* Tokenizer::number() {
@@ -72,7 +73,7 @@ Token* Tokenizer::number() {
     if (buffer.str().size() == 0) 
         return nullptr;
     else
-        return new Token(isFloat ? TokenType::FLOAT_NUMBER : TokenType::INT_NUMBER, buffer.str());
+        return new Token(isFloat ? FLOAT_NUMBER : INT_NUMBER, buffer.str());
 }
 
 Token* Tokenizer::string() {
@@ -108,7 +109,7 @@ Token* Tokenizer::string() {
         return nullptr;
     }
 
-    return new Token(TokenType::STRING, buffer.str());
+    return new Token(STRING, buffer.str());
 }
 
 Token* Tokenizer::next() {
@@ -127,5 +128,5 @@ Token* Tokenizer::next() {
     else if ((currentToken = string()) != nullptr)
         return currentToken;
     else
-        return new Token(TokenType::UNKNOWN);
+        return new Token(UNKNOWN);
 }

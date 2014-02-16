@@ -184,6 +184,7 @@ Object* Parser::dispatch(Token *token) {
         case TokenType::FLOAT_NUMBER: return allocator.createFloatNumber(token->getFloatNumber());
         case TokenType::BOOL_TRUE:    return allocator.createBoolean(true);
         case TokenType::BOOL_FALSE:   return allocator.createBoolean(false);
+        case TokenType::SMART_QUOTE:  return allocator.createQuote(parseExpr());
         case TokenType::OPEN_PAREN:   return parseList();
         case TokenType::EOS:          return nullptr;
         default:                      throw std::runtime_error("PARSER - dispatch failed");

@@ -10,7 +10,7 @@
 namespace Lispino {
 
     enum TokenType {EOS,
-                    OPEN_PAREN, CLOSE_PAREN, DOT,
+                    OPEN_PAREN, CLOSE_PAREN, DOT, SMART_QUOTE,
                     SYMBOL,
                     INT_NUMBER,
                     FLOAT_NUMBER,

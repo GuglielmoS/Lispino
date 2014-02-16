@@ -36,7 +36,7 @@ TEST(TokenizerTests, Delimiters) {
      std::stringstream stream;
 
     // add some text to the input stream
-    stream << "().";
+    stream << "().'";
 
     // create the tokenizer
     Tokenizer tokenizer(stream);
@@ -48,6 +48,8 @@ TEST(TokenizerTests, Delimiters) {
     ASSERT_EQ(CLOSE_PAREN, token->getType());
     token.reset(tokenizer.next());
     ASSERT_EQ(DOT, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(SMART_QUOTE, token->getType());
 
     // check the End Of Stream (EOS)
     token.reset(tokenizer.next());
