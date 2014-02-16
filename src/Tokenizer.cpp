@@ -54,6 +54,7 @@ Token* Tokenizer::number() {
     std::stringstream buffer;
     bool isFloat = false, negate = false;
 
+    // check for the initial minus sign
     char ch = stream.get();
     if (ch == '-') {
         negate = true;
@@ -72,10 +73,11 @@ Token* Tokenizer::number() {
         return nullptr;
     }
 
+    // parse the integer part
     while (isdigit(ch = stream.get()))
         buffer << ch;
     
-    // if this is a float
+    // if this is a float, parse the decimal part
     if (buffer.str().size() > 0 && ch == '.') {
         isFloat = true;
         buffer << ch;
@@ -134,7 +136,7 @@ Token* Tokenizer::string() {
 }
 
 Token* Tokenizer::next() {
-    Token *currentToken;
+    Token *currentToken = nullptr;
 
     // skip various spaces (\n, ' ', \t ...)
     skipSpaces();
