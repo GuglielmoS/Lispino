@@ -30,4 +30,4 @@ test/%.o: test/%.cpp src/VM.o
 	$(CC) -c $< -o $@
 
 clean:
-	rm -rf bin/* src/*.o src/builtin/*.o test/*.o
+	rm -rf bin/lispino bin/all_tests src/*.o src/builtin/*.o test/*.o

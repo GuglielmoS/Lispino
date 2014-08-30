@@ -5,14 +5,18 @@
 
 namespace Lispino {
 
+	const std::string LIB_DIR = "lib";
+	const std::string STDLIB_FILE = "std.scm";
+
     class Interpreter {
     
-        static std::string humanTime(double time_spent);
+        std::string humanTime(double time_spent);
     
         public:
 
-            static int repl(bool verbose=false);
-            static int execute(std::string filename);
+			void init();
+            int repl(bool verbose=false);
+            int execute(std::string filename);
 
     };
 };

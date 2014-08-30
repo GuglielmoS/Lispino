@@ -1,8 +1,3 @@
-(define (range start end)
-  (if (= start end)
-    nil
-    (cons start (range (+ start 1) end))))
-
 (define (euler1 values acc)
   (if (null? values)
     acc

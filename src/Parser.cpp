@@ -137,7 +137,7 @@ Object* Parser::parseList() {
     std::unique_ptr<Token> token(tokenizer.next());
     Object *head = nullptr;
      
-    // check if the current token is a reserved keyword
+    // check if the current token is a reserved keyword or the end of the list
     switch (token->getType()) {
         case TokenType::CLOSE_PAREN: return allocator.createList(allocator.createNil(), allocator.createNil());
         case TokenType::LAMBDA:      return parseLambda();

@@ -34,6 +34,11 @@ std::string Interpreter::humanTime(double time_spent) {
     return buf.str();
 }
 
+void Interpreter::init() {
+	// try to load the standard library
+	execute(LIB_DIR + "/" + STDLIB_FILE);
+}
+
 int Interpreter::repl(bool verbose) {
     bool terminated = false;
 
