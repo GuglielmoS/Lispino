@@ -17,6 +17,27 @@ void Tokenizer::skipSpaces() {
     stream.unget();
 }
 
+void Tokenizer::skipCommentsAndSpaces() {
+	// skip the initial possible spaces
+	skipSpaces();
+
+	// check if there is a starting comment
+	if (stream.get() == ';') {
+		if (stream.get() == ';') {
+			// skip the current comment
+			while (stream.get() != '\n') { /* DO NOTHING */ }
+
+			// try to skip the comment on the next line
+			skipCommentsAndSpaces();
+		} else {
+            stream.putback(';');
+			stream.unget();
+		}
+	} else {
+		stream.unget();
+	}
+}
+
 bool Tokenizer::isdelimiter(char ch) const {
     return ch == EOF || ch == '(' || ch == ')' || ch == '.' || ch == '\'';
 }
@@ -138,8 +159,8 @@ Token* Tokenizer::string() {
 Token* Tokenizer::next() {
     Token *currentToken = nullptr;
 
-    // skip various spaces (\n, ' ', \t ...)
-    skipSpaces();
+    // skip the comments (;; blah blah) and the various spaces (\n, ' ', \t ...)
+    skipCommentsAndSpaces();
 
     // try to parse the next token
     if ((currentToken = delimiter()) != nullptr)

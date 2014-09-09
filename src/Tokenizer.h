@@ -17,6 +17,9 @@ namespace Lispino {
         // eat all the spaces
         void skipSpaces();
 
+		// skip all the comments and spaces
+		void skipCommentsAndSpaces();
+
         // useful predicates
         bool isdelimiter(char ch) const;
 

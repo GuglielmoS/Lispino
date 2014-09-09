@@ -32,6 +32,28 @@ TEST(TokenizerTests, SkipSpaces) {
     ASSERT_EQ(EOS, token->getType());
 }
 
+TEST(TokenizerTests, SkipCommentsAndSpaces) {
+    std::stringstream stream;
+
+    // add some text keywords to the input stream
+    stream << ";; comment 1\n;; comment ;; 2" << std::endl << " te\tst \n";
+
+    // create the tokenizer
+    Tokenizer tokenizer(stream);
+
+    // check the presence of the two symbols (te,st)
+    std::unique_ptr<Token> token(tokenizer.next()); 
+    ASSERT_EQ(SYMBOL, token->getType());
+    ASSERT_EQ("te", token->getSymbol());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(SYMBOL, token->getType());
+    ASSERT_EQ("st", token->getSymbol());
+
+    // check the End Of Stream (EOS)
+    token.reset(tokenizer.next());
+    ASSERT_EQ(EOS, token->getType());
+}
+
 TEST(TokenizerTests, Delimiters) {
      std::stringstream stream;
 
