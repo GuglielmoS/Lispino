@@ -57,7 +57,6 @@ namespace Lispino {
                 // if the current object is not marked, then it is not visibile
                 // and it must be removed from the memory
                 if (!current->object->isMarked()) {
-
                     // if we have the first node
                     if (prev == nullptr) {
                         first = current->next;

@@ -2,6 +2,7 @@
 #define __LAMBDA_H__
 
 #include "Object.h"
+#include "Symbol.h"
 
 #include <vector>
 #include <string>
@@ -19,7 +20,8 @@ namespace Lispino {
 
             Lambda() : body(nullptr) {}
             Lambda(Object* body, std::vector<std::string> arguments) :
-                body(body), arguments(arguments) {}
+                body(body), arguments(arguments) {
+            }
 
             Object* eval(Environment& env);
 
@@ -27,13 +29,8 @@ namespace Lispino {
                 this->body = body;
             }
 
-            void setArguments(std::vector<std::string> arguments) {
-                this->arguments = arguments;
-            }
-
-            std::vector<std::string>& getArguments() {
-                return arguments;
-            }
+            void setArguments(std::vector<std::string> arguments);
+            std::vector<std::string> getArguments();
 
             Object* getBody() {
                 return body;
@@ -51,7 +48,6 @@ namespace Lispino {
             std::string toString() const {
                 return "LAMBDA";
             }
-
     };
 };
 

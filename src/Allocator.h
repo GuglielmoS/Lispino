@@ -11,9 +11,12 @@ namespace Lispino {
         // memory used for the allocated objects
         Memory &memory;
 
+        // counter used to generate random symbols
+        int symbolsCounter;
+
         public:
 
-            Allocator(Memory& memory) : memory(memory) {}
+            Allocator(Memory& memory) : memory(memory), symbolsCounter(0){}
 
             Memory& getMemory() {
                 return memory;
@@ -22,6 +25,14 @@ namespace Lispino {
             inline Symbol* createSymbol(std::string value) {
                 Symbol *symbol = static_cast<Symbol*>(memory.allocate(Object::SYMBOL));
                 symbol->setValue(value);
+
+                return symbol;
+            }
+
+            inline Symbol* createRandomSymbol() {
+                Symbol *symbol = static_cast<Symbol*>(memory.allocate(Object::SYMBOL));
+                symbol->setValue("SYMBOL#" + symbolsCounter);
+                symbolsCounter++;
 
                 return symbol;
             }

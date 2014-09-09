@@ -56,7 +56,6 @@ namespace Lispino {
             std::string toString() const {
                 return "CLOSURE";
             }
-
     };
 };
 

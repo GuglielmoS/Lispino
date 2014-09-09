@@ -28,6 +28,10 @@ namespace Lispino {
             Environment() : enclosingEnv(nullptr) {}
             Environment(Environment* env) : enclosingEnv(env) {}
 
+            Environment* getParent() {
+                return enclosingEnv;
+            }
+
             inline std::unordered_map<std::string, std::pair<Symbol*, Object*>>& lookupTable() {
                 return frame;
             }
@@ -39,7 +43,6 @@ namespace Lispino {
             Object* update(Symbol* key, Object* value);
             Object* put(Symbol* key, Object* value);
             Object* get(Symbol* key);
-
     };
 };
 

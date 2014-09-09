@@ -75,8 +75,11 @@ Object* List::eval(Environment& env) {
         for (unsigned int i = 0; i < args.size(); i++)
             evaluatedArgs.push_back(args[i]->eval(env));
 
-        if (op->isLambda())
-            return static_cast<Closure*>(op->eval(env))->apply(evaluatedArgs);
+        if (op->isLambda()) {
+            Closure *closure = static_cast<Closure*>(op->eval(env));
+            env.put(VM::getAllocator().createRandomSymbol(), closure);
+            return closure->apply(evaluatedArgs);
+        }
         else if (op->isClosure())
             return static_cast<Closure*>(op)->apply(evaluatedArgs);
         else
