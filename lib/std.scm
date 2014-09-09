@@ -3,8 +3,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (not p)
-	(if p false true))
-
+  (if p false true))
+	
 (define (and p1 p2)
 	(if p1 p2 false))
 
