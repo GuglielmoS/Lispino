@@ -35,8 +35,8 @@
 
 (define (fold f init lst)
   (if (null? lst)
-  init
-  (f (car lst) (fold f init (cdr lst)))))
+    init
+    (f (car lst) (fold f init (cdr lst)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::::::::::::::
 ;; List                                                                      ;;
