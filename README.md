@@ -21,12 +21,12 @@ Main Features
 + Easy way to add builtin functions
 + Basic Scheme constructs available (see the examples)
 + Integer, Float, String, Symbol, Boolean as possible atoms values
++ A little standard library that contains basic stuff (see lib/std.scm)
 
 TODO
 ----
 
 + Implement a better errors handling mechanism
-+ Write the standard library in Lispino
 + Investigate a possible implementation of the Tail Call Optimization technique
 
 Requirements
