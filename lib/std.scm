@@ -37,10 +37,15 @@
     lst
     (dropWhile f (cdr lst))))
 
-(define (fold f init lst)
+(define (fold f acc lst)
+  (if (null? lst)
+    acc
+    (fold f (f (car lst) acc) (cdr lst))))
+
+(define (foldr f init lst)
   (if (null? lst)
     init
-    (f (car lst) (fold f init (cdr lst)))))
+    (f (car lst) (foldr f init (cdr lst)))))
 
 (define (zipWith f lst1 lst2)
   (if (or (null? lst1) (null? lst2))
