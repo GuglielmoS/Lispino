@@ -4,22 +4,19 @@
     (combiner (term a) 
               (accumulate combiner null-value term (next a) next b))))
 
-(define (sum term a next b)
+(define (sum-alt term a next b)
   (accumulate + 0 term a next b))
 
-(define (product term a next b)
+(define (prod term a next b)
   (accumulate * 1 term a next b))
 
-(define (id x) x)
-(define (inc n) (+ 1 n))
-
-(define (factorial n)
-  (product id 1 inc n))
+(define (fact n)
+  (prod id 1 inc n))
 
 (define (sum-integers-below n)
-  (sum id 1 inc n))
+  (sum-alt id 1 inc n))
 
-(display "factorial of 5 = " (factorial 5))
+(display "factorial of 5 = " (fact 5))
 (newline)
 (display "sum integers below 10 = " (sum-integers-below 10))
 (newline)

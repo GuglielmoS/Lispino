@@ -2,8 +2,8 @@
 ;; Utils                                                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (const x)
-  (lambda (y) x))
+(define (id x)
+  x)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::::::::::::::
 ;; Boolean                                                                   ;;
@@ -65,7 +65,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (length lst)
-  (fold (lambda (x acc) (+ acc 1)) 0 lst))
+  (fold (lambda (x acc) (inc acc)) 0 lst))
 
 (define (any lst)
   (fold or false lst))
@@ -76,12 +76,12 @@
 (define (take n lst)
   (if (or (zero? n) (null? lst))
     nil
-    (cons (car lst) (take (- n 1) (cdr lst)))))
+    (cons (car lst) (take (inc n) (cdr lst)))))
 
 (define (drop n lst)
   (if (or (zero? n) (null? lst))
     lst
-    (drop (- n 1) (cdr lst))))
+    (drop (dec n) (cdr lst))))
 
 (define (zip lst1 lst2)
   (zipWith cons lst1 lst2))
@@ -90,10 +90,16 @@
 ;; Math                                                                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(define (inc x)
+  (+ x 1))
+
+(define (dec x)
+  (- x 1))
+
 (define (range start end)
   (if (= start end)
     nil
-    (cons start (range (+ start 1) end))))
+    (cons start (range (inc start) end))))
 
 (define (sum lst)
   (fold + 0 lst))
@@ -107,18 +113,39 @@
 (define (positive? n)
   (> n 0))
 
-(define (factorial n)
-  (product (range 1 (+ n 1))))
+(define (div-by? n)
+  (lambda (x)
+    (zero? (remainder x n))))
 
-(define (even n)
+(define (factorial n)
+  (product (range 1 (inc n))))
+
+(define (recur-exp base n)
+  (if (zero? n)
+    1
+    (* base (recur-exp base (dec n)))))
+
+(define (exp base n)
+  (if (= n 1)
+    base
+    (if (= n 0)
+      1
+      (if (even? n)
+        (square (exp base (/ n 2)))
+        (* base (exp base (dec n)))))))
+
+(define (square n)
+  (* n n))
+
+(define (even? n)
   (if (zero? n)
     true
-    (odd (- n 1))))
+    (odd? (dec n))))
 
-(define (odd n)
+(define (odd? n)
   (if (zero? n)
     false
-    (even (- n 1))))
+    (even? (dec n))))
 
 (define (fibonacci n)
   (if (< n 2)
