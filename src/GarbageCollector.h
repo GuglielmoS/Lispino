@@ -20,26 +20,28 @@ namespace Lispino {
             return false;
         }
 
-        void markVisibleObjects(Environment& env, std::vector<Environment*> markedEnvs, int level = 0) {
-            std::unordered_map<std::string, std::pair<Symbol*, Object*>>::iterator iter;
+        void markVisibleObjects(Environment* env, std::vector<Environment*>& markedEnvs, int level = 0) {
+            if (!alreadyMarked(env, markedEnvs)) {
+                std::unordered_map<std::string, std::pair<Symbol*, Object*>>::iterator iter;
 
-            // mark the current env
-            markedEnvs.push_back(&env);
-            for (iter = env.lookupTable().begin(); iter != env.lookupTable().end(); ++iter) {
-                // mark the current key-value pair
-                (iter->second).first->mark();
-                (iter->second).second->mark();
+                // mark the current env
+                markedEnvs.push_back(env);
+                for (iter = env->lookupTable().begin(); iter != env->lookupTable().end(); ++iter) {
+                    // mark the current key-value pair
+                    (iter->second).first->mark();
+                    (iter->second).second->mark();
 
-                // mark the sub-environment if needed
-                if ((iter->second).second->isClosure()) {
-                    markVisibleObjects(*static_cast<Closure*>((iter->second).second)->getEnv(), markedEnvs, level+1);
+                    // mark the sub-environment if needed
+                    if ((iter->second).second->isClosure()) {
+                        markVisibleObjects(static_cast<Closure*>((iter->second).second)->getEnv(), markedEnvs, level+1);
+                    }
                 }
-            }
 
-            // mark the parent env
-            Environment *parentEnv = env.getParent();
-            if (parentEnv != nullptr && !alreadyMarked(parentEnv, markedEnvs)) {
-                markVisibleObjects(*parentEnv, markedEnvs, level+1);
+                // mark the parent env if it exists
+                Environment *parentEnv = env->getParent();
+                if (parentEnv != nullptr) {
+                    markVisibleObjects(parentEnv, markedEnvs, level+1);
+                }
             }
         }
 
@@ -49,7 +51,7 @@ namespace Lispino {
 
             void collect() {
                 std::vector<Environment*> markedEnvs;
-                markVisibleObjects(globalEnv, markedEnvs);
+                markVisibleObjects(&globalEnv, markedEnvs);
             }
     };
 };

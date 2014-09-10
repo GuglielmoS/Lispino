@@ -32,6 +32,10 @@ namespace Lispino {
                 return enclosingEnv;
             }
 
+            void setParent(Environment *env) {
+                this->enclosingEnv = env;
+            }
+
             inline std::unordered_map<std::string, std::pair<Symbol*, Object*>>& lookupTable() {
                 return frame;
             }

@@ -14,4 +14,3 @@ Object* Closure::apply(std::vector<Object*>& actualArgs) {
 
     return lambda->getBody()->eval(*env);
 }
-

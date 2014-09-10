@@ -72,16 +72,18 @@ Object* List::eval(Environment& env) {
     else {
         // evaluate the arguments
         std::vector<Object*> evaluatedArgs;
-        for (unsigned int i = 0; i < args.size(); i++)
+        for (unsigned int i = 0; i < args.size(); i++) {
             evaluatedArgs.push_back(args[i]->eval(env));
+        }
 
         if (op->isLambda()) {
             Closure *closure = static_cast<Closure*>(op->eval(env));
             env.put(VM::getAllocator().createRandomSymbol(), closure);
             return closure->apply(evaluatedArgs);
         }
-        else if (op->isClosure())
+        else if (op->isClosure()) {
             return static_cast<Closure*>(op)->apply(evaluatedArgs);
+        }
         else
             throw std::runtime_error("Invalid function call, the operator cannot be used: " + op->toString());
     }
