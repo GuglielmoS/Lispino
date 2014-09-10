@@ -15,9 +15,6 @@
 #include "builtin/GreaterEqualThan.h"
 #include "builtin/LowerThan.h"
 #include "builtin/LowerEqualThan.h"
-#include "builtin/NullPredicate.h"
-#include "builtin/TruePredicate.h"
-#include "builtin/FalsePredicate.h"
 
 using namespace Lispino;
 
@@ -25,11 +22,6 @@ std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> Environment::b
 
 std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> Environment::initializeBuiltinFunctions() {
     std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> bindings;
-
-    // common predicates
-    bindings["null?"] = std::unique_ptr<BuiltinFunction>(new BuiltinNullPredicate());
-    bindings["true?"] = std::unique_ptr<BuiltinFunction>(new BuiltinTruePredicate());
-    bindings["false?"] = std::unique_ptr<BuiltinFunction>(new BuiltinFalsePredicate());
 
     // list
     bindings["car"] = std::unique_ptr<BuiltinFunction>(new BuiltinCar());
