@@ -139,12 +139,12 @@ Object* Parser::parseList() {
      
     // check if the current token is a reserved keyword or the end of the list
     switch (token->getType()) {
-        case TokenType::CLOSE_PAREN: return allocator.createList(allocator.createNil(), allocator.createNil());
-        case TokenType::LAMBDA:      return parseLambda();
-        case TokenType::DEFINE:      return parseDefine();
-        case TokenType::QUOTE:       return parseQuote();
-        case TokenType::IF:          return parseIf();
-        default:                     head = dispatch(token.get());
+        case TokenType::CLOSE_PAREN: return allocator.createNil();  // empty list == nil
+        case TokenType::LAMBDA:      return parseLambda();          // lambda
+        case TokenType::DEFINE:      return parseDefine();          // define
+        case TokenType::QUOTE:       return parseQuote();           // quote
+        case TokenType::IF:          return parseIf();              // if
+        default:                     head = dispatch(token.get());  // other
     }
 
     // create the final list
