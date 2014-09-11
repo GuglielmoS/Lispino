@@ -68,7 +68,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (length lst)
-  (fold (lambda (x acc) (inc acc)) 0 lst))
+  (if (null? lst)
+    0
+    (+ 1 (length (cdr lst)))))
 
 (define (any lst)
   (fold or false lst))
@@ -123,11 +125,6 @@
 (define (factorial n)
   (product (range 1 (inc n))))
 
-(define (recur-exp base n)
-  (if (zero? n)
-    1
-    (* base (recur-exp base (dec n)))))
-
 (define (exp base n)
   (if (= n 1)
     base
@@ -149,9 +146,4 @@
   (if (zero? n)
     false
     (even? (dec n))))
-
-(define (fibonacci n)
-  (if (< n 2)
-    1
-    (+ (fibonacci (- n 1)) (fibonacci (- n 2)))))
 

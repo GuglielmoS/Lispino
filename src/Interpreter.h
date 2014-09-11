@@ -7,6 +7,7 @@ namespace Lispino {
 
 	const std::string LIB_DIR = "lib";
 	const std::string STDLIB_FILE = "std.scm";
+	const std::string TESTLIB_FILE = "unittest.scm";
 
     class Interpreter {
     

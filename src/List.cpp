@@ -78,7 +78,11 @@ Object* List::eval(Environment& env) {
 
         if (op->isLambda()) {
             Closure *closure = static_cast<Closure*>(op->eval(env));
+            
+            // prevent the closure from being removed by the GC
             env.put(VM::getAllocator().createRandomSymbol(), closure);
+
+            // execute the closure and return the result
             return closure->apply(evaluatedArgs);
         }
         else if (op->isClosure()) {

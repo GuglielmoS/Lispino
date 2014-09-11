@@ -27,6 +27,16 @@ namespace Lispino {
                     return false;
             }
 
+            int compare(Object* obj) {
+                return obj->compareBoolean(this);
+            }
+
+            int compareBoolean(Boolean* obj) {
+                if (value == obj->value) return 0;
+                else if (value == false) return 1;
+                else                     return -1;
+            }
+
             void setValue(bool value) {
                 this->value = value;
             }

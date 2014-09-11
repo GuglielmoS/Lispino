@@ -37,6 +37,9 @@ std::string Interpreter::humanTime(double time_spent) {
 void Interpreter::init() {
 	// try to load the standard library
 	execute(LIB_DIR + "/" + STDLIB_FILE);
+
+    // try to load the unit testing library
+	execute(LIB_DIR + "/" + TESTLIB_FILE);
 }
 
 int Interpreter::repl(bool verbose) {

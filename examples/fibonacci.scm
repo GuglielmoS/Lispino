@@ -1,9 +1,9 @@
 (define (fibonacci n)
-  (if (= n 0)
+  (if (< n 2)
     1
-    (if (= n 1)
-      1
-      (+ (fibonacci (- n 1)) (fibonacci (- n 2))))))
+    (+ (fibonacci (- n 1)) (fibonacci (- n 2)))))
 
-(display "FIBONACCI(25) = " (fibonacci 25))
+(display "The first ten fibonacci numbers: ")
+(newline)
+(display (map fibonacci (range 0 10)))
 (newline)
