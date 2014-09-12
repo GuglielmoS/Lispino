@@ -38,12 +38,12 @@
       (filter pred (cdr lst)))))
 
 (define (takeWhile f lst)
-  (if (or (null? lst) (false? (f (car lst))))
+  (if (or (null? lst) (not (f (car lst))))
     nil
     (cons (car lst) (takeWhile f (cdr lst)))))
 
 (define (dropWhile f lst)
-  (if (or (null? lst) (false? (f (car lst))))
+  (if (or (null? lst) (not (f (car lst))))
     lst
     (dropWhile f (cdr lst))))
 
