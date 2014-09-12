@@ -10,7 +10,7 @@
 
 #include "Object.h"
 #include "Symbol.h"
-#include "builtin/BuiltinFunction.h"
+#include "builtins/BuiltinFunction.h"
 
 namespace Lispino {
     
@@ -20,8 +20,8 @@ namespace Lispino {
         std::unordered_map<std::string, std::pair<Symbol*, Object*>> frame;
 
         // builtin functions
-        static std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> builtinFunctions;
-        static std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> initializeBuiltinFunctions();
+        static std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> builtinFunctions;
+        static std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> initializeBuiltinFunctions();
 
         public:
             

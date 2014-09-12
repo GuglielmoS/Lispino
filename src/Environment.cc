@@ -1,49 +1,49 @@
 #include "Environment.h"
 
-#include "builtin/Car.h"
-#include "builtin/Cdr.h"
-#include "builtin/Cons.h"
-#include "builtin/Add.h"
-#include "builtin/Sub.h"
-#include "builtin/Mul.h"
-#include "builtin/Div.h"
-#include "builtin/Remainder.h"
-#include "builtin/Display.h"
-#include "builtin/Newline.h"
-#include "builtin/Equal.h"
-#include "builtin/GreaterThan.h"
-#include "builtin/GreaterEqualThan.h"
-#include "builtin/LowerThan.h"
-#include "builtin/LowerEqualThan.h"
+#include "builtins/Car.h"
+#include "builtins/Cdr.h"
+#include "builtins/Cons.h"
+#include "builtins/Add.h"
+#include "builtins/Sub.h"
+#include "builtins/Mul.h"
+#include "builtins/Div.h"
+#include "builtins/Remainder.h"
+#include "builtins/Display.h"
+#include "builtins/Newline.h"
+#include "builtins/Equal.h"
+#include "builtins/GreaterThan.h"
+#include "builtins/GreaterEqualThan.h"
+#include "builtins/LowerThan.h"
+#include "builtins/LowerEqualThan.h"
 
 namespace Lispino {
-    std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> Environment::builtinFunctions = Environment::initializeBuiltinFunctions();
+    std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> Environment::builtinFunctions = Environment::initializeBuiltinFunctions();
 
-    std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> Environment::initializeBuiltinFunctions() {
-        std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>> bindings;
+    std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> Environment::initializeBuiltinFunctions() {
+        std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> bindings;
 
         // list
-        bindings["car"] = std::unique_ptr<BuiltinFunction>(new BuiltinCar());
-        bindings["cdr"] = std::unique_ptr<BuiltinFunction>(new BuiltinCdr());
-        bindings["cons"] = std::unique_ptr<BuiltinFunction>(new BuiltinCons());
+        bindings["car"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Car());
+        bindings["cdr"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Cdr());
+        bindings["cons"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Cons());
 
         // maths
-        bindings["+"] = std::unique_ptr<BuiltinFunction>(new BuiltinAdd());
-        bindings["-"] = std::unique_ptr<BuiltinFunction>(new BuiltinSub());
-        bindings["*"] = std::unique_ptr<BuiltinFunction>(new BuiltinMul());
-        bindings["/"] = std::unique_ptr<BuiltinFunction>(new BuiltinDiv());
-        bindings["remainder"] = std::unique_ptr<BuiltinFunction>(new BuiltinRemainder());
+        bindings["+"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Add());
+        bindings["-"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Sub());
+        bindings["*"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Mul());
+        bindings["/"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Div());
+        bindings["remainder"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Remainder());
 
         // equality
-        bindings["="] = std::unique_ptr<BuiltinFunction>(new BuiltinEqual());
-        bindings[">"] = std::unique_ptr<BuiltinFunction>(new BuiltinGreaterThan());
-        bindings[">="] = std::unique_ptr<BuiltinFunction>(new BuiltinGreaterEqualThan());
-        bindings["<"] = std::unique_ptr<BuiltinFunction>(new BuiltinLowerThan());
-        bindings["<="] = std::unique_ptr<BuiltinFunction>(new BuiltinLowerEqualThan());
+        bindings["="] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Equal());
+        bindings[">"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::GreaterThan());
+        bindings[">="] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::GreaterEqualThan());
+        bindings["<"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::LowerThan());
+        bindings["<="] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::LowerEqualThan());
 
         // I/O utils
-        bindings["display"] = std::unique_ptr<BuiltinFunction>(new BuiltinDisplay());
-        bindings["newline"] = std::unique_ptr<BuiltinFunction>(new BuiltinNewline());
+        bindings["display"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Display());
+        bindings["newline"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Newline());
 
         return bindings;
     }
@@ -70,7 +70,9 @@ namespace Lispino {
 
     Object* Environment::get(Symbol* key) {
         // check for builtin functions
-        std::unordered_map<std::string, std::unique_ptr<BuiltinFunction>>::iterator bf_iter = builtinFunctions.find(key->getValue());
+        std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>>::iterator 
+            bf_iter = builtinFunctions.find(key->getValue());
+
         if (bf_iter != builtinFunctions.end())
             return bf_iter->second.get();
 

@@ -68,7 +68,7 @@ namespace Lispino {
 
         Object *op = head->eval(env);
         if (op->isBuiltinFunction())
-            return static_cast<BuiltinFunction*>(op)->apply(args, env);
+            return static_cast<Builtins::BuiltinFunction*>(op)->apply(args, env);
         else {
             // evaluate the arguments
             std::vector<Object*> evaluatedArgs;
