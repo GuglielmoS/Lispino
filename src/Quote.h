@@ -5,40 +5,27 @@
 
 namespace Lispino {
 
+    class Environment;
+
     class Quote : public Object {
         
         Object *value;
 
         public:
 
-            Quote() : value(nullptr) {}
-            Quote(Object* value) : value(value) {}
+            Quote();
+            Quote(Object* value);
     
-            Object* eval(Environment& env) {
-                return value;
-            }
+            Object* eval(Environment& env);
 
-            void setValue(Object* value) {
-                this->value = value;
-            }
-        
-            Object* getValue() {
-                return value;
-            }
+            void setValue(Object* value);
+            Object* getValue();
 
-            void mark() {
-                Object::mark();
-                value->mark();
-            }
+            void mark();
 
-            bool isQuote() const {
-                return true;
-            }
+            bool isQuote() const;
 
-            std::string toString() const {
-                return "'" + value->toString();
-            }
-
+            std::string toString() const;
     };
 };
 

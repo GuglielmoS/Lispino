@@ -11,56 +11,22 @@ namespace Lispino {
 
         public:
 
-            Boolean() : value(false) {}
-            Boolean(bool value) : value(value) {}
+            Boolean();
+            Boolean(bool value);
+            
+            Object* eval(Environment& env);
 
-            Object* eval(Environment& env) {
-                return this;
-            }
-
-            bool equals(Object *obj) const {
-                if (this == obj)
-                    return true;
-                else if (obj->isBoolean())
-                    return static_cast<Boolean*>(obj)->value == value;
-                else
-                    return false;
-            }
-
-            int compare(Object* obj) {
-                return obj->compareBoolean(this);
-            }
-
-            int compareBoolean(Boolean* obj) {
-                if (value == obj->value) return 0;
-                else if (value == false) return 1;
-                else                     return -1;
-            }
-
-            void setValue(bool value) {
-                this->value = value;
-            }
-
-            bool getValue() const {
-                return value;
-            }
-
-            bool isTrue() const {
-                return value;
-            }
-
-            bool isFalse() const {
-                return !value;
-            }
-
-            bool isBoolean() const {
-                return true;
-            }
-
-            std::string toString() const {
-                return value ? "TRUE" : "FALSE";
-            }
-
+            void setValue(bool value);
+            bool getValue() const;
+            
+            int compare(Object* obj);
+            int compareBoolean(Boolean* obj);
+            
+            bool isTrue() const;
+            bool isFalse() const;
+            bool isBoolean() const;
+            
+            std::string toString() const;
     };
 };
 

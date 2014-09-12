@@ -9,54 +9,21 @@ namespace Lispino {
     
         public:
 
-            Object* eval(Environment& env) {
-                return this;
-            }
+            Object* eval(Environment& env);
 
-            int compare(Object* obj) {
-                return obj->compareNil(this);
-            }
+            int compare(Object* obj);
+            int compareNil(Nil* obj);
+            int compareList(List* obj);
+            int compareInt(IntNumber* obj);
+            int compareFloat(FloatNumber* obj);
+            int compareSymbol(Symbol* obj);
+            int compareString(String* obj);
+            int compareBoolean(Boolean* obj);
+            int compareSequence(Sequence* obj);
 
-            int compareNil(Nil* obj) {
-                return 0;
-            }
-
-            int compareList(List* obj) {
-                return -1;
-            }
-
-            int compareInt(IntNumber* obj) {
-                return -1;
-            }
-
-            int compareFloat(FloatNumber* obj) {
-                return -1;
-            }
-
-            int compareSymbol(Symbol* obj) {
-                return -1;
-            }
-
-            int compareString(String* obj) {
-                return -1;
-            }
+            bool isNil() const;
             
-            int compareBoolean(Boolean* obj) {
-                return -1;
-            }
-
-            int compareSequence(Sequence* obj) {
-                return -1;
-            }
-
-            bool isNil() const {
-                return true;
-            }
-
-            std::string toString() const {
-                return "NIL";
-            }
-
+            std::string toString() const;
     };
 };
 

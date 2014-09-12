@@ -1,18 +1,18 @@
 #include "VM.h"
 
-using namespace Lispino;
+namespace Lispino {
+    // singleton instance
+    VM VM::instance;
 
-// singleton instance
-VM VM::instance;
+    Environment& VM::getGlobalEnv() {
+        return instance.globalEnv;
+    }
 
-Environment& VM::getGlobalEnv() {
-    return instance.globalEnv;
-}
+    Allocator& VM::getAllocator() {
+        return instance.allocator;
+    }
 
-Allocator& VM::getAllocator() {
-    return instance.allocator;
-}
-
-Memory& VM::getMemory() {
-    return instance.memory;
+    Memory& VM::getMemory() {
+        return instance.memory;
+    }
 }

@@ -11,20 +11,13 @@ namespace Lispino {
     
         public:
 
-            Object* eval(Environment& env) {
-                return this;
-            }
-
             virtual Object* apply(std::vector<Object*>& args, Environment& env) = 0;
 
-            bool isBuiltinFunction() const {
-                return true;
-            }
+            Object* eval(Environment& env);
 
-            std::string toString() const {
-                return "BUILTIN-FUNCTION";
-            }
+            bool isBuiltinFunction() const;
 
+            std::string toString() const;
     };
 };
 

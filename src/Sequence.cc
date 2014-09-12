@@ -1,34 +1,35 @@
 #include "Sequence.h"
+
 #include "VM.h"
 
-using namespace Lispino;
+namespace Lispino {
+    Object* Sequence::eval(Environment& env) {
+        Object *result = VM::getAllocator().createNil();
+        for (unsigned int i = 0; i < expressions.size(); i++)
+            result = expressions[i]->eval(env);
 
-Object* Sequence::eval(Environment& env) {
-    Object *result = VM::getAllocator().createNil();
-    for (unsigned int i = 0; i < expressions.size(); i++)
-        result = expressions[i]->eval(env);
+        return result;
+    }
 
-    return result;
-}
+    void Sequence::setValue(std::vector<Object*> value) {
+        this->expressions = value;
+    }
 
-void Sequence::setValue(std::vector<Object*> value) {
-    this->expressions = value;
-}
+    std::vector<Object*>& Sequence::getValue() {
+        return expressions;
+    }
 
-std::vector<Object*>& Sequence::getValue() {
-    return expressions;
-}
+    void Sequence::mark() {
+        Object::mark();
+        for (unsigned int i = 0; i < expressions.size(); i++)
+            expressions[i]->mark();
+    }
 
-void Sequence::mark() {
-    Object::mark();
-    for (unsigned int i = 0; i < expressions.size(); i++)
-        expressions[i]->mark();
-}
+    bool Sequence::isSequence() const {
+        return true;
+    }
 
-bool Sequence::isSequence() const {
-    return true;
-}
-
-std::string Sequence::toString() const {
-    return "SEQUENCE";
+    std::string Sequence::toString() const {
+        return "SEQUENCE";
+    }
 }

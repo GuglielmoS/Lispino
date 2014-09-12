@@ -1,11 +1,15 @@
 #ifndef LISPINO_DEFINE_H_
 #define LISPINO_DEFINE_H_
 
+#include <string>
+
 #include "Object.h"
 #include "Symbol.h"
 
 namespace Lispino {
     
+    class Environment;
+
     class Define : public Object {
     
         Symbol *name;
@@ -13,42 +17,22 @@ namespace Lispino {
 
         public:
             
-            Define() : name(nullptr), value(nullptr) {}
-            Define(Symbol *name, Object* value) : name(name), value(value) {}
+            Define(); 
+            Define(Symbol *name, Object* value);
 
-            Object* eval(Environment& env) {
-                return env.put(name, value->isLambda() ? value : value->eval(env));
-            }
+            Object* eval(Environment& env);
 
-            void setName(Symbol *name) {
-                this->name = name;
-            }
+            void setName(Symbol *name);
+            void setValue(Object *value);
 
-            void setValue(Object *value) {
-                this->value = value;
-            }
+            std::string getName() const;
+            Object* getValue();
 
-            std::string getName() const {
-                return name->getValue();
-            }
+            void mark();
+            
+            bool isDefine() const;
 
-            Object* getValue() {
-                return value;
-            }
-
-            void mark() {
-                Object::mark();
-                name->mark();
-                value->mark();
-            }
-
-            bool isDefine() const {
-                return true;
-            }
-
-            std::string toString() const {
-                return "DEFINE";
-            }
+            std::string toString() const;
     };
 };
 

@@ -2,7 +2,6 @@
 #define LISPINO_IFEXPR_H_
 
 #include "Object.h"
-#include "Boolean.h"
 
 namespace Lispino {
 
@@ -14,59 +13,23 @@ namespace Lispino {
 
         public:
 
-            IfExpr() : condition(nullptr), consequent(nullptr), alternative(nullptr) {}
+            IfExpr();
     
-            Object* eval(Environment& env) {
-                Object *conditionResult = condition->eval(env);
+            Object* eval(Environment& env);
 
-                if (!conditionResult->isBoolean())
-                    throw std::runtime_error("IF: the condition must be a BOOLEAN!");
-                
-                if (static_cast<Boolean*>(conditionResult)->isTrue())
-                    return consequent->eval(env);
-                else
-                    return alternative->eval(env);
-            }
+            void setCondition(Object* condition);
+            void setConsequent(Object* consequent);
+            void setAlternative(Object* alternative);
 
-            void setCondition(Object* condition) {
-                this->condition = condition;
-            }
+            Object* getCondition();
+            Object* getConsequent();
+            Object* getAlternative();
 
-            void setConsequent(Object* consequent) {
-                this->consequent = consequent;
-            }
+            void mark();
 
-            void setAlternative(Object* alternative) {
-                this->alternative = alternative;
-            }
+            bool isIfExpr() const;
 
-            Object* getCondition() {
-                return condition;
-            }
-
-            Object* getConsequent() {
-                return consequent;
-            }
-
-            Object* getAlternative() {
-                return alternative;
-            }
-
-            void mark() {
-                Object::mark();
-                condition->mark();
-                consequent->mark();
-                alternative->mark();
-            }
-
-            bool isIfExpr() const {
-                return true;
-            }
-
-            std::string toString() const {
-                return "IF";
-            }
-
+            std::string toString() const;
     };
 };
 
