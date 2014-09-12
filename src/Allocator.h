@@ -1,5 +1,5 @@
-#ifndef __ALLOCATOR_H__
-#define __ALLOCATOR_H__
+#ifndef LISPINO_ALLOCATOR_H_
+#define LISPINO_ALLOCATOR_H_
 
 #include "Memory.h"
 #include "Environment.h"
@@ -124,4 +124,4 @@ namespace Lispino {
     };
 };
 
-#endif // __ALLOCATOR_H__
+#endif // LISPINO_ALLOCATOR_H_

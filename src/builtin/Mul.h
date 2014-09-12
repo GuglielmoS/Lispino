@@ -1,5 +1,5 @@
-#ifndef __BUILTIN_MUL_H__
-#define __BUILTIN_MUL_H__
+#ifndef LISPINO_BUILTIN_MUL_H_
+#define LISPINO_BUILTIN_MUL_H_
 
 #include "BuiltinFunction.h"
 
@@ -14,4 +14,4 @@ namespace Lispino {
     };
 };
 
-#endif // _BUILTIN_MUL_H__
+#endif // LISPINO_BUILTIN_MUL_H_

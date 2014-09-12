@@ -1,5 +1,5 @@
-#ifndef __IF_EXPRESSION_H__
-#define __IF_EXPRESSION_H__
+#ifndef LISPINO_IFEXPR_H_
+#define LISPINO_IFEXPR_H_
 
 #include "Object.h"
 #include "Boolean.h"
@@ -70,4 +70,4 @@ namespace Lispino {
     };
 };
 
-#endif // __IF_EXPRESSIONS_H__
+#endif // LISPINO_IFEXPR_H_

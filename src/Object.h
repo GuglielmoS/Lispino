@@ -1,5 +1,5 @@
-#ifndef __OBJECT_H__
-#define __OBJECT_H__
+#ifndef LISPINO_OBJECT_H_
+#define LISPINO_OBJECT_H_
 
 #include <string>
 #include <stdexcept>
@@ -125,4 +125,4 @@ namespace Lispino {
     };
 };
 
-#endif // __OBJECT_H__
+#endif // LISPINO_OBJECT_H_

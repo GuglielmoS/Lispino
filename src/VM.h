@@ -1,5 +1,5 @@
-#ifndef __VM_H__
-#define __VM_H__
+#ifndef LISPINO_VM_H_
+#define LISPINO_VM_H_
 
 #include "Memory.h"
 #include "Allocator.h"
@@ -37,4 +37,4 @@ namespace Lispino {
     };
 };
 
-#endif // __VM_H__
+#endif // LISPINO_VM_H_

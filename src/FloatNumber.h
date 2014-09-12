@@ -1,10 +1,10 @@
-#ifndef __FLOAT_NUMBER_H__
-#define __FLOAT_NUMBER_H__
-
-#include "Object.h"
+#ifndef LISPINO_FLOATNUMBER_H_
+#define LISPINO_FLOATNUMBER_H_
 
 #include <sstream>
 #include <string>
+
+#include "Object.h"
 
 namespace Lispino {
 
@@ -50,4 +50,4 @@ namespace Lispino {
     };
 };
 
-#endif // __FLOAT_NUMBER_H__
+#endif // LISPINO_FLOATNUMBER_H_

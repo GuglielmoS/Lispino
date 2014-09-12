@@ -1,9 +1,5 @@
-#ifndef __ENVIRONMENT_H__
-#define __ENVIRONMENT_H__
-
-#include "Object.h"
-#include "Symbol.h"
-#include "builtin/BuiltinFunction.h"
+#ifndef LISPINO_ENVIRONMENT_H_
+#define LISPINO_ENVIRONMENT_H_
 
 #include <map>
 #include <unordered_map>
@@ -11,6 +7,10 @@
 #include <sstream>
 #include <iostream>
 #include <memory>
+
+#include "Object.h"
+#include "Symbol.h"
+#include "builtin/BuiltinFunction.h"
 
 namespace Lispino {
     
@@ -50,4 +50,4 @@ namespace Lispino {
     };
 };
 
-#endif // __ENVIRONMENT_H__
+#endif // LISPINO_ENVIRONMENT_H_

@@ -1,10 +1,10 @@
-#ifndef __LIST_H__
-#define __LIST_H__
-
-#include "Object.h"
+#ifndef LISPINO_LIST_H_
+#define LISPINO_LIST_H_
 
 #include <vector>
 #include <string>
+
+#include "Object.h"
 
 namespace Lispino {
 
@@ -41,4 +41,4 @@ namespace Lispino {
     };
 };
 
-#endif // _LIST_H__
+#endif // LISPINO_LIST_H_

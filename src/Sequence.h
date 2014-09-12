@@ -1,9 +1,9 @@
-#ifndef __SEQUENCE_H__
-#define __SEQUENCE_H__
-
-#include "Object.h"
+#ifndef LISPINO_SEQUENCE_H_
+#define LISPINO_SEQUENCE_H_
 
 #include <vector>
+
+#include "Object.h"
 
 namespace Lispino {
     
@@ -28,4 +28,4 @@ namespace Lispino {
     };
 };
 
-#endif // __SEQUENCE_H__
+#endif // LISPINO_SEQUENCE_H_

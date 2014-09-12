@@ -1,5 +1,5 @@
-#ifndef __QUOTE_H__
-#define __QUOTE_H__
+#ifndef LISPINO_QUOTE_H_
+#define LISPINO_QUOTE_H_
 
 #include "Object.h"
 
@@ -42,4 +42,4 @@ namespace Lispino {
     };
 };
 
-#endif // _QUOTE_H__
+#endif // LISPINO_QUOTE_H_

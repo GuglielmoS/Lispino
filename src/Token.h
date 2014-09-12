@@ -1,7 +1,6 @@
-#ifndef __TOKEN_H__
-#define __TOKEN_H__
+#ifndef LISPINO_TOKEN_H_
+#define LISPINO_TOKEN_H_
 
-// Standard C++ headers
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -74,4 +73,4 @@ namespace Lispino {
     };
 };
 
-#endif // __TOKEN_H__
+#endif // LISPINO_TOKEN_H_

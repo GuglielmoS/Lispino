@@ -1,5 +1,5 @@
-#ifndef __NIL_H__
-#define __NIL_H__
+#ifndef LISPINO_NIL_H_
+#define LISPINO_NIL_H_
 
 #include "Object.h"
 
@@ -60,4 +60,4 @@ namespace Lispino {
     };
 };
 
-#endif // __NIL_H__
+#endif // LISPINO_NIL_H_

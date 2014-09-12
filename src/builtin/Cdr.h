@@ -1,5 +1,5 @@
-#ifndef __BUILTIN_CDR_H__
-#define __BUILTIN_CDR_H__
+#ifndef LISPINO_BUILTIN_CDR_H_
+#define LISPINO_BUILTIN_CDR_H_
 
 #include "BuiltinFunction.h"
 
@@ -14,4 +14,4 @@ namespace Lispino {
     };
 };
 
-#endif // _BUILTIN_CDR_H__
+#endif // LISPINO_BUILTIN_CDR_H_

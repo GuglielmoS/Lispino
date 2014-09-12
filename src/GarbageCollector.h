@@ -1,5 +1,5 @@
-#ifndef __GARBAGE_COLLECTOR_H__
-#define __GARBAGE_COLLECTOR_H__
+#ifndef LISPINO_GARBAGECOLLECTOR_H_
+#define LISPINO_GARBAGECOLLECTOR_H_
 
 #include "Environment.h"
 
@@ -56,4 +56,4 @@ namespace Lispino {
     };
 };
 
-#endif // __GARBAGE_COLLECTOR_H__
+#endif // LISPINO_GARBAGECOLLECTOR_H_

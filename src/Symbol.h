@@ -1,9 +1,9 @@
-#ifndef __SYMBOL_H__
-#define __SYMBOL_H__
-
-#include "Object.h"
+#ifndef LISPINO_SYMBOL_H_
+#define LISPINO_SYMBOL_H_
 
 #include <string>
+
+#include "Object.h"
 
 namespace Lispino {
 
@@ -31,4 +31,4 @@ namespace Lispino {
     };
 };
 
-#endif // __SYMBOL_H__
+#endif // LISPINO_SYMBOL_H_

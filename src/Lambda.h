@@ -1,11 +1,11 @@
-#ifndef __LAMBDA_H__
-#define __LAMBDA_H__
-
-#include "Object.h"
-#include "Symbol.h"
+#ifndef LISPINO_LAMBDA_H_
+#define LISPINO_LAMBDA_H_
 
 #include <vector>
 #include <string>
+
+#include "Object.h"
+#include "Symbol.h"
 
 namespace Lispino {
 
@@ -51,4 +51,4 @@ namespace Lispino {
     };
 };
 
-#endif // __LAMBDA_H__
+#endif // LISPINO_LAMBDA_H_

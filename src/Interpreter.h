@@ -1,5 +1,5 @@
-#ifndef __INTERPRETER_H__
-#define __INTERPRETER_H__
+#ifndef LISPINO_INTERPRETER_H_
+#define LISPINO_INTERPRETER_H_
 
 #include <string>
 
@@ -22,4 +22,4 @@ namespace Lispino {
     };
 };
 
-#endif // __INTERPRETER_H__
+#endif // LISPINO_INTERPRETER_H_

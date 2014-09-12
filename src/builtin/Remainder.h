@@ -1,5 +1,5 @@
-#ifndef __BUILTIN_REMAINDER_H__
-#define __BUILTIN_REMAINDER_H__
+#ifndef LISPINO_BUILTIN_REMAINDER_H_
+#define LISPINO_BUILTIN_REMAINDER_H_
 
 #include "BuiltinFunction.h"
 
@@ -14,4 +14,4 @@ namespace Lispino {
     };
 };
 
-#endif // _BUILTIN_REMAINDER_H__
+#endif // LISPINO_BUILTIN_REMAINDER_H_

@@ -1,5 +1,5 @@
-#ifndef __BUILTIN_CAR_H__
-#define __BUILTIN_CAR_H__
+#ifndef LISPINO_BUILTIN_CAR_H_
+#define LISPINO_BUILTIN_CAR_H_
 
 #include "BuiltinFunction.h"
 
@@ -14,4 +14,4 @@ namespace Lispino {
     };
 };
 
-#endif // _BUILTIN_CAR_H__
+#endif // LISPINO_BUILTIN_CAR_H_

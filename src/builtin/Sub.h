@@ -1,5 +1,5 @@
-#ifndef __BUILTIN_SUB_H__
-#define __BUILTIN_SUB_H__
+#ifndef LISPINO_BUILTIN_SUB_H_
+#define LISPINO_BUILTIN_SUB_H_
 
 #include "BuiltinFunction.h"
 #include "../VM.h"
@@ -17,4 +17,4 @@ namespace Lispino {
     };
 };
 
-#endif // _BUILTIN_SUB_H__
+#endif // LISPINO_BUILTIN_SUB_H_

@@ -20,13 +20,13 @@ bin/parser_tests: test/parser_tests.o test/main_tests.o src/Parser.o src/Tokeniz
 bin/interpreter_tests: test/interpreter_tests.o test/main_tests.o src/Parser.o src/Tokenizer.o src/Token.o src/Object.o src/Lambda.o src/IntNumber.o src/FloatNumber.o src/List.o src/Symbol.o src/String.o src/VM.o src/Environment.o src/Closure.o src/Sequence.o src/builtin/Add.o src/builtin/Sub.o src/builtin/Mul.o src/builtin/Div.o src/builtin/Remainder.o src/builtin/LowerThan.o src/builtin/LowerEqualThan.o src/builtin/GreaterThan.o src/builtin/GreaterEqualThan.o src/builtin/Equal.o src/builtin/Car.o src/builtin/Cdr.o src/builtin/Cons.o
 	$(CC) -o $@ $^ -lgtest -pthread
 
-src/VM.o: src/VM.cpp
+src/VM.o: src/VM.cc
 	$(CC) -c $< -o $@
 
-src/%.o: src/%.cpp src/VM.o
+src/%.o: src/%.cc src/VM.o
 	$(CC) -c $< -o $@
 
-test/%.o: test/%.cpp src/VM.o
+test/%.o: test/%.cc src/VM.o
 	$(CC) -c $< -o $@
 
 clean:

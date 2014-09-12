@@ -1,12 +1,12 @@
-#ifndef __CLOSURE_H__
-#define __CLOSURE_H__
+#ifndef LISPINO_CLOSURE_H_
+#define LISPINO_CLOSURE_H_
+
+#include <vector>
+#include <memory>
 
 #include "Object.h"
 #include "Lambda.h"
 #include "Environment.h"
-
-#include <vector>
-#include <memory>
 
 namespace Lispino {
 
@@ -59,4 +59,4 @@ namespace Lispino {
     };
 };
 
-#endif // __CLOSURE_H__
+#endif // LISPINO_CLOSURE_H_

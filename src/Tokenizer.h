@@ -1,11 +1,9 @@
-#ifndef __TOKENIZER_H__
-#define __TOKENIZER_H__
+#ifndef LISPINO_TOKENIZER_H_
+#define LISPINO_TOKENIZER_H_
 
-// Internal headers
-#include "Token.h"
-
-// Standard C++ headers
 #include <iostream>
+
+#include "Token.h"
 
 namespace Lispino {
 
@@ -38,4 +36,4 @@ namespace Lispino {
     };
 };
 
-#endif // __TOKENIZER_H__
+#endif // LISPINO_TOKENIZER_H_

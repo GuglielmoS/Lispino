@@ -1,5 +1,5 @@
-#ifndef __DEFINE_H__
-#define __DEFINE_H__
+#ifndef LISPINO_DEFINE_H_
+#define LISPINO_DEFINE_H_
 
 #include "Object.h"
 #include "Symbol.h"
@@ -52,4 +52,4 @@ namespace Lispino {
     };
 };
 
-#endif // __DEFINE_H__
+#endif // LISPINO_DEFINE_H_

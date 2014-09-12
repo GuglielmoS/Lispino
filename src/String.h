@@ -1,10 +1,10 @@
-#ifndef __STRING_H__
-#define __STRING_H__
-
-#include "Object.h"
+#ifndef LISPINO_STRING_H_
+#define LISPINO_STRING_H_
 
 #include <sstream>
 #include <string>
+
+#include "Object.h"
 
 namespace Lispino {
 
@@ -32,4 +32,4 @@ namespace Lispino {
     };
 };
 
-#endif // __STRING_H__
+#endif // LISPINO_STRING_H_

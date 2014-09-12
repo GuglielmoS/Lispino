@@ -1,12 +1,12 @@
-#ifndef __BUILTIN_DISPLAY_H__
-#define __BUILTIN_DISPLAY_H__
-
-#include "BuiltinFunction.h"
-#include "../VM.h"
+#ifndef LISPINO_BUILTIN_DISPLAY_H_
+#define LISPINO_BUILTIN_DISPLAY_H_
 
 #include <iostream>
 #include <sstream>
 #include <string>
+
+#include "BuiltinFunction.h"
+#include "../VM.h"
 
 namespace Lispino {
     
@@ -38,4 +38,4 @@ namespace Lispino {
     };
 };
 
-#endif // _BUILTIN_ADD_H__
+#endif // LISPINO_BUILTIN_ADD_H_

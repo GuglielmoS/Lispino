@@ -1,13 +1,11 @@
-#ifndef __PARSER_H__
-#define __PARSER_H__
+#ifndef LISPINO_PARSER_H_
+#define LISPINO_PARSER_H_
 
-// Internal headers
+#include <iostream>
+
 #include "VM.h"
 #include "Object.h"
 #include "Tokenizer.h"
-
-// Standard C++ headers
-#include <iostream>
 
 namespace Lispino {
 
@@ -33,4 +31,4 @@ namespace Lispino {
     };
 };
 
-#endif // __PARSER_H__
+#endif // LISPINO_PARSER_H_

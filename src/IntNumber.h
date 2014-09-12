@@ -1,10 +1,10 @@
-#ifndef __INT_NUMBER_H__
-#define __INT_NUMBER_H__
-
-#include "Object.h"
+#ifndef LISPINO_INTNUMBER_H_
+#define LISPINO_INTNUMBER_H_
 
 #include <sstream>
 #include <string>
+
+#include "Object.h"
 
 namespace Lispino {
 
@@ -50,4 +50,4 @@ namespace Lispino {
     };
 };
 
-#endif // __INT_NUMBER_H__
+#endif // LISPINO_INTNUMBER_H_

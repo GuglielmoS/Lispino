@@ -1,5 +1,8 @@
-#ifndef __MEMORY_H__
-#define __MEMORY_H__
+#ifndef LISPINO_MEMORY_H_
+#define LISPINO_MEMORY_H_
+
+#include <iostream>
+#include <memory>
 
 #include "Object.h"
 #include "Symbol.h"
@@ -16,9 +19,6 @@
 #include "Define.h"
 #include "IfExpr.h"
 #include "Sequence.h"
-
-#include <iostream>
-#include <memory>
 
 namespace Lispino {
 
@@ -181,4 +181,4 @@ namespace Lispino {
     };
 };
 
-#endif // __MEMORY_H__
+#endif // LISPINO_MEMORY_H_

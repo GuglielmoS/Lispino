@@ -1,5 +1,5 @@
-#ifndef __BUILTIN_ADD_H__
-#define __BUILTIN_ADD_H__
+#ifndef LISPINO_BUILTIN_ADD_H_
+#define LISPINO_BUILTIN_ADD_H_
 
 #include "BuiltinFunction.h"
 
@@ -14,4 +14,4 @@ namespace Lispino {
     };
 };
 
-#endif // _BUILTIN_ADD_H__
+#endif // LISPINO_BUILTIN_ADD_H_

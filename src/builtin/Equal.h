@@ -1,5 +1,5 @@
-#ifndef __BUILTIN_EQUAL_H__
-#define __BUILTIN_EQUAL_H__
+#ifndef LISPINO_BUILTIN_EQUAL_H_
+#define LISPINO_BUILTIN_EQUAL_H_
 
 #include "BuiltinFunction.h"
 
@@ -14,4 +14,4 @@ namespace Lispino {
     };
 };
 
-#endif // __BUILTIN_EQUAL_H__
+#endif // LISPINO_BUILTIN_EQUAL_H_

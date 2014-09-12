@@ -1,9 +1,9 @@
-#ifndef __BUILTIN_FUNCTION_H__
-#define __BUILTIN_FUNCTION_H__
-
-#include "../Object.h"
+#ifndef LISPINO_BUILTIN_FUNCTION_H_
+#define LISPINO_BUILTIN_FUNCTION_H_
 
 #include <vector>
+
+#include "../Object.h"
 
 namespace Lispino {
 
@@ -28,4 +28,4 @@ namespace Lispino {
     };
 };
 
-#endif // __BUILTIN_FUNCTION_H__
+#endif // LISPINO_BUILTIN_FUNCTION_H_

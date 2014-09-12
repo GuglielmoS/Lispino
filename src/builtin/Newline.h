@@ -1,10 +1,10 @@
-#ifndef __BUILTIN_NEWLINE_H__
-#define __BUILTIN_NEWLINE_H__
+#ifndef LISPINO_BUILTIN_NEWLINE_H_
+#define LISPINO_BUILTIN_NEWLINE_H_
+
+#include <iostream>
 
 #include "BuiltinFunction.h"
 #include "../VM.h"
-
-#include <iostream>
 
 namespace Lispino {
     
@@ -25,4 +25,4 @@ namespace Lispino {
     };
 };
 
-#endif // _BUILTIN_ADD_H__
+#endif // LISPINO_BUILTIN_NEWLINE_H_

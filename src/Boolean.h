@@ -1,5 +1,5 @@
-#ifndef __BOOLEAN_H__
-#define __BOOLEAN_H__
+#ifndef LISPINO_BOOLEAN_H_
+#define LISPINO_BOOLEAN_H_
 
 #include "Object.h"
 
@@ -64,4 +64,4 @@ namespace Lispino {
     };
 };
 
-#endif // __BOOLEAN_H__
+#endif // LISPINO_BOOLEAN_H_

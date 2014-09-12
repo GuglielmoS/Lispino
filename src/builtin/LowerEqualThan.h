@@ -1,5 +1,5 @@
-#ifndef __BUILTIN_LOWER_EQUAL_THAN_H__
-#define __BUILTIN_LOWER_EQUAL_THAN_H__
+#ifndef LISPINO_BUILTIN_LOWEREQUALTHAN_H_
+#define LISPINO_BUILTIN_LOWEREQUALTHAN_H_
 
 #include "BuiltinFunction.h"
 
@@ -14,4 +14,4 @@ namespace Lispino {
     };
 };
 
-#endif // __BUILTIN_LOWER_EQUAL_THAN_H__
+#endif // LISPINO_BUILTIN_LOWEREQUALTHAN_H_
