@@ -3,7 +3,9 @@
 #include "../VM.h"
 
 namespace Lispino {
+
     namespace Builtins {
+
         Object* Car::apply(std::vector<Object*>& args, Environment& env) {
             if (args.size() != 1)
                 throw std::runtime_error("car: wrong number of arguments!");

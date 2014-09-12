@@ -11,10 +11,6 @@ namespace Lispino {
     class Environment;
 
     class Define : public Object {
-    
-        Symbol *name;
-        Object *value;
-
         public:
             
             Define(); 
@@ -33,6 +29,11 @@ namespace Lispino {
             bool isDefine() const;
 
             std::string toString() const;
+
+        private:
+
+            Symbol *name;
+            Object *value;
     };
 };
 

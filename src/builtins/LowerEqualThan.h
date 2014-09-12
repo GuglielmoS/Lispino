@@ -4,9 +4,12 @@
 #include "BuiltinFunction.h"
 
 namespace Lispino {
+
     namespace Builtins {
+
         class LowerEqualThan : public BuiltinFunction {
             public:
+
                 Object* apply(std::vector<Object*>& args, Environment& env);
         };
     }

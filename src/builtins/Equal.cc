@@ -3,7 +3,9 @@
 #include "../VM.h"
 
 namespace Lispino {
+
     namespace Builtins {
+
         Object* Equal::apply(std::vector<Object*>& args, Environment& env) {
             if (args.size() <= 1)
                 throw std::runtime_error("=: wrong number of arguments");

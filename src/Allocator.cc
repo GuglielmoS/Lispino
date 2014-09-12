@@ -1,6 +1,7 @@
 #include "Allocator.h"
 
 namespace Lispino {
+
     Allocator::Allocator(Memory& memory) : memory(memory), symbolsCounter(0) {
         /* DO NOTHING */
     }

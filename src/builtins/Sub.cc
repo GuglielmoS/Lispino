@@ -1,9 +1,13 @@
 #include "Sub.h"
 
 #include "../VM.h"
+#include "../IntNumber.h"
+#include "../FloatNumber.h"
 
 namespace Lispino {
+
     namespace Builtins {
+
         Object* Sub::apply(std::vector<Object*>& args, Environment& env) {
             if (args.size() == 0)
                 throw std::runtime_error("-: wrong number of arguments!");

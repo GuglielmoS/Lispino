@@ -1,8 +1,13 @@
 #include "VM.h"
 
 namespace Lispino {
+
     // singleton instance
     VM VM::instance;
+
+    VM::VM() : memory(gc), allocator(memory), gc(globalEnv) {
+        /* DO NOTHING */
+    }
 
     Environment& VM::getGlobalEnv() {
         return instance.globalEnv;

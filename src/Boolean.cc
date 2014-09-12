@@ -1,6 +1,7 @@
 #include "Boolean.h"
 
 namespace Lispino {
+
     Boolean::Boolean() : value(false) {
         /* DO NOTHING */
     }

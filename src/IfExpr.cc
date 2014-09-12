@@ -3,6 +3,7 @@
 #include "Boolean.h"
 
 namespace Lispino {
+
     IfExpr::IfExpr() : condition(nullptr), consequent(nullptr), alternative(nullptr) {
         /* DO NOTHING */
     }

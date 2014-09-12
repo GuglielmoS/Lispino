@@ -7,6 +7,21 @@ namespace Lispino {
         falseInstance = new Boolean(false);
     }
 
+    Memory::~Memory() {
+        // delete the objects stored in the virtual memory
+        MemoryNode *current = first;
+        while (current != nullptr) {
+            MemoryNode *temp = current;
+            current = current->next;
+            delete temp;
+        }
+
+        // delete the cached instances
+        delete nilInstance;
+        delete trueInstance;
+        delete falseInstance;
+    }
+
     Nil* Memory::getNilInstance() {
         return nilInstance;
     }
@@ -77,21 +92,6 @@ namespace Lispino {
     size_t Memory::cleanup() {
         gc.collect();
         return releaseUnusedObjects();
-    }
-
-    Memory::~Memory() {
-        // delete the objects stored in the virtual memory
-        MemoryNode *current = first;
-        while (current != nullptr) {
-            MemoryNode *temp = current;
-            current = current->next;
-            delete temp;
-        }
-
-        // delete the cached instances
-        delete nilInstance;
-        delete trueInstance;
-        delete falseInstance;
     }
 
     // remove the unused objects and return the number of objects deleted

@@ -3,6 +3,23 @@
 #include "Environment.h"
 
 namespace Lispino {
+
+    Symbol::Symbol() : value("") {
+        /* DO NOTHING */
+    }
+
+    Symbol::Symbol(std::string value) : value(value) {
+        /* DO NOTHING */
+    }
+
+    void Symbol::setValue(std::string value) {
+        this->value = value;
+    }
+
+    std::string& Symbol::getValue() {
+        return value;
+    }
+
     Object* Symbol::eval(Environment& env) {
         return env.get(this);
     }
@@ -14,14 +31,6 @@ namespace Lispino {
 
     int Symbol::compareSymbol(Symbol* obj) {
         return obj->getValue().compare(value);
-    }
-
-    std::string& Symbol::getValue() {
-        return value;
-    }
-
-    void Symbol::setValue(std::string value) {
-        this->value = value;
     }
 
     bool Symbol::isAtom() const {

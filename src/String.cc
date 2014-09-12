@@ -1,6 +1,23 @@
 #include "String.h"
 
 namespace Lispino {
+
+    String::String() : value("") {
+        /* DO NOTHING */
+    }
+
+    String::String(std::string value) : value(value) {
+        /* DO NOTHING */
+    }
+
+    void String::setValue(std::string value) {
+        this->value = value;
+    }
+
+    std::string String::getValue() const {
+        return value;
+    }
+
     Object* String::eval(Environment& env) {
         return this;
     }
@@ -12,14 +29,6 @@ namespace Lispino {
 
     int String::compareString(String* obj) {
         return obj->getValue().compare(value);
-    }
-
-    void String::setValue(std::string value) {
-        this->value = value;
-    }
-
-    std::string String::getValue() const {
-        return value;
     }
 
     bool String::isAtom() const {
@@ -35,5 +44,4 @@ namespace Lispino {
         buf << "\"" << value << "\"";
         return buf.str();
     }
-
 }

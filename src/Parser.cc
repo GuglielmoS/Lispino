@@ -4,6 +4,29 @@
 #include <memory>
 
 namespace Lispino {
+
+    Parser::Parser(std::istream& inputStream) : 
+        allocator(VM::getAllocator()), 
+        tokenizer(inputStream) {
+        /* DO NOTHING */    
+    }
+
+    Object* Parser::parse() {
+        Object *expr = parseExpr();
+
+        // check for the End Of Stream
+        std::unique_ptr<Token> token(tokenizer.next());
+        if (token->getType() != TokenType::EOS)
+            throw std::runtime_error("PARSER - missing End Of Stream!");
+
+        return expr;
+    }
+
+    Object* Parser::parseExpr() {
+        std::unique_ptr<Token> token(tokenizer.next());
+        return dispatch(token.get());
+    }
+
     Object* Parser::parseLambda() {
         // parse the arguments
         std::unique_ptr<Token> token(tokenizer.next());
@@ -188,21 +211,5 @@ namespace Lispino {
             case TokenType::EOS:          return nullptr;
             default:                      throw std::runtime_error("PARSER - dispatch failed");
         }
-    }
-
-    Object* Parser::parseExpr() {
-        std::unique_ptr<Token> token(tokenizer.next());
-        return dispatch(token.get());
-    }
-
-    Object* Parser::parse() {
-        Object *expr = parseExpr();
-
-        // check for the End Of Stream
-        std::unique_ptr<Token> token(tokenizer.next());
-        if (token->getType() != TokenType::EOS)
-            throw std::runtime_error("PARSER - missing End Of Stream!");
-
-        return expr;
     }
 }

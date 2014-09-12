@@ -10,29 +10,6 @@
 #include "VM.h"
 
 namespace Lispino {
-    std::string Interpreter::humanTime(double time_spent) {
-        std::stringstream buf;
-        std::string unit;
-
-        if (time_spent > 0.001)
-            unit = "secs";
-        else if (time_spent > 0.000001) {
-            time_spent *= 1000.0;
-            unit = "ms";
-        }
-        else if (time_spent > 0.000000001) {
-            time_spent *= 1000000.0;
-            unit = "us";
-        }
-        else {
-            time_spent *= 1000000000.0;
-            unit = "ns";
-        }
-        
-        buf << time_spent << " " << unit;
-
-        return buf.str();
-    }
 
     void Interpreter::init() {
         // try to load the standard library
@@ -119,5 +96,29 @@ namespace Lispino {
             std::cerr << "File not found: " << filename << std::endl;
             return 1;
         }
+    }
+
+    std::string Interpreter::humanTime(double time_spent) {
+        std::stringstream buf;
+        std::string unit;
+
+        if (time_spent > 0.001)
+            unit = "secs";
+        else if (time_spent > 0.000001) {
+            time_spent *= 1000.0;
+            unit = "ms";
+        }
+        else if (time_spent > 0.000000001) {
+            time_spent *= 1000000.0;
+            unit = "us";
+        }
+        else {
+            time_spent *= 1000000000.0;
+            unit = "ns";
+        }
+        
+        buf << time_spent << " " << unit;
+
+        return buf.str();
     }
 }

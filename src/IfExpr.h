@@ -6,11 +6,6 @@
 namespace Lispino {
 
     class IfExpr : public Object {
-    
-        Object *condition;
-        Object *consequent;
-        Object *alternative;
-
         public:
 
             IfExpr();
@@ -30,6 +25,12 @@ namespace Lispino {
             bool isIfExpr() const;
 
             std::string toString() const;
+
+        private:
+
+            Object *condition;
+            Object *consequent;
+            Object *alternative;
     };
 };
 

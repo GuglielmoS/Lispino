@@ -2,12 +2,18 @@
 #include "VM.h"
 
 namespace Lispino {
-    Object* Object::eval() {
-        return eval(VM::getGlobalEnv());
+
+    Object::Object() : markFlag(false) {
+        /* DO NOTHING */
+    }
+    
+    /// default destructor
+    Object::~Object() {
+        /* DO NOTHING */
     }
 
-    Object* Object::negate() {
-        throw std::runtime_error("negate: invalid data type!");
+    Object* Object::eval() {
+        return eval(VM::getGlobalEnv());
     }
 
     int Object::compare(Object* obj) {
@@ -44,6 +50,10 @@ namespace Lispino {
 
     int Object::compareSequence(Sequence* obj) {
         throw std::runtime_error("compare: invalid data types!");
+    }
+
+    Object* Object::negate() {
+        throw std::runtime_error("negate: invalid data type!");
     }
 
     Object* Object::add(Object* obj) {

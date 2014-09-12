@@ -3,6 +3,23 @@
 #include "VM.h"
 
 namespace Lispino {
+
+    IntNumber::IntNumber() : value(0) {
+        /* DO NOTHING */
+    }
+    
+    IntNumber::IntNumber(long int value) : value(value) {
+        /* DO NOTHING */
+    }
+
+    void IntNumber::setValue(long int value) {
+        this->value = value;
+    }
+
+    long int IntNumber::getValue() const {
+        return value;
+    }
+
     Object* IntNumber::eval(Environment& env) {
         return this;
     }
@@ -82,14 +99,6 @@ namespace Lispino {
 
     Object* IntNumber::remainderInt(IntNumber* obj) {
         return VM::getAllocator().createIntNumber(obj->value % value);
-    }
-
-    void IntNumber::setValue(long int value) {
-        this->value = value;
-    }
-
-    long int IntNumber::getValue() const {
-        return value;
     }
 
     bool IntNumber::isAtom() const {

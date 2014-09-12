@@ -9,13 +9,13 @@
 namespace Lispino {
 
     class IntNumber : public Object {
-
-        long int value;
-
         public:
 
-            IntNumber() : value(0) {}
-            IntNumber(long int value) : value(value) {}
+            IntNumber();
+            IntNumber(long int value);
+
+            void setValue(long int value);
+            long int getValue() const;
 
             Object* eval(Environment& env);
 
@@ -40,13 +40,14 @@ namespace Lispino {
             Object* remainder(Object* obj);
             Object* remainderInt(IntNumber* obj);
 
-            void setValue(long int value);
-            long int getValue() const;
-
             bool isAtom() const;
             bool isIntNumber() const;
 
             std::string toString() const;
+
+        private:
+
+            long int value;
     };
 };
 

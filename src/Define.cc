@@ -3,6 +3,7 @@
 #include "Environment.h"
 
 namespace Lispino {
+
     Define::Define() : name(nullptr), value(nullptr) {
         /* DO NOTHING */
     }

@@ -3,7 +3,9 @@
 #include "../VM.h"
 
 namespace Lispino {
+
     namespace Builtins {
+
         Object* Add::apply(std::vector<Object*>& args, Environment& env) {
             if (args.size() == 0)
                 throw std::runtime_error("+: wrong number of arguments!");

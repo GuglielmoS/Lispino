@@ -11,51 +11,29 @@
 namespace Lispino {
 
     class Closure : public Object {
-        Lambda *lambda;
-        std::unique_ptr<Environment> env;
-
         public:
 
-            Closure() : lambda(nullptr), env(nullptr) {}
-            Closure(Lambda *lambda, Environment *parentEnv) : lambda(lambda), env(new Environment(parentEnv)) {}
+            Closure();
+            Closure(Lambda *lambda, Environment *parentEnv);
 
-            Object* eval(Environment& env) {
-                return this;
-            }
-
+            Object* eval(Environment& env);
             Object* apply(std::vector<Object*>& actualArgs);
 
-            bool equals(Object *obj) const {
-                // Two closure are never equals.
-                // only when the pointers have the same address
-                // we can return true
-                return obj == this;
-            }
+            void setLambda(Lambda *lambda);
+            void setEnv(Environment *parentEnv);
 
-            void setLambda(Lambda *lambda) {
-                this->lambda = lambda;
-            }
+            Environment* getEnv();
 
-            void setEnv(Environment *parentEnv) {
-                this->env.reset(new Environment(parentEnv));
-            }
+            void mark();
 
-            Environment* getEnv() {
-                return env.get();
-            }
+            bool isClosure() const;
 
-            void mark() {
-                Object::mark();
-                lambda->mark();
-            }
+            std::string toString() const;
 
-            bool isClosure() const {
-                return true;
-            }
+        private:
 
-            std::string toString() const {
-                return "CLOSURE";
-            }
+            Lambda *lambda;
+            std::unique_ptr<Environment> env;
     };
 };
 

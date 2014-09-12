@@ -10,7 +10,6 @@ namespace Lispino {
     namespace Builtins {
 
         class BuiltinFunction : public Object {
-        
             public:
 
                 virtual Object* apply(std::vector<Object*>& args, Environment& env) = 0;
@@ -22,6 +21,6 @@ namespace Lispino {
                 std::string toString() const;
         };
     }
-};
+}
 
 #endif // LISPINO_BUILTINS_BUILTINFUNCTION_H_

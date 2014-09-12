@@ -3,13 +3,6 @@
 #include "VM.h"
 
 namespace Lispino {
-    Object* Sequence::eval(Environment& env) {
-        Object *result = VM::getAllocator().createNil();
-        for (unsigned int i = 0; i < expressions.size(); i++)
-            result = expressions[i]->eval(env);
-
-        return result;
-    }
 
     void Sequence::setValue(std::vector<Object*> value) {
         this->expressions = value;
@@ -17,6 +10,14 @@ namespace Lispino {
 
     std::vector<Object*>& Sequence::getValue() {
         return expressions;
+    }
+
+    Object* Sequence::eval(Environment& env) {
+        Object *result = VM::getAllocator().createNil();
+        for (unsigned int i = 0; i < expressions.size(); i++)
+            result = expressions[i]->eval(env);
+
+        return result;
     }
 
     void Sequence::mark() {

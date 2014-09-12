@@ -15,38 +15,30 @@
 namespace Lispino {
     
     class Environment {   
-
-        Environment *enclosingEnv;
-        std::unordered_map<std::string, std::pair<Symbol*, Object*>> frame;
-
-        // builtin functions
-        static std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> builtinFunctions;
-        static std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> initializeBuiltinFunctions();
-
         public:
             
-            Environment() : enclosingEnv(nullptr) {}
-            Environment(Environment* env) : enclosingEnv(env) {}
+            Environment();
+            Environment(Environment* env);
 
-            Environment* getParent() {
-                return enclosingEnv;
-            }
+            Environment* getParent();
 
-            void setParent(Environment *env) {
-                this->enclosingEnv = env;
-            }
+            void setParent(Environment *env);
 
-            inline std::unordered_map<std::string, std::pair<Symbol*, Object*>>& lookupTable() {
-                return frame;
-            }
-
-            inline std::unordered_map<std::string, std::pair<Symbol*, Object*>>::iterator iterator() {
-                return frame.begin(); 
-            }
+            std::unordered_map<std::string, std::pair<Symbol*, Object*>>& lookupTable();
+            std::unordered_map<std::string, std::pair<Symbol*, Object*>>::iterator iterator();
 
             Object* update(Symbol* key, Object* value);
             Object* put(Symbol* key, Object* value);
             Object* get(Symbol* key);
+
+        private:
+
+            Environment *enclosingEnv;
+            std::unordered_map<std::string, std::pair<Symbol*, Object*>> frame;
+
+            // builtin functions
+            static std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> builtinFunctions;
+            static std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> initializeBuiltinFunctions();
     };
 };
 

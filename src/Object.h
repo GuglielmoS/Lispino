@@ -17,10 +17,6 @@ namespace Lispino {
     class Sequence;
 
     class Object {
-        
-        // flag used for garbage collection
-        bool markFlag;
-
         public:
 
             enum ObjectType {
@@ -38,7 +34,8 @@ namespace Lispino {
                 SEQUENCE
             };
 
-            Object() : markFlag(false) {}
+            Object();
+            virtual ~Object();
 
             /*
              * Evaluation
@@ -116,12 +113,13 @@ namespace Lispino {
             virtual bool isBuiltinFunction() const;
             virtual bool isSequence() const;
 
-            /// provides a string representation for the object
+            /// provides a string representation of the object
             virtual std::string toString() const = 0;
 
-            /// default destructor
-            virtual ~Object() { /* DO NOTHING */ }
+        private:
 
+            // flag used for the garbage collection
+            bool markFlag;
     };
 };
 

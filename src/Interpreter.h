@@ -10,15 +10,15 @@ namespace Lispino {
 	const std::string TESTLIB_FILE = "unittest.scm";
 
     class Interpreter {
-    
-        std::string humanTime(double time_spent);
-    
         public:
 
 			void init();
             int repl(bool verbose=false);
             int execute(std::string filename);
 
+        private:
+
+            std::string humanTime(double time_spent);
     };
 };
 

@@ -4,12 +4,14 @@
 #include <vector>
 
 #include "BuiltinFunction.h"
-#include "../VM.h"
 
 namespace Lispino {
+
     namespace Builtins {
+
         class Display : public BuiltinFunction {
             public:
+
                 Object* apply(std::vector<Object*>& args, Environment& env);
         };
     }

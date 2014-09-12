@@ -8,24 +8,25 @@ namespace Lispino {
     class Environment;
 
     class Quote : public Object {
-        
-        Object *value;
-
         public:
 
             Quote();
             Quote(Object* value);
-    
-            Object* eval(Environment& env);
-
+ 
             void setValue(Object* value);
             Object* getValue();
+   
+            Object* eval(Environment& env);
 
             void mark();
 
             bool isQuote() const;
 
             std::string toString() const;
+
+        private:
+
+            Object *value;
     };
 };
 

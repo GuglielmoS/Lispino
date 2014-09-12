@@ -8,18 +8,19 @@
 namespace Lispino {
 
     class GarbageCollector {
-
-        // global environment reference
-        Environment &globalEnv;
-
-        bool alreadyMarked(Environment* env, std::vector<Environment*> markedEnvs);
-        void markVisibleObjects(Environment* env, std::vector<Environment*>& markedEnvs);
-
         public:
 
             GarbageCollector(Environment& env);
 
             void collect();
+
+        private:
+
+            // global environment reference
+            Environment &globalEnv;
+
+            bool alreadyMarked(Environment* env, std::vector<Environment*> markedEnvs);
+            void markVisibleObjects(Environment* env, std::vector<Environment*>& markedEnvs);
     };
 };
 

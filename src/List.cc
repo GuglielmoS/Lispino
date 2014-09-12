@@ -5,31 +5,31 @@
 #include "VM.h"
 
 namespace Lispino {
-    std::string List::toStringHelper(bool parentheses) const {
-        std::stringstream buf;
-        if (parentheses)
-            buf << "(";
 
-        if (!head->isNil())
-            buf << head->toString();
+    List::List() : head(nullptr), tail(nullptr), cachedArgs(false) {
+        /* DO NOTHING */
+    }
 
-        if (!tail->isNil()) {
-            if (tail->isList() || tail->isQuote() || tail->isDefine() || tail->isLambda())
-                buf << " ";
-            else
-                buf << " . ";
+    List::List(Object* head, Object* tail) : head(head), tail(tail), cachedArgs(false) {
+        /* DO NOTHING */
+    }
 
-            if (tail->isList())
-                buf << static_cast<List*>(tail)->toStringHelper(false);
-            else
-                buf << tail->toString();
-        }
+    void List::setFirst(Object *first) {
+        this->head = first;
+    }
 
-        if (parentheses)
-            buf << ")";
+    void List::setRest(Object *rest) {
+        this->tail = rest;
+        cachedArgs = false;
+    }
 
-        return buf.str();   
-    } 
+    Object* List::getFirst() {
+        return head;
+    }
+
+    Object* List::getRest() {
+        return tail;
+    }
 
     Object* List::eval(Environment& env) {
         if (head->isNil())
@@ -102,23 +102,6 @@ namespace Lispino {
         else             return -1;
     }
 
-    void List::setFirst(Object *first) {
-        this->head = first;
-    }
-
-    void List::setRest(Object *rest) {
-        this->tail = rest;
-        cachedArgs = false;
-    }
-
-    Object* List::getFirst() {
-        return head;
-    }
-
-    Object* List::getRest() {
-        return tail;
-    }
-
     bool List::isList() const {
         return true;
     }
@@ -137,4 +120,30 @@ namespace Lispino {
     std::string List::toString() const {
         return toStringHelper(true);
     }
+
+    std::string List::toStringHelper(bool parentheses) const {
+        std::stringstream buf;
+        if (parentheses)
+            buf << "(";
+
+        if (!head->isNil())
+            buf << head->toString();
+
+        if (!tail->isNil()) {
+            if (tail->isList() || tail->isQuote() || tail->isDefine() || tail->isLambda())
+                buf << " ";
+            else
+                buf << " . ";
+
+            if (tail->isList())
+                buf << static_cast<List*>(tail)->toStringHelper(false);
+            else
+                buf << tail->toString();
+        }
+
+        if (parentheses)
+            buf << ")";
+
+        return buf.str();   
+    } 
 }

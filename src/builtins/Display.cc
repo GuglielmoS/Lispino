@@ -4,8 +4,12 @@
 #include <sstream>
 #include <string>
 
+#include "../VM.h"
+
 namespace Lispino {
+
     namespace Builtins {
+
         Object* Display::apply(std::vector<Object*>& args, Environment& env) {
             if (args.size() == 0)
                 throw std::runtime_error("display: wrong number of arguments!");

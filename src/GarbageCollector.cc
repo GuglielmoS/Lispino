@@ -5,6 +5,7 @@
 #include "Closure.h"
 
 namespace Lispino {
+
     GarbageCollector::GarbageCollector(Environment& env) : globalEnv(env) {
         /* DO NOTHING */
     }

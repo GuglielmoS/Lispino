@@ -33,26 +33,10 @@ namespace Lispino {
             MemoryNode(Object* obj, MemoryNode* next) : object(obj), next(next) {}
         };
 
-        // reference to the garbage collector
-        GarbageCollector &gc;
-
-        // pointer to the first object in memory
-        MemoryNode *first;
-
-        // instance of frequently used objects that don't change their value
-        Nil *nilInstance;
-        Boolean *trueInstance;
-        Boolean *falseInstance;
-
-        // number of objects stored
-        size_t allocatedObjects;
-
-        // remove the unused objects and return the number of objects deleted
-        size_t releaseUnusedObjects();
-
         public:
 
             Memory(GarbageCollector& gc);
+            ~Memory();
 
             Nil* getNilInstance();
             Boolean* getTrueInstance();
@@ -64,7 +48,24 @@ namespace Lispino {
 
             size_t cleanup();
 
-            ~Memory();
+        private:
+
+            // reference to the garbage collector
+            GarbageCollector &gc;
+
+            // pointer to the first object in memory
+            MemoryNode *first;
+
+            // instance of frequently used objects that don't change their value
+            Nil *nilInstance;
+            Boolean *trueInstance;
+            Boolean *falseInstance;
+
+            // number of objects stored
+            size_t allocatedObjects;
+
+            // remove the unused objects and return the number of objects deleted
+            size_t releaseUnusedObjects();
     };
 };
 

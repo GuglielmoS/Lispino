@@ -3,6 +3,7 @@
 namespace Lispino {
 
     namespace Builtins {
+
         Object* BuiltinFunction::eval(Environment& env) {
             return this;
         }

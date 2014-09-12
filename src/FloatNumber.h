@@ -9,13 +9,13 @@
 namespace Lispino {
 
     class FloatNumber : public Object {
-
-        float value;
-
         public:
 
-            FloatNumber() : value(0.0f) {}
-            FloatNumber(float value) : value(value) {}
+            FloatNumber();
+            FloatNumber(float value);
+
+            void setValue(float value);
+            float getValue() const;
 
             Object* eval(Environment& env);
 
@@ -40,13 +40,14 @@ namespace Lispino {
             Object* remainder(Object* obj);
             Object* remainderFloat(FloatNumber* obj);
 
-            void setValue(float value);
-            float getValue() const;
-
             bool isAtom() const;
             bool isFloatNumber() const;
 
             std::string toString() const;
+
+        private:
+
+            float value;
     };
 };
 

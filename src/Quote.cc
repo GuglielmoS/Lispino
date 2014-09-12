@@ -1,6 +1,7 @@
 #include "Quote.h"
 
 namespace Lispino {
+
     Quote::Quote() : value(nullptr) {
         /* DO NOTHING */
     }
@@ -9,15 +10,15 @@ namespace Lispino {
         /* DO NOTHING */
     }
 
-    Object* Quote::eval(Environment& env) {
-        return value;
-    }
-
     void Quote::setValue(Object* value) {
         this->value = value;
     }
 
     Object* Quote::getValue() {
+        return value;
+    }
+
+    Object* Quote::eval(Environment& env) {
         return value;
     }
 

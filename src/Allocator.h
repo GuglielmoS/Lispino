@@ -7,13 +7,6 @@
 namespace Lispino {
 
     class Allocator {
-        
-        // memory used for the allocated objects
-        Memory &memory;
-
-        // counter used to generate random symbols
-        int symbolsCounter;
-
         public:
 
             Allocator(Memory& memory);
@@ -34,6 +27,14 @@ namespace Lispino {
             Nil* createNil();
             IfExpr* createIf(Object* condition, Object* consequent, Object* alternative);
             Sequence* createSequence(std::vector<Object*>& expressions);
+
+        private:
+
+            // memory used for the allocated objects
+            Memory& memory;
+
+            // counter used to generate random symbols
+            int symbolsCounter;
     };
 };
 

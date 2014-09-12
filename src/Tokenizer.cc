@@ -9,6 +9,30 @@
 #include <cstdlib>
 
 namespace Lispino {
+
+    Tokenizer::Tokenizer(std::istream& inputStream) : stream(inputStream) {
+        /* DO NOTHING */
+    }
+
+    Token* Tokenizer::next() {
+        Token *currentToken = nullptr;
+
+        // skip the comments (;; blah blah) and the various spaces (\n, ' ', \t ...)
+        skipCommentsAndSpaces();
+
+        // try to parse the next token
+        if ((currentToken = delimiter()) != nullptr)
+            return currentToken;
+        else if ((currentToken = number()) != nullptr)
+            return currentToken;
+        else if ((currentToken = symbol()) != nullptr)
+            return currentToken;
+        else if ((currentToken = string()) != nullptr)
+            return currentToken;
+        else
+            return new Token(UNKNOWN);
+    }
+
     void Tokenizer::skipSpaces() {
         while (isspace((char)stream.get())) { 
             /* DO NOTHING */ 
@@ -154,24 +178,5 @@ namespace Lispino {
         }
 
         return new Token(STRING, buffer.str());
-    }
-
-    Token* Tokenizer::next() {
-        Token *currentToken = nullptr;
-
-        // skip the comments (;; blah blah) and the various spaces (\n, ' ', \t ...)
-        skipCommentsAndSpaces();
-
-        // try to parse the next token
-        if ((currentToken = delimiter()) != nullptr)
-            return currentToken;
-        else if ((currentToken = number()) != nullptr)
-            return currentToken;
-        else if ((currentToken = symbol()) != nullptr)
-            return currentToken;
-        else if ((currentToken = string()) != nullptr)
-            return currentToken;
-        else
-            return new Token(UNKNOWN);
     }
 }

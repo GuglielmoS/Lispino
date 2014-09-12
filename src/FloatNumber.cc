@@ -5,6 +5,23 @@
 #include <cmath>
 
 namespace Lispino {
+
+    FloatNumber::FloatNumber() : value(0.0f) {
+        /* DO NOTHING */
+    }
+
+    FloatNumber::FloatNumber(float value) : value(value) {
+        /* DO NOTHING */
+    }
+
+    void FloatNumber::setValue(float value) {
+        this->value = value;
+    }
+
+    float FloatNumber::getValue() const {
+        return value;
+    }
+
     Object* FloatNumber::eval(Environment& env) {
         return this;
     }
@@ -88,14 +105,6 @@ namespace Lispino {
 
     Object* FloatNumber::remainderFloat(FloatNumber* obj) {
         return VM::getAllocator().createIntNumber(fmod(obj->value, value));
-    }
-
-    void FloatNumber::setValue(float value) {
-        this->value = value;
-    }
-
-    float FloatNumber::getValue() const {
-        return value;
     }
 
     bool FloatNumber::isAtom() const {

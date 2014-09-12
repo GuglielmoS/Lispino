@@ -6,9 +6,6 @@
 namespace Lispino {
 
     class Boolean : public Object {
-        
-        bool value;
-
         public:
 
             Boolean();
@@ -27,6 +24,10 @@ namespace Lispino {
             bool isBoolean() const;
             
             std::string toString() const;
+
+        private:
+
+            bool value;
     };
 };
 
