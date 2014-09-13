@@ -99,7 +99,7 @@ std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> Envi
   bindings["remainder"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Remainder());
 
   // equality
-  bindings["="] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Equal());
+  bindings["eq?"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Equal());
   bindings[">"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::GreaterThan());
   bindings[">="] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::GreaterEqualThan());
   bindings["<"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::LowerThan());

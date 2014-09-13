@@ -1,5 +1,5 @@
 (define (recur-expt b n)
-  (if (= n 0)
+  (if (zero? 0)
     1
     (* b (recur-expt b (- n 1)))))
 

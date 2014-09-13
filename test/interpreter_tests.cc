@@ -236,7 +236,7 @@ TEST(InterpreterTests, Closure) {
 }
 
 TEST(InterpreterTests, BuiltinEqual) {
-    std::stringstream stream("(= 0 0) (= 0 1) (= 2 2) (= 0.5 0.5)");
+    std::stringstream stream("(eq? 0 0) (eq? 0 1) (eq? 2 2) (eq? 0.5 0.5)");
     Parser parser(stream);
 
     // parse the stream and check the expressions

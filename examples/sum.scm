@@ -1,5 +1,5 @@
 (define (sum n)
-  (if (= n 0)
+  (if (zero? n)
     0
     (+ n (sum (- n 1)))))
 

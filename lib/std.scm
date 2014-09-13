@@ -6,7 +6,7 @@
   x)
 
 (define (null? val)
-  (= val nil))
+  (eq? val nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::::::::::::::
 ;; Boolean                                                                   ;;
@@ -102,7 +102,7 @@
   (- x 1))
 
 (define (range start end)
-  (if (= start end)
+  (if (eq? start end)
     nil
     (cons start (range (inc start) end))))
 
@@ -113,7 +113,7 @@
   (fold * 1 lst))
 
 (define (zero? n)
-  (= n 0))
+  (eq? n 0))
 
 (define (positive? n)
   (> n 0))
@@ -126,9 +126,9 @@
   (product (range 1 (inc n))))
 
 (define (exp base n)
-  (if (= n 1)
+  (if (eq? n 1)
     base
-    (if (= n 0)
+    (if (eq? n 0)
       1
       (if (even? n)
         (square (exp base (/ n 2)))
