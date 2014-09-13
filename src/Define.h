@@ -16,13 +16,13 @@ namespace Lispino {
             Define(); 
             Define(Symbol *name, Object* value);
 
-            Object* eval(Environment& env);
-
             void setName(Symbol *name);
             void setValue(Object *value);
 
             std::string getName() const;
             Object* getValue();
+
+            Object* eval(Environment& env);
 
             void mark();
             

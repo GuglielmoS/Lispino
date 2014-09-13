@@ -10,12 +10,12 @@ namespace Lispino {
 
             Boolean();
             Boolean(bool value);
-            
-            Object* eval(Environment& env);
 
             void setValue(bool value);
             bool getValue() const;
             
+            Object* eval(Environment& env);
+           
             int compare(Object* obj);
             int compareBoolean(Boolean* obj);
             

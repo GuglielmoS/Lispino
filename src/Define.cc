@@ -12,10 +12,6 @@ namespace Lispino {
         /* DO NOTHING */
     }
 
-    Object* Define::eval(Environment& env) {
-        return env.put(name, value->isLambda() ? value : value->eval(env));
-    }
-
     void Define::setName(Symbol *name) {
         this->name = name;
     }
@@ -30,6 +26,10 @@ namespace Lispino {
 
     Object* Define::getValue() {
         return value;
+    }
+
+    Object* Define::eval(Environment& env) {
+        return env.put(name, value->isLambda() ? value : value->eval(env));
     }
 
     void Define::mark() {

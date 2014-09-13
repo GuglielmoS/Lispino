@@ -8,18 +8,6 @@ namespace Lispino {
         /* DO NOTHING */
     }
 
-    Object* IfExpr::eval(Environment& env) {
-        Object *conditionResult = condition->eval(env);
-
-        if (!conditionResult->isBoolean())
-            throw std::runtime_error("IF: the condition must be a BOOLEAN!");
-        
-        if (static_cast<Boolean*>(conditionResult)->isTrue())
-            return consequent->eval(env);
-        else
-            return alternative->eval(env);
-    }
-
     void IfExpr::setCondition(Object* condition) {
         this->condition = condition;
     }
@@ -42,6 +30,20 @@ namespace Lispino {
 
     Object* IfExpr::getAlternative() {
         return alternative;
+    }
+
+    Object* IfExpr::eval(Environment& env) {
+        Object *conditionResult = condition->eval(env);
+
+        if (!conditionResult->isBoolean()) {
+            throw std::runtime_error("IF: the condition must be a BOOLEAN!");
+        }
+        
+        if (static_cast<Boolean*>(conditionResult)->isTrue()) {
+            return consequent->eval(env);
+        } else {
+            return alternative->eval(env);
+        }
     }
 
     void IfExpr::mark() {

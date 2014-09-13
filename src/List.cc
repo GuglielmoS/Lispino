@@ -35,41 +35,16 @@ namespace Lispino {
         if (head->isNil())
             return VM::getAllocator().createNil();
         
-        // extract the arguments if needed
+        // extract the arguments
         if (!cachedArgs) {
-            args.clear();
-            cachedArgs = true;
-
-            if (tail != nullptr) {
-                List *current = nullptr;
-
-                if (tail->isList()) {
-                    current = static_cast<List*>(tail);
-
-                    while (!current->isNil()) {
-                        if (current->head != nullptr) {
-                            args.push_back(current->head);
-                            if (!current->tail->isNil()) {
-                                if (current->tail->isList())
-                                    current = static_cast<List*>(current->tail);
-                                else {
-                                    args.push_back(current->tail);
-                                    break;
-                                }
-                            } else break;
-                        } else break;
-                    }
-                }
-                else if (!tail->isNil()) {
-                    args.push_back(tail);
-                }
-            }
+            updateCachedArguments();
         }
 
+        // execute the call
         Object *op = head->eval(env);
-        if (op->isBuiltinFunction())
+        if (op->isBuiltinFunction()) {
             return static_cast<Builtins::BuiltinFunction*>(op)->apply(args, env);
-        else {
+        } else {
             // evaluate the arguments
             std::vector<Object*> evaluatedArgs;
             for (unsigned int i = 0; i < args.size(); i++) {
@@ -84,12 +59,11 @@ namespace Lispino {
 
                 // execute the closure and return the result
                 return closure->apply(evaluatedArgs);
-            }
-            else if (op->isClosure()) {
+            } else if (op->isClosure()) {
                 return static_cast<Closure*>(op)->apply(evaluatedArgs);
-            }
-            else
+            } else {
                 throw std::runtime_error("Invalid function call, the operator cannot be used: " + op->toString());
+            }
         }
     }
 
@@ -146,4 +120,34 @@ namespace Lispino {
 
         return buf.str();   
     } 
+
+    void List::updateCachedArguments() {
+        args.clear();
+        cachedArgs = true;
+
+        if (tail != nullptr) {
+            List *current = nullptr;
+
+            if (tail->isList()) {
+                current = static_cast<List*>(tail);
+
+                while (!current->isNil()) {
+                    if (current->head != nullptr) {
+                        args.push_back(current->head);
+                        if (!current->tail->isNil()) {
+                            if (current->tail->isList())
+                                current = static_cast<List*>(current->tail);
+                            else {
+                                args.push_back(current->tail);
+                                break;
+                            }
+                        } else break;
+                    } else break;
+                }
+            }
+            else if (!tail->isNil()) {
+                args.push_back(tail);
+            }
+        }
+    }
 }

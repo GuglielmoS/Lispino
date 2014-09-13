@@ -9,9 +9,7 @@ namespace Lispino {
         public:
 
             IfExpr();
-    
-            Object* eval(Environment& env);
-
+ 
             void setCondition(Object* condition);
             void setConsequent(Object* consequent);
             void setAlternative(Object* alternative);
@@ -19,6 +17,8 @@ namespace Lispino {
             Object* getCondition();
             Object* getConsequent();
             Object* getAlternative();
+
+            Object* eval(Environment& env);
 
             void mark();
 

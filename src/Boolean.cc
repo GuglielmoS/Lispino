@@ -10,6 +10,14 @@ namespace Lispino {
         /* DO NOTHING */
     }
 
+    void Boolean::setValue(bool value) {
+        this->value = value;
+    }
+
+    bool Boolean::getValue() const {
+        return value;
+    }
+
     Object* Boolean::eval(Environment& env) {
         return this;
     }
@@ -22,14 +30,6 @@ namespace Lispino {
         if (value == obj->value) return 0;
         else if (value == false) return 1;
         else                     return -1;
-    }
-
-    void Boolean::setValue(bool value) {
-        this->value = value;
-    }
-
-    bool Boolean::getValue() const {
-        return value;
     }
 
     bool Boolean::isTrue() const {

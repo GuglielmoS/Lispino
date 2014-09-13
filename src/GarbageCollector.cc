@@ -26,12 +26,10 @@ namespace Lispino {
     }
 
     void GarbageCollector::markVisibleObjects(Environment* env, std::vector<Environment*>& markedEnvs) {
+        // mark the given environment objects if needed
         if (!alreadyMarked(env, markedEnvs)) {
-            std::unordered_map<std::string, std::pair<Symbol*, Object*>>::iterator iter;
-
-            // mark the current env
             markedEnvs.push_back(env);
-            for (iter = env->lookupTable().begin(); iter != env->lookupTable().end(); ++iter) {
+            for (auto iter = env->lookupTable().begin(); iter != env->lookupTable().end(); ++iter) {
                 // mark the current key-value pair
                 (iter->second).first->mark();
                 (iter->second).second->mark();
@@ -42,7 +40,7 @@ namespace Lispino {
                 }
             }
 
-            // mark the parent env if it exists
+            // mark the parent environment if it exists
             Environment *parentEnv = env->getParent();
             if (parentEnv != nullptr) {
                 markVisibleObjects(parentEnv, markedEnvs);

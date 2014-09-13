@@ -12,6 +12,19 @@ namespace Lispino {
         /* DO NOTHING */    
     }
 
+    void Closure::setLambda(Lambda *lambda) {
+        this->lambda = lambda;
+    }
+
+    void Closure::setEnv(Environment *parentEnv) {
+        this->env.reset(new Environment(parentEnv));
+    }
+
+    Environment* Closure::getEnv() {
+        return env.get();
+    }
+
+
     Object* Closure::eval(Environment& env) {
         return this;
     }
@@ -28,18 +41,6 @@ namespace Lispino {
         return lambda->getBody()->eval(*env);
     }
  
-    void Closure::setLambda(Lambda *lambda) {
-        this->lambda = lambda;
-    }
-
-    void Closure::setEnv(Environment *parentEnv) {
-        this->env.reset(new Environment(parentEnv));
-    }
-
-    Environment* Closure::getEnv() {
-        return env.get();
-    }
-
     void Closure::mark() {
         Object::mark();
         lambda->mark();

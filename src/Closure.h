@@ -16,13 +16,13 @@ namespace Lispino {
             Closure();
             Closure(Lambda *lambda, Environment *parentEnv);
 
-            Object* eval(Environment& env);
-            Object* apply(std::vector<Object*>& actualArgs);
-
             void setLambda(Lambda *lambda);
             void setEnv(Environment *parentEnv);
 
             Environment* getEnv();
+
+            Object* eval(Environment& env);
+            Object* apply(std::vector<Object*>& actualArgs);
 
             void mark();
 

@@ -39,6 +39,7 @@ namespace Lispino {
             bool cachedArgs;
 
             std::string toStringHelper(bool parentheses) const;
+            void updateCachedArguments();
     };
 };
 
