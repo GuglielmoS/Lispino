@@ -1,6 +1,6 @@
 OPTIMIZATION=3
 STANDARD=c++11
-CC=g++ -std=$(STANDARD) -O$(OPTIMIZATION) -Wall
+CC=g++ -std=$(STANDARD) -O$(OPTIMIZATION) -Wall -Wextra -pedantic -pedantic-errors -Wstrict-aliasing
 
 bin/lispino: src/main.o src/Tokenizer.o src/Token.o src/Parser.o src/Object.o src/Nil.o src/Define.o src/Lambda.o src/Boolean.o src/IntNumber.o src/FloatNumber.o src/List.o src/Quote.o src/Symbol.o src/String.o src/VM.o src/Memory.o src/Allocator.o src/GarbageCollector.o src/Environment.o src/Closure.o src/Interpreter.o src/Sequence.o src/IfExpr.o src/builtins/BuiltinFunction.o src/builtins/Add.o src/builtins/Sub.o src/builtins/Mul.o src/builtins/Div.o src/builtins/Remainder.o src/builtins/LowerThan.o src/builtins/LowerEqualThan.o src/builtins/GreaterThan.o src/builtins/GreaterEqualThan.o src/builtins/Equal.o src/builtins/Car.o src/builtins/Cdr.o src/builtins/Cons.o src/builtins/Display.o src/builtins/Newline.o
 	$(CC) -o $@ $^

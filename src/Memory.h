@@ -47,8 +47,6 @@ class Memory {
   struct MemoryNode {
     std::unique_ptr<Object> object;
     MemoryNode *next;
-
-    MemoryNode(Object* obj, MemoryNode* next) : object(obj), next(next) {}
   };
 
   // reference to the garbage collector

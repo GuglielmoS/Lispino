@@ -20,7 +20,7 @@ long int IntNumber::getValue() const {
   return value;
 }
 
-Object* IntNumber::eval(Environment& env) {
+Object* IntNumber::eval(Environment&) {
   return this;
 }
 

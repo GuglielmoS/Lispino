@@ -1,7 +1,7 @@
 #include "Nil.h"
 
 namespace Lispino {
-Object* Nil::eval(Environment& env) {
+Object* Nil::eval(Environment&) {
   return this;
 }
 
@@ -9,35 +9,35 @@ int Nil::compare(Object* obj) {
   return obj->compareNil(this);
 }
 
-int Nil::compareNil(Nil* obj) {
+int Nil::compareNil(Nil*) {
   return 0;
 }
 
-int Nil::compareList(List* obj) {
+int Nil::compareList(List*) {
   return -1;
 }
 
-int Nil::compareInt(IntNumber* obj) {
+int Nil::compareInt(IntNumber*) {
   return -1;
 }
 
-int Nil::compareFloat(FloatNumber* obj) {
+int Nil::compareFloat(FloatNumber*) {
   return -1;
 }
 
-int Nil::compareSymbol(Symbol* obj) {
+int Nil::compareSymbol(Symbol*) {
   return -1;
 }
 
-int Nil::compareString(String* obj) {
+int Nil::compareString(String*) {
   return -1;
 }
 
-int Nil::compareBoolean(Boolean* obj) {
+int Nil::compareBoolean(Boolean*) {
   return -1;
 }
 
-int Nil::compareSequence(Sequence* obj) {
+int Nil::compareSequence(Sequence*) {
   return -1;
 }
 

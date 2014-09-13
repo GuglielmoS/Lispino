@@ -16,39 +16,39 @@ Object* Object::eval() {
   return eval(VM::getGlobalEnv());
 }
 
-int Object::compare(Object* obj) {
+int Object::compare(Object*) {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareNil(Nil* obj) {
+int Object::compareNil(Nil*) {
   return -1;
 }
 
-int Object::compareList(List* obj) {
+int Object::compareList(List*) {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareInt(IntNumber* obj) {
+int Object::compareInt(IntNumber*) {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareFloat(FloatNumber* obj) {
+int Object::compareFloat(FloatNumber*) {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareSymbol(Symbol* obj) {
+int Object::compareSymbol(Symbol*) {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareString(String* obj) {
+int Object::compareString(String*) {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareBoolean(Boolean* obj) {
+int Object::compareBoolean(Boolean*) {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareSequence(Sequence* obj) {
+int Object::compareSequence(Sequence*) {
   throw std::runtime_error("compare: invalid data types!");
 }
 
@@ -56,67 +56,67 @@ Object* Object::negate() {
   throw std::runtime_error("negate: invalid data type!");
 }
 
-Object* Object::add(Object* obj) {
+Object* Object::add(Object*) {
   throw std::runtime_error("+: invalid data types!");
 }
 
-Object* Object::addInt(IntNumber* obj) {
+Object* Object::addInt(IntNumber*) {
   throw std::runtime_error("+: invalid data types!");
 }
 
-Object* Object::addFloat(FloatNumber* obj) {
+Object* Object::addFloat(FloatNumber*) {
   throw std::runtime_error("+: invalid data types!");
 }
 
-Object* Object::addString(String* obj) {
+Object* Object::addString(String*) {
   throw std::runtime_error("+: invalid data types!");
 }
 
-Object* Object::sub(Object* obj) {
+Object* Object::sub(Object*) {
   throw std::runtime_error("-: invalid data types!");
 }
 
-Object* Object::subInt(IntNumber* obj) {
+Object* Object::subInt(IntNumber*) {
   throw std::runtime_error("-: invalid data types!");
 }
 
-Object* Object::subFloat(FloatNumber* obj) {
+Object* Object::subFloat(FloatNumber*) {
   throw std::runtime_error("-: invalid data types!");
 }
 
-Object* Object::mul(Object* obj) {
+Object* Object::mul(Object*) {
   throw std::runtime_error("*: invalid data types!");
 }
 
-Object* Object::mulInt(IntNumber* obj) {
+Object* Object::mulInt(IntNumber*) {
   throw std::runtime_error("*: invalid data types!");
 }
 
-Object* Object::mulFloat(FloatNumber* obj) {
+Object* Object::mulFloat(FloatNumber*) {
   throw std::runtime_error("*: invalid data types!");
 }
 
-Object* Object::div(Object* obj) {
+Object* Object::div(Object*) {
   throw std::runtime_error("/: invalid data types!");
 }
 
-Object* Object::divInt(IntNumber* obj) {
+Object* Object::divInt(IntNumber*) {
   throw std::runtime_error("/: invalid data types!");
 }
 
-Object* Object::divFloat(FloatNumber* obj) {
+Object* Object::divFloat(FloatNumber*) {
   throw std::runtime_error("/: invalid data types!");
 }
 
-Object* Object::remainder(Object* obj) {
+Object* Object::remainder(Object*) {
   throw std::runtime_error("remainder: invalid data types!");
 }
 
-Object* Object::remainderInt(IntNumber* obj) {
+Object* Object::remainderInt(IntNumber*) {
   throw std::runtime_error("remainder: invalid data types!");
 }
 
-Object* Object::remainderFloat(FloatNumber* obj) {
+Object* Object::remainderFloat(FloatNumber*) {
   throw std::runtime_error("remainder: invalid data types!");
 }
 

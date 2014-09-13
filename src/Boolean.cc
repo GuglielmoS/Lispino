@@ -18,7 +18,7 @@ bool Boolean::getValue() const {
   return value;
 }
 
-Object* Boolean::eval(Environment& env) {
+Object* Boolean::eval(Environment&) {
   return this;
 }
 

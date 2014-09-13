@@ -78,7 +78,7 @@ Object* Memory::allocate(Object::ObjectType type) {
   }
 
   // add the allocated object to the memory linked list
-  MemoryNode *newNode = new MemoryNode(allocated_object, first);
+  MemoryNode *newNode = new MemoryNode{std::unique_ptr<Object>(allocated_object), first};
   first = newNode;
 
   // increase the counter

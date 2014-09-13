@@ -8,7 +8,7 @@ namespace Lispino {
 
 namespace Builtins {
 
-  Object* Newline::apply(std::vector<Object*>& args, Environment& env) {
+Object* Newline::apply(std::vector<Object*>& args, Environment&) {
   if (args.size() != 0)
     throw std::runtime_error("newline: wrong number of arguments!");
 

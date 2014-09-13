@@ -22,7 +22,7 @@ float FloatNumber::getValue() const {
   return value;
 }
 
-Object* FloatNumber::eval(Environment& env) {
+Object* FloatNumber::eval(Environment&) {
   return this;
 }
 
