@@ -1,5 +1,6 @@
 #include "Environment.h"
 
+#include "builtins/Set.h"
 #include "builtins/Car.h"
 #include "builtins/Cdr.h"
 #include "builtins/Cons.h"
@@ -85,6 +86,9 @@ Object* Environment::get(Symbol* key) {
 
 std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> Environment::initializeBuiltinFunctions() {
   std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> bindings;
+
+  // environment
+  bindings["set!"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Set());
 
   // list
   bindings["car"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Car());
