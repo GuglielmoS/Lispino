@@ -21,15 +21,15 @@ TEST(TokenizerTests, SkipSpaces) {
 
     // check the presence of the two symbols (te,st)
     std::unique_ptr<Token> token(tokenizer.next()); 
-    ASSERT_EQ(SYMBOL, token->getType());
+    ASSERT_EQ(TokenType::SYMBOL, token->getType());
     ASSERT_EQ("te", token->getSymbol());
     token.reset(tokenizer.next());
-    ASSERT_EQ(SYMBOL, token->getType());
+    ASSERT_EQ(TokenType::SYMBOL, token->getType());
     ASSERT_EQ("st", token->getSymbol());
 
     // check the End Of Stream (EOS)
     token.reset(tokenizer.next());
-    ASSERT_EQ(EOS, token->getType());
+    ASSERT_EQ(TokenType::EOS, token->getType());
 }
 
 TEST(TokenizerTests, SkipCommentsAndSpaces) {
@@ -43,15 +43,15 @@ TEST(TokenizerTests, SkipCommentsAndSpaces) {
 
     // check the presence of the two symbols (te,st)
     std::unique_ptr<Token> token(tokenizer.next()); 
-    ASSERT_EQ(SYMBOL, token->getType());
+    ASSERT_EQ(TokenType::SYMBOL, token->getType());
     ASSERT_EQ("te", token->getSymbol());
     token.reset(tokenizer.next());
-    ASSERT_EQ(SYMBOL, token->getType());
+    ASSERT_EQ(TokenType::SYMBOL, token->getType());
     ASSERT_EQ("st", token->getSymbol());
 
     // check the End Of Stream (EOS)
     token.reset(tokenizer.next());
-    ASSERT_EQ(EOS, token->getType());
+    ASSERT_EQ(TokenType::EOS, token->getType());
 }
 
 TEST(TokenizerTests, Delimiters) {
@@ -65,17 +65,17 @@ TEST(TokenizerTests, Delimiters) {
 
     // check the presence of the delimiters
     std::unique_ptr<Token> token(tokenizer.next()); 
-    ASSERT_EQ(OPEN_PAREN, token->getType());
+    ASSERT_EQ(TokenType::OPEN_PAREN, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(CLOSE_PAREN, token->getType());
+    ASSERT_EQ(TokenType::CLOSE_PAREN, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(DOT, token->getType());
+    ASSERT_EQ(TokenType::DOT, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(SMART_QUOTE, token->getType());
+    ASSERT_EQ(TokenType::SMART_QUOTE, token->getType());
 
     // check the End Of Stream (EOS)
     token.reset(tokenizer.next());
-    ASSERT_EQ(EOS, token->getType());   
+    ASSERT_EQ(TokenType::EOS, token->getType());   
 }
 
 TEST(TokenizerTests, Symbols) {
@@ -89,20 +89,20 @@ TEST(TokenizerTests, Symbols) {
 
     // check the presence of the symbols
     std::unique_ptr<Token> token(tokenizer.next()); 
-    ASSERT_EQ(SYMBOL, token->getType());
+    ASSERT_EQ(TokenType::SYMBOL, token->getType());
     ASSERT_EQ("abc123", token->getSymbol());
 
     token.reset(tokenizer.next());
-    ASSERT_EQ(SYMBOL, token->getType());
+    ASSERT_EQ(TokenType::SYMBOL, token->getType());
     ASSERT_EQ("de_boh", token->getSymbol());
 
     token.reset(tokenizer.next());
-    ASSERT_EQ(SYMBOL, token->getType());
+    ASSERT_EQ(TokenType::SYMBOL, token->getType());
     ASSERT_EQ("this-is-a-symbol", token->getSymbol());
 
     // check the End Of Stream (EOS)
     token.reset(tokenizer.next());
-    ASSERT_EQ(EOS, token->getType());
+    ASSERT_EQ(TokenType::EOS, token->getType());
 }
 
 TEST(TokenizerTests, IntNumbers) {
@@ -116,18 +116,18 @@ TEST(TokenizerTests, IntNumbers) {
 
     // check the presence of the numbers
     std::unique_ptr<Token> token(tokenizer.next()); 
-    ASSERT_EQ(INT_NUMBER, token->getType());
+    ASSERT_EQ(TokenType::INT_NUMBER, token->getType());
     ASSERT_EQ(12345, token->getIntNumber());
     token.reset(tokenizer.next());
-    ASSERT_EQ(INT_NUMBER, token->getType());
+    ASSERT_EQ(TokenType::INT_NUMBER, token->getType());
     ASSERT_EQ(54321, token->getIntNumber());
     token.reset(tokenizer.next());
-    ASSERT_EQ(INT_NUMBER, token->getType());
+    ASSERT_EQ(TokenType::INT_NUMBER, token->getType());
     ASSERT_EQ(-1, token->getIntNumber());
 
     // check the End Of Stream (EOS)
     token.reset(tokenizer.next());
-    ASSERT_EQ(EOS, token->getType());
+    ASSERT_EQ(TokenType::EOS, token->getType());
 }
 
 TEST(TokenizerTests, FloatNumbers) {
@@ -141,18 +141,18 @@ TEST(TokenizerTests, FloatNumbers) {
 
     // check the presence of the numbers
     std::unique_ptr<Token> token(tokenizer.next()); 
-    ASSERT_EQ(FLOAT_NUMBER, token->getType());
+    ASSERT_EQ(TokenType::FLOAT_NUMBER, token->getType());
     ASSERT_FLOAT_EQ(1.5f, token->getFloatNumber());
     token.reset(tokenizer.next());
-    ASSERT_EQ(FLOAT_NUMBER, token->getType());
+    ASSERT_EQ(TokenType::FLOAT_NUMBER, token->getType());
     ASSERT_FLOAT_EQ(0.1f, token->getFloatNumber());
     token.reset(tokenizer.next());
-    ASSERT_EQ(FLOAT_NUMBER, token->getType());
+    ASSERT_EQ(TokenType::FLOAT_NUMBER, token->getType());
     ASSERT_FLOAT_EQ(15.0001f, token->getFloatNumber());
 
     // check the End Of Stream (EOS)
     token.reset(tokenizer.next());
-    ASSERT_EQ(EOS, token->getType());
+    ASSERT_EQ(TokenType::EOS, token->getType());
 }
 
 TEST(TokenizerTests, Strings) {
@@ -166,16 +166,16 @@ TEST(TokenizerTests, Strings) {
 
     // check the presence of the symbols
     std::unique_ptr<Token> token(tokenizer.next()); 
-    ASSERT_EQ(STRING, token->getType());
+    ASSERT_EQ(TokenType::STRING, token->getType());
     ASSERT_EQ("Plain string", token->getString());
 
     token.reset(tokenizer.next());
-    ASSERT_EQ(STRING, token->getType());
+    ASSERT_EQ(TokenType::STRING, token->getType());
     ASSERT_EQ("String with \"escape\"", token->getString());
 
     // check the End Of Stream (EOS)
     token.reset(tokenizer.next());
-    ASSERT_EQ(EOS, token->getType());
+    ASSERT_EQ(TokenType::EOS, token->getType());
 }
 
 TEST(TokenizerTests, ReservedKeywords) {
@@ -194,59 +194,59 @@ TEST(TokenizerTests, ReservedKeywords) {
 
     // check the DEFINE keyword
     std::unique_ptr<Token> token(tokenizer.next()); 
-    ASSERT_EQ(DEFINE, token->getType());
+    ASSERT_EQ(TokenType::DEFINE, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(DEFINE, token->getType());
+    ASSERT_EQ(TokenType::DEFINE, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(DEFINE, token->getType());
+    ASSERT_EQ(TokenType::DEFINE, token->getType());
 
     // check the NIL keyword
     token.reset(tokenizer.next());
-    ASSERT_EQ(NIL, token->getType());
+    ASSERT_EQ(TokenType::NIL, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(NIL, token->getType());
+    ASSERT_EQ(TokenType::NIL, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(NIL, token->getType());
+    ASSERT_EQ(TokenType::NIL, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(NIL, token->getType());
+    ASSERT_EQ(TokenType::NIL, token->getType());
 
     // check the LAMBDA keyword
     token.reset(tokenizer.next());
-    ASSERT_EQ(LAMBDA, token->getType());
+    ASSERT_EQ(TokenType::LAMBDA, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(LAMBDA, token->getType());
+    ASSERT_EQ(TokenType::LAMBDA, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(LAMBDA, token->getType());
+    ASSERT_EQ(TokenType::LAMBDA, token->getType());
 
     // check the QUOTE keyword
     token.reset(tokenizer.next());
-    ASSERT_EQ(QUOTE, token->getType());
+    ASSERT_EQ(TokenType::QUOTE, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(QUOTE, token->getType());
+    ASSERT_EQ(TokenType::QUOTE, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(QUOTE, token->getType());
+    ASSERT_EQ(TokenType::QUOTE, token->getType());
 
     // check the IF keyword
     token.reset(tokenizer.next());
-    ASSERT_EQ(IF, token->getType());
+    ASSERT_EQ(TokenType::IF, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(IF, token->getType());
+    ASSERT_EQ(TokenType::IF, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(IF, token->getType());
+    ASSERT_EQ(TokenType::IF, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(IF, token->getType());
+    ASSERT_EQ(TokenType::IF, token->getType());
 
     // check the BOOLEAN keywords
     token.reset(tokenizer.next());
-    ASSERT_EQ(BOOL_TRUE, token->getType());
+    ASSERT_EQ(TokenType::BOOL_TRUE, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(BOOL_TRUE, token->getType());
+    ASSERT_EQ(TokenType::BOOL_TRUE, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(BOOL_FALSE, token->getType());
+    ASSERT_EQ(TokenType::BOOL_FALSE, token->getType());
     token.reset(tokenizer.next());
-    ASSERT_EQ(BOOL_FALSE, token->getType());
+    ASSERT_EQ(TokenType::BOOL_FALSE, token->getType());
 
     // check the End Of Stream (EOS)
     token.reset(tokenizer.next());
-    ASSERT_EQ(EOS, token->getType());
+    ASSERT_EQ(TokenType::EOS, token->getType());
 }

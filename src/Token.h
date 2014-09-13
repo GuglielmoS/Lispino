@@ -8,7 +8,7 @@
 
 namespace Lispino {
 
-enum TokenType {
+enum class TokenType {
   EOS,
   OPEN_PAREN, CLOSE_PAREN, DOT, SMART_QUOTE,
   SYMBOL,

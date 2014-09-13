@@ -31,7 +31,7 @@ Token* Tokenizer::next() {
   else if ((current_token = string()) != nullptr)
     return current_token;
   else
-    return new Token(UNKNOWN);
+    return new Token(TokenType::UNKNOWN);
 }
 
 void Tokenizer::skipSpaces() {
@@ -67,11 +67,11 @@ bool Tokenizer::isdelimiter(char ch) const {
 Token* Tokenizer::delimiter() {
   int ch = stream.get();
   switch (ch) {
-    case EOF:  return new Token(EOS);
-    case '(':  return new Token(OPEN_PAREN);
-    case ')':  return new Token(CLOSE_PAREN);
-    case '.':  return new Token(DOT);
-    case '\'': return new Token(SMART_QUOTE);
+    case EOF:  return new Token(TokenType::EOS);
+    case '(':  return new Token(TokenType::OPEN_PAREN);
+    case ')':  return new Token(TokenType::CLOSE_PAREN);
+    case '.':  return new Token(TokenType::DOT);
+    case '\'': return new Token(TokenType::SMART_QUOTE);
   }
   stream.unget();
 
@@ -93,7 +93,7 @@ Token* Tokenizer::symbol() {
   if (buffer.str().size() == 0)
     return nullptr;
   else
-    return new Token(SYMBOL, buffer.str());
+    return new Token(TokenType::SYMBOL, buffer.str());
 }
 
 Token* Tokenizer::number() {
@@ -185,7 +185,7 @@ Token* Tokenizer::string() {
     return nullptr;
   }
 
-  return new Token(STRING, buffer.str());
+  return new Token(TokenType::STRING, buffer.str());
 }
 
 }

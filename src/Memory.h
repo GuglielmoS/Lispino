@@ -35,7 +35,7 @@ class Memory {
 
   Boolean* getFalseInstance();
 
-  Object* allocate(Object::ObjectType type);
+  Object* allocate(ObjectType type);
 
   size_t getAllocatedObjects() const;
 

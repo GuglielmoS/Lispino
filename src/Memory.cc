@@ -36,41 +36,41 @@ Boolean* Memory::getFalseInstance() {
   return false_instance;
 }
 
-Object* Memory::allocate(Object::ObjectType type) {
+Object* Memory::allocate(ObjectType type) {
   Object *allocated_object = nullptr;
 
   switch (type) {
-    case Object::SYMBOL:
+    case ObjectType::SYMBOL:
       allocated_object = new Symbol();
       break;
-    case Object::INT_NUMBER:
+    case ObjectType::INT_NUMBER:
       allocated_object = new IntNumber();
       break;
-    case Object::FLOAT_NUMBER:
+    case ObjectType::FLOAT_NUMBER:
       allocated_object = new FloatNumber();
       break;
-    case Object::STRING:
+    case ObjectType::STRING:
       allocated_object = new String();
       break;
-    case Object::LIST:
+    case ObjectType::LIST:
       allocated_object = new List();
       break;
-    case Object::LAMBDA:
+    case ObjectType::LAMBDA:
       allocated_object = new Lambda();
       break;
-    case Object::CLOSURE:
+    case ObjectType::CLOSURE:
       allocated_object = new Closure();
       break;
-    case Object::QUOTE:
+    case ObjectType::QUOTE:
       allocated_object = new Quote();
       break;
-    case Object::DEFINE:
+    case ObjectType::DEFINE:
       allocated_object = new Define();
       break;
-    case Object::IF:
+    case ObjectType::IF:
       allocated_object = new IfExpr();
       break;
-    case Object::SEQUENCE:
+    case ObjectType::SEQUENCE:
       allocated_object = new Sequence();
       break;
     default:

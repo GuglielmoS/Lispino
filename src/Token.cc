@@ -17,7 +17,7 @@ Token::Token(TokenType type)
 }
 
 Token::Token(long int value)
-    : type(INT_NUMBER),
+    : type(TokenType::INT_NUMBER),
       raw_value(std::string()),
       int_value(value),
       float_value(0.0) {
@@ -25,7 +25,7 @@ Token::Token(long int value)
 }
 
 Token::Token(float value)
-    : type(FLOAT_NUMBER),
+    : type(TokenType::FLOAT_NUMBER),
       raw_value(std::string()),
       int_value(0),
       float_value(value) {

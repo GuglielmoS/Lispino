@@ -16,24 +16,23 @@ class Nil;
 class List;
 class Sequence;
 
+enum class ObjectType {
+  NIL,
+  DEFINE,
+  QUOTE,
+  LIST,
+  SYMBOL,
+  STRING,
+  INT_NUMBER, FLOAT_NUMBER,
+  BOOLEAN,
+  IF,
+  LAMBDA,
+  CLOSURE,
+  SEQUENCE
+};
+
 class Object {
  public:
-
-  enum ObjectType {
-    NIL,
-    DEFINE,
-    QUOTE,
-    LIST,
-    SYMBOL,
-    STRING,
-    INT_NUMBER, FLOAT_NUMBER,
-    BOOLEAN,
-    IF,
-    LAMBDA,
-    CLOSURE,
-    SEQUENCE
-  };
-
   Object();
 
   virtual ~Object();

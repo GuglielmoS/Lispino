@@ -11,14 +11,14 @@ Memory& Allocator::getMemory() {
 }
 
 Symbol* Allocator::createSymbol(std::string value) {
-  Symbol *symbol = static_cast<Symbol*>(memory.allocate(Object::SYMBOL));
+  Symbol *symbol = static_cast<Symbol*>(memory.allocate(ObjectType::SYMBOL));
   symbol->setValue(value);
 
   return symbol;
 }
 
 Symbol* Allocator::createRandomSymbol() {
-  Symbol *symbol = static_cast<Symbol*>(memory.allocate(Object::SYMBOL));
+  Symbol *symbol = static_cast<Symbol*>(memory.allocate(ObjectType::SYMBOL));
   symbol->setValue("SYMBOL#" + symbols_counter);
   symbols_counter++;
 
@@ -26,21 +26,21 @@ Symbol* Allocator::createRandomSymbol() {
 }
 
 String* Allocator::createString(std::string value) {
-  String *str = static_cast<String*>(memory.allocate(Object::STRING));
+  String *str = static_cast<String*>(memory.allocate(ObjectType::STRING));
   str->setValue(value);
 
   return str;
 }
 
 IntNumber* Allocator::createIntNumber(long int value) {
-  IntNumber *num = static_cast<IntNumber*>(memory.allocate(Object::INT_NUMBER));
+  IntNumber *num = static_cast<IntNumber*>(memory.allocate(ObjectType::INT_NUMBER));
   num->setValue(value);
 
   return num;
 }
 
 FloatNumber* Allocator::createFloatNumber(float value) {
-  FloatNumber *num = static_cast<FloatNumber*>(memory.allocate(Object::FLOAT_NUMBER));
+  FloatNumber *num = static_cast<FloatNumber*>(memory.allocate(ObjectType::FLOAT_NUMBER));
   num->setValue(value);
 
   return num;
@@ -51,7 +51,7 @@ Boolean* Allocator::createBoolean(bool value) {
 }
 
 List* Allocator::createList(Object* first, Object* rest) {
-  List *list = static_cast<List*>(memory.allocate(Object::LIST));
+  List *list = static_cast<List*>(memory.allocate(ObjectType::LIST));
   list->setFirst(first);
   list->setRest(rest);
 
@@ -59,7 +59,7 @@ List* Allocator::createList(Object* first, Object* rest) {
 }
 
 Lambda* Allocator::createLambda(Object* body, std::vector<std::string>& arguments) {
-  Lambda *lambda = static_cast<Lambda*>(memory.allocate(Object::LAMBDA));
+  Lambda *lambda = static_cast<Lambda*>(memory.allocate(ObjectType::LAMBDA));
   lambda->setBody(body);
   lambda->setArguments(arguments);
 
@@ -67,7 +67,7 @@ Lambda* Allocator::createLambda(Object* body, std::vector<std::string>& argument
 }
 
 Closure* Allocator::createClosure(Lambda *lambda, Environment *env) {
-  Closure *closure = static_cast<Closure*>(memory.allocate(Object::CLOSURE));
+  Closure *closure = static_cast<Closure*>(memory.allocate(ObjectType::CLOSURE));
   closure->setLambda(lambda);
   closure->setEnv(env);
 
@@ -75,7 +75,7 @@ Closure* Allocator::createClosure(Lambda *lambda, Environment *env) {
 }
 
 Define* Allocator::createDefine(std::string name, Object* value) {
-  Define *define = static_cast<Define*>(memory.allocate(Object::DEFINE));
+  Define *define = static_cast<Define*>(memory.allocate(ObjectType::DEFINE));
   define->setName(createSymbol(name));
   define->setValue(value);
 
@@ -83,7 +83,7 @@ Define* Allocator::createDefine(std::string name, Object* value) {
 }
 
 Quote* Allocator::createQuote(Object* value) {
-  Quote *quote = static_cast<Quote*>(memory.allocate(Object::QUOTE));
+  Quote *quote = static_cast<Quote*>(memory.allocate(ObjectType::QUOTE));
   quote->setValue(value);
 
   return quote;
@@ -94,7 +94,7 @@ Nil* Allocator::createNil() {
 }
 
 IfExpr* Allocator::createIf(Object* condition, Object* consequent, Object* alternative) {
-  IfExpr *if_expr = static_cast<IfExpr*>(memory.allocate(Object::IF));
+  IfExpr *if_expr = static_cast<IfExpr*>(memory.allocate(ObjectType::IF));
   if_expr->setCondition(condition);
   if_expr->setConsequent(consequent);
   if_expr->setAlternative(alternative);
@@ -103,7 +103,7 @@ IfExpr* Allocator::createIf(Object* condition, Object* consequent, Object* alter
 }
 
 Sequence* Allocator::createSequence(std::vector<Object*>& expressions) {
-  Sequence *seq = static_cast<Sequence*>(memory.allocate(Object::SEQUENCE));
+  Sequence *seq = static_cast<Sequence*>(memory.allocate(ObjectType::SEQUENCE));
   seq->setValue(expressions);
 
   return seq;
