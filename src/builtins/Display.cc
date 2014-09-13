@@ -15,17 +15,19 @@ Object* Display::apply(std::vector<Object*>& args, Environment& env) {
     throw std::runtime_error("display: wrong number of arguments!");
 
   std::stringstream buf;
-  for (unsigned int i = 0; i < args.size(); i++) {
-    std::string currentValue;
-    Object *currentObject = args[i]->eval(env);
+  std::string current_value;
+  Object *current_object;
 
-    if (currentObject->isString())
-      currentValue = static_cast<String*>(currentObject)->getValue();
+  for (auto& current_arg : args) {
+    current_object = current_arg->eval(env);
+
+    if (current_object->isString())
+      current_value = static_cast<String*>(current_object)->getValue();
     else
-      currentValue = currentObject->toString();
+      current_value = current_object->toString();
 
-    std::cout << currentValue;
-    buf << currentValue;
+    std::cout << current_value;
+    buf << current_value;
   }
 
   return VM::getAllocator().createString(buf.str());

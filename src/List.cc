@@ -48,8 +48,8 @@ Object* List::eval(Environment& env) {
   } else {
     // evaluate the arguments
     std::vector<Object*> evaluatedArgs;
-    for (unsigned int i = 0; i < args.size(); i++)
-      evaluatedArgs.push_back(args[i]->eval(env));
+    for (auto& current_arg : args)
+      evaluatedArgs.push_back(current_arg->eval(env));
 
     if (op->isLambda()) {
       Closure *closure = static_cast<Closure*>(op->eval(env));
@@ -89,8 +89,8 @@ void List::mark() {
   // mark its sub-components
   head->mark();
   tail->mark();
-  for (unsigned int i = 0; i < args.size(); i++)
-    args[i]->mark();
+  for (auto& current_arg : args)
+    current_arg->mark();
 }
 
 std::string List::toString() const {

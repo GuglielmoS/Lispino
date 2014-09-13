@@ -14,16 +14,16 @@ std::vector<Object*>& Sequence::getValue() {
 
 Object* Sequence::eval(Environment& env) {
   Object *result = VM::getAllocator().createNil();
-  for (unsigned int i = 0; i < expressions.size(); i++)
-    result = expressions[i]->eval(env);
+  for (auto& expr : expressions)
+    result = expr->eval(env);
 
   return result;
 }
 
 void Sequence::mark() {
   Object::mark();
-  for (unsigned int i = 0; i < expressions.size(); i++)
-    expressions[i]->mark();
+  for (auto& expr : expressions)
+    expr->mark();
 }
 
 bool Sequence::isSequence() const {
