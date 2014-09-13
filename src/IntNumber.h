@@ -8,47 +8,64 @@
 
 namespace Lispino {
 
-    class IntNumber : public Object {
-        public:
+class IntNumber : public Object {
+ public:
+  IntNumber();
 
-            IntNumber();
-            IntNumber(long int value);
+  IntNumber(long int value);
 
-            void setValue(long int value);
-            long int getValue() const;
+  void setValue(long int value);
 
-            Object* eval(Environment& env);
+  long int getValue() const;
 
-            Object* negate();
+  Object* eval(Environment& env);
 
-            int compare(Object* obj);
-            int compareInt(IntNumber* obj);
-            int compareFloat(FloatNumber* obj);
+  int compare(Object* obj);
 
-            Object* add(Object* obj);
-            Object* addInt(IntNumber* obj);
-            Object* addFloat(FloatNumber* obj);
-            Object* sub(Object* obj);
-            Object* subInt(IntNumber* obj);
-            Object* subFloat(FloatNumber* obj);
-            Object* mul(Object* obj);
-            Object* mulInt(IntNumber* obj);
-            Object* mulFloat(FloatNumber* obj);
-            Object* div(Object* obj);
-            Object* divInt(IntNumber* obj);
-            Object* divFloat(FloatNumber* obj);
-            Object* remainder(Object* obj);
-            Object* remainderInt(IntNumber* obj);
+  int compareInt(IntNumber* obj);
 
-            bool isAtom() const;
-            bool isIntNumber() const;
+  int compareFloat(FloatNumber* obj);
+  
+  Object* negate();
 
-            std::string toString() const;
+  Object* add(Object* obj);
 
-        private:
+  Object* addInt(IntNumber* obj);
 
-            long int value;
-    };
+  Object* addFloat(FloatNumber* obj);
+
+  Object* sub(Object* obj);
+  
+  Object* subInt(IntNumber* obj);
+  
+  Object* subFloat(FloatNumber* obj);
+  
+  Object* mul(Object* obj);
+  
+  Object* mulInt(IntNumber* obj);
+  
+  Object* mulFloat(FloatNumber* obj);
+  
+  Object* div(Object* obj);
+  
+  Object* divInt(IntNumber* obj);
+  
+  Object* divFloat(FloatNumber* obj);
+  
+  Object* remainder(Object* obj);
+  
+  Object* remainderInt(IntNumber* obj);
+
+  bool isAtom() const;
+  
+  bool isIntNumber() const;
+
+  std::string toString() const;
+
+ private:
+  long int value;
 };
+
+}
 
 #endif // LISPINO_INTNUMBER_H_

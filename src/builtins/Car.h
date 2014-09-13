@@ -5,14 +5,15 @@
 
 namespace Lispino {
 
-    namespace Builtins {
+namespace Builtins {
 
-        class Car : public BuiltinFunction {
-            public:
-                
-                Object* apply(std::vector<Object*>& args, Environment& env);
-        };
-    }
+class Car : public BuiltinFunction {
+ public:
+  Object* apply(std::vector<Object*>& args, Environment& env);
+};
+
+}
+
 }
 
 #endif // LISPINO_BUILTINS_CAR_H_

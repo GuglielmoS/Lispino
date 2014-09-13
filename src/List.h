@@ -8,39 +8,46 @@
 
 namespace Lispino {
 
-    class List : public Object {
-        public:
+class List : public Object {
+ public:
+  List();
 
-            List();
-            List(Object* head, Object* tail);
+  List(Object* head, Object* tail);
 
-            void setFirst(Object *first);
-            void setRest(Object *rest);
+  void setFirst(Object *first);
 
-            Object* getFirst();
-            Object* getRest();
+  void setRest(Object *rest);
 
-            Object* eval(Environment& env);
+  Object* getFirst();
 
-            int compare(Object* obj);
-            int compareList(List* obj);
+  Object* getRest();
 
-            void mark();
+  Object* eval(Environment& env);
 
-            bool isList() const;
+  int compare(Object* obj);
 
-            std::string toString() const;
+  int compareList(List* obj);
 
-        private:
+  void mark();
 
-            Object *head;
-            Object *tail;
-            std::vector<Object*> args;
-            bool cachedArgs;
+  bool isList() const;
 
-            std::string toStringHelper(bool parentheses) const;
-            void updateCachedArguments();
-    };
+  std::string toString() const;
+
+ private:
+  Object *head;
+
+  Object *tail;
+
+  std::vector<Object*> args;
+
+  bool cachedArgs;
+
+  std::string toStringHelper(bool parentheses) const;
+
+  void updateCachedArguments();
 };
+
+}
 
 #endif // LISPINO_LIST_H_

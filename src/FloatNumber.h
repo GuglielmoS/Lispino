@@ -8,47 +8,64 @@
 
 namespace Lispino {
 
-    class FloatNumber : public Object {
-        public:
+class FloatNumber : public Object {
+ public:
+  FloatNumber();
 
-            FloatNumber();
-            FloatNumber(float value);
+  FloatNumber(float value);
 
-            void setValue(float value);
-            float getValue() const;
+  void setValue(float value);
 
-            Object* eval(Environment& env);
+  float getValue() const;
 
-            Object* negate();
+  Object* eval(Environment& env);
 
-            int compare(Object* obj);
-            int compareInt(IntNumber* obj);
-            int compareFloat(FloatNumber* obj);
+  Object* negate();
 
-            Object* add(Object* obj);
-            Object* addInt(IntNumber* obj);
-            Object* addFloat(FloatNumber* obj);
-            Object* sub(Object* obj);
-            Object* subInt(IntNumber* obj);
-            Object* subFloat(FloatNumber* obj);
-            Object* mul(Object* obj);
-            Object* mulInt(IntNumber* obj);
-            Object* mulFloat(FloatNumber* obj);
-            Object* div(Object* obj);
-            Object* divInt(IntNumber* obj);
-            Object* divFloat(FloatNumber* obj);
-            Object* remainder(Object* obj);
-            Object* remainderFloat(FloatNumber* obj);
+  int compare(Object* obj);
 
-            bool isAtom() const;
-            bool isFloatNumber() const;
+  int compareInt(IntNumber* obj);
 
-            std::string toString() const;
+  int compareFloat(FloatNumber* obj);
 
-        private:
+  Object* add(Object* obj);
 
-            float value;
-    };
+  Object* addInt(IntNumber* obj);
+
+  Object* addFloat(FloatNumber* obj);
+
+  Object* sub(Object* obj);
+
+  Object* subInt(IntNumber* obj);
+
+  Object* subFloat(FloatNumber* obj);
+
+  Object* mul(Object* obj);
+
+  Object* mulInt(IntNumber* obj);
+
+  Object* mulFloat(FloatNumber* obj);
+
+  Object* div(Object* obj);
+
+  Object* divInt(IntNumber* obj);
+
+  Object* divFloat(FloatNumber* obj);
+
+  Object* remainder(Object* obj);
+
+  Object* remainderFloat(FloatNumber* obj);
+
+  bool isAtom() const;
+
+  bool isFloatNumber() const;
+
+  std::string toString() const;
+
+ private:
+  float value;
 };
+
+}
 
 #endif // LISPINO_FLOATNUMBER_H_

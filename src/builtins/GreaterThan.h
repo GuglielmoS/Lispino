@@ -5,14 +5,15 @@
 
 namespace Lispino {
 
-    namespace Builtins {
+namespace Builtins {
 
-        class GreaterThan : public BuiltinFunction {
-            public:
+class GreaterThan : public BuiltinFunction {
+ public:
+  Object* apply(std::vector<Object*>& args, Environment& env);
+};
 
-                Object* apply(std::vector<Object*>& args, Environment& env);
-        };
-    }
+}
+
 }
 
 #endif // LISPINO_BUILTINS_GREATERTHAN_H_

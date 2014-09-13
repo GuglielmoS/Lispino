@@ -7,29 +7,32 @@
 
 namespace Lispino {
 
-    class Symbol : public Object {
-        public:
+class Symbol : public Object {
+ public:
+  Symbol();
 
-            Symbol();
-            Symbol(std::string value);
+  Symbol(std::string value);
 
-            void setValue(std::string value);
-            std::string& getValue();
+  void setValue(std::string value);
+  
+  std::string& getValue();
 
-            Object* eval(Environment& env);
+  Object* eval(Environment& env);
 
-            int compare(Object* obj);
-            int compareSymbol(Symbol* obj);
+  int compare(Object* obj);
+  
+  int compareSymbol(Symbol* obj);
 
-            bool isAtom() const;
-            bool isSymbol() const;
+  bool isAtom() const;
 
-            std::string toString() const;
+  bool isSymbol() const;
 
-        private:
+  std::string toString() const;
 
-            std::string value;
-    };
+ private:
+  std::string value;
 };
+
+}
 
 #endif // LISPINO_SYMBOL_H_

@@ -6,148 +6,154 @@
 
 namespace Lispino {
 
-    List::List() : head(nullptr), tail(nullptr), cachedArgs(false) {
-        /* DO NOTHING */
+List::List() 
+    : head(nullptr), tail(nullptr), cachedArgs(false) {
+  /* DO NOTHING */
+}
+
+List::List(Object* head, Object* tail)
+    : head(head), tail(tail), cachedArgs(false) {
+  /* DO NOTHING */
+}
+
+void List::setFirst(Object *first) {
+  head = first;
+}
+
+void List::setRest(Object *rest) {
+  tail = rest;
+  cachedArgs = false;
+}
+
+Object* List::getFirst() {
+  return head;
+}
+
+Object* List::getRest() {
+  return tail;
+}
+
+Object* List::eval(Environment& env) {
+  if (head->isNil())
+    return VM::getAllocator().createNil();
+
+  // extract the arguments
+  if (!cachedArgs)
+    updateCachedArguments();
+
+  // execute the call
+  Object *op = head->eval(env);
+  if (op->isBuiltinFunction()) {
+    return static_cast<Builtins::BuiltinFunction*>(op)->apply(args, env);
+  } else {
+    // evaluate the arguments
+    std::vector<Object*> evaluatedArgs;
+    for (unsigned int i = 0; i < args.size(); i++)
+      evaluatedArgs.push_back(args[i]->eval(env));
+
+    if (op->isLambda()) {
+      Closure *closure = static_cast<Closure*>(op->eval(env));
+
+      // prevent the closure from being removed by the GC
+      env.put(VM::getAllocator().createRandomSymbol(), closure);
+
+      // execute the closure and return the result
+      return closure->apply(evaluatedArgs);
+    } else if (op->isClosure()) {
+      return static_cast<Closure*>(op)->apply(evaluatedArgs);
+    } else {
+      throw std::runtime_error("Invalid function call, the operator cannot be used: " + op->toString());
     }
+  }
+}
 
-    List::List(Object* head, Object* tail) : head(head), tail(tail), cachedArgs(false) {
-        /* DO NOTHING */
-    }
+int List::compare(Object* obj) {
+  return obj->compareList(this);
+}
 
-    void List::setFirst(Object *first) {
-        this->head = first;
-    }
+int List::compareList(List* obj) {
+  if (obj == this)
+    return 0;
+  else
+    return -1;
+}
 
-    void List::setRest(Object *rest) {
-        this->tail = rest;
-        cachedArgs = false;
-    }
+bool List::isList() const {
+  return true;
+}
 
-    Object* List::getFirst() {
-        return head;
-    }
+void List::mark() {
+  // mark the current object
+  Object::mark();
 
-    Object* List::getRest() {
-        return tail;
-    }
+  // mark its sub-components
+  head->mark();
+  tail->mark();
+  for (unsigned int i = 0; i < args.size(); i++)
+    args[i]->mark();
+}
 
-    Object* List::eval(Environment& env) {
-        if (head->isNil())
-            return VM::getAllocator().createNil();
-        
-        // extract the arguments
-        if (!cachedArgs) {
-            updateCachedArguments();
-        }
+std::string List::toString() const {
+  return toStringHelper(true);
+}
 
-        // execute the call
-        Object *op = head->eval(env);
-        if (op->isBuiltinFunction()) {
-            return static_cast<Builtins::BuiltinFunction*>(op)->apply(args, env);
-        } else {
-            // evaluate the arguments
-            std::vector<Object*> evaluatedArgs;
-            for (unsigned int i = 0; i < args.size(); i++) {
-                evaluatedArgs.push_back(args[i]->eval(env));
-            }
+std::string List::toStringHelper(bool parentheses) const {
+  std::stringstream buf;
+  if (parentheses)
+    buf << "(";
 
-            if (op->isLambda()) {
-                Closure *closure = static_cast<Closure*>(op->eval(env));
-                
-                // prevent the closure from being removed by the GC
-                env.put(VM::getAllocator().createRandomSymbol(), closure);
+  if (!head->isNil())
+    buf << head->toString();
 
-                // execute the closure and return the result
-                return closure->apply(evaluatedArgs);
-            } else if (op->isClosure()) {
-                return static_cast<Closure*>(op)->apply(evaluatedArgs);
+  if (!tail->isNil()) {
+    if (tail->isList() || tail->isQuote() || tail->isDefine() || tail->isLambda())
+      buf << " ";
+    else
+      buf << " . ";
+
+    if (tail->isList())
+      buf << static_cast<List*>(tail)->toStringHelper(false);
+    else
+      buf << tail->toString();
+  }
+
+  if (parentheses)
+    buf << ")";
+
+  return buf.str();   
+} 
+
+void List::updateCachedArguments() {
+  args.clear();
+  cachedArgs = true;
+
+  if (tail != nullptr) {
+    List *current = nullptr;
+
+    if (tail->isList()) {
+      current = static_cast<List*>(tail);
+
+      while (!current->isNil()) {
+        if (current->head != nullptr) {
+          args.push_back(current->head);
+          if (!current->tail->isNil()) {
+            if (current->tail->isList()) {
+              current = static_cast<List*>(current->tail);
             } else {
-                throw std::runtime_error("Invalid function call, the operator cannot be used: " + op->toString());
+              args.push_back(current->tail);
+              break;
             }
+          } else {
+            break;
+          }
+        } else {
+          break;
         }
+      }
+    } else if (!tail->isNil()) {
+      args.push_back(tail);
     }
+  }
+}
 
-    int List::compare(Object* obj) {
-        return obj->compareList(this);
-    }
-
-    int List::compareList(List* obj) {
-        if (obj == this) return 0;
-        else             return -1;
-    }
-
-    bool List::isList() const {
-        return true;
-    }
-
-    void List::mark() {
-        // mark the current object
-        Object::mark();
-
-        // mark its sub-components
-        head->mark();
-        tail->mark();
-        for (unsigned int i = 0; i < args.size(); i++)
-            args[i]->mark();
-    }
-
-    std::string List::toString() const {
-        return toStringHelper(true);
-    }
-
-    std::string List::toStringHelper(bool parentheses) const {
-        std::stringstream buf;
-        if (parentheses)
-            buf << "(";
-
-        if (!head->isNil())
-            buf << head->toString();
-
-        if (!tail->isNil()) {
-            if (tail->isList() || tail->isQuote() || tail->isDefine() || tail->isLambda())
-                buf << " ";
-            else
-                buf << " . ";
-
-            if (tail->isList())
-                buf << static_cast<List*>(tail)->toStringHelper(false);
-            else
-                buf << tail->toString();
-        }
-
-        if (parentheses)
-            buf << ")";
-
-        return buf.str();   
-    } 
-
-    void List::updateCachedArguments() {
-        args.clear();
-        cachedArgs = true;
-
-        if (tail != nullptr) {
-            List *current = nullptr;
-
-            if (tail->isList()) {
-                current = static_cast<List*>(tail);
-
-                while (!current->isNil()) {
-                    if (current->head != nullptr) {
-                        args.push_back(current->head);
-                        if (!current->tail->isNil()) {
-                            if (current->tail->isList())
-                                current = static_cast<List*>(current->tail);
-                            else {
-                                args.push_back(current->tail);
-                                break;
-                            }
-                        } else break;
-                    } else break;
-                }
-            }
-            else if (!tail->isNil()) {
-                args.push_back(tail);
-            }
-        }
-    }
 }

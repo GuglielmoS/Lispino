@@ -13,33 +13,34 @@
 #include "builtins/BuiltinFunction.h"
 
 namespace Lispino {
-    
-    class Environment {   
-        public:
-            
-            Environment();
-            Environment(Environment* env);
 
-            Environment* getParent();
+class Environment {   
+ public:
 
-            void setParent(Environment *env);
+  Environment();
 
-            std::unordered_map<std::string, std::pair<Symbol*, Object*>>& lookupTable();
-            std::unordered_map<std::string, std::pair<Symbol*, Object*>>::iterator iterator();
+  Environment(Environment* env);
 
-            Object* update(Symbol* key, Object* value);
-            Object* put(Symbol* key, Object* value);
-            Object* get(Symbol* key);
+  Environment* getParent();
 
-        private:
+  void setParent(Environment *env);
 
-            Environment *enclosingEnv;
-            std::unordered_map<std::string, std::pair<Symbol*, Object*>> frame;
+  std::unordered_map<std::string, std::pair<Symbol*, Object*>>& lookupTable();
 
-            // builtin functions
-            static std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> builtinFunctions;
-            static std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> initializeBuiltinFunctions();
-    };
+  Object* update(Symbol* key, Object* value);
+  Object* put(Symbol* key, Object* value);
+  Object* get(Symbol* key);
+
+ private:
+
+  Environment *parent;
+  std::unordered_map<std::string, std::pair<Symbol*, Object*>> frame;
+
+  // builtin functions
+  static std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> builtin_functions;
+  static std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> initializeBuiltinFunctions();
 };
+
+}
 
 #endif // LISPINO_ENVIRONMENT_H_

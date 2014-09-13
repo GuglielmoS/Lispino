@@ -8,29 +8,32 @@
 
 namespace Lispino {
 
-    class String : public Object {
-        public:
+class String : public Object {
+ public:
+  String();
 
-            String();
-            String(std::string value);
+  String(std::string value);
 
-            void setValue(std::string value);
-            std::string getValue() const;
+  void setValue(std::string value);
 
-            Object* eval(Environment& env);
+  std::string getValue() const;
 
-            int compare(Object* obj);
-            int compareString(String* obj);
+  Object* eval(Environment& env);
 
-            bool isAtom() const;
-            bool isString() const;
+  int compare(Object* obj);
 
-            std::string toString() const;
+  int compareString(String* obj);
 
-        private:
+  bool isAtom() const;
 
-            std::string value;
-    };
+  bool isString() const;
+
+  std::string toString() const;
+
+ private:
+  std::string value;
 };
+
+}
 
 #endif // LISPINO_STRING_H_

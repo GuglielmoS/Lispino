@@ -6,25 +6,25 @@
 #include "Object.h"
 
 namespace Lispino {
-    
-    class Sequence : public Object {
-        public:
 
-            void setValue(std::vector<Object*> value);
-            std::vector<Object*>& getValue();
+class Sequence : public Object {
+ public:
+  void setValue(std::vector<Object*> value);
 
-            Object* eval(Environment& env);
+  std::vector<Object*>& getValue();
 
-            void mark();
+  Object* eval(Environment& env);
 
-            bool isSequence() const;
+  void mark();
 
-            std::string toString() const;
+  bool isSequence() const;
 
-        private:
+  std::string toString() const;
 
-            std::vector<Object*> expressions;
-    };
+ private:
+  std::vector<Object*> expressions;
 };
+
+}
 
 #endif // LISPINO_SEQUENCE_H_

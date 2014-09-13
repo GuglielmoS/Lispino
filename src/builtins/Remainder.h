@@ -5,14 +5,15 @@
 
 namespace Lispino {
 
-    namespace Builtins {
+namespace Builtins {
 
-        class Remainder : public BuiltinFunction {
-            public:
+class Remainder : public BuiltinFunction {
+ public:
+  Object* apply(std::vector<Object*>& args, Environment& env);
+};
 
-                Object* apply(std::vector<Object*>& args, Environment& env);
-        };
-    }
+}
+
 }
 
 #endif // LISPINO_BUILTINS_REMAINDER_H_

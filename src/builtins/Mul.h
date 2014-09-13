@@ -5,14 +5,15 @@
 
 namespace Lispino {
 
-    namespace Builtins {
+namespace Builtins {
 
-        class Mul : public BuiltinFunction {
-            public:
+class Mul : public BuiltinFunction {
+ public:
+  Object* apply(std::vector<Object*>& args, Environment& env);
+};
 
-                Object* apply(std::vector<Object*>& args, Environment& env);
-        };
-    }
+}
+
 }
 
 #endif // LISPINO_BUILTINS_MUL_H_

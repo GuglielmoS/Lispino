@@ -5,30 +5,35 @@
 
 namespace Lispino {
 
-    class Boolean : public Object {
-        public:
+class Boolean : public Object {
+ public:
+  Boolean();
 
-            Boolean();
-            Boolean(bool value);
+  Boolean(bool value);
 
-            void setValue(bool value);
-            bool getValue() const;
-            
-            Object* eval(Environment& env);
-           
-            int compare(Object* obj);
-            int compareBoolean(Boolean* obj);
-            
-            bool isTrue() const;
-            bool isFalse() const;
-            bool isBoolean() const;
-            
-            std::string toString() const;
+  void setValue(bool value);
 
-        private:
+  bool getValue() const;
 
-            bool value;
-    };
+  Object* eval(Environment& env);
+
+  int compare(Object* obj);
+
+  int compareBoolean(Boolean* obj);
+
+  bool isTrue() const;
+
+  bool isFalse() const;
+
+  bool isBoolean() const;
+
+  std::string toString() const;
+
+ private:
+  // the value that the object represents
+  bool value;
 };
+
+}
 
 #endif // LISPINO_BOOLEAN_H_

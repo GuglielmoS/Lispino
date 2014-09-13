@@ -9,26 +9,32 @@
 
 namespace Lispino {
 
-    class Parser {
-        public:
+class Parser {
+ public:
+  Parser(std::istream& inputStream);
 
-            Parser(std::istream& inputStream);
+  Object* parse();
 
-            Object* parse();
-            Object* parseExpr();
+  Object* parseExpr();
 
-        private:
+ private:
+  Allocator &allocator;
 
-            Allocator &allocator;
-            Tokenizer tokenizer;
+  Tokenizer tokenizer;
 
-            Object* parseIf();
-            Object* parseList();
-            Object* parseLambda();
-            Object* parseDefine();
-            Object* parseQuote();
-            Object* dispatch(Token *token);
-    };
+  Object* parseIf();
+  
+  Object* parseList();
+  
+  Object* parseLambda();
+  
+  Object* parseDefine();
+  
+  Object* parseQuote();
+  
+  Object* dispatch(Token *token);
 };
+
+}
 
 #endif // LISPINO_PARSER_H_

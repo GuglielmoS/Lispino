@@ -7,14 +7,15 @@
 
 namespace Lispino {
 
-    namespace Builtins {
+namespace Builtins {
 
-        class Display : public BuiltinFunction {
-            public:
+class Display : public BuiltinFunction {
+ public:
+  Object* apply(std::vector<Object*>& args, Environment& env);
+};
 
-                Object* apply(std::vector<Object*>& args, Environment& env);
-        };
-    }
+}
+
 }
 
 #endif // LISPINO_BUILTINS_DISPLAY_H_

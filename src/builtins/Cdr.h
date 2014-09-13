@@ -5,14 +5,15 @@
 
 namespace Lispino {
 
-    namespace Builtins {
-        
-        class Cdr : public BuiltinFunction {
-            public:
+namespace Builtins {
 
-                Object* apply(std::vector<Object*>& args, Environment& env);
-        };
-    }
+class Cdr : public BuiltinFunction {
+ public:
+  Object* apply(std::vector<Object*>& args, Environment& env);
+};
+
+}
+
 }
 
 #endif // LISPINO_BUILTINS_CDR_H_

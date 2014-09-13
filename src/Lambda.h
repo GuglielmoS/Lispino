@@ -9,33 +9,35 @@
 
 namespace Lispino {
 
-    class Closure;
+class Closure;
 
-    class Lambda : public Object {
-        public:
+class Lambda : public Object {
+ public:
+  Lambda();
 
-            Lambda();
-            Lambda(Object* body, std::vector<std::string> arguments);
-    
-            void setBody(Object* body);
-            void setArguments(std::vector<std::string> arguments);
+  Lambda(Object* body, std::vector<std::string> arguments);
 
-            Object* getBody();
-            std::vector<std::string> getArguments();
+  void setBody(Object* body);
 
-            Object* eval(Environment& env);
+  void setArguments(std::vector<std::string> arguments);
 
-            void mark();
+  Object* getBody();
 
-            bool isLambda() const;
+  std::vector<std::string> getArguments();
 
-            std::string toString() const;
+  Object* eval(Environment& env);
 
-        private:
+  void mark();
 
-            Object *body;
-            std::vector<std::string> arguments;
-    };
+  bool isLambda() const;
+
+  std::string toString() const;
+
+ private:
+  Object *body;
+  std::vector<std::string> arguments;
 };
+
+}
 
 #endif // LISPINO_LAMBDA_H_

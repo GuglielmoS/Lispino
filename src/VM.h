@@ -8,32 +8,31 @@
 
 namespace Lispino {
 
-    class VM {
-        public:
+class VM {
+ public:
+  static Environment& getGlobalEnv();
+  static Allocator& getAllocator();
+  static Memory& getMemory();
 
-            static Environment& getGlobalEnv();
-            static Allocator& getAllocator();
-            static Memory& getMemory();
-      
-        private:
+ private:
+  VM();
 
-            VM();
+  // memory used at runtime by the objects
+  Memory memory;
 
-            // memory used at runtime by the objects
-            Memory memory;
+  // used when at runtime when a new object is needed 
+  Allocator allocator;
 
-            // used when at runtime when a new object is needed 
-            Allocator allocator;
+  // gc used by the memory when needed
+  GarbageCollector gc;
 
-            // gc used by the memory when needed
-            GarbageCollector gc;
+  // environment that contains the global definitions 
+  Environment globalEnv;
 
-            // environment that contains the global definitions 
-            Environment globalEnv;
-        
-            // singleton instance
-            static VM instance;
-    };
+  // singleton instance
+  static VM instance;
+};
+
 }
 
 #endif // LISPINO_VM_H_

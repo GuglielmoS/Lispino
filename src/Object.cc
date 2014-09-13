@@ -3,192 +3,193 @@
 
 namespace Lispino {
 
-    Object::Object() : markFlag(false) {
-        /* DO NOTHING */
-    }
-    
-    /// default destructor
-    Object::~Object() {
-        /* DO NOTHING */
-    }
+Object::Object() : markFlag(false) {
+  /* DO NOTHING */
+}
 
-    Object* Object::eval() {
-        return eval(VM::getGlobalEnv());
-    }
+/// default destructor
+Object::~Object() {
+  /* DO NOTHING */
+}
 
-    int Object::compare(Object* obj) {
-        throw std::runtime_error("compare: invalid data types!");
-    }
+Object* Object::eval() {
+  return eval(VM::getGlobalEnv());
+}
 
-    int Object::compareNil(Nil* obj) {
-        return -1;
-    }
+int Object::compare(Object* obj) {
+  throw std::runtime_error("compare: invalid data types!");
+}
 
-    int Object::compareList(List* obj) {
-        throw std::runtime_error("compare: invalid data types!");
-    }
+int Object::compareNil(Nil* obj) {
+  return -1;
+}
 
-    int Object::compareInt(IntNumber* obj) {
-        throw std::runtime_error("compare: invalid data types!");
-    }
+int Object::compareList(List* obj) {
+  throw std::runtime_error("compare: invalid data types!");
+}
 
-    int Object::compareFloat(FloatNumber* obj) {
-        throw std::runtime_error("compare: invalid data types!");
-    }
+int Object::compareInt(IntNumber* obj) {
+  throw std::runtime_error("compare: invalid data types!");
+}
 
-    int Object::compareSymbol(Symbol* obj) {
-        throw std::runtime_error("compare: invalid data types!");
-    }
+int Object::compareFloat(FloatNumber* obj) {
+  throw std::runtime_error("compare: invalid data types!");
+}
 
-    int Object::compareString(String* obj) {
-        throw std::runtime_error("compare: invalid data types!");
-    }
+int Object::compareSymbol(Symbol* obj) {
+  throw std::runtime_error("compare: invalid data types!");
+}
 
-    int Object::compareBoolean(Boolean* obj) {
-        throw std::runtime_error("compare: invalid data types!");
-    }
+int Object::compareString(String* obj) {
+  throw std::runtime_error("compare: invalid data types!");
+}
 
-    int Object::compareSequence(Sequence* obj) {
-        throw std::runtime_error("compare: invalid data types!");
-    }
+int Object::compareBoolean(Boolean* obj) {
+  throw std::runtime_error("compare: invalid data types!");
+}
 
-    Object* Object::negate() {
-        throw std::runtime_error("negate: invalid data type!");
-    }
+int Object::compareSequence(Sequence* obj) {
+  throw std::runtime_error("compare: invalid data types!");
+}
 
-    Object* Object::add(Object* obj) {
-        throw std::runtime_error("+: invalid data types!");
-    }
+Object* Object::negate() {
+  throw std::runtime_error("negate: invalid data type!");
+}
 
-    Object* Object::addInt(IntNumber* obj) {
-        throw std::runtime_error("+: invalid data types!");
-    }
+Object* Object::add(Object* obj) {
+  throw std::runtime_error("+: invalid data types!");
+}
 
-    Object* Object::addFloat(FloatNumber* obj) {
-        throw std::runtime_error("+: invalid data types!");
-    }
+Object* Object::addInt(IntNumber* obj) {
+  throw std::runtime_error("+: invalid data types!");
+}
 
-    Object* Object::addString(String* obj) {
-        throw std::runtime_error("+: invalid data types!");
-    }
+Object* Object::addFloat(FloatNumber* obj) {
+  throw std::runtime_error("+: invalid data types!");
+}
 
-    Object* Object::sub(Object* obj) {
-        throw std::runtime_error("-: invalid data types!");
-    }
+Object* Object::addString(String* obj) {
+  throw std::runtime_error("+: invalid data types!");
+}
 
-    Object* Object::subInt(IntNumber* obj) {
-        throw std::runtime_error("-: invalid data types!");
-    }
+Object* Object::sub(Object* obj) {
+  throw std::runtime_error("-: invalid data types!");
+}
 
-    Object* Object::subFloat(FloatNumber* obj) {
-        throw std::runtime_error("-: invalid data types!");
-    }
+Object* Object::subInt(IntNumber* obj) {
+  throw std::runtime_error("-: invalid data types!");
+}
 
-    Object* Object::mul(Object* obj) {
-        throw std::runtime_error("*: invalid data types!");
-    }
+Object* Object::subFloat(FloatNumber* obj) {
+  throw std::runtime_error("-: invalid data types!");
+}
 
-    Object* Object::mulInt(IntNumber* obj) {
-        throw std::runtime_error("*: invalid data types!");
-    }
+Object* Object::mul(Object* obj) {
+  throw std::runtime_error("*: invalid data types!");
+}
 
-    Object* Object::mulFloat(FloatNumber* obj) {
-        throw std::runtime_error("*: invalid data types!");
-    }
+Object* Object::mulInt(IntNumber* obj) {
+  throw std::runtime_error("*: invalid data types!");
+}
 
-    Object* Object::div(Object* obj) {
-        throw std::runtime_error("/: invalid data types!");
-    }
+Object* Object::mulFloat(FloatNumber* obj) {
+  throw std::runtime_error("*: invalid data types!");
+}
 
-    Object* Object::divInt(IntNumber* obj) {
-        throw std::runtime_error("/: invalid data types!");
-    }
+Object* Object::div(Object* obj) {
+  throw std::runtime_error("/: invalid data types!");
+}
 
-    Object* Object::divFloat(FloatNumber* obj) {
-        throw std::runtime_error("/: invalid data types!");
-    }
+Object* Object::divInt(IntNumber* obj) {
+  throw std::runtime_error("/: invalid data types!");
+}
 
-    Object* Object::remainder(Object* obj) {
-        throw std::runtime_error("remainder: invalid data types!");
-    }
+Object* Object::divFloat(FloatNumber* obj) {
+  throw std::runtime_error("/: invalid data types!");
+}
 
-    Object* Object::remainderInt(IntNumber* obj) {
-        throw std::runtime_error("remainder: invalid data types!");
-    }
+Object* Object::remainder(Object* obj) {
+  throw std::runtime_error("remainder: invalid data types!");
+}
 
-    Object* Object::remainderFloat(FloatNumber* obj) {
-        throw std::runtime_error("remainder: invalid data types!");
-    }
+Object* Object::remainderInt(IntNumber* obj) {
+  throw std::runtime_error("remainder: invalid data types!");
+}
 
-    void Object::mark() {
-        markFlag = true;
-    }
+Object* Object::remainderFloat(FloatNumber* obj) {
+  throw std::runtime_error("remainder: invalid data types!");
+}
 
-    void Object::unmark() {
-        markFlag = false;
-    }
+void Object::mark() {
+  markFlag = true;
+}
 
-    bool Object::isMarked() const {
-        return markFlag;
-    }
+void Object::unmark() {
+  markFlag = false;
+}
 
-    bool Object::isNil() const {
-        return false;
-    }
+bool Object::isMarked() const {
+  return markFlag;
+}
 
-    bool Object::isAtom() const {
-        return false;
-    }
+bool Object::isNil() const {
+  return false;
+}
 
-    bool Object::isList() const {
-        return false;
-    }
+bool Object::isAtom() const {
+  return false;
+}
 
-    bool Object::isLambda() const {
-        return false;
-    }
+bool Object::isList() const {
+  return false;
+}
 
-    bool Object::isClosure() const {
-        return false;
-    }
+bool Object::isLambda() const {
+  return false;
+}
 
-    bool Object::isIntNumber() const {
-        return false;
-    }
+bool Object::isClosure() const {
+  return false;
+}
 
-    bool Object::isFloatNumber() const {
-        return false;
-    }
+bool Object::isIntNumber() const {
+  return false;
+}
 
-    bool Object::isBoolean() const {
-        return false;
-    }
+bool Object::isFloatNumber() const {
+  return false;
+}
 
-    bool Object::isSymbol() const {
-        return false;
-    }
+bool Object::isBoolean() const {
+  return false;
+}
 
-    bool Object::isString() const {
-        return false;
-    }
+bool Object::isSymbol() const {
+  return false;
+}
 
-    bool Object::isQuote() const {
-        return false;
-    }
+bool Object::isString() const {
+  return false;
+}
 
-    bool Object::isDefine() const {
-        return false;
-    }
+bool Object::isQuote() const {
+  return false;
+}
 
-    bool Object::isIfExpr() const {
-        return false;
-    }
+bool Object::isDefine() const {
+  return false;
+}
 
-    bool Object::isBuiltinFunction() const {
-        return false;
-    }
+bool Object::isIfExpr() const {
+  return false;
+}
 
-    bool Object::isSequence() const {
-        return false;
-    }
+bool Object::isBuiltinFunction() const {
+  return false;
+}
+
+bool Object::isSequence() const {
+  return false;
+}
+
 }

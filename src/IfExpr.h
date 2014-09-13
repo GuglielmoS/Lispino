@@ -5,33 +5,37 @@
 
 namespace Lispino {
 
-    class IfExpr : public Object {
-        public:
+class IfExpr : public Object {
+ public:
+  IfExpr();
 
-            IfExpr();
- 
-            void setCondition(Object* condition);
-            void setConsequent(Object* consequent);
-            void setAlternative(Object* alternative);
+  void setCondition(Object* condition);
 
-            Object* getCondition();
-            Object* getConsequent();
-            Object* getAlternative();
+  void setConsequent(Object* consequent);
 
-            Object* eval(Environment& env);
+  void setAlternative(Object* alternative);
 
-            void mark();
+  Object* getCondition();
 
-            bool isIfExpr() const;
+  Object* getConsequent();
 
-            std::string toString() const;
+  Object* getAlternative();
 
-        private:
+  Object* eval(Environment& env);
 
-            Object *condition;
-            Object *consequent;
-            Object *alternative;
-    };
+  void mark();
+
+  bool isIfExpr() const;
+
+  std::string toString() const;
+
+ private:
+
+  Object *condition;
+  Object *consequent;
+  Object *alternative;
 };
+
+}
 
 #endif // LISPINO_IFEXPR_H_

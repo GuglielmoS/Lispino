@@ -22,51 +22,53 @@
 
 namespace Lispino {
 
-    class Memory {
+class Memory {
+ public:
 
-        // This struct contains a pointer to an allocated object and the pointer
-        // to the next element in memory
-        struct MemoryNode {
-            std::unique_ptr<Object> object;
-            MemoryNode *next;
+  Memory(GarbageCollector& gc);
 
-            MemoryNode(Object* obj, MemoryNode* next) : object(obj), next(next) {}
-        };
+  ~Memory();
 
-        public:
+  Nil* getNilInstance();
 
-            Memory(GarbageCollector& gc);
-            ~Memory();
+  Boolean* getTrueInstance();
 
-            Nil* getNilInstance();
-            Boolean* getTrueInstance();
-            Boolean* getFalseInstance();
+  Boolean* getFalseInstance();
 
-            Object* allocate(Object::ObjectType type);
+  Object* allocate(Object::ObjectType type);
 
-            size_t getAllocatedObjects() const;
+  size_t getAllocatedObjects() const;
 
-            size_t cleanup();
+  size_t cleanup();
 
-        private:
+ private:
+  // This struct contains a pointer to an allocated object and the pointer
+  // to the next element in memory
+  struct MemoryNode {
+    std::unique_ptr<Object> object;
+    MemoryNode *next;
 
-            // reference to the garbage collector
-            GarbageCollector &gc;
+    MemoryNode(Object* obj, MemoryNode* next) : object(obj), next(next) {}
+  };
 
-            // pointer to the first object in memory
-            MemoryNode *first;
+  // reference to the garbage collector
+  GarbageCollector &gc;
 
-            // instance of frequently used objects that don't change their value
-            Nil *nilInstance;
-            Boolean *trueInstance;
-            Boolean *falseInstance;
+  // pointer to the first object in memory
+  MemoryNode *first;
 
-            // number of objects stored
-            size_t allocatedObjects;
+  // instance of frequently used objects that don't change their value
+  Nil *nil_instance;
+  Boolean *true_instance;
+  Boolean *false_instance;
 
-            // remove the unused objects and return the number of objects deleted
-            size_t releaseUnusedObjects();
-    };
+  // number of objects stored
+  size_t allocated_objects;
+
+  // remove the unused objects and return the number of objects deleted
+  size_t releaseUnusedObjects();
 };
+
+}
 
 #endif // LISPINO_MEMORY_H_

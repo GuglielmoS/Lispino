@@ -4,60 +4,59 @@
 
 namespace Lispino {
 
-    IfExpr::IfExpr() : condition(nullptr), consequent(nullptr), alternative(nullptr) {
-        /* DO NOTHING */
-    }
+IfExpr::IfExpr() : condition(nullptr), consequent(nullptr), alternative(nullptr) {
+  /* DO NOTHING */
+}
 
-    void IfExpr::setCondition(Object* condition) {
-        this->condition = condition;
-    }
+void IfExpr::setCondition(Object* condition) {
+  this->condition = condition;
+}
 
-    void IfExpr::setConsequent(Object* consequent) {
-        this->consequent = consequent;
-    }
+void IfExpr::setConsequent(Object* consequent) {
+  this->consequent = consequent;
+}
 
-    void IfExpr::setAlternative(Object* alternative) {
-        this->alternative = alternative;
-    }
+void IfExpr::setAlternative(Object* alternative) {
+  this->alternative = alternative;
+}
 
-    Object* IfExpr::getCondition() {
-        return condition;
-    }
+Object* IfExpr::getCondition() {
+  return condition;
+}
 
-    Object* IfExpr::getConsequent() {
-        return consequent;
-    }
+Object* IfExpr::getConsequent() {
+  return consequent;
+}
 
-    Object* IfExpr::getAlternative() {
-        return alternative;
-    }
+Object* IfExpr::getAlternative() {
+  return alternative;
+}
 
-    Object* IfExpr::eval(Environment& env) {
-        Object *conditionResult = condition->eval(env);
+Object* IfExpr::eval(Environment& env) {
+  Object *condition_result = condition->eval(env);
 
-        if (!conditionResult->isBoolean()) {
-            throw std::runtime_error("IF: the condition must be a BOOLEAN!");
-        }
-        
-        if (static_cast<Boolean*>(conditionResult)->isTrue()) {
-            return consequent->eval(env);
-        } else {
-            return alternative->eval(env);
-        }
-    }
+  if (!condition_result->isBoolean())
+    throw std::runtime_error("IF: the condition must be a BOOLEAN!");
 
-    void IfExpr::mark() {
-        Object::mark();
-        condition->mark();
-        consequent->mark();
-        alternative->mark();
-    }
+  if (static_cast<Boolean*>(condition_result)->isTrue())
+    return consequent->eval(env);
+  else
+    return alternative->eval(env);
+}
 
-    bool IfExpr::isIfExpr() const {
-        return true;
-    }
+void IfExpr::mark() {
+  Object::mark();
+  condition->mark();
+  consequent->mark();
+  alternative->mark();
+}
 
-    std::string IfExpr::toString() const {
-        return "IF";
-    }
+bool IfExpr::isIfExpr() const {
+  return true;
+}
+
+std::string IfExpr::toString() const {
+  return "IF";
+}
+
 }

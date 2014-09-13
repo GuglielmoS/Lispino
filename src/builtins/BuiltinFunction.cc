@@ -2,18 +2,20 @@
 
 namespace Lispino {
 
-    namespace Builtins {
+namespace Builtins {
 
-        Object* BuiltinFunction::eval(Environment& env) {
-            return this;
-        }
+Object* BuiltinFunction::eval(Environment& env) {
+  return this;
+}
 
-        bool BuiltinFunction::isBuiltinFunction() const {
-            return true;
-        }
+bool BuiltinFunction::isBuiltinFunction() const {
+  return true;
+}
 
-        std::string BuiltinFunction::toString() const {
-            return "BUILTIN-FUNCTION";
-        }
-    }
+std::string BuiltinFunction::toString() const {
+  return "BUILTIN-FUNCTION";
+}
+
+}
+
 }

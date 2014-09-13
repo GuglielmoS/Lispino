@@ -18,102 +18,98 @@
 
 namespace Lispino {
 
-    // initialize the builtin functions
-    std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> 
-        Environment::builtinFunctions = Environment::initializeBuiltinFunctions();
+// initialize the builtin functions
+std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> 
+Environment::builtin_functions = Environment::initializeBuiltinFunctions();
 
-    Environment::Environment() : enclosingEnv(nullptr) {
-        /* DO NOTHING */
+Environment::Environment() : parent(nullptr) {
+  /* DO NOTHING */
+}
+
+Environment::Environment(Environment* env) : parent(env) {
+  /* DO NOTHING */
+}
+
+Environment* Environment::getParent() {
+  return parent;
+}
+
+void Environment::setParent(Environment *env) {
+  this->parent = env;
+}
+
+std::unordered_map<std::string, std::pair<Symbol*, Object*>>& Environment::lookupTable() {
+  return frame;
+}
+
+Object* Environment::update(Symbol* key, Object* value) {
+  auto iter = frame.find(key->getValue());
+
+  if (iter == frame.end()) {
+    if (parent != nullptr) {
+      parent->update(key, value);
+    } else {
+      throw std::out_of_range("Environment update failed with key: " + key->toString());
     }
+  } else {
+    frame[key->getValue()] = std::make_pair(key,value);
+  }
 
-    Environment::Environment(Environment* env) : enclosingEnv(env) {
-        /* DO NOTHING */
-    }
+  return value;
+}
 
-    Environment* Environment::getParent() {
-        return enclosingEnv;
-    }
+Object* Environment::put(Symbol* key, Object* value) {
+  frame[key->getValue()] = std::make_pair(key,value);
 
-    void Environment::setParent(Environment *env) {
-        this->enclosingEnv = env;
-    }
+  return value;
+}
 
-    std::unordered_map<std::string, std::pair<Symbol*, Object*>>& Environment::lookupTable() {
-        return frame;
-    }
+Object* Environment::get(Symbol* key) {
+  // check for builtin functions
+  auto bf_iter = builtin_functions.find(key->getValue());
+  if (bf_iter != builtin_functions.end())
+    return bf_iter->second.get();
 
-    std::unordered_map<std::string, std::pair<Symbol*, Object*>>::iterator Environment::iterator() {
-        return frame.begin(); 
-    }
+  // check for environment values
+  auto env_iter = frame.find(key->getValue());
+  if (env_iter != frame.end())
+    return (env_iter->second).second;
 
-    Object* Environment::update(Symbol* key, Object* value) {
-        auto iter = frame.find(key->getValue());
-        
-        if (iter == frame.end()) {
-            if (enclosingEnv != nullptr) {
-                enclosingEnv->update(key, value);
-            } else {
-                throw std::out_of_range("Environment update failed with key: " + key->toString());
-            }
-        } else {
-            frame[key->getValue()] = std::make_pair(key,value);
-        }
+  // check in the parent environment
+  if (parent != nullptr)
+    return parent->get(key);
 
-        return value;
-    }
+  // the lookup has failed, thus signal an error
+  throw std::out_of_range("Environment lookup failed with [key = " + key->toString() + "]");
+}
 
-    Object* Environment::put(Symbol* key, Object* value) {
-        frame[key->getValue()] = std::make_pair(key,value);
+std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> Environment::initializeBuiltinFunctions() {
+  std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> bindings;
 
-        return value;
-    }
+  // list
+  bindings["car"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Car());
+  bindings["cdr"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Cdr());
+  bindings["cons"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Cons());
 
-    Object* Environment::get(Symbol* key) {
-        // check for builtin functions
-        auto bf_iter = builtinFunctions.find(key->getValue());
+  // maths
+  bindings["+"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Add());
+  bindings["-"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Sub());
+  bindings["*"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Mul());
+  bindings["/"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Div());
+  bindings["remainder"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Remainder());
 
-        if (bf_iter != builtinFunctions.end())
-            return bf_iter->second.get();
+  // equality
+  bindings["="] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Equal());
+  bindings[">"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::GreaterThan());
+  bindings[">="] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::GreaterEqualThan());
+  bindings["<"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::LowerThan());
+  bindings["<="] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::LowerEqualThan());
 
-        // check for environment values
-        auto iter = frame.find(key->getValue());
-        if (iter != frame.end())
-            return (iter->second).second;
+  // I/O utils
+  bindings["display"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Display());
+  bindings["newline"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Newline());
 
-        // check in the parent environment
-        if (enclosingEnv != nullptr)
-            return enclosingEnv->get(key);
+  return bindings;
+}
 
-        // the lookup has failed, thus signal an error
-        throw std::out_of_range("Environment lookup failed with [key = " + key->toString() + "]");
-    }
-
-    std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> Environment::initializeBuiltinFunctions() {
-        std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> bindings;
-
-        // list
-        bindings["car"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Car());
-        bindings["cdr"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Cdr());
-        bindings["cons"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Cons());
-
-        // maths
-        bindings["+"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Add());
-        bindings["-"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Sub());
-        bindings["*"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Mul());
-        bindings["/"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Div());
-        bindings["remainder"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Remainder());
-
-        // equality
-        bindings["="] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Equal());
-        bindings[">"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::GreaterThan());
-        bindings[">="] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::GreaterEqualThan());
-        bindings["<"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::LowerThan());
-        bindings["<="] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::LowerEqualThan());
-
-        // I/O utils
-        bindings["display"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Display());
-        bindings["newline"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Newline());
-
-        return bindings;
-    }
 }

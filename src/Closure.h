@@ -10,31 +10,34 @@
 
 namespace Lispino {
 
-    class Closure : public Object {
-        public:
+class Closure : public Object {
+ public:
+  Closure();
 
-            Closure();
-            Closure(Lambda *lambda, Environment *parentEnv);
+  Closure(Lambda *lambda, Environment *parent_env);
 
-            void setLambda(Lambda *lambda);
-            void setEnv(Environment *parentEnv);
+  void setLambda(Lambda *lambda);
 
-            Environment* getEnv();
+  void setEnv(Environment *parent_env);
 
-            Object* eval(Environment& env);
-            Object* apply(std::vector<Object*>& actualArgs);
+  Environment* getEnv();
 
-            void mark();
+  Object* eval(Environment& env);
 
-            bool isClosure() const;
+  Object* apply(std::vector<Object*>& actual_args);
 
-            std::string toString() const;
+  void mark();
 
-        private:
+  bool isClosure() const;
 
-            Lambda *lambda;
-            std::unique_ptr<Environment> env;
-    };
+  std::string toString() const;
+
+ private:
+
+  Lambda *lambda;
+  std::unique_ptr<Environment> env;
 };
+
+}
 
 #endif // LISPINO_CLOSURE_H_
