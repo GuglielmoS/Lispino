@@ -2,7 +2,6 @@
 #define LISPINO_OBJECT_H_
 
 #include <string>
-#include <stdexcept>
 
 namespace Lispino {
 

@@ -1,5 +1,7 @@
 #include "IfExpr.h"
 
+#include <stdexcept>
+
 #include "Boolean.h"
 
 namespace Lispino {

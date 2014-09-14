@@ -1,4 +1,7 @@
 #include "Object.h"
+
+#include <stdexcept>
+
 #include "VM.h"
 
 namespace Lispino {
