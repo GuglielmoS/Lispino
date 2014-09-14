@@ -25,9 +25,9 @@ class Lambda : public Object {
 
   std::vector<std::string> getArguments();
 
-  Object* eval(Environment& env);
+  Object* eval(Environment* env);
 
-  Object* apply(std::vector<Object*>& actual_args, Environment& env);
+  Object* apply(std::vector<Object*>& actual_args, Environment* env);
 
   void mark();
 

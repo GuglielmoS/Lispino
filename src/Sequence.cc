@@ -12,7 +12,7 @@ std::vector<Object*>& Sequence::getValue() {
   return expressions;
 }
 
-Object* Sequence::eval(Environment& env) {
+Object* Sequence::eval(Environment* env) {
   Object *result = VM::getAllocator().createNil();
   for (auto& expr : expressions)
     result = expr->eval(env);

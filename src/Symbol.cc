@@ -20,8 +20,8 @@ std::string Symbol::getValue() const {
   return value;
 }
 
-Object* Symbol::eval(Environment& env) {
-  return env.get(this);
+Object* Symbol::eval(Environment* env) {
+  return env->get(this);
 }
 
 int Symbol::compare(const Object* obj) const {

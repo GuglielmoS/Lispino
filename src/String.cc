@@ -18,7 +18,7 @@ std::string String::getValue() const {
   return value;
 }
 
-Object* String::eval(Environment&) {
+Object* String::eval(Environment*) {
   return this;
 }
 

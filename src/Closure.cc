@@ -28,7 +28,7 @@ Environment* Closure::getEnv() {
   return env.get();
 }
 
-Object* Closure::eval(Environment&) {
+Object* Closure::eval(Environment*) {
   return this;
 }
 

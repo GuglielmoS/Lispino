@@ -8,15 +8,15 @@ Define::Define() : name(nullptr), value(nullptr) {
   /* DO NOTHING */
 }
 
-Define::Define(Symbol *name, Object* value) : name(name), value(value) {
+Define::Define(Symbol* name, Object* value) : name(name), value(value) {
   /* DO NOTHING */
 }
 
-void Define::setName(Symbol *name) {
+void Define::setName(Symbol* name) {
   this->name = name;
 }
-
-void Define::setValue(Object *value) {
+ 
+void Define::setValue(Object* value) {
   this->value = value;
 }
 
@@ -28,11 +28,11 @@ Object* Define::getValue() {
   return value;
 }
 
-Object* Define::eval(Environment& env) {
+Object* Define::eval(Environment* env) {
   if (value->isLambda())
-    return env.put(name, value);
+    return env->put(name, value);
   else
-    return env.put(name, value->eval(env));
+    return env->put(name, value->eval(env));
 }
 
 void Define::mark() {

@@ -21,7 +21,7 @@ class IfExpr : public Object {
 
   Object* getAlternative();
 
-  Object* eval(Environment& env);
+  Object* eval(Environment* env);
 
   void mark();
 

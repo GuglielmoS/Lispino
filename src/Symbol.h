@@ -17,7 +17,7 @@ class Symbol : public Object {
   
   std::string getValue() const;
 
-  Object* eval(Environment& env);
+  Object* eval(Environment* env);
 
   int compare(const Object* obj) const;
   

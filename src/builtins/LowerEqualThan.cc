@@ -6,7 +6,7 @@ namespace Lispino {
 
 namespace Builtins {
 
-Object* LowerEqualThan::apply(std::vector<Object*>& args, Environment& env) {
+Object* LowerEqualThan::apply(std::vector<Object*>& args, Environment* env) {
   if (args.size() <= 1)
     throw std::runtime_error("<=: wrong number of arguments");
 

@@ -16,7 +16,7 @@ Object::~Object() {
 }
 
 Object* Object::eval() {
-  return eval(VM::getGlobalEnv());
+  return eval(&VM::getGlobalEnv());
 }
 
 int Object::compare(const Object*) const {

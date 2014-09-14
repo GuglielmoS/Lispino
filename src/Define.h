@@ -15,17 +15,17 @@ class Define : public Object {
 
   Define(); 
 
-  Define(Symbol *name, Object* value);
+  Define(Symbol* name, Object* value);
 
-  void setName(Symbol *name);
+  void setName(Symbol* name);
 
-  void setValue(Object *value);
+  void setValue(Object* value);
 
   std::string getName() const;
 
   Object* getValue();
 
-  Object* eval(Environment& env);
+  Object* eval(Environment* env);
 
   void mark();
 
@@ -34,7 +34,6 @@ class Define : public Object {
   std::string toString() const;
 
  private:
-
   Symbol *name;
   Object *value;
 };

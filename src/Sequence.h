@@ -13,7 +13,7 @@ class Sequence : public Object {
 
   std::vector<Object*>& getValue();
 
-  Object* eval(Environment& env);
+  Object* eval(Environment* env);
 
   void mark();
 

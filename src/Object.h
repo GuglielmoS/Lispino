@@ -40,11 +40,11 @@ class Object {
   Object* eval();
 
   /// evaluates the object accordingly to the provided environment
-  virtual Object* eval(Environment& env) = 0;
+  virtual Object* eval(Environment* env) = 0;
 
   /*
-  * Equality
-  */
+   * Equality
+   */
 
   virtual int compare(const Object* obj) const;
   
@@ -65,8 +65,8 @@ class Object {
   virtual int compareSequence(const Sequence* obj) const;
 
   /*
-  * Commoin operations between objects
-  */
+   * Common operations between objects
+   */
 
   virtual Object* negate();
 
@@ -103,8 +103,8 @@ class Object {
   virtual Object* remainderFloat(FloatNumber* obj);
 
   /*
-  * Garbage collection related methods 
-  */
+   * Garbage collection related methods 
+   */
 
   // this is virtual because it's easier to recursively
   // mark objects by overriding this method
@@ -115,8 +115,8 @@ class Object {
   bool isMarked() const;
 
   /*
-  * Useful methods 
-  */
+   * Useful methods 
+   */
 
   virtual bool isNil() const;
   

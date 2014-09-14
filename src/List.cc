@@ -33,7 +33,7 @@ Object* List::getRest() {
   return tail;
 }
 
-Object* List::eval(Environment& env) {
+Object* List::eval(Environment* env) {
   // return NIL if the list is empty
   if (head->isNil())
     return VM::getAllocator().createNil();
@@ -59,7 +59,7 @@ Object* List::eval(Environment& env) {
     Lambda *lambda = nullptr;
 
     // the pointer to the environment to use for the evaluation
-    Environment *eval_env = &env;
+    Environment *eval_env = env;
 
     // retrieve the lambda and the environment where the code must be evaluated
     if (op->isLambda()) {
@@ -73,7 +73,7 @@ Object* List::eval(Environment& env) {
     }
 
     // apply the arguments to the lambda and return the result
-    return lambda->apply(evaluated_args, *eval_env);
+    return lambda->apply(evaluated_args, eval_env);
   }
 }
 

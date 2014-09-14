@@ -18,7 +18,7 @@ class FloatNumber : public Object {
 
   float getValue() const;
 
-  Object* eval(Environment& env);
+  Object* eval(Environment* env);
 
   int compare(const Object* obj) const;
 

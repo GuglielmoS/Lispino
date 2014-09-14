@@ -11,7 +11,7 @@ namespace Builtins {
 
 class Display : public BuiltinFunction {
  public:
-  Object* apply(std::vector<Object*>& args, Environment& env);
+  Object* apply(std::vector<Object*>& args, Environment* env);
 };
 
 }

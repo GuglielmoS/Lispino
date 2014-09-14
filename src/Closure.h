@@ -23,7 +23,7 @@ class Closure : public Object {
 
   Environment* getEnv();
 
-  Object* eval(Environment& env);
+  Object* eval(Environment* env);
 
   void mark();
 
@@ -32,7 +32,6 @@ class Closure : public Object {
   std::string toString() const;
 
  private:
-
   Lambda *lambda;
   std::unique_ptr<Environment> env;
 };

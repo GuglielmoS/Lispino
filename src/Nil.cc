@@ -1,7 +1,8 @@
 #include "Nil.h"
 
 namespace Lispino {
-Object* Nil::eval(Environment&) {
+
+Object* Nil::eval(Environment*) {
   return this;
 }
 

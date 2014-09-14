@@ -18,7 +18,7 @@ Object* Quote::getValue() {
   return value;
 }
 
-Object* Quote::eval(Environment&) {
+Object* Quote::eval(Environment*) {
   return value;
 }
 

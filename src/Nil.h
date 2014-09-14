@@ -7,7 +7,7 @@ namespace Lispino {
 
 class Nil : public Object {
  public:
-  Object* eval(Environment& env);
+  Object* eval(Environment* env);
 
   int compare(const Object* obj) const;
 

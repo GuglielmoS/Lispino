@@ -7,7 +7,7 @@ namespace Lispino {
 
 namespace Builtins {
 
-Object* Set::apply(std::vector<Object*>& args, Environment& env) {
+Object* Set::apply(std::vector<Object*>& args, Environment* env) {
   if (args.size() != 2)
     throw std::runtime_error("set!: wrong number of arguments!");
 
@@ -18,7 +18,7 @@ Object* Set::apply(std::vector<Object*>& args, Environment& env) {
   Object *result = args[1]->eval(env);
 
   // update the given symbol
-  env.update(static_cast<Symbol*>(args[0]), result);
+  env->update(static_cast<Symbol*>(args[0]), result);
 
   return result;
 }
