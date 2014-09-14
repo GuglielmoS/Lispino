@@ -81,7 +81,7 @@
 (define (take n lst)
   (if (or (zero? n) (null? lst))
     nil
-    (cons (car lst) (take (inc n) (cdr lst)))))
+    (cons (car lst) (take (dec n) (cdr lst)))))
 
 (define (drop n lst)
   (if (or (zero? n) (null? lst))
