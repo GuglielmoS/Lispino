@@ -14,11 +14,10 @@ class GarbageCollector {
   void collect();
 
  private:
-
   // global environment reference
   Environment &global_env;
 
-  bool alreadyMarked(Environment* env, std::vector<Environment*> marked_envs);
+  bool alreadyMarked(Environment* env, std::vector<Environment*>& marked_envs);
 
   void markVisibleObjects(Environment* env, std::vector<Environment*>& marked_envs);
 };

@@ -14,6 +14,9 @@
 
 namespace Lispino {
 
+typedef std::unordered_map<std::string, std::pair<Symbol*, Object*>> LookupTable;
+typedef std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> BuiltinsTable; 
+
 class Environment {   
  public:
   Environment();
@@ -24,20 +27,19 @@ class Environment {
 
   Environment* extend();
 
-  std::unordered_map<std::string, std::pair<Symbol*, Object*>>& lookupTable();
+  LookupTable& getLookupTable();
 
   Object* update(Symbol* key, Object* value);
   Object* put(Symbol* key, Object* value);
   Object* get(Symbol* key);
 
  private:
-
   Environment *parent;
-  std::unordered_map<std::string, std::pair<Symbol*, Object*>> frame;
+  LookupTable frame;
 
   // builtin functions
-  static std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> builtin_functions;
-  static std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> initializeBuiltinFunctions();
+  static BuiltinsTable builtin_functions;
+  static BuiltinsTable initializeBuiltinFunctions();
 };
 
 }

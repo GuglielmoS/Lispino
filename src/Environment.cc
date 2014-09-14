@@ -20,8 +20,7 @@
 namespace Lispino {
 
 // initialize the builtin functions
-std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> 
-Environment::builtin_functions = Environment::initializeBuiltinFunctions();
+BuiltinsTable Environment::builtin_functions = Environment::initializeBuiltinFunctions();
 
 Environment::Environment() : parent(nullptr) {
   /* DO NOTHING */
@@ -45,7 +44,7 @@ Environment* Environment::extend() {
   return extended_environment;
 }
 
-std::unordered_map<std::string, std::pair<Symbol*, Object*>>& Environment::lookupTable() {
+LookupTable& Environment::getLookupTable() {
   return frame;
 }
 
@@ -90,8 +89,8 @@ Object* Environment::get(Symbol* key) {
   throw std::out_of_range("Environment lookup failed with [key = " + key->toString() + "]");
 }
 
-std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> Environment::initializeBuiltinFunctions() {
-  std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> bindings;
+BuiltinsTable Environment::initializeBuiltinFunctions() {
+  BuiltinsTable bindings;
 
   // environment
   bindings["set!"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Set());

@@ -16,7 +16,7 @@ void GarbageCollector::collect() {
   markVisibleObjects(&global_env, markedEnvs);
 }
 
-bool GarbageCollector::alreadyMarked(Environment* env, std::vector<Environment*> marked_envs) {
+bool GarbageCollector::alreadyMarked(Environment* env, std::vector<Environment*>& marked_envs) {
   return std::find(marked_envs.begin(), marked_envs.end(), env) != marked_envs.end();
 }
 
@@ -26,7 +26,7 @@ void GarbageCollector::markVisibleObjects(Environment* env, std::vector<Environm
     marked_envs.push_back(env);
 
     // loop through the environment values
-    for (auto& current_pair : env->lookupTable()) {
+    for (auto& current_pair : env->getLookupTable()) {
       auto current_symbol = current_pair.second.first;
       auto current_object = current_pair.second.second;
 
