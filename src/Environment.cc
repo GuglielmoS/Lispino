@@ -27,16 +27,22 @@ Environment::Environment() : parent(nullptr) {
   /* DO NOTHING */
 }
 
-Environment::Environment(Environment* env) : parent(env) {
-  /* DO NOTHING */
+void Environment::setParent(Environment *env) {
+  this->parent = env;
 }
 
 Environment* Environment::getParent() {
   return parent;
 }
 
-void Environment::setParent(Environment *env) {
-  this->parent = env;
+Environment* Environment::extend() {
+  Environment *extended_environment = new Environment();
+
+  // since the new environment is an extension of the current one,
+  // I set its parent to the current environment itself
+  extended_environment->setParent(this);
+
+  return extended_environment;
 }
 
 std::unordered_map<std::string, std::pair<Symbol*, Object*>>& Environment::lookupTable() {

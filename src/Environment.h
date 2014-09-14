@@ -16,14 +16,13 @@ namespace Lispino {
 
 class Environment {   
  public:
-
   Environment();
 
-  Environment(Environment* env);
+  void setParent(Environment *env);
 
   Environment* getParent();
 
-  void setParent(Environment *env);
+  Environment* extend();
 
   std::unordered_map<std::string, std::pair<Symbol*, Object*>>& lookupTable();
 

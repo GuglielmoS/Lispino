@@ -77,11 +77,11 @@ Object* List::eval(Environment& env) {
   }
 }
 
-int List::compare(Object* obj) {
+int List::compare(const Object* obj) const {
   return obj->compareList(this);
 }
 
-int List::compareList(List* obj) {
+int List::compareList(const List* obj) const {
   if (obj == this)
     return 0;
   else

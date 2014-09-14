@@ -19,39 +19,39 @@ Object* Object::eval() {
   return eval(VM::getGlobalEnv());
 }
 
-int Object::compare(Object*) {
+int Object::compare(const Object*) const {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareNil(Nil*) {
+int Object::compareNil(const Nil*) const {
   return -1;
 }
 
-int Object::compareList(List*) {
+int Object::compareList(const List*) const {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareInt(IntNumber*) {
+int Object::compareInt(const IntNumber*) const {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareFloat(FloatNumber*) {
+int Object::compareFloat(const FloatNumber*) const {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareSymbol(Symbol*) {
+int Object::compareSymbol(const Symbol*) const {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareString(String*) {
+int Object::compareString(const String*) const {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareBoolean(Boolean*) {
+int Object::compareBoolean(const Boolean*) const {
   throw std::runtime_error("compare: invalid data types!");
 }
 
-int Object::compareSequence(Sequence*) {
+int Object::compareSequence(const Sequence*) const {
   throw std::runtime_error("compare: invalid data types!");
 }
 

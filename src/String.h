@@ -20,9 +20,9 @@ class String : public Object {
 
   Object* eval(Environment& env);
 
-  int compare(Object* obj);
+  int compare(const Object* obj) const;
 
-  int compareString(String* obj);
+  int compareString(const String* obj) const;
 
   bool isAtom() const;
 

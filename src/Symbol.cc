@@ -16,7 +16,7 @@ void Symbol::setValue(std::string value) {
   this->value = value;
 }
 
-std::string& Symbol::getValue() {
+std::string Symbol::getValue() const {
   return value;
 }
 
@@ -24,14 +24,14 @@ Object* Symbol::eval(Environment& env) {
   return env.get(this);
 }
 
-int Symbol::compare(Object* obj) {
+int Symbol::compare(const Object* obj) const {
   if (obj == this)
     return 0;
   else 
     return obj->compareSymbol(this);
 }
 
-int Symbol::compareSymbol(Symbol* obj) {
+int Symbol::compareSymbol(const Symbol* obj) const {
   return obj->getValue().compare(value);
 }
 

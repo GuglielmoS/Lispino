@@ -9,23 +9,23 @@ class Nil : public Object {
  public:
   Object* eval(Environment& env);
 
-  int compare(Object* obj);
+  int compare(const Object* obj) const;
 
-  int compareNil(Nil* obj);
+  int compareNil(const Nil* obj) const;
 
-  int compareList(List* obj);
+  int compareList(const List* obj) const;
   
-  int compareInt(IntNumber* obj);
+  int compareInt(const IntNumber* obj) const;
   
-  int compareFloat(FloatNumber* obj);
+  int compareFloat(const FloatNumber* obj) const;
   
-  int compareSymbol(Symbol* obj);
+  int compareSymbol(const Symbol* obj) const;
   
-  int compareString(String* obj);
+  int compareString(const String* obj) const;
   
-  int compareBoolean(Boolean* obj);
+  int compareBoolean(const Boolean* obj) const;
   
-  int compareSequence(Sequence* obj);
+  int compareSequence(const Sequence* obj) const;
 
   bool isNil() const;
 

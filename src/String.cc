@@ -22,14 +22,14 @@ Object* String::eval(Environment&) {
   return this;
 }
 
-int String::compare(Object* obj) {
+int String::compare(const Object* obj) const {
   if (this == obj)
     return 0;
   else
     return obj->compareString(this);
 }
 
-int String::compareString(String* obj) {
+int String::compareString(const String* obj) const {
   return obj->getValue().compare(value);
 }
 

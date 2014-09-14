@@ -24,18 +24,18 @@ Object* IntNumber::eval(Environment&) {
   return this;
 }
 
-int IntNumber::compare(Object* obj) {
+int IntNumber::compare(const Object* obj) const {
   if (obj == this)
     return 0;
   else
     return obj->compareInt(this);
 }
 
-int IntNumber::compareInt(IntNumber* obj) {
+int IntNumber::compareInt(const IntNumber* obj) const {
   return obj->value - value;
 }
 
-int IntNumber::compareFloat(FloatNumber* obj) {
+int IntNumber::compareFloat(const FloatNumber* obj) const {
   float temp = obj->getValue() - value;
 
   if (temp > 0.0f)

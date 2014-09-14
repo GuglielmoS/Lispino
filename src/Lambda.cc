@@ -38,7 +38,7 @@ Object* Lambda::apply(std::vector<Object*>& actual_args, Environment& env) {
     throw std::runtime_error("Invalid function call, wrong number of arguments");
 
   // extend the current environment with the arguments to apply
-  Environment *extended_env = new Environment(&env);
+  Environment *extended_env = env.extend();
   for (unsigned int i = 0; i < arguments.size(); i++)
     extended_env->put(VM::getAllocator().createSymbol(arguments[i]), actual_args[i]);
 

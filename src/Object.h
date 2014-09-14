@@ -46,23 +46,23 @@ class Object {
   * Equality
   */
 
-  virtual int compare(Object* obj);
+  virtual int compare(const Object* obj) const;
   
-  virtual int compareNil(Nil* obj);
+  virtual int compareNil(const Nil* obj) const;
   
-  virtual int compareList(List* obj);
+  virtual int compareList(const List* obj) const;
   
-  virtual int compareInt(IntNumber* obj);
+  virtual int compareInt(const IntNumber* obj) const;
   
-  virtual int compareFloat(FloatNumber* obj);
+  virtual int compareFloat(const FloatNumber* obj) const;
   
-  virtual int compareSymbol(Symbol* obj);
+  virtual int compareSymbol(const Symbol* obj) const;
   
-  virtual int compareString(String* obj);
+  virtual int compareString(const String* obj) const;
   
-  virtual int compareBoolean(Boolean* obj);
+  virtual int compareBoolean(const Boolean* obj) const;
   
-  virtual int compareSequence(Sequence* obj);
+  virtual int compareSequence(const Sequence* obj) const;
 
   /*
   * Commoin operations between objects

@@ -26,18 +26,14 @@ Object* FloatNumber::eval(Environment&) {
   return this;
 }
 
-Object* FloatNumber::negate() {
-  return VM::getAllocator().createFloatNumber(-value);
-}
-
-int FloatNumber::compare(Object* obj) {
+int FloatNumber::compare(const Object* obj) const {
   if (obj == this)
     return 0;
   else
     return obj->compareFloat(this);
 }
 
-int FloatNumber::compareInt(IntNumber* obj) {
+int FloatNumber::compareInt(const IntNumber* obj) const {
   float temp = obj->getValue() - value;
 
   if (temp > 0.0f)
@@ -48,7 +44,7 @@ int FloatNumber::compareInt(IntNumber* obj) {
     return 0;
 }
 
-int FloatNumber::compareFloat(FloatNumber* obj) {
+int FloatNumber::compareFloat(const FloatNumber* obj) const {
   float temp = obj->value - value;
 
   if (temp > 0.0f)
@@ -57,6 +53,10 @@ int FloatNumber::compareFloat(FloatNumber* obj) {
     return -1;
   else
     return 0;
+}
+
+Object* FloatNumber::negate() {
+  return VM::getAllocator().createFloatNumber(-value);
 }
 
 Object* FloatNumber::add(Object* obj) {

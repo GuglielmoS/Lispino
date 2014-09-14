@@ -24,9 +24,9 @@ class List : public Object {
 
   Object* eval(Environment& env);
 
-  int compare(Object* obj);
+  int compare(const Object* obj) const;
 
-  int compareList(List* obj);
+  int compareList(const List* obj) const;
 
   void mark();
 

@@ -17,9 +17,9 @@ class Boolean : public Object {
 
   Object* eval(Environment& env);
 
-  int compare(Object* obj);
+  int compare(const Object* obj) const;
 
-  int compareBoolean(Boolean* obj);
+  int compareBoolean(const Boolean* obj) const;
 
   bool isTrue() const;
 

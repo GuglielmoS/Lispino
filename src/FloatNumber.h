@@ -20,13 +20,13 @@ class FloatNumber : public Object {
 
   Object* eval(Environment& env);
 
+  int compare(const Object* obj) const;
+
+  int compareInt(const IntNumber* obj) const;
+
+  int compareFloat(const FloatNumber* obj) const;
+
   Object* negate();
-
-  int compare(Object* obj);
-
-  int compareInt(IntNumber* obj);
-
-  int compareFloat(FloatNumber* obj);
 
   Object* add(Object* obj);
 

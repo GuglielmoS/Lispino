@@ -20,11 +20,11 @@ class IntNumber : public Object {
 
   Object* eval(Environment& env);
 
-  int compare(Object* obj);
+  int compare(const Object* obj) const;
 
-  int compareInt(IntNumber* obj);
+  int compareInt(const IntNumber* obj) const;
 
-  int compareFloat(FloatNumber* obj);
+  int compareFloat(const FloatNumber* obj) const;
   
   Object* negate();
 

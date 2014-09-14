@@ -5,39 +5,39 @@ Object* Nil::eval(Environment&) {
   return this;
 }
 
-int Nil::compare(Object* obj) {
+int Nil::compare(const Object* obj) const {
   return obj->compareNil(this);
 }
 
-int Nil::compareNil(Nil*) {
+int Nil::compareNil(const Nil*) const {
   return 0;
 }
 
-int Nil::compareList(List*) {
+int Nil::compareList(const List*) const {
   return -1;
 }
 
-int Nil::compareInt(IntNumber*) {
+int Nil::compareInt(const IntNumber*) const {
   return -1;
 }
 
-int Nil::compareFloat(FloatNumber*) {
+int Nil::compareFloat(const FloatNumber*) const {
   return -1;
 }
 
-int Nil::compareSymbol(Symbol*) {
+int Nil::compareSymbol(const Symbol*) const {
   return -1;
 }
 
-int Nil::compareString(String*) {
+int Nil::compareString(const String*) const {
   return -1;
 }
 
-int Nil::compareBoolean(Boolean*) {
+int Nil::compareBoolean(const Boolean*) const {
   return -1;
 }
 
-int Nil::compareSequence(Sequence*) {
+int Nil::compareSequence(const Sequence*) const {
   return -1;
 }
 

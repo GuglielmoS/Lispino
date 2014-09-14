@@ -1,7 +1,6 @@
 #ifndef LISPINO_CLOSURE_H_
 #define LISPINO_CLOSURE_H_
 
-#include <vector>
 #include <memory>
 
 #include "Object.h"

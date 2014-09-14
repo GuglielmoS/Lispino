@@ -15,13 +15,13 @@ class Symbol : public Object {
 
   void setValue(std::string value);
   
-  std::string& getValue();
+  std::string getValue() const;
 
   Object* eval(Environment& env);
 
-  int compare(Object* obj);
+  int compare(const Object* obj) const;
   
-  int compareSymbol(Symbol* obj);
+  int compareSymbol(const Symbol* obj) const;
 
   bool isAtom() const;
 

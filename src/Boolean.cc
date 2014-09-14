@@ -22,11 +22,11 @@ Object* Boolean::eval(Environment&) {
   return this;
 }
 
-int Boolean::compare(Object* obj) {
+int Boolean::compare(const Object* obj) const {
   return obj->compareBoolean(this);
 }
 
-int Boolean::compareBoolean(Boolean* obj) {
+int Boolean::compareBoolean(const Boolean* obj) const {
   if (value == obj->value)
     return 0;
   else if (value == false)
