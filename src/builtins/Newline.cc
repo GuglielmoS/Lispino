@@ -21,3 +21,4 @@ Object* Newline::apply(std::vector<Object*>& args, Environment*) {
 }
 
 }
+
