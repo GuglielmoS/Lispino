@@ -14,8 +14,6 @@ class Allocator {
 
   Symbol* createSymbol(std::string value);
 
-  Symbol* createRandomSymbol();
-
   String* createString(std::string value);
 
   IntNumber* createIntNumber(long int value);

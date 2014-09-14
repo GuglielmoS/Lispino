@@ -27,6 +27,8 @@ class Lambda : public Object {
 
   Object* eval(Environment& env);
 
+  Object* apply(std::vector<Object*>& actual_args, Environment& env);
+
   void mark();
 
   bool isLambda() const;

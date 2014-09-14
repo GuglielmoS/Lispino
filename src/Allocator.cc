@@ -17,14 +17,6 @@ Symbol* Allocator::createSymbol(std::string value) {
   return symbol;
 }
 
-Symbol* Allocator::createRandomSymbol() {
-  Symbol *symbol = static_cast<Symbol*>(memory.allocate(ObjectType::SYMBOL));
-  symbol->setValue("SYMBOL#" + symbols_counter);
-  symbols_counter++;
-
-  return symbol;
-}
-
 String* Allocator::createString(std::string value) {
   String *str = static_cast<String*>(memory.allocate(ObjectType::STRING));
   str->setValue(value);

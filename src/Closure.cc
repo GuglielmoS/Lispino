@@ -7,9 +7,8 @@ Closure::Closure() : lambda(nullptr), env(nullptr) {
   /* DO NOTHING */
 }
 
-Closure::Closure(Lambda *lambda, Environment *parent_env)
-    : lambda(lambda), 
-      env(new Environment(parent_env)) {
+Closure::Closure(Lambda *lambda, Environment *env)
+    : lambda(lambda), env(env) {
   /* DO NOTHING */    
 }
 
@@ -17,8 +16,12 @@ void Closure::setLambda(Lambda *lambda) {
   this->lambda = lambda;
 }
 
-void Closure::setEnv(Environment *parent_env) {
-  this->env.reset(new Environment(parent_env));
+void Closure::setEnv(Environment *env) {
+  this->env.reset(env);
+}
+
+Lambda* Closure::getLambda() {
+  return lambda;
 }
 
 Environment* Closure::getEnv() {
@@ -27,18 +30,6 @@ Environment* Closure::getEnv() {
 
 Object* Closure::eval(Environment&) {
   return this;
-}
-
-Object* Closure::apply(std::vector<Object*>& actual_args) {
-  std::vector<std::string> formal_args = lambda->getArguments();
-
-  if (formal_args.size() != actual_args.size())
-    throw std::runtime_error("Invalid function call, wrong number of arguments");
-
-  for (unsigned int i = 0; i < formal_args.size(); i++)
-    env->put(VM::getAllocator().createSymbol(formal_args[i]), actual_args[i]);
-
-  return lambda->getBody()->eval(*env);
 }
 
 void Closure::mark() {

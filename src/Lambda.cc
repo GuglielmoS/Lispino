@@ -33,6 +33,26 @@ Object* Lambda::eval(Environment& env) {
   return VM::getAllocator().createClosure(this, &env);
 }
 
+Object* Lambda::apply(std::vector<Object*>& actual_args, Environment& env) {
+  if (arguments.size() != actual_args.size())
+    throw std::runtime_error("Invalid function call, wrong number of arguments");
+
+  // extend the current environment with the arguments to apply
+  Environment *extended_env = new Environment(&env);
+  for (unsigned int i = 0; i < arguments.size(); i++)
+    extended_env->put(VM::getAllocator().createSymbol(arguments[i]), actual_args[i]);
+
+  // evaluate the code associated to this lambda in the extended environment
+  Object *result = body->eval(*extended_env);
+
+  // delete the environment if not needed: if we have a closure as result, it
+  // must not be deleted because it is now part of the closure
+  if (!result->isClosure())
+    delete extended_env;
+
+  return result;
+}
+
 void Lambda::mark() {
   Object::mark();
   body->mark();

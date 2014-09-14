@@ -34,36 +34,46 @@ Object* List::getRest() {
 }
 
 Object* List::eval(Environment& env) {
+  // return NIL if the list is empty
   if (head->isNil())
     return VM::getAllocator().createNil();
 
-  // extract the arguments
+  // extract the arguments if needed
   if (!cachedArgs)
     updateCachedArguments();
 
-  // execute the call
+  // evaluate the first element (the list's head)
   Object *op = head->eval(env);
+
+  // apply the other values to the evaluated operator accordingly to the fact
+  // that it can be either a builtin function or a lambda object 
   if (op->isBuiltinFunction()) {
     return static_cast<Builtins::BuiltinFunction*>(op)->apply(args, env);
   } else {
     // evaluate the arguments
-    std::vector<Object*> evaluatedArgs;
+    std::vector<Object*> evaluated_args;
     for (auto& current_arg : args)
-      evaluatedArgs.push_back(current_arg->eval(env));
+      evaluated_args.push_back(current_arg->eval(env));
 
+    // the pointer to the lambda code to evaluate
+    Lambda *lambda = nullptr;
+
+    // the pointer to the environment to use for the evaluation
+    Environment *eval_env = &env;
+
+    // retrieve the lambda and the environment where the code must be evaluated
     if (op->isLambda()) {
-      Closure *closure = static_cast<Closure*>(op->eval(env));
-
-      // prevent the closure from being removed by the GC
-      env.put(VM::getAllocator().createRandomSymbol(), closure);
-
-      // execute the closure and return the result
-      return closure->apply(evaluatedArgs);
+      lambda = static_cast<Lambda*>(op);
     } else if (op->isClosure()) {
-      return static_cast<Closure*>(op)->apply(evaluatedArgs);
-    } else {
-      throw std::runtime_error("Invalid function call, the operator cannot be used: " + op->toString());
+      lambda = static_cast<Closure*>(op)->getLambda();
+      eval_env = static_cast<Closure*>(op)->getEnv();
     }
+    else {
+      throw std::runtime_error("Invalid function call, the operator cannot be called: " + op->toString());
+    }
+
+    // apply the arguments to the lambda and return the result
+    return lambda->apply(evaluated_args, *eval_env);
   }
 }
 
