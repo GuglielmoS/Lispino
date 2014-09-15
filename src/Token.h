@@ -1,8 +1,10 @@
 #ifndef LISPINO_TOKEN_H_
 #define LISPINO_TOKEN_H_
 
-#include <iostream>
 #include <cstdlib>
+#include <cstdint>
+
+#include <iostream>
 #include <string>
 #include <map>
 
@@ -30,7 +32,7 @@ class Token {
  public:
   Token(TokenType type);
 
-  Token(long int value);
+  Token(std::int64_t value);
 
   Token(double value);
 
@@ -42,7 +44,7 @@ class Token {
   
   std::string getString() const;
   
-  long int getIntNumber() const;
+  std::int64_t getIntNumber() const;
   
   double getFloatNumber() const;
 
@@ -51,7 +53,7 @@ class Token {
 
   std::string raw_value;
 
-  long int int_value;
+  std::int64_t int_value;
 
   double float_value;
 

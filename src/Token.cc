@@ -16,7 +16,7 @@ Token::Token(TokenType type)
   /* DO NOTHING */
 }
 
-Token::Token(long int value)
+Token::Token(std::int64_t value)
     : type(TokenType::INT_NUMBER),
       raw_value(std::string()),
       int_value(value),
@@ -59,7 +59,7 @@ std::string Token::getString() const {
   return raw_value;
 }
 
-long int Token::getIntNumber() const {
+std::int64_t Token::getIntNumber() const {
   return int_value;
 }
 

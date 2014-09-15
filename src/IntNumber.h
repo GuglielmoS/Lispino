@@ -1,6 +1,8 @@
 #ifndef LISPINO_INTNUMBER_H_
 #define LISPINO_INTNUMBER_H_
 
+#include <cstdint>
+
 #include <sstream>
 #include <string>
 
@@ -12,11 +14,11 @@ class IntNumber : public Object {
  public:
   IntNumber();
 
-  IntNumber(long int value);
+  IntNumber(std::int64_t value);
 
-  void setValue(long int value);
+  void setValue(std::int64_t value);
 
-  long int getValue() const;
+  std::int64_t getValue() const;
 
   Object* eval(Environment* env);
 
@@ -63,7 +65,7 @@ class IntNumber : public Object {
   std::string toString() const;
 
  private:
-  long int value;
+  std::int32_t value;
 };
 
 }

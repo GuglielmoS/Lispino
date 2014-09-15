@@ -8,15 +8,15 @@ IntNumber::IntNumber() : value(0) {
   /* DO NOTHING */
 }
 
-IntNumber::IntNumber(long int value) : value(value) {
+IntNumber::IntNumber(std::int64_t value) : value(value) {
   /* DO NOTHING */
 }
 
-void IntNumber::setValue(long int value) {
+void IntNumber::setValue(std::int64_t value) {
   this->value = value;
 }
 
-long int IntNumber::getValue() const {
+std::int64_t IntNumber::getValue() const {
   return value;
 }
 
@@ -36,11 +36,11 @@ int IntNumber::compareInt(const IntNumber* obj) const {
 }
 
 int IntNumber::compareFloat(const FloatNumber* obj) const {
-  float temp = obj->getValue() - value;
+  double temp = obj->getValue() - value;
 
-  if (temp > 0.0f)
+  if (temp > 0.0)
     return 1;
-  else if (temp < 0.0f)
+  else if (temp < 0.0)
     return -1;
   else
     return 0;

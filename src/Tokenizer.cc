@@ -140,15 +140,17 @@ Token* Tokenizer::number() {
     return nullptr;
   } else {
     if (isFloat) {
+      double value = std::stof(buffer.str()); 
       if (negate)
-        return new Token(-atof(buffer.str().c_str())); 
+        return new Token(-value);
       else
-        return new Token(atof(buffer.str().c_str()));
+        return new Token(value);
     } else {
+      std::int64_t value = stol(buffer.str());
       if (negate)
-        return new Token(-atol(buffer.str().c_str()));
+        return new Token(-value);
       else
-        return new Token(atol(buffer.str().c_str()));
+        return new Token(value);
     }
   }
 }
