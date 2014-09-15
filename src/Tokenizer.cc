@@ -40,19 +40,20 @@ void Tokenizer::skipSpaces() {
 }
 
 void Tokenizer::skipCommentsAndSpaces() {
-  // skip the initial possible spaces
+  // skip the initial spaces
   skipSpaces();
 
-  // check if there is a starting comment
-  if (stream.get() == ';') {
-    // skip the current comment
+  // loop until no other comments are found
+  while (stream.get() == ';') {
+    // skip the characters between the ';' and the newline
     while (stream.get() != '\n') continue;
 
-    // try to skip the comment on the next line
-    skipCommentsAndSpaces();
-  } else {
-    stream.unget();
+    // skip the other eventual spaces
+    skipSpaces();
   }
+
+  // put the last char found on the stream because it has not been used
+  stream.unget();
 }
 
 bool Tokenizer::isdelimiter(char ch) const {
