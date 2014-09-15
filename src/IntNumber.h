@@ -20,49 +20,49 @@ class IntNumber : public Object {
 
   std::int64_t getValue() const;
 
-  Object* eval(Environment* env);
+  Object* eval(Environment* env) override;
 
-  int compare(const Object* obj) const;
+  int compare(const Object* obj) const override;
 
-  int compareInt(const IntNumber* obj) const;
+  int compareInt(const IntNumber* obj) const override;
 
-  int compareFloat(const FloatNumber* obj) const;
+  int compareFloat(const FloatNumber* obj) const override;
   
-  Object* negate();
+  Object* negate() override;
 
-  Object* add(Object* obj);
+  Object* add(Object* obj) override;
 
-  Object* addInt(IntNumber* obj);
+  Object* addInt(IntNumber* obj) override;
 
-  Object* addFloat(FloatNumber* obj);
+  Object* addFloat(FloatNumber* obj) override;
 
-  Object* sub(Object* obj);
+  Object* sub(Object* obj) override;
   
-  Object* subInt(IntNumber* obj);
+  Object* subInt(IntNumber* obj) override;
   
-  Object* subFloat(FloatNumber* obj);
+  Object* subFloat(FloatNumber* obj) override;
   
-  Object* mul(Object* obj);
+  Object* mul(Object* obj) override;
   
-  Object* mulInt(IntNumber* obj);
+  Object* mulInt(IntNumber* obj) override;
   
-  Object* mulFloat(FloatNumber* obj);
+  Object* mulFloat(FloatNumber* obj) override;
   
-  Object* div(Object* obj);
+  Object* div(Object* obj) override;
   
-  Object* divInt(IntNumber* obj);
+  Object* divInt(IntNumber* obj) override;
   
-  Object* divFloat(FloatNumber* obj);
+  Object* divFloat(FloatNumber* obj) override;
   
-  Object* remainder(Object* obj);
+  Object* remainder(Object* obj) override;
   
-  Object* remainderInt(IntNumber* obj);
+  Object* remainderInt(IntNumber* obj) override;
 
-  bool isAtom() const;
+  bool isAtom() const override;
   
-  bool isIntNumber() const;
+  bool isIntNumber() const override;
 
-  std::string toString() const;
+  std::string toString() const override;
 
  private:
   std::int32_t value;

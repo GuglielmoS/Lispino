@@ -23,13 +23,13 @@ class Closure : public Object {
 
   Environment* getEnv();
 
-  Object* eval(Environment* env);
+  Object* eval(Environment* env) override;
 
-  void mark();
+  void mark() override;
 
-  bool isClosure() const;
+  bool isClosure() const override;
 
-  std::string toString() const;
+  std::string toString() const override;
 
  private:
   Lambda *lambda;

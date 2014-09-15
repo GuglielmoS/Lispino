@@ -17,13 +17,13 @@ class Quote : public Object {
   
   Object* getValue();
 
-  Object* eval(Environment* env);
+  Object* eval(Environment* env) override;
 
-  void mark();
+  void mark() override;
 
-  bool isQuote() const;
+  bool isQuote() const override;
 
-  std::string toString() const;
+  std::string toString() const override;
 
  private:
   Object *value;

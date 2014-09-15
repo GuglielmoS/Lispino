@@ -18,17 +18,17 @@ class String : public Object {
 
   std::string getValue() const;
 
-  Object* eval(Environment* env);
+  Object* eval(Environment* env) override;
 
-  int compare(const Object* obj) const;
+  int compare(const Object* obj) const override;
 
-  int compareString(const String* obj) const;
+  int compareString(const String* obj) const override;
 
-  bool isAtom() const;
+  bool isAtom() const override;
 
-  bool isString() const;
+  bool isString() const override;
 
-  std::string toString() const;
+  std::string toString() const override;
 
  private:
   std::string value;

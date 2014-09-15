@@ -185,6 +185,7 @@ TEST(TokenizerTests, ReservedKeywords) {
     stream << "DefInE define DEFine" << std::endl;
     stream << "Nil NIL NiL nil" << std::endl;
     stream << "LamBdA LAMBDA lambda" << std::endl;
+    stream << "LET leT LEt" << std::endl;
     stream << "QuoTE qUote quote" << std::endl;
     stream << "IF iF if If" << std::endl;
     stream << "true TrUe false FalSE";
@@ -217,6 +218,14 @@ TEST(TokenizerTests, ReservedKeywords) {
     ASSERT_EQ(TokenType::LAMBDA, token->getType());
     token.reset(tokenizer.next());
     ASSERT_EQ(TokenType::LAMBDA, token->getType());
+
+    // check the LET keyword
+    token.reset(tokenizer.next());
+    ASSERT_EQ(TokenType::LET, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(TokenType::LET, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(TokenType::LET, token->getType());
 
     // check the QUOTE keyword
     token.reset(tokenizer.next());

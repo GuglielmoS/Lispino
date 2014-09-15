@@ -55,6 +55,58 @@ Object* Parser::parseLambda() {
   return allocator.createLambda(body, params);
 }
 
+Object* Parser::parseLet() {
+  // parse the arguments
+  std::unique_ptr<Token> token(tokenizer.next());
+
+  // check the bindings list intial '('
+  if (token->getType() != TokenType::OPEN_PAREN)
+    throw std::runtime_error("PARSER - invalid LET arguments, missing '('");
+
+  // parse the LET bindings ([symbol -> value] pairs)
+  std::vector<std::string> let_symbols;
+  std::vector<Object*> let_values;
+
+  // skip to the next token
+  token.reset(tokenizer.next());
+  while (token->getType() == TokenType::OPEN_PAREN) {
+    // parse the current binding symbol
+    token.reset(tokenizer.next());
+    if (token->getType() != TokenType::SYMBOL)
+      throw std::runtime_error("PARSER - invalid LET arguments, missing a symbol in the bindings list");
+    let_symbols.push_back(token->getSymbol());
+
+    // parse the current binding value
+    let_values.push_back(parseExpr());
+
+    // check the current binding final ')'
+    token.reset(tokenizer.next());
+    if (token->getType() != TokenType::CLOSE_PAREN)
+      throw std::runtime_error("PARSER - invalid LET arguments, missing ')'");
+
+    // skip to the next token
+    token.reset(tokenizer.next());
+  }
+
+  // check the bindings list final ')'
+  if (token->getType() != TokenType::CLOSE_PAREN)
+    throw std::runtime_error("PARSER - invalid LET arguments, missing ')'");
+
+  // parse the body of the LET expression
+  Object *body = parseExpr();
+
+  // check the final ')'
+  token.reset(tokenizer.next());
+  if (token->getType() != TokenType::CLOSE_PAREN)
+    throw std::runtime_error("PARSER - invalid LET arguments, missing ')'");
+
+  // create the lambda with the LET body and the LET symbols
+  Lambda *let_lambda = allocator.createLambda(body, let_symbols);
+
+  // return the application of the LET values to the LET lambda
+  return allocator.createList(let_lambda, vec2cons(let_values));
+}
+
 Object* Parser::parseDefine() {
   std::unique_ptr<Token> token(tokenizer.next());
   std::vector<std::string> params;
@@ -163,6 +215,7 @@ Object* Parser::parseList() {
   switch (token->getType()) {
     case TokenType::CLOSE_PAREN: return allocator.createNil();  // empty list == nil
     case TokenType::LAMBDA:      return parseLambda();          // lambda
+    case TokenType::LET:         return parseLet();             // let == lexical closure
     case TokenType::DEFINE:      return parseDefine();          // define
     case TokenType::QUOTE:       return parseQuote();           // quote
     case TokenType::IF:          return parseIf();              // if
@@ -211,6 +264,28 @@ Object* Parser::dispatch(Token *token) {
     case TokenType::EOS:          return nullptr;
     default:                      throw std::runtime_error("PARSER - dispatch failed");
   }
+}
+
+Object* Parser::vec2cons(std::vector<Object*>& objects) {
+  List *last_cons = nullptr;
+  List *first_cons = nullptr;
+
+  for (auto& current_object : objects) {
+    List *new_cons = allocator.createList(current_object, allocator.createNil());
+
+    if (last_cons == nullptr) {
+      first_cons = new_cons;
+      last_cons = new_cons;
+    } else {
+      last_cons->setRest(new_cons);
+      last_cons = static_cast<List*>(last_cons->getRest());
+    }
+  }
+
+  if (first_cons == nullptr)
+    return allocator.createNil();
+  else
+    return first_cons;
 }
 
 }

@@ -22,17 +22,17 @@ class List : public Object {
 
   Object* getRest();
 
-  Object* eval(Environment* env);
+  Object* eval(Environment* env) override;
 
-  int compare(const Object* obj) const;
+  int compare(const Object* obj) const override;
 
-  int compareList(const List* obj) const;
+  int compareList(const List* obj) const override;
 
-  void mark();
+  void mark() override;
 
-  bool isList() const;
+  bool isList() const override;
 
-  std::string toString() const;
+  std::string toString() const override;
 
  private:
   Object *head;

@@ -15,19 +15,19 @@ class Boolean : public Object {
 
   bool getValue() const;
 
-  Object* eval(Environment* env);
+  Object* eval(Environment* env) override;
 
-  int compare(const Object* obj) const;
+  int compare(const Object* obj) const override;
 
-  int compareBoolean(const Boolean* obj) const;
+  int compareBoolean(const Boolean* obj) const override;
 
   bool isTrue() const;
 
   bool isFalse() const;
 
-  bool isBoolean() const;
+  bool isBoolean() const override;
 
-  std::string toString() const;
+  std::string toString() const override;
 
  private:
   // the value that the object represents

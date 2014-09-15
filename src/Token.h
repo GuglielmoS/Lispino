@@ -20,6 +20,7 @@ enum class TokenType {
   //RESERVED_KEYWORDS_START__,
   NIL,
   LAMBDA,
+  LET,
   DEFINE,
   QUOTE,
   IF,

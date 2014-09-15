@@ -25,15 +25,15 @@ class Lambda : public Object {
 
   std::vector<std::string> getArguments();
 
-  Object* eval(Environment* env);
+  Object* eval(Environment* env) override;
 
   Object* apply(std::vector<Object*>& actual_args, Environment* env);
 
-  void mark();
+  void mark() override;
 
-  bool isLambda() const;
+  bool isLambda() const override;
 
-  std::string toString() const;
+  std::string toString() const override;
 
  private:
   Object *body;

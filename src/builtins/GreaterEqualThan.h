@@ -9,7 +9,7 @@ namespace Builtins {
 
 class GreaterEqualThan : public BuiltinFunction {
  public:
-  Object* apply(std::vector<Object*>& args, Environment* env);
+  Object* apply(std::vector<Object*>& args, Environment* env) override;
 };
 
 }

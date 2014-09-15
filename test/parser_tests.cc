@@ -199,6 +199,63 @@ TEST(ParserTests, Lambdas) {
     ASSERT_EQ("x", static_cast<Symbol*>(temp->getFirst())->getValue());
 }
 
+TEST(ParserTests, Let) {
+    std::stringstream stream("(let ((a 0) (b (+ 1 2))) (+ a b))");
+    Parser parser(stream);
+    
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr());
+
+    // check that the parsed expr is a list who's first element is a lambda
+    ASSERT_TRUE(expr->isList());
+    List *let_list = static_cast<List*>(expr);
+    ASSERT_TRUE(let_list->getFirst() != nullptr);
+    ASSERT_TRUE(let_list->getFirst()->isLambda());
+
+    // check that the lambda has the right parameters
+    Lambda *lambda = static_cast<Lambda*>(let_list->getFirst());
+    std::vector<std::string> params = lambda->getArguments();
+    Object *body = lambda->getBody();
+
+    // check the lambda parameters
+    ASSERT_EQ(2, params.size());
+    ASSERT_EQ("a", params[0]);
+    ASSERT_EQ("b", params[1]);
+
+    // check the lambda body
+    ASSERT_TRUE(body->isList());
+    List *temp = static_cast<List*>(body);
+    ASSERT_TRUE(temp->getFirst()->isSymbol());
+    ASSERT_EQ("+", static_cast<Symbol*>(temp->getFirst())->getValue());
+    ASSERT_TRUE(temp->getRest()->isList());
+    temp = static_cast<List*>(temp->getRest());
+    ASSERT_TRUE(temp->getFirst()->isSymbol());
+    ASSERT_EQ("a", static_cast<Symbol*>(temp->getFirst())->getValue());
+    ASSERT_TRUE(temp->getRest()->isList());
+    temp = static_cast<List*>(temp->getRest());
+    ASSERT_TRUE(temp->getFirst()->isSymbol());
+    ASSERT_EQ("b", static_cast<Symbol*>(temp->getFirst())->getValue());
+
+    // check that the arguments provided to the lambda are correct
+    temp = static_cast<List*>(let_list->getRest());
+    ASSERT_TRUE(temp->getFirst()->isIntNumber());
+    ASSERT_EQ(0, static_cast<IntNumber*>(temp->getFirst())->getValue());
+    ASSERT_TRUE(temp->getRest()->isList());
+    temp = static_cast<List*>(temp->getRest());
+    ASSERT_TRUE(temp->getFirst()->isList());
+    temp = static_cast<List*>(temp->getFirst());
+    ASSERT_TRUE(temp->getFirst()->isSymbol());
+    ASSERT_EQ("+", static_cast<Symbol*>(temp->getFirst())->getValue());
+    ASSERT_TRUE(temp->getRest()->isList());
+    temp = static_cast<List*>(temp->getRest());
+    ASSERT_TRUE(temp->getFirst()->isIntNumber());
+    ASSERT_EQ(1, static_cast<IntNumber*>(temp->getFirst())->getValue());
+    ASSERT_TRUE(temp->getRest()->isList());
+    temp = static_cast<List*>(temp->getRest());
+    ASSERT_TRUE(temp->getFirst()->isIntNumber());
+    ASSERT_EQ(2, static_cast<IntNumber*>(temp->getFirst())->getValue());
+}
+
 TEST(ParserTests, Defines) {
     std::stringstream stream("(define (square x) (* x x))");
     Parser parser(stream);

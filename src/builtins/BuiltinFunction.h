@@ -13,11 +13,11 @@ class BuiltinFunction : public Object {
  public:
   virtual Object* apply(std::vector<Object*>& args, Environment* env) = 0;
 
-  Object* eval(Environment* env);
+  Object* eval(Environment* env) override;
 
-  bool isBuiltinFunction() const;
+  bool isBuiltinFunction() const override;
 
-  std::string toString() const;
+  std::string toString() const override;
 };
 
 }

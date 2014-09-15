@@ -42,8 +42,10 @@ Object* List::eval(Environment* env) {
   if (!cachedArgs)
     updateCachedArguments();
 
-  // evaluate the first element (the list's head)
-  Object *op = head->eval(env);
+  // evaluate the list's head if needed (-> it's not a lambda)
+  Object *op = head;
+  if (!op->isLambda())
+    op = head->eval(env);
 
   // apply the other values to the evaluated operator accordingly to the fact
   // that it can be either a builtin function or a lambda object 

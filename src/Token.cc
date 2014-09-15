@@ -72,6 +72,7 @@ std::map<std::string, TokenType> Token::initializeReservedKeywords() {
 
   bindings["nil"]    = TokenType::NIL;
   bindings["lambda"] = TokenType::LAMBDA;
+  bindings["let"]    = TokenType::LET;
   bindings["define"] = TokenType::DEFINE;
   bindings["quote"]  = TokenType::QUOTE;
   bindings["true"]   = TokenType::BOOL_TRUE;

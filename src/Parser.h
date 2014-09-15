@@ -27,12 +27,16 @@ class Parser {
   Object* parseList();
   
   Object* parseLambda();
+
+  Object* parseLet();
   
   Object* parseDefine();
   
   Object* parseQuote();
   
   Object* dispatch(Token *token);
+
+  Object* vec2cons(std::vector<Object*>& objects);
 };
 
 }

@@ -13,13 +13,13 @@ class Sequence : public Object {
 
   std::vector<Object*>& getValue();
 
-  Object* eval(Environment* env);
+  Object* eval(Environment* env) override;
 
-  void mark();
+  void mark() override;
 
-  bool isSequence() const;
+  bool isSequence() const override;
 
-  std::string toString() const;
+  std::string toString() const override;
 
  private:
   std::vector<Object*> expressions;

@@ -66,7 +66,7 @@ int Interpreter::repl(bool verbose) {
         std::cout << "     + Parsing Time:            " << parsing_time << std::endl;
         std::cout << "     + Evaluation Time:         " << evaluation_time << std::endl;
         std::cout << "     + Garbage Collection Time: " << garbage_collection_time << std::endl;
-        std::cout << "     Total Time:                " << total_time << std::endl;
+        std::cout << "     = Total Time:              " << total_time << std::endl;
         std::cout << ";; Memory report" << std::endl;
         std::cout << "     Garbage collected objects " <<  removed_objects << "/" << total_objects << std::endl;
       }

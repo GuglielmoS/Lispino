@@ -21,13 +21,13 @@ class IfExpr : public Object {
 
   Object* getAlternative();
 
-  Object* eval(Environment* env);
+  Object* eval(Environment* env) override;
 
-  void mark();
+  void mark() override;
 
-  bool isIfExpr() const;
+  bool isIfExpr() const override;
 
-  std::string toString() const;
+  std::string toString() const override;
 
  private:
 
