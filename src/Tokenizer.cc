@@ -45,16 +45,11 @@ void Tokenizer::skipCommentsAndSpaces() {
 
   // check if there is a starting comment
   if (stream.get() == ';') {
-    if (stream.get() == ';') {
     // skip the current comment
     while (stream.get() != '\n') continue;
 
     // try to skip the comment on the next line
     skipCommentsAndSpaces();
-    } else {
-      stream.putback(';');
-      stream.unget();
-    }
   } else {
     stream.unget();
   }
