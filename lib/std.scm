@@ -150,3 +150,8 @@
     false
     (even? (dec n))))
 
+(define (abs x)
+  (if (< x 0)
+    (- x)
+    x))
+
