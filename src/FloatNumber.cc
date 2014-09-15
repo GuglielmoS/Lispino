@@ -6,19 +6,19 @@
 
 namespace Lispino {
 
-FloatNumber::FloatNumber() : value(0.0f) {
+FloatNumber::FloatNumber() : value(0.0) {
   /* DO NOTHING */
 }
 
-FloatNumber::FloatNumber(float value) : value(value) {
+FloatNumber::FloatNumber(double value) : value(value) {
   /* DO NOTHING */
 }
 
-void FloatNumber::setValue(float value) {
+void FloatNumber::setValue(double value) {
   this->value = value;
 }
 
-float FloatNumber::getValue() const {
+double FloatNumber::getValue() const {
   return value;
 }
 
@@ -36,9 +36,9 @@ int FloatNumber::compare(const Object* obj) const {
 int FloatNumber::compareInt(const IntNumber* obj) const {
   float temp = obj->getValue() - value;
 
-  if (temp > 0.0f)
+  if (temp > 0.0)
     return 1;
-  else if (temp < 0.0f)
+  else if (temp < 0.0)
     return -1;
   else
     return 0;
@@ -47,9 +47,9 @@ int FloatNumber::compareInt(const IntNumber* obj) const {
 int FloatNumber::compareFloat(const FloatNumber* obj) const {
   float temp = obj->value - value;
 
-  if (temp > 0.0f)
+  if (temp > 0.0)
     return 1;
-  else if (temp < 0.0f)
+  else if (temp < 0.0)
     return -1;
   else
     return 0;

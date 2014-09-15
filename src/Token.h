@@ -32,7 +32,7 @@ class Token {
 
   Token(long int value);
 
-  Token(float value);
+  Token(double value);
 
   Token(TokenType type, std::string value);
 
@@ -44,7 +44,7 @@ class Token {
   
   long int getIntNumber() const;
   
-  float getFloatNumber() const;
+  double getFloatNumber() const;
 
  private:
   TokenType type;
@@ -53,7 +53,7 @@ class Token {
 
   long int int_value;
 
-  float float_value;
+  double float_value;
 
   // it contains all the reserved keywords and their relative TokenType
   static std::map<std::string, TokenType> reserved_keywords;

@@ -12,11 +12,11 @@ class FloatNumber : public Object {
  public:
   FloatNumber();
 
-  FloatNumber(float value);
+  FloatNumber(double value);
 
-  void setValue(float value);
+  void setValue(double value);
 
-  float getValue() const;
+  double getValue() const;
 
   Object* eval(Environment* env);
 
@@ -63,7 +63,7 @@ class FloatNumber : public Object {
   std::string toString() const;
 
  private:
-  float value;
+  double value;
 };
 
 }

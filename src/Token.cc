@@ -24,7 +24,7 @@ Token::Token(long int value)
   /* DO NOTHING */
 }
 
-Token::Token(float value)
+Token::Token(double value)
     : type(TokenType::FLOAT_NUMBER),
       raw_value(std::string()),
       int_value(0),
@@ -63,7 +63,7 @@ long int Token::getIntNumber() const {
   return int_value;
 }
 
-float Token::getFloatNumber() const {
+double Token::getFloatNumber() const {
   return float_value;
 }
 

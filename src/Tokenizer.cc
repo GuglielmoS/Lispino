@@ -141,9 +141,9 @@ Token* Tokenizer::number() {
   } else {
     if (isFloat) {
       if (negate)
-        return new Token((float)(-atof(buffer.str().c_str()))); 
+        return new Token(-atof(buffer.str().c_str())); 
       else
-        return new Token((float)(atof(buffer.str().c_str())));
+        return new Token(atof(buffer.str().c_str()));
     } else {
       if (negate)
         return new Token(-atol(buffer.str().c_str()));
