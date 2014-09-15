@@ -10,7 +10,6 @@
 #include "builtins/Div.h"
 #include "builtins/Remainder.h"
 #include "builtins/Display.h"
-#include "builtins/Newline.h"
 #include "builtins/Equal.h"
 #include "builtins/GreaterThan.h"
 #include "builtins/GreaterEqualThan.h"
@@ -116,7 +115,6 @@ BuiltinsTable Environment::initializeBuiltinFunctions() {
 
   // I/O utils
   bindings["display"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Display());
-  bindings["newline"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Newline());
 
   return bindings;
 }
