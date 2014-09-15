@@ -173,14 +173,27 @@ Token* Tokenizer::string() {
         break;
       }
     } else {
-      buffer << ch;
+      char ch_to_put = ch;
+
+      // handle the escaping
+      if (escape) {
+        escape = false;
+
+        switch (ch) {
+          case 'n':  ch_to_put = '\n'; break;
+          case 'r':  ch_to_put = '\r'; break;
+          case '\\': ch_to_put = '\\'; break;
+          default:   throw new std::runtime_error("Undefined character to escape: " + ch);
+        }
+      }
+
+      // put the read character in the buffer
+      buffer << ch_to_put;
     }
   }
 
-  if (ch != '"') {
-    std::cerr << "UNTERMINATED STRING!" << std::endl;
-    return nullptr;
-  }
+  if (ch != '"')
+    throw new std::runtime_error("Unterminated string!");
 
   return new Token(TokenType::STRING, buffer.str());
 }
