@@ -22,14 +22,14 @@ Object* String::eval(Environment*) throw (Errors::RuntimeError) {
   return this;
 }
 
-int String::compare(const Object* obj) const {
+int String::compare(const Object* obj) const throw (Errors::RuntimeError) {
   if (this == obj)
     return 0;
   else
     return obj->compareString(this);
 }
 
-int String::compareString(const String* obj) const {
+int String::compareString(const String* obj) const throw (Errors::RuntimeError) {
   return obj->getValue().compare(value);
 }
 

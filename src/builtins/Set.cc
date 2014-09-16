@@ -9,10 +9,10 @@ namespace Builtins {
 
 Object* Set::apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) {
   if (args.size() != 2)
-    throw std::runtime_error("set!: wrong number of arguments!");
+    throw Errors::RuntimeError(/*"set!: wrong number of arguments"*/);
 
   if (!args[0]->isSymbol())
-    throw std::runtime_error("set!: wrong input parameters types!");
+    throw Errors::RuntimeError(/*"set!: the first argument must be a symol"*/);
 
   // evaluate the expression to assing
   Object *result = args[1]->eval(env);

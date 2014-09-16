@@ -19,108 +19,108 @@ Object* Object::eval() throw (Errors::RuntimeError) {
   return eval(&VM::getGlobalEnv());
 }
 
-int Object::compare(const Object*) const {
-  throw std::runtime_error("compare: invalid data types!");
+int Object::compare(const Object*) const throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareNil(const Nil*) const {
+int Object::compareNil(const Nil*) const throw (Errors::RuntimeError) {
   return -1;
 }
 
-int Object::compareList(const List*) const {
-  throw std::runtime_error("compare: invalid data types!");
+int Object::compareList(const List*) const throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareInt(const IntNumber*) const {
-  throw std::runtime_error("compare: invalid data types!");
+int Object::compareInt(const IntNumber*) const throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareFloat(const FloatNumber*) const {
-  throw std::runtime_error("compare: invalid data types!");
+int Object::compareFloat(const FloatNumber*) const throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareSymbol(const Symbol*) const {
-  throw std::runtime_error("compare: invalid data types!");
+int Object::compareSymbol(const Symbol*) const throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareString(const String*) const {
-  throw std::runtime_error("compare: invalid data types!");
+int Object::compareString(const String*) const throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareBoolean(const Boolean*) const {
-  throw std::runtime_error("compare: invalid data types!");
+int Object::compareBoolean(const Boolean*) const throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareSequence(const Sequence*) const {
-  throw std::runtime_error("compare: invalid data types!");
+int Object::compareSequence(const Sequence*) const throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-Object* Object::negate() {
-  throw std::runtime_error("negate: invalid data type!");
+Object* Object::negate() throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot negate this!"*/);
 }
 
-Object* Object::add(Object*) {
-  throw std::runtime_error("+: invalid data types!");
+Object* Object::add(Object*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot add apples and pears!"*/);
 }
 
-Object* Object::addInt(IntNumber*) {
-  throw std::runtime_error("+: invalid data types!");
+Object* Object::addInt(IntNumber*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot add apples and pears!"*/);
 }
 
-Object* Object::addFloat(FloatNumber*) {
-  throw std::runtime_error("+: invalid data types!");
+Object* Object::addFloat(FloatNumber*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot add apples and pears!"*/);
 }
 
-Object* Object::addString(String*) {
-  throw std::runtime_error("+: invalid data types!");
+Object* Object::addString(String*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot add apples and pears!"*/);
 }
 
-Object* Object::sub(Object*) {
-  throw std::runtime_error("-: invalid data types!");
+Object* Object::sub(Object*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot sub apples and pears!"*/);
 }
 
-Object* Object::subInt(IntNumber*) {
-  throw std::runtime_error("-: invalid data types!");
+Object* Object::subInt(IntNumber*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot sub apples and pears!"*/);
 }
 
-Object* Object::subFloat(FloatNumber*) {
-  throw std::runtime_error("-: invalid data types!");
+Object* Object::subFloat(FloatNumber*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot sub apples and pears!"*/);
 }
 
-Object* Object::mul(Object*) {
-  throw std::runtime_error("*: invalid data types!");
+Object* Object::mul(Object*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot mul apples and pears!"*/);
 }
 
-Object* Object::mulInt(IntNumber*) {
-  throw std::runtime_error("*: invalid data types!");
+Object* Object::mulInt(IntNumber*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot mul apples and pears!"*/);
 }
 
-Object* Object::mulFloat(FloatNumber*) {
-  throw std::runtime_error("*: invalid data types!");
+Object* Object::mulFloat(FloatNumber*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot mul apples and pears!"*/);
 }
 
-Object* Object::div(Object*) {
-  throw std::runtime_error("/: invalid data types!");
+Object* Object::div(Object*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot div apples and pears!"*/);
 }
 
-Object* Object::divInt(IntNumber*) {
-  throw std::runtime_error("/: invalid data types!");
+Object* Object::divInt(IntNumber*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot div apples and pears!"*/);
 }
 
-Object* Object::divFloat(FloatNumber*) {
-  throw std::runtime_error("/: invalid data types!");
+Object* Object::divFloat(FloatNumber*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot div apples and pears!"*/);
 }
 
-Object* Object::remainder(Object*) {
-  throw std::runtime_error("remainder: invalid data types!");
+Object* Object::remainder(Object*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot calculate the remainder between apples and pears!"*/);
 }
 
-Object* Object::remainderInt(IntNumber*) {
-  throw std::runtime_error("remainder: invalid data types!");
+Object* Object::remainderInt(IntNumber*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot calculate the remainder between apples and pears!"*/);
 }
 
-Object* Object::remainderFloat(FloatNumber*) {
-  throw std::runtime_error("remainder: invalid data types!");
+Object* Object::remainderFloat(FloatNumber*) throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot calculate the remainder between apples and pears!"*/);
 }
 
 void Object::mark() {

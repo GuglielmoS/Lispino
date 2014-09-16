@@ -24,14 +24,14 @@ Object* Symbol::eval(Environment* env) throw (Errors::RuntimeError) {
   return env->get(this);
 }
 
-int Symbol::compare(const Object* obj) const {
+int Symbol::compare(const Object* obj) const throw (Errors::RuntimeError) {
   if (obj == this)
     return 0;
   else 
     return obj->compareSymbol(this);
 }
 
-int Symbol::compareSymbol(const Symbol* obj) const {
+int Symbol::compareSymbol(const Symbol* obj) const throw (Errors::RuntimeError) {
   return obj->getValue().compare(value);
 }
 

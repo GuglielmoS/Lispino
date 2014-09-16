@@ -26,14 +26,14 @@ Object* FloatNumber::eval(Environment*) throw (Errors::RuntimeError) {
   return this;
 }
 
-int FloatNumber::compare(const Object* obj) const {
+int FloatNumber::compare(const Object* obj) const throw (Errors::RuntimeError) {
   if (obj == this)
     return 0;
   else
     return obj->compareFloat(this);
 }
 
-int FloatNumber::compareInt(const IntNumber* obj) const {
+int FloatNumber::compareInt(const IntNumber* obj) const throw (Errors::RuntimeError) {
   float temp = obj->getValue() - value;
 
   if (temp > 0.0)
@@ -44,7 +44,7 @@ int FloatNumber::compareInt(const IntNumber* obj) const {
     return 0;
 }
 
-int FloatNumber::compareFloat(const FloatNumber* obj) const {
+int FloatNumber::compareFloat(const FloatNumber* obj) const throw (Errors::RuntimeError) {
   float temp = obj->value - value;
 
   if (temp > 0.0)
@@ -55,63 +55,63 @@ int FloatNumber::compareFloat(const FloatNumber* obj) const {
     return 0;
 }
 
-Object* FloatNumber::negate() {
+Object* FloatNumber::negate() throw (Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(-value);
 }
 
-Object* FloatNumber::add(Object* obj) {
+Object* FloatNumber::add(Object* obj) throw (Errors::RuntimeError) {
   return obj->addFloat(this);
 }
 
-Object* FloatNumber::addInt(IntNumber* obj) {
+Object* FloatNumber::addInt(IntNumber* obj) throw (Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(value + obj->getValue());
 }
 
-Object* FloatNumber::addFloat(FloatNumber* obj) {
+Object* FloatNumber::addFloat(FloatNumber* obj) throw (Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(value + obj->value);
 }
 
-Object* FloatNumber::sub(Object* obj) {
+Object* FloatNumber::sub(Object* obj) throw (Errors::RuntimeError) {
   return obj->subFloat(this);
 }
 
-Object* FloatNumber::subInt(IntNumber* obj) {
+Object* FloatNumber::subInt(IntNumber* obj) throw (Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(obj->getValue() - value);
 }
 
-Object* FloatNumber::subFloat(FloatNumber* obj) {
+Object* FloatNumber::subFloat(FloatNumber* obj) throw (Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(obj->value - value);
 }
 
-Object* FloatNumber::mul(Object* obj) {
+Object* FloatNumber::mul(Object* obj) throw (Errors::RuntimeError) {
   return obj->mulFloat(this);
 }
 
-Object* FloatNumber::mulInt(IntNumber* obj) {
+Object* FloatNumber::mulInt(IntNumber* obj) throw (Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(obj->getValue() * value);
 }
 
-Object* FloatNumber::mulFloat(FloatNumber* obj) {
+Object* FloatNumber::mulFloat(FloatNumber* obj) throw (Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(obj->value * value);
 }
 
-Object* FloatNumber::div(Object* obj) {
+Object* FloatNumber::div(Object* obj) throw (Errors::RuntimeError) {
   return obj->divFloat(this);
 }
 
-Object* FloatNumber::divInt(IntNumber* obj) {
+Object* FloatNumber::divInt(IntNumber* obj) throw (Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(obj->getValue() / value);
 }
 
-Object* FloatNumber::divFloat(FloatNumber* obj) {
+Object* FloatNumber::divFloat(FloatNumber* obj) throw (Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(obj->value / value);
 }
 
-Object* FloatNumber::remainder(Object* obj) {
+Object* FloatNumber::remainder(Object* obj) throw (Errors::RuntimeError) {
   return obj->remainderFloat(this);
 }
 
-Object* FloatNumber::remainderFloat(FloatNumber* obj) {
+Object* FloatNumber::remainderFloat(FloatNumber* obj) throw (Errors::RuntimeError) {
   return VM::getAllocator().createIntNumber(fmod(obj->value, value));
 }
 

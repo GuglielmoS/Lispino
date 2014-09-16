@@ -9,23 +9,23 @@ class Nil : public Object {
  public:
   Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
-  int compare(const Object* obj) const override;
+  int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
-  int compareNil(const Nil* obj) const override;
+  int compareNil(const Nil* obj) const throw (Errors::RuntimeError) override;
 
-  int compareList(const List* obj) const override;
+  int compareList(const List* obj) const throw (Errors::RuntimeError) override;
   
-  int compareInt(const IntNumber* obj) const override;
+  int compareInt(const IntNumber* obj) const throw (Errors::RuntimeError) override;
   
-  int compareFloat(const FloatNumber* obj) const override;
+  int compareFloat(const FloatNumber* obj) const throw (Errors::RuntimeError) override;
   
-  int compareSymbol(const Symbol* obj) const override;
+  int compareSymbol(const Symbol* obj) const throw (Errors::RuntimeError) override;
   
-  int compareString(const String* obj) const override;
+  int compareString(const String* obj) const throw (Errors::RuntimeError) override;
   
-  int compareBoolean(const Boolean* obj) const override;
+  int compareBoolean(const Boolean* obj) const throw (Errors::RuntimeError) override;
   
-  int compareSequence(const Sequence* obj) const override;
+  int compareSequence(const Sequence* obj) const throw (Errors::RuntimeError) override;
 
   bool isNil() const override;
 

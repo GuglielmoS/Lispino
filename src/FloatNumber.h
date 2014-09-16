@@ -20,41 +20,41 @@ class FloatNumber : public Object {
 
   Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
-  int compare(const Object* obj) const override;
+  int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
-  int compareInt(const IntNumber* obj) const override;
+  int compareInt(const IntNumber* obj) const throw (Errors::RuntimeError) override;
 
-  int compareFloat(const FloatNumber* obj) const override;
+  int compareFloat(const FloatNumber* obj) const throw (Errors::RuntimeError) override;
 
-  Object* negate() override;
+  Object* negate() throw (Errors::RuntimeError) override;
 
-  Object* add(Object* obj) override;
+  Object* add(Object* obj) throw (Errors::RuntimeError) override;
 
-  Object* addInt(IntNumber* obj) override;
+  Object* addInt(IntNumber* obj) throw (Errors::RuntimeError) override;
 
-  Object* addFloat(FloatNumber* obj) override;
+  Object* addFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
 
-  Object* sub(Object* obj) override;
+  Object* sub(Object* obj) throw (Errors::RuntimeError) override;
 
-  Object* subInt(IntNumber* obj) override;
+  Object* subInt(IntNumber* obj) throw (Errors::RuntimeError) override;
 
-  Object* subFloat(FloatNumber* obj) override;
+  Object* subFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
 
-  Object* mul(Object* obj) override;
+  Object* mul(Object* obj) throw (Errors::RuntimeError) override;
 
-  Object* mulInt(IntNumber* obj) override;
+  Object* mulInt(IntNumber* obj) throw (Errors::RuntimeError) override;
 
-  Object* mulFloat(FloatNumber* obj) override;
+  Object* mulFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
 
-  Object* div(Object* obj) override;
+  Object* div(Object* obj) throw (Errors::RuntimeError) override;
 
-  Object* divInt(IntNumber* obj) override;
+  Object* divInt(IntNumber* obj) throw (Errors::RuntimeError) override;
 
-  Object* divFloat(FloatNumber* obj) override;
+  Object* divFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
 
-  Object* remainder(Object* obj) override;
+  Object* remainder(Object* obj) throw (Errors::RuntimeError) override;
 
-  Object* remainderFloat(FloatNumber* obj) override;
+  Object* remainderFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
 
   bool isAtom() const override;
 

@@ -8,11 +8,11 @@ namespace Builtins {
 
 Object* Cdr::apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) {
   if (args.size() != 1)
-    throw std::runtime_error("cdr: wrong number of arguments!");
+    throw Errors::RuntimeError(/*"cdr: wrong number of arguments"*/);
 
   Object *value = args[0]->eval(env);
   if (!value->isList())
-    throw std::runtime_error("cdr: invalid arguments!");
+    throw Errors::RuntimeError(/*"cdr: invalid argument"*/);
 
   return static_cast<List*>(value)->getRest();
 }

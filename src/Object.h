@@ -48,61 +48,61 @@ class Object {
    * Equality
    */
 
-  virtual int compare(const Object* obj) const;
+  virtual int compare(const Object* obj) const throw (Errors::RuntimeError);
   
-  virtual int compareNil(const Nil* obj) const;
+  virtual int compareNil(const Nil* obj) const throw (Errors::RuntimeError);
   
-  virtual int compareList(const List* obj) const;
+  virtual int compareList(const List* obj) const throw (Errors::RuntimeError);
   
-  virtual int compareInt(const IntNumber* obj) const;
+  virtual int compareInt(const IntNumber* obj) const throw (Errors::RuntimeError);
   
-  virtual int compareFloat(const FloatNumber* obj) const;
+  virtual int compareFloat(const FloatNumber* obj) const throw (Errors::RuntimeError);
   
-  virtual int compareSymbol(const Symbol* obj) const;
+  virtual int compareSymbol(const Symbol* obj) const throw (Errors::RuntimeError);
   
-  virtual int compareString(const String* obj) const;
+  virtual int compareString(const String* obj) const throw (Errors::RuntimeError);
   
-  virtual int compareBoolean(const Boolean* obj) const;
+  virtual int compareBoolean(const Boolean* obj) const throw (Errors::RuntimeError);
   
-  virtual int compareSequence(const Sequence* obj) const;
+  virtual int compareSequence(const Sequence* obj) const throw (Errors::RuntimeError);
 
   /*
    * Common operations between objects
    */
 
-  virtual Object* negate();
+  virtual Object* negate() throw (Errors::RuntimeError);
 
-  virtual Object* add(Object* obj);
+  virtual Object* add(Object* obj) throw (Errors::RuntimeError);
   
-  virtual Object* addInt(IntNumber* obj);
+  virtual Object* addInt(IntNumber* obj) throw (Errors::RuntimeError);
   
-  virtual Object* addFloat(FloatNumber* obj);
+  virtual Object* addFloat(FloatNumber* obj) throw (Errors::RuntimeError);
   
-  virtual Object* addString(String* obj);
+  virtual Object* addString(String* obj) throw (Errors::RuntimeError);
   
-  virtual Object* sub(Object* obj);
+  virtual Object* sub(Object* obj) throw (Errors::RuntimeError);
   
-  virtual Object* subInt(IntNumber* obj);
+  virtual Object* subInt(IntNumber* obj) throw (Errors::RuntimeError);
   
-  virtual Object* subFloat(FloatNumber* obj);
+  virtual Object* subFloat(FloatNumber* obj) throw (Errors::RuntimeError);
 
-  virtual Object* mul(Object* obj);  
+  virtual Object* mul(Object* obj) throw (Errors::RuntimeError);  
 
-  virtual Object* mulInt(IntNumber* obj);
+  virtual Object* mulInt(IntNumber* obj) throw (Errors::RuntimeError);
   
-  virtual Object* mulFloat(FloatNumber* obj);
+  virtual Object* mulFloat(FloatNumber* obj) throw (Errors::RuntimeError);
   
-  virtual Object* div(Object* obj);
+  virtual Object* div(Object* obj) throw (Errors::RuntimeError);
   
-  virtual Object* divInt(IntNumber* obj);
+  virtual Object* divInt(IntNumber* obj) throw (Errors::RuntimeError);
   
-  virtual Object* divFloat(FloatNumber* obj);  
+  virtual Object* divFloat(FloatNumber* obj) throw (Errors::RuntimeError); 
   
-  virtual Object* remainder(Object* obj);
+  virtual Object* remainder(Object* obj) throw (Errors::RuntimeError);
   
-  virtual Object* remainderInt(IntNumber* obj);
+  virtual Object* remainderInt(IntNumber* obj) throw (Errors::RuntimeError);
   
-  virtual Object* remainderFloat(FloatNumber* obj);
+  virtual Object* remainderFloat(FloatNumber* obj) throw (Errors::RuntimeError);
 
   /*
    * Garbage collection related methods 

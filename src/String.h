@@ -20,9 +20,9 @@ class String : public Object {
 
   Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
-  int compare(const Object* obj) const override;
+  int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
-  int compareString(const String* obj) const override;
+  int compareString(const String* obj) const throw (Errors::RuntimeError) override;
 
   bool isAtom() const override;
 

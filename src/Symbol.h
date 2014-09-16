@@ -19,9 +19,9 @@ class Symbol : public Object {
 
   Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
-  int compare(const Object* obj) const override;
+  int compare(const Object* obj) const throw (Errors::RuntimeError) override;
   
-  int compareSymbol(const Symbol* obj) const override;
+  int compareSymbol(const Symbol* obj) const throw (Errors::RuntimeError) override;
 
   bool isAtom() const override;
 

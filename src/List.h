@@ -24,9 +24,9 @@ class List : public Object {
 
   Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
-  int compare(const Object* obj) const override;
+  int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
-  int compareList(const List* obj) const override;
+  int compareList(const List* obj) const throw (Errors::RuntimeError) override;
 
   void mark() override;
 

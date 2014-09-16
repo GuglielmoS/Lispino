@@ -8,11 +8,11 @@ namespace Builtins {
 
 Object* Car::apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) {
   if (args.size() != 1)
-    throw std::runtime_error("car: wrong number of arguments!");
+    throw Errors::RuntimeError(/*"car: wrong number of arguments"*/);
 
   Object *value = args[0]->eval(env);
   if (!value->isList())
-    throw std::runtime_error("car: invalid arguments!");
+    throw Errors::RuntimeError(/*"car: invalid argument"*/);
 
   return static_cast<List*>(value)->getFirst();
 }

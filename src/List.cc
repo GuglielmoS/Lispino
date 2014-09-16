@@ -79,11 +79,11 @@ Object* List::eval(Environment* env) throw (Errors::RuntimeError) {
   }
 }
 
-int List::compare(const Object* obj) const {
+int List::compare(const Object* obj) const throw (Errors::RuntimeError) {
   return obj->compareList(this);
 }
 
-int List::compareList(const List* obj) const {
+int List::compareList(const List* obj) const throw (Errors::RuntimeError) {
   if (obj == this)
     return 0;
   else

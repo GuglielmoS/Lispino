@@ -17,9 +17,9 @@ class Boolean : public Object {
 
   Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
-  int compare(const Object* obj) const override;
+  int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
-  int compareBoolean(const Boolean* obj) const override;
+  int compareBoolean(const Boolean* obj) const throw (Errors::RuntimeError) override;
 
   bool isTrue() const;
 

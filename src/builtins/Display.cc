@@ -12,7 +12,7 @@ namespace Builtins {
 
 Object* Display::apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) {
   if (args.size() == 0)
-    throw std::runtime_error("display: wrong number of arguments!");
+    throw Errors::RuntimeError(/*"display: wrong number of arguments"*/);
 
   std::stringstream buf;
   std::string current_value;
