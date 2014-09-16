@@ -38,7 +38,7 @@ Object* IfExpr::eval(Environment* env) throw (Errors::RuntimeError) {
   Object *condition_result = condition->eval(env);
 
   if (!condition_result->isBoolean())
-    throw std::runtime_error("IF: the condition must be a BOOLEAN!");
+    throw Errors::RuntimeError(/*the condition must be a boolean object*/);
 
   if (static_cast<Boolean*>(condition_result)->isTrue())
     return consequent->eval(env);

@@ -1,5 +1,7 @@
 #include "Memory.h"
 
+#include <cassert>
+
 #include "Symbol.h"
 #include "IntNumber.h"
 #include "FloatNumber.h"
@@ -81,7 +83,7 @@ Object* Memory::allocate(ObjectType type) {
       allocated_object = new Sequence();
       break;
     default:
-      throw std::runtime_error("[MEMORY-allocate ERROR] invalid ObjectType!");
+      assert(false);
   }
 
   // add the allocated object to the memory linked list

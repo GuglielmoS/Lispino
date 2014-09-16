@@ -71,7 +71,7 @@ Object* List::eval(Environment* env) throw (Errors::RuntimeError) {
       eval_env = static_cast<Closure*>(op)->getEnv();
     }
     else {
-      throw std::runtime_error("Invalid function call, the operator cannot be called: " + op->toString());
+      throw Errors::RuntimeError(/*"Invalid function call, the operator cannot be called!"*/);
     }
 
     // apply the arguments to the lambda and return the result

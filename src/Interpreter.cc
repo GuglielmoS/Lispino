@@ -6,9 +6,10 @@
 #include <memory>
 #include <vector>
 
-#include "errors/CompileError.h"
-#include "Parser.h"
 #include "VM.h"
+#include "Parser.h"
+#include "errors/CompileError.h"
+#include "errors/RuntimeError.h"
 
 namespace Lispino {
 
@@ -44,6 +45,8 @@ int Interpreter::repl() {
         std::cout << result->toString() << std::endl;
       } catch (Errors::CompileError& e) {
         std::cout << "Cannot parse the given expression!" << std::endl;
+      } catch (Errors::RuntimeError& e) {
+        std::cout << "Cannot evaluate the given expression!" << std::endl;
       }
 
       // perform a garbage collection cycle

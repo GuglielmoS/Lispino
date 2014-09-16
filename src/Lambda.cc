@@ -35,7 +35,7 @@ Object* Lambda::eval(Environment* env) throw (Errors::RuntimeError) {
 
 Object* Lambda::apply(std::vector<Object*>& actual_args, Environment* env) throw (Errors::RuntimeError) {
   if (arguments.size() != actual_args.size())
-    throw std::runtime_error("Invalid function call, wrong number of arguments");
+    throw Errors::RuntimeError(/*"Wrong number of arguments"*/);
 
   // extend the current environment with the arguments to apply
   Environment *extended_env = env->extend();

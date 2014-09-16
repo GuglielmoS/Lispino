@@ -11,6 +11,7 @@
 #include "Object.h"
 #include "Symbol.h"
 #include "builtins/BuiltinFunction.h"
+#include "errors/RuntimeError.h"
 
 namespace Lispino {
 
@@ -29,9 +30,9 @@ class Environment {
 
   LookupTable& getLookupTable();
 
-  Object* update(Symbol* key, Object* value);
+  Object* update(Symbol* key, Object* value) throw (Errors::RuntimeError);
   Object* put(Symbol* key, Object* value);
-  Object* get(Symbol* key);
+  Object* get(Symbol* key) throw (Errors::RuntimeError);
 
  private:
   Environment *parent;

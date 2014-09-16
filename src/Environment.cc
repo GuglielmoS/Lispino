@@ -47,14 +47,14 @@ LookupTable& Environment::getLookupTable() {
   return frame;
 }
 
-Object* Environment::update(Symbol* key, Object* value) {
+Object* Environment::update(Symbol* key, Object* value) throw (Errors::RuntimeError) {
   auto iter = frame.find(key->getValue());
 
   if (iter == frame.end()) {
     if (parent != nullptr) {
       parent->update(key, value);
     } else {
-      throw std::out_of_range("Environment update failed with key: " + key->toString());
+      throw Errors::RuntimeError(/*"Environment update failed with key: " + key->toString()*/);
     }
   } else {
     frame[key->getValue()] = std::make_pair(key,value);
@@ -69,7 +69,7 @@ Object* Environment::put(Symbol* key, Object* value) {
   return value;
 }
 
-Object* Environment::get(Symbol* key) {
+Object* Environment::get(Symbol* key) throw (Errors::RuntimeError) {
   // check for builtin functions
   auto bf_iter = builtin_functions.find(key->getValue());
   if (bf_iter != builtin_functions.end())
@@ -85,7 +85,7 @@ Object* Environment::get(Symbol* key) {
     return parent->get(key);
 
   // the lookup has failed, thus signal an error
-  throw std::out_of_range("Environment lookup failed with [key = " + key->toString() + "]");
+  throw Errors::RuntimeError(/*"Environment lookup failed with key: " + key->toString()*/);
 }
 
 BuiltinsTable Environment::initializeBuiltinFunctions() {
