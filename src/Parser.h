@@ -35,6 +35,8 @@ class Parser {
   Object* parseDefine();
   
   Object* parseQuote();
+
+  Object* parseBegin();
   
   Object* dispatch(Token *token);
 

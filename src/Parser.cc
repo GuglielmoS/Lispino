@@ -40,6 +40,7 @@ Object* Parser::parseList() {
     case TokenType::QUOTE:       return parseQuote();           // quote
     case TokenType::IF:          return parseIf();              // if
     case TokenType::COND:        return parseCond();            // cond
+    case TokenType::BEGIN:       return parseBegin();           // begin
     default:                     head = dispatch(token.get());  // other
   }
 
@@ -314,6 +315,32 @@ Object* Parser::parseQuote() {
     throw std::runtime_error("PARSER - invalid QUOTE arguments, missing ')'");
 
   return quote;
+}
+
+Object* Parser::parseBegin() {
+  std::unique_ptr<Token> token(tokenizer.next());
+  
+  // parse the expressions
+  std::vector<Object*> expressions;
+  while (token->getType() != TokenType::CLOSE_PAREN) {
+    expressions.push_back(dispatch(token.get()));
+    token.reset(tokenizer.next());
+  }
+
+  // check for the final paren ')'
+  if (token->getType() != TokenType::CLOSE_PAREN)
+    throw std::runtime_error("PARSER - invalid BEGIN, missing final ')'");
+
+  // create and optimize the begin if possible
+  Object* value = nullptr;
+  if (expressions.size() == 0)
+    throw std::runtime_error("PARSER - invalid BEGIN, it's empty!");
+  else if (expressions.size() == 1)
+    value = expressions[0];
+  else
+    value = allocator.createSequence(expressions);
+
+  return value;
 }
 
 Object* Parser::dispatch(Token *token) {

@@ -189,6 +189,7 @@ TEST(TokenizerTests, ReservedKeywords) {
     stream << "QuoTE qUote quote" << std::endl;
     stream << "cond CoNd COND cONd" << std::endl;
     stream << "IF iF if If" << std::endl;
+    stream << "begin BEGIN bEgIn BEGin" << std::endl;
     stream << "true TrUe false FalSE";
 
     // create the tokenizer
@@ -255,6 +256,16 @@ TEST(TokenizerTests, ReservedKeywords) {
     ASSERT_EQ(TokenType::IF, token->getType());
     token.reset(tokenizer.next());
     ASSERT_EQ(TokenType::IF, token->getType());
+
+    // check the BEGIN keyword
+    token.reset(tokenizer.next());
+    ASSERT_EQ(TokenType::BEGIN, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(TokenType::BEGIN, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(TokenType::BEGIN, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(TokenType::BEGIN, token->getType());
 
     // check the BOOLEAN keywords
     token.reset(tokenizer.next());

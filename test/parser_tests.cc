@@ -402,3 +402,54 @@ TEST(ParserTests, CondExpr) {
     ASSERT_EQ("x", static_cast<Symbol*>(if_obj->getConsequent())->getValue());
     ASSERT_TRUE(if_obj->getAlternative()->isNil());
 }
+
+TEST(ParserTests, BeginExpr) {
+    std::stringstream stream("(begin 0 x (+ 1 2)) (begin x)");
+    Parser parser(stream);
+    
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr());
+
+    /*
+     * Check the first begin.
+     */
+
+    // check the sequence's expressions
+    ASSERT_TRUE(expr->isSequence());
+    Sequence *seq = static_cast<Sequence*>(expr);
+    std::vector<Object*>& expressions = seq->getValue(); 
+    ASSERT_EQ(3, expressions.size());
+
+    // check the first expr
+    ASSERT_TRUE(expressions[0]->isIntNumber());
+    ASSERT_EQ(0, static_cast<IntNumber*>(expressions[0])->getValue());
+
+    // check the second expr
+    ASSERT_TRUE(expressions[1]->isSymbol());
+    ASSERT_EQ("x", static_cast<Symbol*>(expressions[1])->getValue());
+
+    // check the third and last expr
+    ASSERT_TRUE(expressions[2]->isList());
+    List *list = static_cast<List*>(expressions[2]);
+    ASSERT_TRUE(list->getFirst()->isSymbol());
+    ASSERT_EQ("+", static_cast<Symbol*>(list->getFirst())->getValue());
+    ASSERT_TRUE(list->getRest()->isList());
+    list = static_cast<List*>(list->getRest());
+    ASSERT_TRUE(list->getFirst()->isIntNumber());
+    ASSERT_EQ(1, static_cast<IntNumber*>(list->getFirst())->getValue());
+    ASSERT_TRUE(list->getRest()->isList());
+    list = static_cast<List*>(list->getRest());
+    ASSERT_TRUE(list->getFirst()->isIntNumber());
+    ASSERT_EQ(2, static_cast<IntNumber*>(list->getFirst())->getValue());
+    ASSERT_TRUE(list->getRest()->isNil());
+
+    /*
+     * Check the second begin.
+     * Since it is a BEGIN with only one expression, it must be optimized to that
+     * single expression.
+     */
+
+    expr = parser.parseExpr(); 
+    ASSERT_TRUE(expr->isSymbol());
+    ASSERT_EQ("x", static_cast<Symbol*>(expr)->getValue());
+}
