@@ -22,9 +22,11 @@ class Parser {
 
   Tokenizer tokenizer;
 
-  Object* parseIf();
-  
   Object* parseList();
+
+  Object* parseIf();
+
+  Object* parseCond();
   
   Object* parseLambda();
 

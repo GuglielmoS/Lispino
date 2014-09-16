@@ -11,6 +11,9 @@
 (define (newline)
   (display "\n"))
 
+;; useful when used with cond
+(define else true)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::::::::::::::
 ;; Boolean                                                                   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -129,13 +132,10 @@
   (product (range 1 (inc n))))
 
 (define (exp base n)
-  (if (eq? n 1)
-    base
-    (if (eq? n 0)
-      1
-      (if (even? n)
-        (square (exp base (/ n 2)))
-        (* base (exp base (dec n)))))))
+  (cond (((eq? n 1) base)
+         ((eq? n 0) 1)
+         ((even? n) (square (exp base (/ n 2))))
+         (else      (* base (exp base (dec n)))))))
 
 (define (square n)
   (* n n))
@@ -151,7 +151,6 @@
     (even? (dec n))))
 
 (define (abs x)
-  (if (< x 0)
-    (- x)
-    x))
+  (cond (((< x 0) (- x))
+         (else x))))
 

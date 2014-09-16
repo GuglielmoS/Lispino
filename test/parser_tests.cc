@@ -344,3 +344,61 @@ TEST(ParserTests, IfExpr) {
     ASSERT_TRUE(ifObj->getAlternative()->isIntNumber());
     ASSERT_EQ(1, static_cast<IntNumber*>(ifObj->getAlternative())->getValue());
 }
+
+TEST(ParserTests, CondExpr) {
+    std::stringstream stream("(cond (((< x 0) (- x)) (otherwise x)))");
+    Parser parser(stream);
+    
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr());
+
+    ASSERT_TRUE(expr->isIfExpr());
+    IfExpr *if_obj = static_cast<IfExpr*>(expr);
+    
+    /*
+     * Check the first IF
+     */
+  
+    // check the condition expr
+    ASSERT_TRUE(if_obj->getCondition()->isList());
+    List *cond_list = static_cast<List*>(if_obj->getCondition());
+    ASSERT_TRUE(cond_list->getFirst()->isSymbol());
+    ASSERT_EQ("<", static_cast<Symbol*>(cond_list->getFirst())->getValue());
+
+    ASSERT_TRUE(cond_list->getRest()->isList());
+    cond_list = static_cast<List*>(cond_list->getRest());
+    ASSERT_TRUE(cond_list->getFirst()->isSymbol());
+    ASSERT_EQ("x", static_cast<Symbol*>(cond_list->getFirst())->getValue());
+
+    ASSERT_TRUE(cond_list->getRest()->isList());
+    cond_list = static_cast<List*>(cond_list->getRest());
+    ASSERT_TRUE(cond_list->getFirst()->isIntNumber());
+    ASSERT_EQ(0, static_cast<IntNumber*>(cond_list->getFirst())->getValue());
+
+    ASSERT_TRUE(cond_list->getRest()->isNil());
+
+    // check the consequent expr
+    ASSERT_TRUE(if_obj->getConsequent()->isList());
+    List *conseq_list = static_cast<List*>(if_obj->getConsequent());
+    ASSERT_TRUE(conseq_list->getFirst()->isSymbol());
+    ASSERT_EQ("-", static_cast<Symbol*>(conseq_list->getFirst())->getValue());
+
+    ASSERT_TRUE(conseq_list->getRest()->isList());
+    conseq_list = static_cast<List*>(conseq_list->getRest());
+    ASSERT_TRUE(conseq_list->getFirst()->isSymbol());
+    ASSERT_EQ("x", static_cast<Symbol*>(conseq_list->getFirst())->getValue());
+
+    ASSERT_TRUE(conseq_list->getRest()->isNil());
+
+    /*
+     * check the alternative IF
+     */
+
+    ASSERT_TRUE(if_obj->getAlternative()->isIfExpr());
+    if_obj = static_cast<IfExpr*>(if_obj->getAlternative());
+    ASSERT_TRUE(if_obj->getCondition()->isSymbol());
+    ASSERT_EQ("otherwise", static_cast<Symbol*>(if_obj->getCondition())->getValue());
+    ASSERT_TRUE(if_obj->getConsequent()->isSymbol());
+    ASSERT_EQ("x", static_cast<Symbol*>(if_obj->getConsequent())->getValue());
+    ASSERT_TRUE(if_obj->getAlternative()->isNil());
+}

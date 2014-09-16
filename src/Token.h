@@ -25,6 +25,7 @@ enum class TokenType {
   QUOTE,
   IF,
   BOOL_TRUE, BOOL_FALSE,
+  COND,
   //RESERVED_KEYWORDS_END__,
   UNKNOWN
 };

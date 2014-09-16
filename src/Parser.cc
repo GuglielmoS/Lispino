@@ -27,6 +27,143 @@ Object* Parser::parseExpr() {
   return dispatch(token.get());
 }
 
+Object* Parser::parseList() { 
+  std::unique_ptr<Token> token(tokenizer.next());
+  Object *head = nullptr;
+
+  // check if the current token is a reserved keyword or the end of the list
+  switch (token->getType()) {
+    case TokenType::CLOSE_PAREN: return allocator.createNil();  // empty list == nil
+    case TokenType::LAMBDA:      return parseLambda();          // lambda
+    case TokenType::LET:         return parseLet();             // let == lexical closure
+    case TokenType::DEFINE:      return parseDefine();          // define
+    case TokenType::QUOTE:       return parseQuote();           // quote
+    case TokenType::IF:          return parseIf();              // if
+    case TokenType::COND:        return parseCond();            // cond
+    default:                     head = dispatch(token.get());  // other
+  }
+
+  // create the final list
+  List *result = allocator.createList(head, allocator.createNil());
+  List *current = result;
+  bool improper_list = false;
+
+  // parse the tail if needed
+  token.reset(tokenizer.next());
+  while (token->getType() != TokenType::CLOSE_PAREN) {
+    if (token->getType() == TokenType::DOT) {
+      improper_list = true;
+      token.reset(tokenizer.next());
+    }
+
+    if (improper_list) {
+      current->setRest(dispatch(token.get()));
+      improper_list = false;
+    }
+    else {
+      current->setRest(allocator.createList(dispatch(token.get()), allocator.createNil()));
+      current = static_cast<List*>(current->getRest());
+    }
+
+    token.reset(tokenizer.next());
+  }
+
+  return result;
+}
+
+Object* Parser::parseIf() {
+  // parse the condition
+  Object *condition = parseExpr();
+
+  // parse the consequent expression
+  Object *consequent = parseExpr();
+
+  // parse the alternative if needed
+  Object *alternative = nullptr;
+  std::unique_ptr<Token> token(tokenizer.next());
+  if (token->getType() != TokenType::CLOSE_PAREN)
+    alternative = dispatch(token.get());
+  else
+    alternative = allocator.createNil();
+
+  // create the object
+  Object *if_expr = allocator.createIf(condition, consequent, alternative);
+
+  // check for the final paren ')'
+  if (alternative != nullptr) {
+    token.reset(tokenizer.next());
+    if (token->getType() != TokenType::CLOSE_PAREN)
+      throw std::runtime_error("PARSER - invalid IF arguments, missing ')'");
+  }
+
+  return if_expr;
+}
+
+Object* Parser::parseCond() {
+  /*
+   (cond ((<expr_1> <expr_1_body>)
+          ...
+          (<expr_n> <expr_n_body>)))
+
+    is equivalent to
+
+   (if <expr_1> <expr_1_body>
+      ...
+      (if <expr_n> <expr_n_body>
+        nil))
+
+   */
+
+  std::unique_ptr<Token> token(tokenizer.next());
+  IfExpr *first_if_expr = nullptr;
+  IfExpr *current_if_expr = nullptr;
+  
+  // check the initial '(' of the conditions list
+  if (token->getType() != TokenType::OPEN_PAREN)
+    throw std::runtime_error("PARSER - invalid COND, missing '('");
+
+  // skip to the next token
+  token.reset(tokenizer.next());
+  while (token->getType() == TokenType::OPEN_PAREN) {
+    // parse the current condition expr
+    Object *condition_expr = parseExpr();
+
+    // parse the expr associated to the current condition
+    Object *associated_expr = parseExpr();
+
+    // build the new if expression
+    IfExpr *new_if_expr = allocator.createIf(condition_expr, associated_expr, allocator.createNil());
+
+    // bind the new IF the previous one
+    if (first_if_expr == nullptr) {
+      first_if_expr = new_if_expr;
+      current_if_expr = first_if_expr;
+    } else {
+      current_if_expr->setAlternative(new_if_expr);
+      current_if_expr = new_if_expr;
+    }
+
+    // check the current binding final ')'
+    token.reset(tokenizer.next());
+    if (token->getType() != TokenType::CLOSE_PAREN)
+      throw std::runtime_error("PARSER - invalid COND, missing ')'");
+
+    // skip to the next token
+    token.reset(tokenizer.next());
+  }
+
+  // check the final ')' of the conditions list
+  if (token->getType() != TokenType::CLOSE_PAREN)
+    throw std::runtime_error("PARSER - invalid COND, missing ')'");
+  
+  // check the final ')' of the COND expr
+  token.reset(tokenizer.next());
+  if (token->getType() != TokenType::CLOSE_PAREN)
+    throw std::runtime_error("PARSER - invalid COND, missing ')'");
+
+  return first_if_expr;
+}
+
 Object* Parser::parseLambda() {
   // parse the arguments
   std::unique_ptr<Token> token(tokenizer.next());
@@ -177,77 +314,6 @@ Object* Parser::parseQuote() {
     throw std::runtime_error("PARSER - invalid QUOTE arguments, missing ')'");
 
   return quote;
-}
-
-Object* Parser::parseIf() {
-  // parse the condition
-  Object *condition = parseExpr();
-
-  // parse the consequent expression
-  Object *consequent = parseExpr();
-
-  // parse the alternative if needed
-  Object *alternative = nullptr;
-  std::unique_ptr<Token> token(tokenizer.next());
-  if (token->getType() != TokenType::CLOSE_PAREN)
-    alternative = dispatch(token.get());
-  else
-    alternative = allocator.createNil();
-
-  // create the object
-  Object *if_expr = allocator.createIf(condition, consequent, alternative);
-
-  // check for the final paren ')'
-  if (alternative != nullptr) {
-    token.reset(tokenizer.next());
-    if (token->getType() != TokenType::CLOSE_PAREN)
-      throw std::runtime_error("PARSER - invalid IF arguments, missing ')'");
-  }
-
-  return if_expr;
-}
-
-Object* Parser::parseList() { 
-  std::unique_ptr<Token> token(tokenizer.next());
-  Object *head = nullptr;
-
-  // check if the current token is a reserved keyword or the end of the list
-  switch (token->getType()) {
-    case TokenType::CLOSE_PAREN: return allocator.createNil();  // empty list == nil
-    case TokenType::LAMBDA:      return parseLambda();          // lambda
-    case TokenType::LET:         return parseLet();             // let == lexical closure
-    case TokenType::DEFINE:      return parseDefine();          // define
-    case TokenType::QUOTE:       return parseQuote();           // quote
-    case TokenType::IF:          return parseIf();              // if
-    default:                     head = dispatch(token.get());  // other
-  }
-
-  // create the final list
-  List *result = allocator.createList(head, allocator.createNil());
-  List *current = result;
-  bool improper_list = false;
-
-  // parse the tail if needed
-  token.reset(tokenizer.next());
-  while (token->getType() != TokenType::CLOSE_PAREN) {
-    if (token->getType() == TokenType::DOT) {
-      improper_list = true;
-      token.reset(tokenizer.next());
-    }
-
-    if (improper_list) {
-      current->setRest(dispatch(token.get()));
-      improper_list = false;
-    }
-    else {
-      current->setRest(allocator.createList(dispatch(token.get()), allocator.createNil()));
-      current = static_cast<List*>(current->getRest());
-    }
-
-    token.reset(tokenizer.next());
-  }
-
-  return result;
 }
 
 Object* Parser::dispatch(Token *token) {

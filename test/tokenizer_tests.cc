@@ -187,6 +187,7 @@ TEST(TokenizerTests, ReservedKeywords) {
     stream << "LamBdA LAMBDA lambda" << std::endl;
     stream << "LET leT LEt" << std::endl;
     stream << "QuoTE qUote quote" << std::endl;
+    stream << "cond CoNd COND cONd" << std::endl;
     stream << "IF iF if If" << std::endl;
     stream << "true TrUe false FalSE";
 
@@ -234,6 +235,16 @@ TEST(TokenizerTests, ReservedKeywords) {
     ASSERT_EQ(TokenType::QUOTE, token->getType());
     token.reset(tokenizer.next());
     ASSERT_EQ(TokenType::QUOTE, token->getType());
+
+    // check the COND keyword
+    token.reset(tokenizer.next());
+    ASSERT_EQ(TokenType::COND, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(TokenType::COND, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(TokenType::COND, token->getType());
+    token.reset(tokenizer.next());
+    ASSERT_EQ(TokenType::COND, token->getType());
 
     // check the IF keyword
     token.reset(tokenizer.next());

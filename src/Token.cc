@@ -78,6 +78,7 @@ std::map<std::string, TokenType> Token::initializeReservedKeywords() {
   bindings["true"]   = TokenType::BOOL_TRUE;
   bindings["false"]  = TokenType::BOOL_FALSE;
   bindings["if"]     = TokenType::IF;
+  bindings["cond"]   = TokenType::COND;
 
   return bindings;
 }
