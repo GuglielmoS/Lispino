@@ -15,7 +15,7 @@ Tokenizer::Tokenizer(std::istream& input_stream) : stream(input_stream) {
   /* DO NOTHING */
 }
 
-Token* Tokenizer::next() {
+Token* Tokenizer::next() throw (Errors::CompileError) {
   Token *current_token = nullptr;
 
   // skip the comments (;; blah blah) and the various spaces (\n, ' ', \t ...)
@@ -151,20 +151,22 @@ Token* Tokenizer::number() {
   }
 }
 
-Token* Tokenizer::string() {
+Token* Tokenizer::string() throw (Errors::CompileError) {
   std::stringstream buffer;
 
-  char ch = stream.get();
-  if (ch != '"') {
+  if (stream.get() != '"') {
     stream.unget();
     return nullptr;
   }
 
   bool escape = false;
   while (true) {
-    ch = stream.get();
+    int raw_ch = stream.get();
+    char ch = static_cast<char>(raw_ch);
 
-    if (ch == '\\') {
+    if (ch == EOF) {
+      throw Errors::CompileError(/*"Unterminated string*/);
+    } else if (ch == '\\') {
       escape = true;
     } else if (ch == '"') {
       if (escape) {
@@ -181,10 +183,17 @@ Token* Tokenizer::string() {
         escape = false;
 
         switch (ch) {
-          case 'n':  ch_to_put = '\n'; break;
-          case 'r':  ch_to_put = '\r'; break;
-          case '\\': ch_to_put = '\\'; break;
-          default:   throw new std::runtime_error("Undefined character to escape: " + ch);
+          case 'n':  
+            ch_to_put = '\n';
+            break;
+          case 'r':
+            ch_to_put = '\r';
+            break;
+          case '\\':
+            ch_to_put = '\\';
+            break;
+          default:
+            buffer << '\\';
         }
       }
 
@@ -192,9 +201,6 @@ Token* Tokenizer::string() {
       buffer << ch_to_put;
     }
   }
-
-  if (ch != '"')
-    throw new std::runtime_error("Unterminated string!");
 
   return new Token(TokenType::STRING, buffer.str());
 }

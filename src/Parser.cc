@@ -5,29 +5,29 @@
 
 namespace Lispino {
 
-Parser::Parser(std::istream& inputStream)
+Parser::Parser(std::istream& input_stream)
     : allocator(VM::getAllocator()), 
-      tokenizer(inputStream) {
+      tokenizer(input_stream) {
   /* DO NOTHING */    
 }
 
-Object* Parser::parse() {
+Object* Parser::parse() throw (Errors::CompileError) {
   Object *expr = parseExpr();
 
   // check for the End Of Stream
   std::unique_ptr<Token> token(tokenizer.next());
   if (token->getType() != TokenType::EOS)
-    throw std::runtime_error("PARSER - missing End Of Stream!");
+    throw Errors::CompileError(/*"Missing the EOS!"*/);
 
   return expr;
 }
 
-Object* Parser::parseExpr() {
+Object* Parser::parseExpr() throw (Errors::CompileError) {
   std::unique_ptr<Token> token(tokenizer.next());
   return dispatch(token.get());
 }
 
-Object* Parser::parseList() { 
+Object* Parser::parseList() throw (Errors::CompileError) { 
   std::unique_ptr<Token> token(tokenizer.next());
   Object *head = nullptr;
 
@@ -41,6 +41,7 @@ Object* Parser::parseList() {
     case TokenType::IF:          return parseIf();              // if
     case TokenType::COND:        return parseCond();            // cond
     case TokenType::BEGIN:       return parseBegin();           // begin
+    case TokenType::EOS:         throw Errors::CompileError(/*Malformed list*/);
     default:                     head = dispatch(token.get());  // other
   }
 
@@ -72,7 +73,7 @@ Object* Parser::parseList() {
   return result;
 }
 
-Object* Parser::parseIf() {
+Object* Parser::parseIf() throw (Errors::CompileError) {
   // parse the condition
   Object *condition = parseExpr();
 
@@ -94,13 +95,13 @@ Object* Parser::parseIf() {
   if (alternative != nullptr) {
     token.reset(tokenizer.next());
     if (token->getType() != TokenType::CLOSE_PAREN)
-      throw std::runtime_error("PARSER - invalid IF arguments, missing ')'");
+      throw Errors::CompileError(/*"Invalid IF arguments, missing ')'"*/);
   }
 
   return if_expr;
 }
 
-Object* Parser::parseCond() {
+Object* Parser::parseCond() throw (Errors::CompileError) {
   /*
    (cond ((<expr_1> <expr_1_body>)
           ...
@@ -121,7 +122,7 @@ Object* Parser::parseCond() {
   
   // check the initial '(' of the conditions list
   if (token->getType() != TokenType::OPEN_PAREN)
-    throw std::runtime_error("PARSER - invalid COND, missing '('");
+    throw Errors::CompileError(/*"Invalid COND, missing '('"*/);
 
   // skip to the next token
   token.reset(tokenizer.next());
@@ -147,7 +148,7 @@ Object* Parser::parseCond() {
     // check the current binding final ')'
     token.reset(tokenizer.next());
     if (token->getType() != TokenType::CLOSE_PAREN)
-      throw std::runtime_error("PARSER - invalid COND, missing ')'");
+      throw Errors::CompileError(/*"Invalid COND, missing ')'"*/);
 
     // skip to the next token
     token.reset(tokenizer.next());
@@ -155,23 +156,23 @@ Object* Parser::parseCond() {
 
   // check the final ')' of the conditions list
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw std::runtime_error("PARSER - invalid COND, missing ')'");
+    throw Errors::CompileError(/*"Invalid COND, missing ')'"*/);
   
   // check the final ')' of the COND expr
   token.reset(tokenizer.next());
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw std::runtime_error("PARSER - invalid COND, missing ')'");
+    throw Errors::CompileError(/*"Invalid COND, missing ')'"*/);
 
   return first_if_expr;
 }
 
-Object* Parser::parseLambda() {
+Object* Parser::parseLambda() throw (Errors::CompileError) {
   // parse the arguments
   std::unique_ptr<Token> token(tokenizer.next());
   std::vector<std::string> params;
 
   if (token->getType() != TokenType::OPEN_PAREN)
-    throw std::runtime_error("PARSER - invalid LAMBDA arguments, missing '('");
+    throw Errors::CompileError(/*"Invalid LAMBDA, missing '('"*/);
 
   token.reset(tokenizer.next());
   while (token->getType() == TokenType::SYMBOL) {
@@ -180,7 +181,7 @@ Object* Parser::parseLambda() {
   }
 
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw std::runtime_error("PARSER - invalid LAMBDA arguments, missing ')'");
+    throw Errors::CompileError(/*"Invalid LAMBDA arguments, missing ')'"*/);
 
   // parse the body
   Object *body = parseExpr();
@@ -188,12 +189,12 @@ Object* Parser::parseLambda() {
   // check the ')'
   token.reset(tokenizer.next());
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw std::runtime_error("PARSER - invalid LAMBDA arguments, missing ')'");
+    throw Errors::CompileError(/*"Invalid LAMBDA arguments, missing ')'"*/);
 
   return allocator.createLambda(body, params);
 }
 
-Object* Parser::parseLet() {
+Object* Parser::parseLet() throw (Errors::CompileError) {
   /*
     (let ((a 1) (b 2))
       (+ a b))
@@ -208,7 +209,7 @@ Object* Parser::parseLet() {
 
   // check the bindings list intial '('
   if (token->getType() != TokenType::OPEN_PAREN)
-    throw std::runtime_error("PARSER - invalid LET arguments, missing '('");
+    throw Errors::CompileError(/*"Invalid LET arguments, missing '('"*/);
 
   // parse the LET bindings ([symbol -> value] pairs)
   std::vector<std::string> let_symbols;
@@ -220,7 +221,7 @@ Object* Parser::parseLet() {
     // parse the current binding symbol
     token.reset(tokenizer.next());
     if (token->getType() != TokenType::SYMBOL)
-      throw std::runtime_error("PARSER - invalid LET arguments, missing a symbol in the bindings list");
+      throw Errors::CompileError(/*"Invalid LET arguments, missing a symbol in the bindings list'"*/);
     let_symbols.push_back(token->getSymbol());
 
     // parse the current binding value
@@ -229,7 +230,7 @@ Object* Parser::parseLet() {
     // check the current binding final ')'
     token.reset(tokenizer.next());
     if (token->getType() != TokenType::CLOSE_PAREN)
-      throw std::runtime_error("PARSER - invalid LET arguments, missing ')'");
+      throw Errors::CompileError(/*"Invalid LET arguments, missing ')'"*/);
 
     // skip to the next token
     token.reset(tokenizer.next());
@@ -237,7 +238,7 @@ Object* Parser::parseLet() {
 
   // check the bindings list final ')'
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw std::runtime_error("PARSER - invalid LET arguments, missing ')'");
+    throw Errors::CompileError(/*"Invalid LET arguments, missing ')'"*/);
 
   // parse the body of the LET expression
   Object *body = parseExpr();
@@ -245,7 +246,7 @@ Object* Parser::parseLet() {
   // check the final ')'
   token.reset(tokenizer.next());
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw std::runtime_error("PARSER - invalid LET arguments, missing ')'");
+    throw Errors::CompileError(/*"Invalid LET arguments, missing ')'"*/);
 
   // create the lambda with the LET body and the LET symbols
   Lambda *let_lambda = allocator.createLambda(body, let_symbols);
@@ -254,7 +255,7 @@ Object* Parser::parseLet() {
   return allocator.createList(let_lambda, vec2cons(let_values));
 }
 
-Object* Parser::parseDefine() {
+Object* Parser::parseDefine() throw (Errors::CompileError) {
   std::unique_ptr<Token> token(tokenizer.next());
   std::vector<std::string> params;
   std::string name;
@@ -276,15 +277,15 @@ Object* Parser::parseDefine() {
     }
 
     if (isFirst)
-      throw std::runtime_error("PARSER - invalid DEFINE arguments, missing SYMBOL");
+      throw Errors::CompileError(/*"invalid DEFINE arguments, missing SYMBOL"*/);
     else if (token->getType() != TokenType::CLOSE_PAREN)
-      throw std::runtime_error("PARSER - invalid DEFINE arguments, missing ')'");
+      throw Errors::CompileError(/*"invalid DEFINE arguments, missing ')'"*/);
 
   } else if (token->getType() == TokenType::SYMBOL) {
     isFunction = false;
     name = token->getSymbol();
   } else {
-    throw std::runtime_error("PARSER - invalid DEFINE arguments, missing SYMBOL");
+    throw Errors::CompileError(/*"invalid DEFINE arguments, missing SYMBOL"*/);
   }
 
   // parse the define expressions
@@ -297,12 +298,12 @@ Object* Parser::parseDefine() {
 
   // check for the final paren ')'
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw std::runtime_error("PARSER - invalid DEFINE body, missing ')'");
+    throw Errors::CompileError(/*"invalid DEFINE body, missing ')'"*/);
 
   // create and optimize the define body if possible
   Object* value = nullptr;
   if (expressions.size() == 0)
-    throw std::runtime_error("PARSER - invalid DEFINE body, it's empty!");
+    throw Errors::CompileError(/*"invalid DEFINE body, it's empty"*/);
   else if (expressions.size() == 1)
     value = expressions[0];
   else
@@ -315,18 +316,18 @@ Object* Parser::parseDefine() {
     return allocator.createDefine(name, value);
 }
 
-Object* Parser::parseQuote() {
+Object* Parser::parseQuote() throw (Errors::CompileError) {
   Object *quote = allocator.createQuote(parseExpr());
 
   // check for the final paren ')'
   std::unique_ptr<Token> token(tokenizer.next());
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw std::runtime_error("PARSER - invalid QUOTE arguments, missing ')'");
+    throw Errors::CompileError(/*"invalid QUOTE body, missing ')'"*/);
 
   return quote;
 }
 
-Object* Parser::parseBegin() {
+Object* Parser::parseBegin() throw (Errors::CompileError) {
   std::unique_ptr<Token> token(tokenizer.next());
   
   // parse the expressions
@@ -338,12 +339,12 @@ Object* Parser::parseBegin() {
 
   // check for the final paren ')'
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw std::runtime_error("PARSER - invalid BEGIN, missing final ')'");
+    throw Errors::CompileError(/*"invalid BEGIN, missing ')'"*/);
 
   // create and optimize the begin if possible
   Object* value = nullptr;
   if (expressions.size() == 0)
-    throw std::runtime_error("PARSER - invalid BEGIN, it's empty!");
+    throw Errors::CompileError(/*"invalid BEGIN, it's empty'"*/);
   else if (expressions.size() == 1)
     value = expressions[0];
   else
@@ -352,7 +353,7 @@ Object* Parser::parseBegin() {
   return value;
 }
 
-Object* Parser::dispatch(Token *token) {
+Object* Parser::dispatch(Token *token) throw (Errors::CompileError) {
   switch (token->getType()) {
     case TokenType::NIL:          return allocator.createNil();
     case TokenType::SYMBOL:       return allocator.createSymbol(token->getSymbol());
@@ -364,7 +365,8 @@ Object* Parser::dispatch(Token *token) {
     case TokenType::SMART_QUOTE:  return allocator.createQuote(parseExpr());
     case TokenType::OPEN_PAREN:   return parseList();
     case TokenType::EOS:          return nullptr;
-    default:                      throw std::runtime_error("PARSER - dispatch failed");
+    case TokenType::UNKNOWN:
+    default:                      throw Errors::CompileError(/*"Undefined token found'"*/);
   }
 }
 

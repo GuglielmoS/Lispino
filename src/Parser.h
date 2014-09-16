@@ -6,39 +6,40 @@
 #include "VM.h"
 #include "Object.h"
 #include "Tokenizer.h"
+#include "errors/CompileError.h"
 
 namespace Lispino {
 
 class Parser {
  public:
-  Parser(std::istream& inputStream);
+  Parser(std::istream& input_stream);
 
-  Object* parse();
+  Object* parse() throw (Errors::CompileError);
 
-  Object* parseExpr();
+  Object* parseExpr() throw (Errors::CompileError);
 
  private:
   Allocator &allocator;
 
   Tokenizer tokenizer;
 
-  Object* parseList();
+  Object* parseList() throw (Errors::CompileError);
 
-  Object* parseIf();
+  Object* parseIf() throw (Errors::CompileError);
 
-  Object* parseCond();
+  Object* parseCond() throw (Errors::CompileError);
   
-  Object* parseLambda();
+  Object* parseLambda() throw (Errors::CompileError);
 
-  Object* parseLet();
+  Object* parseLet() throw (Errors::CompileError);
   
-  Object* parseDefine();
+  Object* parseDefine() throw (Errors::CompileError);
   
-  Object* parseQuote();
+  Object* parseQuote() throw (Errors::CompileError);
 
-  Object* parseBegin();
+  Object* parseBegin() throw (Errors::CompileError);
   
-  Object* dispatch(Token *token);
+  Object* dispatch(Token *token) throw (Errors::CompileError);
 
   Object* vec2cons(std::vector<Object*>& objects);
 };

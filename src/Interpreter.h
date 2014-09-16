@@ -13,12 +13,9 @@ class Interpreter {
  public:
   void init();
 
-  int repl(bool verbose=false);
+  int repl();
 
   int execute(std::string filename);
-
- private:
-  std::string humanTime(double time_spent);
 };
 
 }

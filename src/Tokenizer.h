@@ -4,15 +4,16 @@
 #include <iostream>
 
 #include "Token.h"
+#include "errors/CompileError.h"
 
 namespace Lispino {
 
 class Tokenizer {
  public:
-  Tokenizer(std::istream& inputStream);
+  Tokenizer(std::istream& input_stream);
 
   // parses and returns the next token
-  Token* next();
+  Token* next() throw (Errors::CompileError);
 
  private:
   // the reference to the stream from which the tokens will be parsed
@@ -31,7 +32,7 @@ class Tokenizer {
   Token* delimiter();
   Token* symbol();
   Token* number();
-  Token* string();
+  Token* string() throw (Errors::CompileError);
 };
 
 }

@@ -6,6 +6,7 @@
 #include <memory>
 #include <vector>
 
+#include "errors/CompileError.h"
 #include "Parser.h"
 #include "VM.h"
 
@@ -19,7 +20,7 @@ void Interpreter::init() {
   execute(LIB_DIR + "/" + TESTLIB_FILE);
 }
 
-int Interpreter::repl(bool verbose) {
+int Interpreter::repl() {
   bool terminated = false;
 
   // Read - Eval - Print - Loop
@@ -34,42 +35,19 @@ int Interpreter::repl(bool verbose) {
     if (input_expr == "quit") {
       terminated = true;
     } else if (input_expr != "") {
-      clock_t begin, end;
-      double total_time, parsing_time, evaluation_time, garbage_collection_time;
       std::stringstream stream(input_expr);
 
-      // *** PARSING ***
-      begin = clock();
-      Object *expr = Parser(stream).parse();
-      end = clock();
-      parsing_time = (double)(end - begin) / CLOCKS_PER_SEC;
-
-      // *** EVALUATION ***
-      begin = clock();
-      std::cout << expr->eval()->toString() << std::endl;
-      end = clock();
-      evaluation_time = (double)(end - begin) / CLOCKS_PER_SEC;
-
-      // *** GARBAGE COLLECTION ***
-      size_t total_objects = VM::getMemory().getAllocatedObjects();
-      begin = clock();
-      size_t removed_objects = VM::getMemory().cleanup();
-      end = clock();
-      garbage_collection_time = (double)(end - begin) / CLOCKS_PER_SEC;
-
-      // calculate the total execution time
-      total_time = parsing_time + evaluation_time + garbage_collection_time;
-
-      // shows the time
-      if (verbose) {
-        std::cout << ";; Timing report" << std::endl;
-        std::cout << "     + Parsing Time:            " << parsing_time << std::endl;
-        std::cout << "     + Evaluation Time:         " << evaluation_time << std::endl;
-        std::cout << "     + Garbage Collection Time: " << garbage_collection_time << std::endl;
-        std::cout << "     = Total Time:              " << total_time << std::endl;
-        std::cout << ";; Memory report" << std::endl;
-        std::cout << "     Garbage collected objects " <<  removed_objects << "/" << total_objects << std::endl;
+      // try to parse and evaluate the given expression
+      try {
+        auto expr = Parser(stream).parse();
+        auto result = expr->eval();
+        std::cout << result->toString() << std::endl;
+      } catch (Errors::CompileError& e) {
+        std::cout << "Cannot parse the given expression!" << std::endl;
       }
+
+      // perform a garbage collection cycle
+      VM::getMemory().cleanup();
     }
   }
 
@@ -99,30 +77,6 @@ int Interpreter::execute(std::string filename) {
     std::cerr << "File not found: " << filename << std::endl;
     return 1;
   }
-}
-
-std::string Interpreter::humanTime(double time_spent) {
-  std::stringstream buf;
-  std::string unit;
-
-  if (time_spent > 0.001)
-  unit = "secs";
-  else if (time_spent > 0.000001) {
-  time_spent *= 1000.0;
-  unit = "ms";
-  }
-  else if (time_spent > 0.000000001) {
-  time_spent *= 1000000.0;
-  unit = "us";
-  }
-  else {
-  time_spent *= 1000000000.0;
-  unit = "ns";
-  }
-
-  buf << time_spent << " " << unit;
-
-  return buf.str();
 }
 
 }
