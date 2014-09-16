@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "errors/RuntimeError.h"
+
 namespace Lispino {
 
 class Environment;
@@ -37,10 +39,10 @@ class Object {
   virtual ~Object();
 
   /// evaluate the object in the global environment
-  Object* eval();
+  Object* eval() throw (Errors::RuntimeError);
 
   /// evaluates the object accordingly to the provided environment
-  virtual Object* eval(Environment* env) = 0;
+  virtual Object* eval(Environment* env) throw (Errors::RuntimeError) = 0;
 
   /*
    * Equality

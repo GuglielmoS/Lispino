@@ -20,7 +20,7 @@ class IntNumber : public Object {
 
   std::int64_t getValue() const;
 
-  Object* eval(Environment* env) override;
+  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
   int compare(const Object* obj) const override;
 

@@ -17,7 +17,7 @@ class Quote : public Object {
   
   Object* getValue();
 
-  Object* eval(Environment* env) override;
+  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
   void mark() override;
 

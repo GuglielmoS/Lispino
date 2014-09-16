@@ -10,7 +10,7 @@ namespace Lispino {
 
 namespace Builtins {
 
-Object* Display::apply(std::vector<Object*>& args, Environment* env) {
+Object* Display::apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) {
   if (args.size() == 0)
     throw std::runtime_error("display: wrong number of arguments!");
 

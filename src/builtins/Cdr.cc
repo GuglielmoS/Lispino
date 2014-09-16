@@ -6,7 +6,7 @@ namespace Lispino {
 
 namespace Builtins {
 
-Object* Cdr::apply(std::vector<Object*>& args, Environment* env) {
+Object* Cdr::apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) {
   if (args.size() != 1)
     throw std::runtime_error("cdr: wrong number of arguments!");
 

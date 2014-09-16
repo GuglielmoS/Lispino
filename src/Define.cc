@@ -28,7 +28,7 @@ Object* Define::getValue() {
   return value;
 }
 
-Object* Define::eval(Environment* env) {
+Object* Define::eval(Environment* env) throw (Errors::RuntimeError) {
   if (value->isLambda())
     return env->put(name, value);
   else

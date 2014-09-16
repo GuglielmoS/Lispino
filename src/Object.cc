@@ -15,7 +15,7 @@ Object::~Object() {
   /* DO NOTHING */
 }
 
-Object* Object::eval() {
+Object* Object::eval() throw (Errors::RuntimeError) {
   return eval(&VM::getGlobalEnv());
 }
 

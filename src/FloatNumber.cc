@@ -22,7 +22,7 @@ double FloatNumber::getValue() const {
   return value;
 }
 
-Object* FloatNumber::eval(Environment*) {
+Object* FloatNumber::eval(Environment*) throw (Errors::RuntimeError) {
   return this;
 }
 

@@ -34,7 +34,7 @@ Object* IfExpr::getAlternative() {
   return alternative;
 }
 
-Object* IfExpr::eval(Environment* env) {
+Object* IfExpr::eval(Environment* env) throw (Errors::RuntimeError) {
   Object *condition_result = condition->eval(env);
 
   if (!condition_result->isBoolean())

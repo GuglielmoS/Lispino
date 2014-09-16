@@ -34,9 +34,25 @@ Token* Tokenizer::next() throw (Errors::CompileError) {
     return new Token(TokenType::UNKNOWN);
 }
 
-void Tokenizer::skipSpaces() {
-  while (isspace((char)stream.get())) continue; 
+int Tokenizer::get() {
+  return stream.get();
+}
+
+char Tokenizer::nextChar() {
+  return static_cast<char>(get());
+}
+
+void Tokenizer::unget() {
   stream.unget();
+}
+
+void Tokenizer::putback(int ch) {
+  stream.putback(ch);
+}
+
+void Tokenizer::skipSpaces() {
+  while (isspace(nextChar())) continue; 
+  unget();
 }
 
 void Tokenizer::skipCommentsAndSpaces() {
@@ -44,24 +60,28 @@ void Tokenizer::skipCommentsAndSpaces() {
   skipSpaces();
 
   // loop until no other comments are found
-  while (stream.get() == ';') {
+  while (nextChar() == ';') {
     // skip the characters between the ';' and the newline
-    while (stream.get() != '\n') continue;
+    while (nextChar() != '\n') continue;
 
     // skip the other eventual spaces
     skipSpaces();
   }
 
   // put the last char found on the stream because it has not been used
-  stream.unget();
+  unget();
 }
 
 bool Tokenizer::isdelimiter(char ch) const {
-  return ch == EOF || ch == '(' || ch == ')' || ch == '.' || ch == '\'';
+  return ch == EOF ||
+         ch == '(' || 
+         ch == ')' || 
+         ch == '.' || 
+         ch == '\'';
 }
 
 Token* Tokenizer::delimiter() {
-  int ch = stream.get();
+  int ch = get();
   switch (ch) {
     case EOF:  return new Token(TokenType::EOS);
     case '(':  return new Token(TokenType::OPEN_PAREN);
@@ -69,7 +89,7 @@ Token* Tokenizer::delimiter() {
     case '.':  return new Token(TokenType::DOT);
     case '\'': return new Token(TokenType::SMART_QUOTE);
   }
-  stream.unget();
+  unget();
 
   return nullptr;
 }
@@ -77,14 +97,14 @@ Token* Tokenizer::delimiter() {
 Token* Tokenizer::symbol() {
   std::stringstream buffer;
 
-  char ch = stream.get();
+  char ch = nextChar();
   if (!isdigit(ch)) {
     while (!isspace(ch) && !isdelimiter(ch) && ch != '"') {
       buffer << ch;
-      ch = stream.get();
+      ch = nextChar();
     }
   }
-  stream.unget();
+  unget();
 
   if (buffer.str().size() == 0)
     return nullptr;
@@ -98,26 +118,26 @@ Token* Tokenizer::number() {
   bool negate = false;
 
   // check for the initial minus sign
-  char ch = stream.get();
+  char ch = nextChar();
   if (ch == '-') {
     negate = true;
 
-    if (isdigit(ch = stream.get())) {
+    if (isdigit(ch = nextChar())) {
       buffer << ch;
     } else {
-      stream.unget();
-      stream.putback('-');
+      unget();
+      putback('-');
       return nullptr;
     }
   } else if (isdigit(ch)) {
     buffer << ch;
   } else {
-    stream.unget();
+    unget();
     return nullptr;
   }
 
   // parse the integer part
-  while (isdigit(ch = stream.get()))
+  while (isdigit(ch = nextChar()))
     buffer << ch;
 
   // if this is a float, parse the decimal part
@@ -125,12 +145,12 @@ Token* Tokenizer::number() {
     isFloat = true;
     buffer << ch;
 
-    while (isdigit(ch = stream.get()))
+    while (isdigit(ch = nextChar()))
       buffer << ch;
   }
 
   // recover the stream status
-  stream.unget();
+  unget();
 
   if (buffer.str().size() == 0) { 
     return nullptr;
@@ -154,14 +174,14 @@ Token* Tokenizer::number() {
 Token* Tokenizer::string() throw (Errors::CompileError) {
   std::stringstream buffer;
 
-  if (stream.get() != '"') {
-    stream.unget();
+  if (nextChar() != '"') {
+    unget();
     return nullptr;
   }
 
   bool escape = false;
   while (true) {
-    int raw_ch = stream.get();
+    int raw_ch = get();
     char ch = static_cast<char>(raw_ch);
 
     if (ch == EOF) {

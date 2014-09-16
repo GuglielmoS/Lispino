@@ -18,7 +18,7 @@ bool Boolean::getValue() const {
   return value;
 }
 
-Object* Boolean::eval(Environment*) {
+Object* Boolean::eval(Environment*) throw (Errors::RuntimeError) {
   return this;
 }
 

@@ -9,7 +9,7 @@ namespace Builtins {
 
 class Equal : public BuiltinFunction {
  public:
-  Object* apply(std::vector<Object*>& args, Environment* env) override;
+  Object* apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) override;
 };
 
 }

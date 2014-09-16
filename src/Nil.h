@@ -7,7 +7,7 @@ namespace Lispino {
 
 class Nil : public Object {
  public:
-  Object* eval(Environment* env) override;
+  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
   int compare(const Object* obj) const override;
 

@@ -13,7 +13,7 @@ class Sequence : public Object {
 
   std::vector<Object*>& getValue();
 
-  Object* eval(Environment* env) override;
+  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
   void mark() override;
 

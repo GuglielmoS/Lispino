@@ -20,7 +20,7 @@ std::string Symbol::getValue() const {
   return value;
 }
 
-Object* Symbol::eval(Environment* env) {
+Object* Symbol::eval(Environment* env) throw (Errors::RuntimeError) {
   return env->get(this);
 }
 

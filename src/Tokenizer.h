@@ -19,6 +19,16 @@ class Tokenizer {
   // the reference to the stream from which the tokens will be parsed
   std::istream &stream;
 
+  // retrieve the next element from the input stream
+  int get();
+  char nextChar();
+
+  // put on the input stream the last element retrieved
+  void unget();
+
+  // put on the input stream the specified element
+  void putback(int ch);
+
   // eat all the spaces
   void skipSpaces();
 

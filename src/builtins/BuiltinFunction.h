@@ -11,9 +11,9 @@ namespace Builtins {
 
 class BuiltinFunction : public Object {
  public:
-  virtual Object* apply(std::vector<Object*>& args, Environment* env) = 0;
+  virtual Object* apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) = 0;
 
-  Object* eval(Environment* env) override;
+  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
   bool isBuiltinFunction() const override;
 

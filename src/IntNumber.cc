@@ -20,7 +20,7 @@ std::int64_t IntNumber::getValue() const {
   return value;
 }
 
-Object* IntNumber::eval(Environment*) {
+Object* IntNumber::eval(Environment*) throw (Errors::RuntimeError) {
   return this;
 }
 

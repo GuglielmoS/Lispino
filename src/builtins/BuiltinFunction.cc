@@ -4,7 +4,7 @@ namespace Lispino {
 
 namespace Builtins {
 
-Object* BuiltinFunction::eval(Environment*) {
+Object* BuiltinFunction::eval(Environment*) throw (Errors::RuntimeError) {
   return this;
 }
 

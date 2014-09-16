@@ -17,7 +17,7 @@ class Symbol : public Object {
   
   std::string getValue() const;
 
-  Object* eval(Environment* env) override;
+  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
   int compare(const Object* obj) const override;
   

@@ -8,7 +8,7 @@ namespace Lispino {
 
 namespace Builtins {
 
-Object* Sub::apply(std::vector<Object*>& args, Environment* env) {
+Object* Sub::apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) {
   if (args.size() == 0)
     throw std::runtime_error("-: wrong number of arguments!");
 

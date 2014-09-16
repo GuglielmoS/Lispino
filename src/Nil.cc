@@ -2,7 +2,7 @@
 
 namespace Lispino {
 
-Object* Nil::eval(Environment*) {
+Object* Nil::eval(Environment*) throw (Errors::RuntimeError) {
   return this;
 }
 

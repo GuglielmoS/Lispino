@@ -23,7 +23,7 @@ class Closure : public Object {
 
   Environment* getEnv();
 
-  Object* eval(Environment* env) override;
+  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
   void mark() override;
 

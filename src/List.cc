@@ -33,7 +33,7 @@ Object* List::getRest() {
   return tail;
 }
 
-Object* List::eval(Environment* env) {
+Object* List::eval(Environment* env) throw (Errors::RuntimeError) {
   // return NIL if the list is empty
   if (head->isNil())
     return VM::getAllocator().createNil();

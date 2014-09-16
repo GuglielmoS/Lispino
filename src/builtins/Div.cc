@@ -6,7 +6,7 @@ namespace Lispino {
 
 namespace Builtins {
 
-Object* Div::apply(std::vector<Object*>& args, Environment* env) {
+Object* Div::apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) {
   if (args.size() <= 1)
     throw std::runtime_error("/: wrong number of arguments!");
 
