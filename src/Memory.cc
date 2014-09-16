@@ -1,5 +1,17 @@
 #include "Memory.h"
 
+#include "Symbol.h"
+#include "IntNumber.h"
+#include "FloatNumber.h"
+#include "List.h"
+#include "String.h"
+#include "Lambda.h"
+#include "Closure.h"
+#include "Quote.h"
+#include "Define.h"
+#include "IfExpr.h"
+#include "Sequence.h"
+
 namespace Lispino {
 
 Memory::Memory(GarbageCollector& gc) 

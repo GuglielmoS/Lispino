@@ -5,20 +5,9 @@
 #include <memory>
 
 #include "Object.h"
-#include "Symbol.h"
-#include "IntNumber.h"
-#include "FloatNumber.h"
-#include "Boolean.h"
-#include "List.h"
-#include "String.h"
-#include "Lambda.h"
-#include "Closure.h"
-#include "GarbageCollector.h"
 #include "Nil.h"
-#include "Quote.h"
-#include "Define.h"
-#include "IfExpr.h"
-#include "Sequence.h"
+#include "Boolean.h"
+#include "GarbageCollector.h"
 
 namespace Lispino {
 

@@ -4,6 +4,19 @@
 #include "Memory.h"
 #include "Environment.h"
 
+#include "Symbol.h"
+#include "String.h"
+#include "IntNumber.h"
+#include "FloatNumber.h"
+#include "List.h"
+#include "Lambda.h"
+#include "Closure.h"
+#include "Define.h"
+#include "Quote.h"
+#include "IfExpr.h"
+#include "Nil.h"
+#include "Sequence.h"
+
 namespace Lispino {
 
 class Allocator {
