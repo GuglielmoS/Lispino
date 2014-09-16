@@ -194,6 +194,15 @@ Object* Parser::parseLambda() {
 }
 
 Object* Parser::parseLet() {
+  /*
+    (let ((a 1) (b 2))
+      (+ a b))
+
+      is equivalent to
+
+    ((lambda (a b) (+ a b)) 1 2)
+  */
+
   // parse the arguments
   std::unique_ptr<Token> token(tokenizer.next());
 
