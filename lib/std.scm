@@ -132,10 +132,10 @@
   (product (range 1 (inc n))))
 
 (define (exp base n)
-  (cond (((eq? n 1) base)
-         ((eq? n 0) 1)
-         ((even? n) (square (exp base (/ n 2))))
-         (else      (* base (exp base (dec n)))))))
+  (cond ((eq? n 1) base)
+        ((eq? n 0) 1)
+        ((even? n) (square (exp base (/ n 2))))
+        (else      (* base (exp base (dec n))))))
 
 (define (square n)
   (* n n))
@@ -151,6 +151,11 @@
     (even? (dec n))))
 
 (define (abs x)
-  (cond (((< x 0) (- x))
-         (else x))))
+  (cond ((< x 0) (- x))
+        (else x)))
+
+(define (gcd a b)
+  (if (eq? b 0)
+    a
+    (gcd b (remainder a b))))
 

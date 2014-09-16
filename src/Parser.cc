@@ -103,9 +103,9 @@ Object* Parser::parseIf() throw (Errors::CompileError) {
 
 Object* Parser::parseCond() throw (Errors::CompileError) {
   /*
-   (cond ((<expr_1> <expr_1_body>)
-          ...
-          (<expr_n> <expr_n_body>)))
+   (cond (<expr_1> <expr_1_body>)
+         ...
+         (<expr_n> <expr_n_body>))
 
     is equivalent to
 
@@ -120,12 +120,8 @@ Object* Parser::parseCond() throw (Errors::CompileError) {
   IfExpr *first_if_expr = nullptr;
   IfExpr *current_if_expr = nullptr;
   
-  // check the initial '(' of the conditions list
-  if (token->getType() != TokenType::OPEN_PAREN)
-    throw Errors::CompileError(/*"Invalid COND, missing '('"*/);
-
   // skip to the next token
-  token.reset(tokenizer.next());
+  //token.reset(tokenizer.next());
   while (token->getType() == TokenType::OPEN_PAREN) {
     // parse the current condition expr
     Object *condition_expr = parseExpr();
@@ -154,12 +150,7 @@ Object* Parser::parseCond() throw (Errors::CompileError) {
     token.reset(tokenizer.next());
   }
 
-  // check the final ')' of the conditions list
-  if (token->getType() != TokenType::CLOSE_PAREN)
-    throw Errors::CompileError(/*"Invalid COND, missing ')'"*/);
-  
   // check the final ')' of the COND expr
-  token.reset(tokenizer.next());
   if (token->getType() != TokenType::CLOSE_PAREN)
     throw Errors::CompileError(/*"Invalid COND, missing ')'"*/);
 

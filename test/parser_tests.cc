@@ -346,7 +346,7 @@ TEST(ParserTests, IfExpr) {
 }
 
 TEST(ParserTests, CondExpr) {
-    std::stringstream stream("(cond (((< x 0) (- x)) (otherwise x)))");
+    std::stringstream stream("(cond ((< x 0) (- x)) (otherwise x))");
     Parser parser(stream);
     
     // parse the stream and check the expressions
