@@ -16,9 +16,9 @@ namespace Lispino {
 
 Memory::Memory(GarbageCollector& gc) 
     : gc(gc), first(nullptr), allocated_objects(0) {
-  nil_instance = new Nil();
-  true_instance = new Boolean(true);
-  false_instance = new Boolean(false);
+  nil_instance = std::unique_ptr<Nil>(new Nil());
+  true_instance = std::unique_ptr<Boolean>(new Boolean(true));
+  false_instance = std::unique_ptr<Boolean>(new Boolean(false));
 }
 
 Memory::~Memory() {
@@ -29,23 +29,18 @@ Memory::~Memory() {
     current = current->next;
     delete temp;
   }
-
-  // delete the cached instances
-  delete nil_instance;
-  delete true_instance;
-  delete false_instance;
 }
 
 Nil* Memory::getNilInstance() {
-  return nil_instance;
+  return nil_instance.get();
 }
 
 Boolean* Memory::getTrueInstance() {
-  return true_instance;
+  return true_instance.get();
 }
 
 Boolean* Memory::getFalseInstance() {
-  return false_instance;
+  return false_instance.get();
 }
 
 Object* Memory::allocate(ObjectType type) {

@@ -45,9 +45,9 @@ class Memory {
   MemoryNode *first;
 
   // instance of frequently used objects that don't change their value
-  Nil *nil_instance;
-  Boolean *true_instance;
-  Boolean *false_instance;
+  std::unique_ptr<Nil> nil_instance;
+  std::unique_ptr<Boolean> true_instance;
+  std::unique_ptr<Boolean> false_instance;
 
   // number of objects stored
   size_t allocated_objects;
