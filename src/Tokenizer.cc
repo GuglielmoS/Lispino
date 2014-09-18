@@ -185,7 +185,7 @@ Token* Tokenizer::string() throw (Errors::CompileError) {
     char ch = static_cast<char>(raw_ch);
 
     if (ch == EOF) {
-      throw Errors::CompileError(/*"Unterminated string*/);
+      throw Errors::CompileError("Unterminated string");
     } else if (ch == '\\') {
       escape = true;
     } else if (ch == '"') {

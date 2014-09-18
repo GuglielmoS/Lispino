@@ -95,7 +95,6 @@ size_t Memory::cleanup() {
   return releaseUnusedObjects();
 }
 
-// remove the unused objects and return the number of objects deleted
 size_t Memory::releaseUnusedObjects() {
   auto original_memory_size = memory.size();
 
@@ -107,7 +106,7 @@ size_t Memory::releaseUnusedObjects() {
       [&](const std::unique_ptr<Object>& object) {
         return !object->isMarked();
       }),
-      memory.end());
+    memory.end());
 
   // return the number of objects removed
   return original_memory_size - memory.size();
