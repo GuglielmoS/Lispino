@@ -19,6 +19,9 @@ class Tokenizer {
   // the reference to the stream from which the tokens will be parsed
   std::istream &stream;
 
+  // the current position in the source code
+  SourceCodePosition position;
+
   // retrieve the next element from the input stream
   int get();
   char nextChar();

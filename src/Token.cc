@@ -8,31 +8,35 @@ namespace Lispino {
 // initialize the reserved keywords map
 std::map<std::string, TokenType> Token::reserved_keywords = Token::initializeReservedKeywords();
 
-Token::Token(TokenType type)
+Token::Token(TokenType type, SourceCodePosition position)
     : type(type), 
       raw_value(std::string()), 
       int_value(0),
-      float_value(0.0) {
+      float_value(0.0),
+      position(position) {
   /* DO NOTHING */
 }
 
-Token::Token(std::int64_t value)
+Token::Token(std::int64_t value, SourceCodePosition position)
     : type(TokenType::INT_NUMBER),
       raw_value(std::string()),
       int_value(value),
-      float_value(0.0) {
+      float_value(0.0),
+      position(position) {
   /* DO NOTHING */
 }
 
-Token::Token(double value)
+Token::Token(double value, SourceCodePosition position)
     : type(TokenType::FLOAT_NUMBER),
       raw_value(std::string()),
       int_value(0),
-      float_value(value) {
+      float_value(value),
+      position(position) {
   /* DO NOTHING */
 }
 
-Token::Token(TokenType type, std::string value) { 
+Token::Token(TokenType type, std::string value, SourceCodePosition position)
+    : position(position) { 
   std::string temp_value = value;
   std::transform(temp_value.begin(), temp_value.end(), temp_value.begin(), ::tolower);
 
@@ -65,6 +69,10 @@ std::int64_t Token::getIntNumber() const {
 
 double Token::getFloatNumber() const {
   return float_value;
+}
+
+SourceCodePosition Token::getSourceCodePosition() const {
+  return position;
 }
 
 std::map<std::string, TokenType> Token::initializeReservedKeywords() {

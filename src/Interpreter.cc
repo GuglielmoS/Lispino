@@ -44,10 +44,7 @@ int Interpreter::repl() {
         auto result = expr->eval();
         std::cout << result->toString() << std::endl;
       } catch (Errors::CompileError& error) {
-        std::cout << "Parser Error: " << std::endl 
-                  << "  " 
-                  << error.getMessage()
-                  << std::endl;
+        std::cout << error.getMessage() << std::endl; 
       } catch (Errors::RuntimeError& error) {
         std::cout << "Cannot evaluate the given expression!" << std::endl;
       }

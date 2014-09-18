@@ -17,7 +17,7 @@ Object* Parser::parse() throw (Errors::CompileError) {
   // check for the End Of Stream
   std::unique_ptr<Token> token(tokenizer.next());
   if (token->getType() != TokenType::EOS)
-    throw Errors::CompileError("Missing the EOS!");
+    throw Errors::CompileError("Missing the EOS!", token->getSourceCodePosition());
 
   return expr;
 }
@@ -41,7 +41,7 @@ Object* Parser::parseList() throw (Errors::CompileError) {
     case TokenType::IF:          return parseIf();              // if
     case TokenType::COND:        return parseCond();            // cond
     case TokenType::BEGIN:       return parseBegin();           // begin
-    case TokenType::EOS:         throw Errors::CompileError("Malformed expression");
+    case TokenType::EOS:         throw Errors::CompileError("Malformed list, missing ')'", token->getSourceCodePosition());
     default:                     head = dispatch(token.get());  // other
   }
 
@@ -58,12 +58,19 @@ Object* Parser::parseList() throw (Errors::CompileError) {
       token.reset(tokenizer.next());
     }
 
+    // dispatch the next token
+    Object *nextExpr = dispatch(token.get());
+
+    // if the token is invalid, signal an error
+    if (nextExpr == nullptr)
+      throw Errors::CompileError("Malformed list, missing ')'", token->getSourceCodePosition());
+
     if (improper_list) {
-      current->setRest(dispatch(token.get()));
+      current->setRest(nextExpr);
       improper_list = false;
     }
     else {
-      current->setRest(allocator.createList(dispatch(token.get()), allocator.createNil()));
+      current->setRest(allocator.createList(nextExpr, allocator.createNil()));
       current = static_cast<List*>(current->getRest());
     }
 
@@ -95,7 +102,7 @@ Object* Parser::parseIf() throw (Errors::CompileError) {
   if (alternative != nullptr) {
     token.reset(tokenizer.next());
     if (token->getType() != TokenType::CLOSE_PAREN)
-      throw Errors::CompileError("Malformed IF, missing ')'");
+      throw Errors::CompileError("Malformed IF, missing ')'", token->getSourceCodePosition());
   }
 
   return if_expr;
@@ -144,7 +151,7 @@ Object* Parser::parseCond() throw (Errors::CompileError) {
     // check the current binding final ')'
     token.reset(tokenizer.next());
     if (token->getType() != TokenType::CLOSE_PAREN)
-      throw Errors::CompileError("Malformed COND, missing ')'");
+      throw Errors::CompileError("Malformed COND, missing ')'", token->getSourceCodePosition());
 
     // skip to the next token
     token.reset(tokenizer.next());
@@ -152,7 +159,7 @@ Object* Parser::parseCond() throw (Errors::CompileError) {
 
   // check the final ')' of the COND expr
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw Errors::CompileError("Malformed COND, missing ')'");
+    throw Errors::CompileError("Malformed COND, missing ')'", token->getSourceCodePosition());
 
   return first_if_expr;
 }
@@ -163,7 +170,7 @@ Object* Parser::parseLambda() throw (Errors::CompileError) {
   std::vector<std::string> params;
 
   if (token->getType() != TokenType::OPEN_PAREN)
-    throw Errors::CompileError("Malformed LAMBDA, missing '('");
+    throw Errors::CompileError("Malformed LAMBDA, missing '('", token->getSourceCodePosition());
 
   token.reset(tokenizer.next());
   while (token->getType() == TokenType::SYMBOL) {
@@ -172,7 +179,7 @@ Object* Parser::parseLambda() throw (Errors::CompileError) {
   }
 
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw Errors::CompileError("Malformed LAMBDA, missing ')'");
+    throw Errors::CompileError("Malformed LAMBDA, missing ')'", token->getSourceCodePosition());
 
   // parse the body
   Object *body = parseExpr();
@@ -180,7 +187,7 @@ Object* Parser::parseLambda() throw (Errors::CompileError) {
   // check the ')'
   token.reset(tokenizer.next());
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw Errors::CompileError("Malformed LAMBDA, missing ')'");
+    throw Errors::CompileError("Malformed LAMBDA, missing ')'", token->getSourceCodePosition());
 
   return allocator.createLambda(body, params);
 }
@@ -200,7 +207,7 @@ Object* Parser::parseLet() throw (Errors::CompileError) {
 
   // check the bindings list intial '('
   if (token->getType() != TokenType::OPEN_PAREN)
-    throw Errors::CompileError("Malformed LET, missing '('");
+    throw Errors::CompileError("Malformed LET, missing '('", token->getSourceCodePosition());
 
   // parse the LET bindings ([symbol -> value] pairs)
   std::vector<std::string> let_symbols;
@@ -212,7 +219,7 @@ Object* Parser::parseLet() throw (Errors::CompileError) {
     // parse the current binding symbol
     token.reset(tokenizer.next());
     if (token->getType() != TokenType::SYMBOL)
-      throw Errors::CompileError("Malformed LET, missing a symbol in the bindings list'");
+      throw Errors::CompileError("Malformed LET, missing a symbol in the bindings list'", token->getSourceCodePosition());
     let_symbols.push_back(token->getSymbol());
 
     // parse the current binding value
@@ -221,7 +228,7 @@ Object* Parser::parseLet() throw (Errors::CompileError) {
     // check the current binding final ')'
     token.reset(tokenizer.next());
     if (token->getType() != TokenType::CLOSE_PAREN)
-      throw Errors::CompileError("Malformed LET arguments, missing ')'");
+      throw Errors::CompileError("Malformed LET arguments, missing ')'", token->getSourceCodePosition());
 
     // skip to the next token
     token.reset(tokenizer.next());
@@ -229,7 +236,7 @@ Object* Parser::parseLet() throw (Errors::CompileError) {
 
   // check the bindings list final ')'
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw Errors::CompileError("Malformed LET arguments, missing ')'");
+    throw Errors::CompileError("Malformed LET arguments, missing ')'", token->getSourceCodePosition());
 
   // parse the body of the LET expression
   Object *body = parseExpr();
@@ -237,7 +244,7 @@ Object* Parser::parseLet() throw (Errors::CompileError) {
   // check the final ')'
   token.reset(tokenizer.next());
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw Errors::CompileError("Malformed LET arguments, missing ')'");
+    throw Errors::CompileError("Malformed LET arguments, missing ')'", token->getSourceCodePosition());
 
   // create the lambda with the LET body and the LET symbols
   Lambda *let_lambda = allocator.createLambda(body, let_symbols);
@@ -268,15 +275,15 @@ Object* Parser::parseDefine() throw (Errors::CompileError) {
     }
 
     if (isFirst)
-      throw Errors::CompileError("Malformed DEFINE arguments, missing SYMBOL");
+      throw Errors::CompileError("Malformed DEFINE arguments, missing SYMBOL", token->getSourceCodePosition());
     else if (token->getType() != TokenType::CLOSE_PAREN)
-      throw Errors::CompileError("Malformed DEFINE arguments, missing ')'");
+      throw Errors::CompileError("Malformed DEFINE arguments, missing ')'", token->getSourceCodePosition());
 
   } else if (token->getType() == TokenType::SYMBOL) {
     isFunction = false;
     name = token->getSymbol();
   } else {
-    throw Errors::CompileError("Malformed DEFINE arguments, missing SYMBOL");
+    throw Errors::CompileError("Malformed DEFINE arguments, missing SYMBOL", token->getSourceCodePosition());
   }
 
   // parse the define expressions
@@ -289,12 +296,12 @@ Object* Parser::parseDefine() throw (Errors::CompileError) {
 
   // check for the final paren ')'
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw Errors::CompileError("Malformed DEFINE body, missing ')'");
+    throw Errors::CompileError("Malformed DEFINE body, missing ')'", token->getSourceCodePosition());
 
   // create and optimize the define body if possible
   Object* value = nullptr;
   if (expressions.size() == 0)
-    throw Errors::CompileError("Malformed DEFINE body, it's empty");
+    throw Errors::CompileError("Malformed DEFINE body, it's empty", token->getSourceCodePosition());
   else if (expressions.size() == 1)
     value = expressions[0];
   else
@@ -313,7 +320,7 @@ Object* Parser::parseQuote() throw (Errors::CompileError) {
   // check for the final paren ')'
   std::unique_ptr<Token> token(tokenizer.next());
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw Errors::CompileError("Malformed QUOTE body, missing ')'");
+    throw Errors::CompileError("Malformed QUOTE body, missing ')'", token->getSourceCodePosition());
 
   return quote;
 }
@@ -330,12 +337,12 @@ Object* Parser::parseBegin() throw (Errors::CompileError) {
 
   // check for the final paren ')'
   if (token->getType() != TokenType::CLOSE_PAREN)
-    throw Errors::CompileError("Malformed BEGIN, missing ')'");
+    throw Errors::CompileError("Malformed BEGIN, missing ')'", token->getSourceCodePosition());
 
   // create and optimize the begin if possible
   Object* value = nullptr;
   if (expressions.size() == 0)
-    throw Errors::CompileError("Malformed BEGIN, it's empty");
+    throw Errors::CompileError("Malformed BEGIN, it's empty", token->getSourceCodePosition());
   else if (expressions.size() == 1)
     value = expressions[0];
   else
@@ -357,7 +364,7 @@ Object* Parser::dispatch(Token *token) throw (Errors::CompileError) {
     case TokenType::OPEN_PAREN:   return parseList();
     case TokenType::EOS:          return nullptr;
     case TokenType::UNKNOWN:
-    default:                      throw Errors::CompileError("Undefined token found");
+    default:                      throw Errors::CompileError("Undefined token found", token->getSourceCodePosition());
   }
 }
 

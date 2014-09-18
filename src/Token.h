@@ -8,6 +8,8 @@
 #include <string>
 #include <map>
 
+#include "SourceCodePosition.h"
+
 namespace Lispino {
 
 enum class TokenType {
@@ -33,13 +35,13 @@ enum class TokenType {
 
 class Token {
  public:
-  Token(TokenType type);
+  Token(TokenType type, SourceCodePosition position);
 
-  Token(std::int64_t value);
+  Token(std::int64_t value, SourceCodePosition position);
 
-  Token(double value);
+  Token(double value, SourceCodePosition position);
 
-  Token(TokenType type, std::string value);
+  Token(TokenType type, std::string value, SourceCodePosition position);
 
   TokenType getType() const;
   
@@ -51,6 +53,8 @@ class Token {
   
   double getFloatNumber() const;
 
+  SourceCodePosition getSourceCodePosition() const;
+
  private:
   TokenType type;
 
@@ -59,6 +63,8 @@ class Token {
   std::int64_t int_value;
 
   double float_value;
+
+  SourceCodePosition position;
 
   // it contains all the reserved keywords and their relative TokenType
   static std::map<std::string, TokenType> reserved_keywords;
