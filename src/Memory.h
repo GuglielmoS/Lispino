@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <memory>
+#include <vector>
 
 #include "Object.h"
 #include "Nil.h"
@@ -13,10 +14,7 @@ namespace Lispino {
 
 class Memory {
  public:
-
   Memory(GarbageCollector& gc);
-
-  ~Memory();
 
   Nil* getNilInstance();
 
@@ -31,18 +29,11 @@ class Memory {
   size_t cleanup();
 
  private:
-  // This struct contains a pointer to an allocated object and the pointer
-  // to the next element in memory
-  struct MemoryNode {
-    std::unique_ptr<Object> object;
-    MemoryNode *next;
-  };
-
   // reference to the garbage collector
   GarbageCollector &gc;
 
   // pointer to the first object in memory
-  MemoryNode *first;
+  std::vector<std::unique_ptr<Object>> memory;
 
   // instance of frequently used objects that don't change their value
   std::unique_ptr<Nil> nil_instance;

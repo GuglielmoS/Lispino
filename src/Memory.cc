@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#include <algorithm>
+
 #include "Symbol.h"
 #include "IntNumber.h"
 #include "FloatNumber.h"
@@ -16,21 +18,10 @@
 
 namespace Lispino {
 
-Memory::Memory(GarbageCollector& gc) 
-    : gc(gc), first(nullptr), allocated_objects(0) {
+Memory::Memory(GarbageCollector& gc) : gc(gc), allocated_objects(0) {
   nil_instance = std::unique_ptr<Nil>(new Nil());
   true_instance = std::unique_ptr<Boolean>(new Boolean(true));
   false_instance = std::unique_ptr<Boolean>(new Boolean(false));
-}
-
-Memory::~Memory() {
-  // delete the objects stored in the virtual memory
-  MemoryNode *current = first;
-  while (current != nullptr) {
-    MemoryNode *temp = current;
-    current = current->next;
-    delete temp;
-  }
 }
 
 Nil* Memory::getNilInstance() {
@@ -87,8 +78,7 @@ Object* Memory::allocate(ObjectType type) {
   }
 
   // add the allocated object to the memory linked list
-  MemoryNode *newNode = new MemoryNode{std::unique_ptr<Object>(allocated_object), first};
-  first = newNode;
+  memory.push_back(std::unique_ptr<Object>(allocated_object));
 
   // increase the counter
   allocated_objects++;
@@ -107,39 +97,20 @@ size_t Memory::cleanup() {
 
 // remove the unused objects and return the number of objects deleted
 size_t Memory::releaseUnusedObjects() {
-  MemoryNode *current = first;
-  MemoryNode *prev = nullptr;
-  size_t released_objects = 0;
+  auto original_memory_size = memory.size();
 
-  while (current != nullptr) {
-    // if the current object is not marked, then it is not visibile
-    // and it must be removed from the memory
-    if (!current->object->isMarked()) {
-      // if we have the first node
-      if (prev == nullptr) {
-        first = current->next;
-        delete current;
-        current = first;
-      } else {
-        prev->next = current->next;
-        delete current;
-        current = prev->next;
-      }
+  // remove all the objects that are not marked
+  memory.erase(
+    std::remove_if(
+      memory.begin(),
+      memory.end(),
+      [&](const std::unique_ptr<Object>& object) {
+        return !object->isMarked();
+      }),
+      memory.end());
 
-      // increase the counter for statistics
-      released_objects++;
-
-      // decrease the number of allocated objects
-      allocated_objects--;
-    } else {
-      // unmark the current object and skip to the next
-      current->object->unmark();
-      prev = current;
-      current = current->next;
-    }
-  }
-
-  return released_objects;
+  // return the number of objects removed
+  return original_memory_size - memory.size();
 }
 
 }
