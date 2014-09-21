@@ -1,7 +1,9 @@
 (define (sum n)
-  (if (zero? n)
-    0
-    (+ n (sum (- n 1)))))
+  (define (iter n acc)
+    (if (zero? n)
+      acc
+      (+ n (iter (- n 1) acc))))
+  (iter n 0))
 
 (display "Sum from 0 to 5000 = " (sum 5000))
 (newline)

@@ -141,14 +141,10 @@
   (* n n))
 
 (define (even? n)
-  (if (zero? n)
-    true
-    (odd? (dec n))))
+  (zero? (remainder n 2)))
 
 (define (odd? n)
-  (if (zero? n)
-    false
-    (even? (dec n))))
+  (not (even? n)))
 
 (define (abs x)
   (cond ((< x 0) (- x))

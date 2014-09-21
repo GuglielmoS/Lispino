@@ -7,10 +7,10 @@
         (else (find-divisor n (+ test-divisor 1)))))
 
 (define (divides? a b)
-  (eq? (remainder b a) 0))
+  (zero? (remainder b a)))
 
 (define (prime? n)
-  (eq? n (smallest-divisor n)))
+  (= n (smallest-divisor n)))
 
 (display "The prime numbers below 50: ")
 (display (filter prime? (range 1 51)))

@@ -85,7 +85,7 @@ Object* Environment::get(Symbol* key) throw (Errors::RuntimeError) {
     return parent->get(key);
 
   // the lookup has failed, thus signal an error
-  throw Errors::RuntimeError("Environment lookup failed: key = " + key->toString());
+  throw Errors::RuntimeError("Environment lookup failed: key = " + key->getValue());
 }
 
 void Environment::bind(BuiltinsTable& bindings, Builtins::BuiltinFunction *fun) {

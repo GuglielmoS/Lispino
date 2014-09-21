@@ -1,2 +1,2 @@
-(display "Factorial(20) = " (factorial 20))
+(display "Factorial(15) = " (factorial 15))
 (newline)
