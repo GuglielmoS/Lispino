@@ -39,7 +39,7 @@ int Nil::compareSequence(const Sequence*) const throw (Errors::RuntimeError) {
 }
 
 std::string Nil::toString() const {
-  return "NIL";
+  return "nil";
 }
 
 }

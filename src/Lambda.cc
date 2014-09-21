@@ -1,5 +1,7 @@
 #include "Lambda.h"
 
+#include <sstream>
+
 #include "VM.h"
 
 namespace Lispino {
@@ -35,7 +37,9 @@ void Lambda::mark() {
 }
 
 std::string Lambda::toString() const {
-  return "LAMBDA";
+  std::stringstream buf;
+  buf << "<#LAMBDA:" << this << ">";
+  return buf.str();
 }
 
 }

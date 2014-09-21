@@ -1,5 +1,7 @@
 #include "Symbol.h"
 
+#include <sstream>
+
 #include "Environment.h"
 
 namespace Lispino {
@@ -32,7 +34,9 @@ int Symbol::compareSymbol(const Symbol* obj) const throw (Errors::RuntimeError) 
 }
 
 std::string Symbol::toString() const {
-  return value;
+  std::stringstream buf;
+  buf << "<#SYMBOL:" << this << ">";
+  return buf.str();
 }
 
 }

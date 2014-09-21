@@ -1,4 +1,7 @@
 #include "Closure.h"
+
+#include <sstream>
+
 #include "VM.h"
 
 namespace Lispino {
@@ -29,7 +32,9 @@ void Closure::mark() {
 }
 
 std::string Closure::toString() const {
-  return "CLOSURE";
+  std::stringstream buf;
+  buf << "<#CLOSURE:" << this << ">";
+  return buf.str();
 }
 
 }

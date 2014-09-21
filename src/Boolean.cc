@@ -40,7 +40,7 @@ bool Boolean::isFalse() const {
 }
 
 std::string Boolean::toString() const {
-  return value ? "TRUE" : "FALSE";
+  return value ? "#t" : "#f";
 }
 
 }
