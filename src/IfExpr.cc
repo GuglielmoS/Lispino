@@ -6,7 +6,7 @@
 
 namespace Lispino {
 
-IfExpr::IfExpr() : condition(nullptr), consequent(nullptr), alternative(nullptr) {
+IfExpr::IfExpr() : Object(ObjectType::IF), condition(nullptr), consequent(nullptr), alternative(nullptr) {
   /* DO NOTHING */
 }
 

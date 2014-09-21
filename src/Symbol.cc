@@ -4,11 +4,11 @@
 
 namespace Lispino {
 
-Symbol::Symbol() : value("") {
+Symbol::Symbol() : Object(ObjectType::SYMBOL), value("") {
   /* DO NOTHING */
 }
 
-Symbol::Symbol(std::string value) : value(value) {
+Symbol::Symbol(std::string value) : Object(ObjectType::SYMBOL), value(value) {
   /* DO NOTHING */
 }
 

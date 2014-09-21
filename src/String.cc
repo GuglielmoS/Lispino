@@ -2,11 +2,11 @@
 
 namespace Lispino {
 
-String::String() : value("") {
+String::String() : Object(ObjectType::STRING), value("") {
   /* DO NOTHING */
 }
 
-String::String(std::string value) : value(value) {
+String::String(std::string value) : Object(ObjectType::STRING), value(value) {
   /* DO NOTHING */
 }
 

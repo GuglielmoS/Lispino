@@ -4,12 +4,12 @@
 namespace Lispino {
 
 SourceCodePosition::SourceCodePosition()
-  : filename("stdin"), line(0), column(0) {
+  : filename("stdin"), line(0), column(0), last_column(0), last_char(0x00) {
   /* DO NOTHING */
 }
 
 SourceCodePosition::SourceCodePosition(const std::string&& filename)
-  : filename(filename), line(0), column(0) {
+  : filename(filename), line(0), column(0), last_column(0), last_char(0x00) {
   /* DO NOTHING */
 }
 

@@ -4,11 +4,11 @@
 
 namespace Lispino {
 
-IntNumber::IntNumber() : value(0) {
+IntNumber::IntNumber() : Object(ObjectType::INT_NUMBER),value(0) {
   /* DO NOTHING */
 }
 
-IntNumber::IntNumber(std::int64_t value) : value(value) {
+IntNumber::IntNumber(std::int64_t value) : Object(ObjectType::INT_NUMBER),value(value) {
   /* DO NOTHING */
 }
 

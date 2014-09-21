@@ -13,6 +13,10 @@
 
 namespace Lispino {
 
+Interpreter::Interpreter() : evaluator(VM::getEvaluator()) {
+  /* DO NOTHING */ 
+}
+
 void Interpreter::init() {
   // try to load the standard library
   execute(LIB_DIR + "/" + STDLIB_FILE);
@@ -23,6 +27,7 @@ void Interpreter::init() {
 
 int Interpreter::repl() {
   bool terminated = false;
+
 
   // Read - Eval - Print - Loop
   while (not terminated) {
@@ -41,12 +46,12 @@ int Interpreter::repl() {
       // try to parse and evaluate the given expression
       try {
         auto expr = Parser(stream).parse();
-        auto result = expr->eval();
+        auto result = evaluator.eval(expr);
         std::cout << result->toString() << std::endl;
       } catch (Errors::CompileError& error) {
         std::cout << error.getMessage() << std::endl; 
       } catch (Errors::RuntimeError& error) {
-        std::cout << "Cannot evaluate the given expression!" << std::endl;
+        std::cout << error.getMessage() << std::endl;
       }
 
       // perform a garbage collection cycle
@@ -66,7 +71,7 @@ int Interpreter::execute(std::string filename) {
     Object *current_expr = nullptr;
     while ((current_expr = parser.parseExpr()) != nullptr) {
       // evaluate the current expression
-      current_expr->eval()->toString();
+      evaluator.eval(current_expr);
 
       // run the garbage collector
       VM::getMemory().cleanup();

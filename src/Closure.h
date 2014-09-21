@@ -13,15 +13,13 @@ class Closure : public Object {
  public:
   Closure();
 
-  Closure(Lambda *lambda, Environment *env);
-
   void setLambda(Lambda *lambda);
 
-  void setEnv(Environment *env);
+  void setEnv(std::shared_ptr<Environment> env);
 
   Lambda* getLambda();
 
-  Environment* getEnv();
+  std::shared_ptr<Environment> getEnv();
 
   Object* eval(Environment* env) throw (Errors::RuntimeError) override;
 
@@ -33,7 +31,7 @@ class Closure : public Object {
 
  private:
   Lambda *lambda;
-  std::unique_ptr<Environment> env;
+  std::shared_ptr<Environment> env;
 };
 
 }

@@ -39,7 +39,7 @@ class Allocator {
 
   Lambda* createLambda(Object* body, std::vector<std::string>& arguments);
 
-  Closure* createClosure(Lambda *lambda, Environment *env);
+  Closure* createClosure(Lambda *lambda, std::shared_ptr<Environment> env);
 
   Define* createDefine(std::string name, Object* value);
 

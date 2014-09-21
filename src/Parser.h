@@ -40,8 +40,6 @@ class Parser {
   Object* parseBegin() throw (Errors::CompileError);
   
   Object* dispatch(Token *token) throw (Errors::CompileError);
-
-  Object* vec2cons(std::vector<Object*>& objects);
 };
 
 }

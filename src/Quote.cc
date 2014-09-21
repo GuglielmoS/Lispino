@@ -2,11 +2,11 @@
 
 namespace Lispino {
 
-Quote::Quote() : value(nullptr) {
+Quote::Quote() : Object(ObjectType::QUOTE), value(nullptr) {
   /* DO NOTHING */
 }
 
-Quote::Quote(Object* value) : value(value) {
+Quote::Quote(Object* value) : Object(ObjectType::QUOTE), value(value) {
   /* DO NOTHING */
 }
 

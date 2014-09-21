@@ -25,20 +25,20 @@ Environment::Environment() : parent(nullptr) {
   /* DO NOTHING */
 }
 
-void Environment::setParent(Environment *env) {
+void Environment::setParent(std::shared_ptr<Environment> env) {
   this->parent = env;
 }
 
-Environment* Environment::getParent() {
+std::shared_ptr<Environment> Environment::getParent() {
   return parent;
 }
 
-Environment* Environment::extend() {
-  Environment *extended_environment = new Environment();
+std::shared_ptr<Environment> Environment::extend(std::shared_ptr<Environment> parent) {
+  auto extended_environment = std::make_shared<Environment>();
 
   // since the new environment is an extension of the current one,
   // I set its parent to the current environment itself
-  extended_environment->setParent(this);
+  extended_environment->setParent(parent);
 
   return extended_environment;
 }
@@ -85,7 +85,7 @@ Object* Environment::get(Symbol* key) throw (Errors::RuntimeError) {
     return parent->get(key);
 
   // the lookup has failed, thus signal an error
-  throw Errors::RuntimeError(/*"Environment lookup failed with key: " + key->toString()*/);
+  throw Errors::RuntimeError("Environment lookup failed: key = " + key->toString());
 }
 
 BuiltinsTable Environment::initializeBuiltinFunctions() {

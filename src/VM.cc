@@ -5,12 +5,17 @@ namespace Lispino {
 // singleton instance
 VM VM::instance;
 
-VM::VM() : memory(gc), allocator(memory), gc(globalEnv) {
+VM::VM() 
+    : global_env(std::make_shared<Environment>()),
+      memory(gc), 
+      allocator(memory), 
+      gc(global_env), 
+      evaluator(global_env) {
   /* DO NOTHING */
 }
 
-Environment& VM::getGlobalEnv() {
-  return instance.globalEnv;
+std::shared_ptr<Environment> VM::getGlobalEnv() {
+  return instance.global_env;
 }
 
 Allocator& VM::getAllocator() {
@@ -19,6 +24,10 @@ Allocator& VM::getAllocator() {
 
 Memory& VM::getMemory() {
   return instance.memory;
+}
+
+Evaluator& VM::getEvaluator() {
+  return instance.evaluator;
 }
 
 }

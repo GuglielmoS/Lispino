@@ -4,11 +4,11 @@
 
 namespace Lispino {
 
-Define::Define() : name(nullptr), value(nullptr) {
+Define::Define() : Object(ObjectType::DEFINE), name(nullptr), value(nullptr) {
   /* DO NOTHING */
 }
 
-Define::Define(Symbol* name, Object* value) : name(name), value(value) {
+Define::Define(Symbol* name, Object* value) : Object(ObjectType::DEFINE), name(name), value(value) {
   /* DO NOTHING */
 }
 
@@ -22,6 +22,10 @@ void Define::setValue(Object* value) {
 
 std::string Define::getName() const {
   return name->getValue();
+}
+
+Symbol* Define::getSymbol() {
+  return name;
 }
 
 Object* Define::getValue() {

@@ -23,6 +23,8 @@ class Define : public Object {
 
   std::string getName() const;
 
+  Symbol* getSymbol();
+
   Object* getValue();
 
   Object* eval(Environment* env) throw (Errors::RuntimeError) override;

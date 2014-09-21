@@ -2,11 +2,11 @@
 
 namespace Lispino {
 
-Boolean::Boolean() : value(false) {
+Boolean::Boolean() : Object(ObjectType::BOOLEAN), value(false) {
   /* DO NOTHING */
 }
 
-Boolean::Boolean(bool value) : value(value) {
+Boolean::Boolean(bool value) : Object(ObjectType::BOOLEAN), value(value) {
   /* DO NOTHING */
 }
 

@@ -6,11 +6,11 @@
 
 namespace Lispino {
 
-FloatNumber::FloatNumber() : value(0.0) {
+FloatNumber::FloatNumber() : Object(ObjectType::FLOAT_NUMBER), value(0.0) {
   /* DO NOTHING */
 }
 
-FloatNumber::FloatNumber(double value) : value(value) {
+FloatNumber::FloatNumber(double value) : Object(ObjectType::FLOAT_NUMBER), value(value) {
   /* DO NOTHING */
 }
 

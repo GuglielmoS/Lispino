@@ -30,7 +30,6 @@ class IfExpr : public Object {
   std::string toString() const override;
 
  private:
-
   Object *condition;
   Object *consequent;
   Object *alternative;

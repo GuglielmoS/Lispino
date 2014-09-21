@@ -7,12 +7,12 @@
 namespace Lispino {
 
 List::List() 
-    : head(nullptr), tail(nullptr), cachedArgs(false) {
+    : Object(ObjectType::LIST), head(nullptr), tail(nullptr), cachedArgs(false) {
   /* DO NOTHING */
 }
 
 List::List(Object* head, Object* tail)
-    : head(head), tail(tail), cachedArgs(false) {
+    : Object(ObjectType::LIST), head(head), tail(tail), cachedArgs(false) {
   /* DO NOTHING */
 }
 
@@ -68,7 +68,7 @@ Object* List::eval(Environment* env) throw (Errors::RuntimeError) {
       lambda = static_cast<Lambda*>(op);
     } else if (op->isClosure()) {
       lambda = static_cast<Closure*>(op)->getLambda();
-      eval_env = static_cast<Closure*>(op)->getEnv();
+      eval_env = static_cast<Closure*>(op)->getEnv().get();
     }
     else {
       throw Errors::RuntimeError(/*"Invalid function call, the operator cannot be called!"*/);

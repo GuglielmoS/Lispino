@@ -9,6 +9,8 @@ namespace Lispino {
 
 class Sequence : public Object {
  public:
+  Sequence() : Object(ObjectType::SEQUENCE) {}
+
   void setValue(std::vector<Object*> value);
 
   std::vector<Object*>& getValue();

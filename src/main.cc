@@ -12,12 +12,8 @@ int main(int argc, char *argv[]) {
 	interpreter.init();
 
 	// launch the REPL or execute a given file
-	if (argc == 2) {
-    if (!strcmp(argv[1], "-v"))
-      return interpreter.repl();
-		else
-      return interpreter.execute(argv[1]);
-  } else {
+	if (argc == 2)
+    return interpreter.execute(argv[1]);
+  else
     return interpreter.repl();
-	}
 }

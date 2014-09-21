@@ -29,14 +29,17 @@ enum class ObjectType {
   IF,
   LAMBDA,
   CLOSURE,
-  SEQUENCE
+  SEQUENCE,
+  BUILTIN_FUNCTION
 };
 
 class Object {
  public:
-  Object();
+  Object(ObjectType type);
 
   virtual ~Object();
+
+  ObjectType getType() const;
 
   /// evaluate the object in the global environment
   Object* eval() throw (Errors::RuntimeError);
@@ -154,6 +157,9 @@ class Object {
   virtual std::string toString() const = 0;
 
  private:
+  // type used for the evaluation
+  ObjectType type;
+
   // flag used for the garbage collection
   bool markFlag;
 };

@@ -3,29 +3,24 @@
 
 namespace Lispino {
 
-Closure::Closure() : lambda(nullptr), env(nullptr) {
+Closure::Closure() : Object(ObjectType::CLOSURE), lambda(nullptr), env(nullptr) {
   /* DO NOTHING */
-}
-
-Closure::Closure(Lambda *lambda, Environment *env)
-    : lambda(lambda), env(env) {
-  /* DO NOTHING */    
 }
 
 void Closure::setLambda(Lambda *lambda) {
   this->lambda = lambda;
 }
 
-void Closure::setEnv(Environment *env) {
-  this->env.reset(env);
+void Closure::setEnv(std::shared_ptr<Environment> env) {
+  this->env = env;
 }
 
 Lambda* Closure::getLambda() {
   return lambda;
 }
 
-Environment* Closure::getEnv() {
-  return env.get();
+std::shared_ptr<Environment> Closure::getEnv() {
+  return env;
 }
 
 Object* Closure::eval(Environment*) throw (Errors::RuntimeError) {

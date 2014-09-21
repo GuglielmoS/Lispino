@@ -4,12 +4,12 @@
 
 namespace Lispino {
 
-Lambda::Lambda() : body(nullptr) {
+Lambda::Lambda() : Object(ObjectType::LAMBDA), body(nullptr) {
   /* DO NOTHING */
 }
 
 Lambda::Lambda(Object* body, std::vector<std::string> arguments)
-    : body(body), arguments(arguments) {
+    : Object(ObjectType::LAMBDA), body(body), arguments(arguments) {
   /* DO NOTHING */
 }
 
@@ -30,15 +30,15 @@ std::vector<std::string> Lambda::getArguments() {
 }
 
 Object* Lambda::eval(Environment* env) throw (Errors::RuntimeError) {
-  return VM::getAllocator().createClosure(this, env);
+  return VM::getAllocator().createClosure(this, std::shared_ptr<Environment>(env));
 }
 
 Object* Lambda::apply(std::vector<Object*>& actual_args, Environment* env) throw (Errors::RuntimeError) {
   if (arguments.size() != actual_args.size())
-    throw Errors::RuntimeError(/*"Wrong number of arguments"*/);
+    throw Errors::RuntimeError("Invalid function call: wrong number of arguments");
 
   // extend the current environment with the arguments to apply
-  Environment *extended_env = env->extend();
+  Environment *extended_env = env->extend(std::make_shared<Environment>()).get();
   for (unsigned int i = 0; i < arguments.size(); i++)
     extended_env->put(VM::getAllocator().createSymbol(arguments[i]), actual_args[i]);
 

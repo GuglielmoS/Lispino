@@ -58,7 +58,7 @@ Lambda* Allocator::createLambda(Object* body, std::vector<std::string>& argument
   return lambda;
 }
 
-Closure* Allocator::createClosure(Lambda *lambda, Environment *env) {
+Closure* Allocator::createClosure(Lambda *lambda, std::shared_ptr<Environment> env) {
   Closure *closure = static_cast<Closure*>(memory.allocate(ObjectType::CLOSURE));
   closure->setLambda(lambda);
   closure->setEnv(env);

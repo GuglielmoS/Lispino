@@ -22,11 +22,11 @@ class Environment {
  public:
   Environment();
 
-  void setParent(Environment *env);
+  void setParent(std::shared_ptr<Environment> env);
 
-  Environment* getParent();
+  std::shared_ptr<Environment> getParent();
 
-  Environment* extend();
+  std::shared_ptr<Environment> extend(std::shared_ptr<Environment> parent);
 
   LookupTable& getLookupTable();
 
@@ -35,7 +35,7 @@ class Environment {
   Object* get(Symbol* key) throw (Errors::RuntimeError);
 
  private:
-  Environment *parent;
+  std::shared_ptr<Environment> parent;
   LookupTable frame;
 
   // builtin functions

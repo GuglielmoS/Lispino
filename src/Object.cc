@@ -6,7 +6,7 @@
 
 namespace Lispino {
 
-Object::Object() : markFlag(false) {
+Object::Object(ObjectType type) : type(type), markFlag(false) {
   /* DO NOTHING */
 }
 
@@ -15,8 +15,12 @@ Object::~Object() {
   /* DO NOTHING */
 }
 
+ObjectType Object::getType() const {
+  return type;
+}
+
 Object* Object::eval() throw (Errors::RuntimeError) {
-  return eval(&VM::getGlobalEnv());
+  return eval(VM::getGlobalEnv().get());
 }
 
 int Object::compare(const Object*) const throw (Errors::RuntimeError) {

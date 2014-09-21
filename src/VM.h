@@ -1,21 +1,28 @@
 #ifndef LISPINO_VM_H_
 #define LISPINO_VM_H_
 
+#include <memory>
+
 #include "Memory.h"
 #include "Allocator.h"
 #include "GarbageCollector.h"
 #include "Environment.h"
+#include "Evaluator.h"
 
 namespace Lispino {
 
 class VM {
  public:
-  static Environment& getGlobalEnv();
+  static std::shared_ptr<Environment> getGlobalEnv();
+  static Evaluator& getEvaluator();
   static Allocator& getAllocator();
   static Memory& getMemory();
 
  private:
   VM();
+
+  // environment that contains the global definitions 
+  std::shared_ptr<Environment> global_env;
 
   // memory used at runtime by the objects
   Memory memory;
@@ -26,8 +33,8 @@ class VM {
   // gc used by the memory when needed
   GarbageCollector gc;
 
-  // environment that contains the global definitions 
-  Environment globalEnv;
+  // the evaluator to use for evaluating expressions
+  Evaluator evaluator;
 
   // singleton instance
   static VM instance;

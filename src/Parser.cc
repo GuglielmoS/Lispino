@@ -3,6 +3,8 @@
 #include <vector>
 #include <memory>
 
+#include "utils/List.h"
+
 namespace Lispino {
 
 Parser::Parser(std::istream& input_stream)
@@ -250,7 +252,7 @@ Object* Parser::parseLet() throw (Errors::CompileError) {
   Lambda *let_lambda = allocator.createLambda(body, let_symbols);
 
   // return the application of the LET values to the LET lambda
-  return allocator.createList(let_lambda, vec2cons(let_values));
+  return allocator.createList(let_lambda, Utils::vec2list(let_values));
 }
 
 Object* Parser::parseDefine() throw (Errors::CompileError) {
@@ -366,28 +368,6 @@ Object* Parser::dispatch(Token *token) throw (Errors::CompileError) {
     case TokenType::UNKNOWN:
     default:                      throw Errors::CompileError("Undefined token found", token->getSourceCodePosition());
   }
-}
-
-Object* Parser::vec2cons(std::vector<Object*>& objects) {
-  List *last_cons = nullptr;
-  List *first_cons = nullptr;
-
-  for (auto& current_object : objects) {
-    List *new_cons = allocator.createList(current_object, allocator.createNil());
-
-    if (last_cons == nullptr) {
-      first_cons = new_cons;
-      last_cons = new_cons;
-    } else {
-      last_cons->setRest(new_cons);
-      last_cons = static_cast<List*>(last_cons->getRest());
-    }
-  }
-
-  if (first_cons == nullptr)
-    return allocator.createNil();
-  else
-    return first_cons;
 }
 
 }
