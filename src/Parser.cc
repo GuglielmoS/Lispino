@@ -316,13 +316,15 @@ Object* Parser::parseDefine() throw (Errors::CompileError) {
     return allocator.createDefine(name, value);
 }
 
-Object* Parser::parseQuote() throw (Errors::CompileError) {
+Object* Parser::parseQuote(bool check_paren) throw (Errors::CompileError) {
   Object *quote = allocator.createQuote(parseExpr());
 
-  // check for the final paren ')'
-  std::unique_ptr<Token> token(tokenizer.next());
-  if (token->getType() != TokenType::CLOSE_PAREN)
-    throw Errors::CompileError("Malformed QUOTE body, missing ')'", token->getSourceCodePosition());
+  // check for the final paren ')' if needed
+  if (check_paren) {
+    std::unique_ptr<Token> token(tokenizer.next());
+    if (token->getType() != TokenType::CLOSE_PAREN)
+      throw Errors::CompileError("Malformed QUOTE body, missing ')'", token->getSourceCodePosition());
+  }
 
   return quote;
 }
@@ -362,7 +364,7 @@ Object* Parser::dispatch(Token *token) throw (Errors::CompileError) {
     case TokenType::FLOAT_NUMBER: return allocator.createFloatNumber(token->getFloatNumber());
     case TokenType::BOOL_TRUE:    return allocator.createBoolean(true);
     case TokenType::BOOL_FALSE:   return allocator.createBoolean(false);
-    case TokenType::SMART_QUOTE:  return allocator.createQuote(parseExpr());
+    case TokenType::SMART_QUOTE:  return parseQuote(false);//allocator.createQuote(parseExpr());
     case TokenType::OPEN_PAREN:   return parseList();
     case TokenType::EOS:          return nullptr;
     case TokenType::UNKNOWN:

@@ -35,7 +35,7 @@ class Parser {
   
   Object* parseDefine() throw (Errors::CompileError);
   
-  Object* parseQuote() throw (Errors::CompileError);
+  Object* parseQuote(bool check_paren = true) throw (Errors::CompileError);
 
   Object* parseBegin() throw (Errors::CompileError);
   
