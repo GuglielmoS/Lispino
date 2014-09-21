@@ -2,7 +2,7 @@
 
 namespace Lispino {
 
-Allocator::Allocator(Memory& memory) : memory(memory), symbols_counter(0) {
+Allocator::Allocator(Memory& memory) : memory(memory) {
   /* DO NOTHING */
 }
 
@@ -11,8 +11,19 @@ Memory& Allocator::getMemory() {
 }
 
 Symbol* Allocator::createSymbol(std::string value) {
-  Symbol *symbol = static_cast<Symbol*>(memory.allocate(ObjectType::SYMBOL));
-  symbol->setValue(value);
+  Symbol *symbol = nullptr;
+  
+  // update the cache if needed
+  if (!isSymbolCached(value)) {
+    // create the new symbol
+    symbol = static_cast<Symbol*>(memory.allocate(ObjectType::SYMBOL));
+    symbol->setValue(value);
+
+    // add the symbol to the cache
+    symbols_cache[value] = symbol;
+  } else {    
+    symbol = symbols_cache[value];
+  }
 
   return symbol;
 }
@@ -99,6 +110,11 @@ Sequence* Allocator::createSequence(std::vector<Object*>& expressions) {
   seq->setValue(expressions);
 
   return seq;
+}
+
+bool Allocator::isSymbolCached(std::string& value) const {
+  auto iter = symbols_cache.find(value);
+  return iter != symbols_cache.end();
 }
 
 }

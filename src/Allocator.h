@@ -1,6 +1,8 @@
 #ifndef LISPINO_ALLOCATOR_H_
 #define LISPINO_ALLOCATOR_H_
 
+#include <unordered_map>
+
 #include "Memory.h"
 #include "Environment.h"
 
@@ -55,8 +57,10 @@ class Allocator {
   // memory used for the allocated objects
   Memory &memory;
 
-  // counter used to generate random symbols
-  int symbols_counter;
+  // cache used for the symbols
+  std::unordered_map<std::string, Symbol*> symbols_cache;
+
+  bool isSymbolCached(std::string& value) const;
 };
 
 }
