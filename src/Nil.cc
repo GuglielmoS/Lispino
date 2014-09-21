@@ -2,10 +2,6 @@
 
 namespace Lispino {
 
-Object* Nil::eval(Environment*) throw (Errors::RuntimeError) {
-  return this;
-}
-
 int Nil::compare(const Object* obj) const throw (Errors::RuntimeError) {
   return obj->compareNil(this);
 }
@@ -40,10 +36,6 @@ int Nil::compareBoolean(const Boolean*) const throw (Errors::RuntimeError) {
 
 int Nil::compareSequence(const Sequence*) const throw (Errors::RuntimeError) {
   return -1;
-}
-
-bool Nil::isNil() const {
-  return true;
 }
 
 std::string Nil::toString() const {

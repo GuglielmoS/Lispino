@@ -77,8 +77,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
         switch (evaluated_first->getType()) {
           case ObjectType::BUILTIN_FUNCTION: {
             Builtins::BuiltinFunction *bf = static_cast<Builtins::BuiltinFunction*>(evaluated_first);
-            current_object = bf->apply(arguments, current_env.get()); // TODO change the apply signature 
-            continue;
+            return bf->apply(arguments, current_env); 
           }
 
           case ObjectType::LAMBDA: {
@@ -93,10 +92,8 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
             for (auto& current_arg : arguments)
               evaluated_arguments.push_back(eval(current_arg, current_env));
     
-            Closure *closure = VM::getAllocator().createClosure(lambda, current_env->extend(current_env));
-            current_env = closure->getEnv();
-
             // extend the current environment with the arguments to apply
+            current_env = current_env->extend(current_env);
             for (unsigned int i = 0; i < evaluated_arguments.size(); i++)
               current_env->put(VM::getAllocator().createSymbol(lambda_arguments[i]), evaluated_arguments[i]);
 
@@ -130,7 +127,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
           }
 
           default:
-            throw Errors::RuntimeError("Invalid function call: expected closure, non-callable object given");
+            throw Errors::RuntimeError("Invalid function call: non-callable object given");
         }
       }
 

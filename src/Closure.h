@@ -21,11 +21,7 @@ class Closure : public Object {
 
   std::shared_ptr<Environment> getEnv();
 
-  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
-
   void mark() override;
-
-  bool isClosure() const override;
 
   std::string toString() const override;
 

@@ -32,21 +32,10 @@ Object* Define::getValue() {
   return value;
 }
 
-Object* Define::eval(Environment* env) throw (Errors::RuntimeError) {
-  if (value->isLambda())
-    return env->put(name, value);
-  else
-    return env->put(name, value->eval(env));
-}
-
 void Define::mark() {
   Object::mark();
   name->mark();
   value->mark();
-}
-
-bool Define::isDefine() const {
-  return true;
 }
 
 std::string Define::toString() const {

@@ -18,17 +18,9 @@ Object* Quote::getValue() {
   return value;
 }
 
-Object* Quote::eval(Environment*) throw (Errors::RuntimeError) {
-  return value;
-}
-
 void Quote::mark() {
   Object::mark();
   value->mark();
-}
-
-bool Quote::isQuote() const {
-  return true;
 }
 
 std::string Quote::toString() const {

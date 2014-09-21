@@ -15,17 +15,13 @@ class Boolean : public Object {
 
   bool getValue() const;
 
-  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
-
   int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
   int compareBoolean(const Boolean* obj) const throw (Errors::RuntimeError) override;
 
-  bool isTrue() const;
+  bool isTrue() const override;
 
-  bool isFalse() const;
-
-  bool isBoolean() const override;
+  bool isFalse() const override;
 
   std::string toString() const override;
 

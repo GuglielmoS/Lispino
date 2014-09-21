@@ -17,11 +17,7 @@ class Quote : public Object {
   
   Object* getValue();
 
-  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
-
   void mark() override;
-
-  bool isQuote() const override;
 
   std::string toString() const override;
 

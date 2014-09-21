@@ -23,17 +23,9 @@ std::shared_ptr<Environment> Closure::getEnv() {
   return env;
 }
 
-Object* Closure::eval(Environment*) throw (Errors::RuntimeError) {
-  return this;
-}
-
 void Closure::mark() {
   Object::mark();
   lambda->mark();
-}
-
-bool Closure::isClosure() const {
-  return true;
 }
 
 std::string Closure::toString() const {

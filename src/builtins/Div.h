@@ -9,7 +9,7 @@ namespace Builtins {
 
 class Div : public BuiltinFunction {
  public:
-  Object* apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) override;
+  Object* apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) override;
 };
 
 }

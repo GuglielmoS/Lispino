@@ -9,8 +9,6 @@ class Nil : public Object {
  public:
   Nil() : Object(ObjectType::NIL) {}
 
-  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
-
   int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
   int compareNil(const Nil* obj) const throw (Errors::RuntimeError) override;
@@ -28,8 +26,6 @@ class Nil : public Object {
   int compareBoolean(const Boolean* obj) const throw (Errors::RuntimeError) override;
   
   int compareSequence(const Sequence* obj) const throw (Errors::RuntimeError) override;
-
-  bool isNil() const override;
 
   std::string toString() const override;
 };

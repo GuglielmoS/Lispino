@@ -6,7 +6,7 @@ namespace Lispino {
 
 namespace Builtins {
 
-Object* Mul::apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) {
+Object* Mul::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   if (args.size() <= 1)
     throw Errors::RuntimeError(/*"*: wrong number of arguments"*/);
 

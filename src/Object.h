@@ -2,6 +2,7 @@
 #define LISPINO_OBJECT_H_
 
 #include <string>
+#include <memory>
 
 #include "errors/RuntimeError.h"
 
@@ -41,11 +42,8 @@ class Object {
 
   ObjectType getType() const;
 
-  /// evaluate the object in the global environment
   Object* eval() throw (Errors::RuntimeError);
-
-  /// evaluates the object accordingly to the provided environment
-  virtual Object* eval(Environment* env) throw (Errors::RuntimeError) = 0;
+  Object* eval(std::shared_ptr<Environment> env) throw (Errors::RuntimeError);
 
   /*
    * Equality
@@ -123,35 +121,37 @@ class Object {
    * Useful methods 
    */
 
-  virtual bool isNil() const;
+  virtual bool isTrue() const;
+
+  virtual bool isFalse() const;
+
+  bool isNil() const;
   
-  virtual bool isAtom() const;
+  bool isList() const;
   
-  virtual bool isList() const;
+  bool isLambda() const;
   
-  virtual bool isLambda() const;
+  bool isClosure() const;
   
-  virtual bool isClosure() const;
+  bool isIntNumber() const;
   
-  virtual bool isIntNumber() const;
+  bool isFloatNumber() const;
   
-  virtual bool isFloatNumber() const;
+  bool isBoolean() const;
   
-  virtual bool isBoolean() const;
+  bool isSymbol() const;
   
-  virtual bool isSymbol() const;
+  bool isString() const;
   
-  virtual bool isString() const;
+  bool isQuote() const;
   
-  virtual bool isQuote() const;
+  bool isDefine() const;
   
-  virtual bool isDefine() const;
+  bool isIfExpr() const;
   
-  virtual bool isIfExpr() const;
+  bool isBuiltinFunction() const;
   
-  virtual bool isBuiltinFunction() const;
-  
-  virtual bool isSequence() const;
+  bool isSequence() const;
 
   /// provides a string representation of the object
   virtual std::string toString() const = 0;

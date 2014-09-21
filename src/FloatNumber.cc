@@ -22,10 +22,6 @@ double FloatNumber::getValue() const {
   return value;
 }
 
-Object* FloatNumber::eval(Environment*) throw (Errors::RuntimeError) {
-  return this;
-}
-
 int FloatNumber::compare(const Object* obj) const throw (Errors::RuntimeError) {
   if (obj == this)
     return 0;
@@ -113,14 +109,6 @@ Object* FloatNumber::remainder(Object* obj) throw (Errors::RuntimeError) {
 
 Object* FloatNumber::remainderFloat(FloatNumber* obj) throw (Errors::RuntimeError) {
   return VM::getAllocator().createIntNumber(fmod(obj->value, value));
-}
-
-bool FloatNumber::isAtom() const {
-  return true;
-}
-
-bool FloatNumber::isFloatNumber() const {
-  return true;
 }
 
 std::string FloatNumber::toString() const {

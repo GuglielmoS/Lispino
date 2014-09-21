@@ -6,7 +6,7 @@ namespace Lispino {
 
 namespace Builtins {
 
-Object* Cons::apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) {
+Object* Cons::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   if (args.size() != 2)
     throw Errors::RuntimeError(/*"cons: wrong number of arguments"*/);
 

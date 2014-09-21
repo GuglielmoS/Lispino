@@ -15,11 +15,7 @@ class Sequence : public Object {
 
   std::vector<Object*>& getValue();
 
-  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
-
   void mark() override;
-
-  bool isSequence() const override;
 
   std::string toString() const override;
 

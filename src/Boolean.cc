@@ -18,10 +18,6 @@ bool Boolean::getValue() const {
   return value;
 }
 
-Object* Boolean::eval(Environment*) throw (Errors::RuntimeError) {
-  return this;
-}
-
 int Boolean::compare(const Object* obj) const throw (Errors::RuntimeError) {
   return obj->compareBoolean(this);
 }
@@ -41,10 +37,6 @@ bool Boolean::isTrue() const {
 
 bool Boolean::isFalse() const {
   return !value;
-}
-
-bool Boolean::isBoolean() const {
-  return true;
 }
 
 std::string Boolean::toString() const {

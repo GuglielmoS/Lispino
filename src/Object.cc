@@ -20,7 +20,11 @@ ObjectType Object::getType() const {
 }
 
 Object* Object::eval() throw (Errors::RuntimeError) {
-  return eval(VM::getGlobalEnv().get());
+  return VM::getEvaluator().eval(this);
+}
+
+Object* Object::eval(std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+  return VM::getEvaluator().eval(this, env);
 }
 
 int Object::compare(const Object*) const throw (Errors::RuntimeError) {
@@ -139,64 +143,68 @@ bool Object::isMarked() const {
   return markFlag;
 }
 
-bool Object::isNil() const {
-  return false;
+bool Object::isTrue() const {
+  return !isFalse();
 }
 
-bool Object::isAtom() const {
-  return false;
+bool Object::isFalse() const {
+  return isNil();
+}
+
+bool Object::isNil() const {
+  return type == ObjectType::NIL;
 }
 
 bool Object::isList() const {
-  return false;
+  return type == ObjectType::LIST;
 }
 
 bool Object::isLambda() const {
-  return false;
+  return type == ObjectType::LAMBDA;
 }
 
 bool Object::isClosure() const {
-  return false;
+  return type == ObjectType::CLOSURE;
 }
 
 bool Object::isIntNumber() const {
-  return false;
+  return type == ObjectType::INT_NUMBER;
 }
 
 bool Object::isFloatNumber() const {
-  return false;
+  return type == ObjectType::FLOAT_NUMBER;
 }
 
 bool Object::isBoolean() const {
-  return false;
+  return type == ObjectType::BOOLEAN;
 }
 
 bool Object::isSymbol() const {
-  return false;
+  return type == ObjectType::SYMBOL;
 }
 
 bool Object::isString() const {
-  return false;
+  return type == ObjectType::STRING;
 }
 
 bool Object::isQuote() const {
-  return false;
+  return type == ObjectType::QUOTE;
 }
 
 bool Object::isDefine() const {
-  return false;
+  return type == ObjectType::DEFINE;
 }
 
 bool Object::isIfExpr() const {
-  return false;
+  return type == ObjectType::IF;
 }
 
 bool Object::isBuiltinFunction() const {
-  return false;
+  return type == ObjectType::BUILTIN_FUNCTION;
 }
 
 bool Object::isSequence() const {
-  return false;
+  return type == ObjectType::SEQUENCE;
 }
 
 }

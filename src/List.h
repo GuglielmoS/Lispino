@@ -22,15 +22,11 @@ class List : public Object {
 
   Object* getRest();
 
-  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
-
   int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
   int compareList(const List* obj) const throw (Errors::RuntimeError) override;
 
   void mark() override;
-
-  bool isList() const override;
 
   std::string toString() const override;
 
@@ -44,8 +40,6 @@ class List : public Object {
   bool cachedArgs;
 
   std::string toStringHelper(bool parentheses) const;
-
-  void updateCachedArguments();
 };
 
 }

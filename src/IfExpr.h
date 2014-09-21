@@ -21,11 +21,7 @@ class IfExpr : public Object {
 
   Object* getAlternative();
 
-  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
-
   void mark() override;
-
-  bool isIfExpr() const override;
 
   std::string toString() const override;
 

@@ -2,6 +2,7 @@
 #define LISPINO_BUILTINS_BUILTINFUNCTION_H_
 
 #include <vector>
+#include <memory>
 
 #include "../Object.h"
 
@@ -13,11 +14,7 @@ class BuiltinFunction : public Object {
  public:
   BuiltinFunction() : Object(ObjectType::BUILTIN_FUNCTION) {}
 
-  virtual Object* apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) = 0;
-
-  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
-
-  bool isBuiltinFunction() const override;
+  virtual Object* apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) = 0;
 
   std::string toString() const override;
 };

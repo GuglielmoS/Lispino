@@ -18,10 +18,6 @@ std::string String::getValue() const {
   return value;
 }
 
-Object* String::eval(Environment*) throw (Errors::RuntimeError) {
-  return this;
-}
-
 int String::compare(const Object* obj) const throw (Errors::RuntimeError) {
   if (this == obj)
     return 0;
@@ -31,14 +27,6 @@ int String::compare(const Object* obj) const throw (Errors::RuntimeError) {
 
 int String::compareString(const String* obj) const throw (Errors::RuntimeError) {
   return obj->getValue().compare(value);
-}
-
-bool String::isAtom() const {
-  return true;
-}
-
-bool String::isString() const {
-  return true;
 }
 
 std::string String::toString() const {

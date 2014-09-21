@@ -18,8 +18,6 @@ class FloatNumber : public Object {
 
   double getValue() const;
 
-  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
-
   int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
   int compareInt(const IntNumber* obj) const throw (Errors::RuntimeError) override;
@@ -55,10 +53,6 @@ class FloatNumber : public Object {
   Object* remainder(Object* obj) throw (Errors::RuntimeError) override;
 
   Object* remainderFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
-
-  bool isAtom() const override;
-
-  bool isFloatNumber() const override;
 
   std::string toString() const override;
 

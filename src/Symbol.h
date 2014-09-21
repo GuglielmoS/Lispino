@@ -17,15 +17,9 @@ class Symbol : public Object {
   
   std::string getValue() const;
 
-  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
-
   int compare(const Object* obj) const throw (Errors::RuntimeError) override;
   
   int compareSymbol(const Symbol* obj) const throw (Errors::RuntimeError) override;
-
-  bool isAtom() const override;
-
-  bool isSymbol() const override;
 
   std::string toString() const override;
 

@@ -34,27 +34,11 @@ Object* IfExpr::getAlternative() {
   return alternative;
 }
 
-Object* IfExpr::eval(Environment* env) throw (Errors::RuntimeError) {
-  Object *condition_result = condition->eval(env);
-
-  if (!condition_result->isBoolean())
-    throw Errors::RuntimeError(/*the condition must be a boolean object*/);
-
-  if (static_cast<Boolean*>(condition_result)->isTrue())
-    return consequent->eval(env);
-  else
-    return alternative->eval(env);
-}
-
 void IfExpr::mark() {
   Object::mark();
   condition->mark();
   consequent->mark();
   alternative->mark();
-}
-
-bool IfExpr::isIfExpr() const {
-  return true;
 }
 
 std::string IfExpr::toString() const {

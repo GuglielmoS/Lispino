@@ -27,11 +27,7 @@ class Define : public Object {
 
   Object* getValue();
 
-  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
-
   void mark() override;
-
-  bool isDefine() const override;
 
   std::string toString() const override;
 

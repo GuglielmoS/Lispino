@@ -28,11 +28,11 @@ class Evaluator {
   Evaluator(std::shared_ptr<Environment> env);
 
   Object* eval(Object* expr) throw (Errors::RuntimeError);
+  Object* eval(Object* expr, std::shared_ptr<Environment> env) throw (Errors::RuntimeError);
 
  private:
   std::shared_ptr<Environment> global_env;
 
-  Object* eval(Object* expr, std::shared_ptr<Environment> env) throw (Errors::RuntimeError);
   Object* evalIf(IfExpr *expr, std::shared_ptr<Environment> env) throw (Errors::RuntimeError);
   Object* evalSequence(Sequence *expr, std::shared_ptr<Environment> env) throw (Errors::RuntimeError);
   Object* evalDefine(Define *expr, std::shared_ptr<Environment> env) throw (Errors::RuntimeError);

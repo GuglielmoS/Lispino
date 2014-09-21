@@ -20,10 +20,6 @@ std::int64_t IntNumber::getValue() const {
   return value;
 }
 
-Object* IntNumber::eval(Environment*) throw (Errors::RuntimeError) {
-  return this;
-}
-
 int IntNumber::compare(const Object* obj) const throw (Errors::RuntimeError) {
   if (obj == this)
     return 0;
@@ -104,14 +100,6 @@ Object* IntNumber::remainder(Object* obj) throw (Errors::RuntimeError) {
 
 Object* IntNumber::remainderInt(IntNumber* obj) throw (Errors::RuntimeError) {
   return VM::getAllocator().createIntNumber(obj->value % value);
-}
-
-bool IntNumber::isAtom() const {
-  return true;
-}
-
-bool IntNumber::isIntNumber() const {
-  return true;
 }
 
 std::string IntNumber::toString() const {

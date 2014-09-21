@@ -20,8 +20,6 @@ class IntNumber : public Object {
 
   std::int64_t getValue() const;
 
-  Object* eval(Environment* env) throw (Errors::RuntimeError) override;
-
   int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
   int compareInt(const IntNumber* obj) const throw (Errors::RuntimeError) override;
@@ -57,10 +55,6 @@ class IntNumber : public Object {
   Object* remainder(Object* obj) throw (Errors::RuntimeError) override;
   
   Object* remainderInt(IntNumber* obj) throw (Errors::RuntimeError) override;
-
-  bool isAtom() const override;
-  
-  bool isIntNumber() const override;
 
   std::string toString() const override;
 

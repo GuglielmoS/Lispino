@@ -6,7 +6,7 @@ namespace Lispino {
 
 namespace Builtins {
 
-Object* Equal::apply(std::vector<Object*>& args, Environment* env) throw (Errors::RuntimeError) {
+Object* Equal::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   if (args.size() <= 1)
     throw Errors::RuntimeError(/*"eq?: wrong number of arguments"*/);
 
