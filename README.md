@@ -18,6 +18,7 @@ Main Features
 + Tail Call Reduction
 + Stop-The-World, Mark & Sweep Garbage Collection  
 + Unit tests covered
++ Checked with Valgrind Memcheck
 + REPL to interact with the interpreter (nice with rlwrap)
 + Easy way to add builtin functions
 + Basic Scheme constructs available (see the examples)
