@@ -15,6 +15,7 @@ Main Features
 --------
 
 + Simple Recursive Descent Parser
++ Tail Call Reduction
 + Stop-The-World, Mark & Sweep Garbage Collection  
 + Unit tests covered
 + REPL to interact with the interpreter (nice with rlwrap)
@@ -27,7 +28,6 @@ TODO
 ----
 
 + Implement a better errors handling mechanism
-+ Investigate a possible implementation of the Tail Call Optimization technique
 
 Requirements
 ------------
