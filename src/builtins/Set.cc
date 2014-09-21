@@ -7,12 +7,17 @@ namespace Lispino {
 
 namespace Builtins {
 
-Object* Set::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
-  if (args.size() != 2)
-    throw Errors::RuntimeError(/*"set!: wrong number of arguments"*/);
+std::uint32_t Set::getRequiredArguments() const {
+  return 2;
+}
+  
+std::string Set::getName() const {
+  return "set!";
+}
 
+Object* Set::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   if (!args[0]->isSymbol())
-    throw Errors::RuntimeError(/*"set!: the first argument must be a symol"*/);
+    throw Errors::RuntimeError("set!: the first argument must be a symbol");
 
   // evaluate the expression to assing
   Object *result = args[1]->eval(env);

@@ -77,12 +77,19 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
         switch (evaluated_first->getType()) {
           case ObjectType::BUILTIN_FUNCTION: {
             Builtins::BuiltinFunction *bf = static_cast<Builtins::BuiltinFunction*>(evaluated_first);
+            
+            // check that there are enough arguments for the specified builtin function
+            if (arguments.size() < bf->getRequiredArguments())
+              throw Errors::RuntimeError("Invalid function call: wrong number of arguments");
+
+            // execute the builtin function and return the result
             return bf->apply(arguments, current_env); 
           }
 
           case ObjectType::LAMBDA: {
             Lambda *lambda = static_cast<Lambda*>(evaluated_first);
 
+            // check that there are enough arguments for the specified lambda code
             auto lambda_arguments = lambda->getArguments();
             if (lambda_arguments.size() != arguments.size())
               throw Errors::RuntimeError("Invalid function call: wrong number of arguments");
@@ -99,22 +106,22 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
 
             // evaluate the code associated to this lambda
             current_object = lambda->getBody();
-
             continue;
           }
 
           case ObjectType::CLOSURE: {
             Closure *closure = static_cast<Closure*>(evaluated_first);
 
+            // check that there are enough arguments for the specified lambda code
+            auto lambda_arguments = closure->getLambda()->getArguments();
+            if (lambda_arguments.size() != arguments.size())
+              throw Errors::RuntimeError("Invalid function call: wrong number of arguments");
+
             // evaluate each argument
             std::vector<Object*> evaluated_arguments;
             for (auto& current_arg : arguments)
               evaluated_arguments.push_back(eval(current_arg, current_env));
          
-            auto lambda_arguments = closure->getLambda()->getArguments();
-            if (lambda_arguments.size() != evaluated_arguments.size())
-              throw Errors::RuntimeError("Invalid function call: wrong number of arguments");
-
             // extend the current environment with the arguments to apply
             for (unsigned int i = 0; i < evaluated_arguments.size(); i++)
               closure->getEnv()->put(VM::getAllocator().createSymbol(lambda_arguments[i]), evaluated_arguments[i]);
@@ -140,10 +147,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
 Object* Evaluator::evalIf(IfExpr* expr, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   Object *condition_result = eval(expr->getCondition(), env);
 
-  if (!condition_result->isBoolean())
-    throw Errors::RuntimeError("The condition must be a boolean object");
-
-  if (static_cast<Boolean*>(condition_result)->isTrue())
+  if (condition_result->isTrue())
     return expr->getConsequent();
   else
     return expr->getAlternative(); 

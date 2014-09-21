@@ -41,6 +41,7 @@ class Environment {
   // builtin functions
   static BuiltinsTable builtin_functions;
   static BuiltinsTable initializeBuiltinFunctions();
+  static void bind(BuiltinsTable& bindings, Builtins::BuiltinFunction *fun);
 };
 
 }

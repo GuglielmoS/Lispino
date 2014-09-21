@@ -8,10 +8,15 @@ namespace Lispino {
 
 namespace Builtins {
 
-Object* Sub::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
-  if (args.size() == 0)
-    throw Errors::RuntimeError(/*"-: wrong number of arguments"*/);
+std::uint32_t Sub::getRequiredArguments() const {
+  return 1;
+}
+  
+std::string Sub::getName() const {
+  return "-";
+}
 
+Object* Sub::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   Object* result = args[0]->eval(env);
   for (unsigned int i = 1; i < args.size(); i++)
     result = result->sub(args[i]->eval(env));

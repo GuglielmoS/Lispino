@@ -190,7 +190,7 @@ TEST(TokenizerTests, ReservedKeywords) {
     stream << "cond CoNd COND cONd" << std::endl;
     stream << "IF iF if If" << std::endl;
     stream << "begin BEGIN bEgIn BEGin" << std::endl;
-    stream << "true TrUe false FalSE";
+    stream << "#t #T #f #F";
 
     // create the tokenizer
     Tokenizer tokenizer(stream);

@@ -83,8 +83,8 @@ std::map<std::string, TokenType> Token::initializeReservedKeywords() {
   bindings["let"]    = TokenType::LET;
   bindings["define"] = TokenType::DEFINE;
   bindings["quote"]  = TokenType::QUOTE;
-  bindings["true"]   = TokenType::BOOL_TRUE;
-  bindings["false"]  = TokenType::BOOL_FALSE;
+  bindings["#t"]   = TokenType::BOOL_TRUE;
+  bindings["#f"]  = TokenType::BOOL_FALSE;
   bindings["if"]     = TokenType::IF;
   bindings["cond"]   = TokenType::COND;
   bindings["begin"]  = TokenType::BEGIN;

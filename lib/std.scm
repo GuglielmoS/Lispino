@@ -6,26 +6,26 @@
   x)
 
 (define (null? val)
-  (eq? val nil))
+  (= val nil))
 
 (define (newline)
   (display "\n"))
 
 ;; useful when used with cond
-(define else true)
+(define else #t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::::::::::::::
 ;; Boolean                                                                   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (not p)
-  (if p false true))
+  (if p #f #t))
 
 (define (and p1 p2)
-  (if p1 p2 false))
+  (if p1 p2 #f))
 
 (define (or p1 p2)
-  (if p1 true p2))
+  (if p1 #t p2))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::::::::::::::
 ;; Higher order functions                                                    ;;
@@ -79,10 +79,10 @@
     (+ 1 (length (cdr lst)))))
 
 (define (any lst)
-  (fold or false lst))
+  (fold or #f lst))
 
 (define (all lst)
-  (fold and true lst))
+  (fold and #t lst))
 
 (define (take n lst)
   (if (or (zero? n) (null? lst))
@@ -108,7 +108,7 @@
   (- x 1))
 
 (define (range start end)
-  (if (eq? start end)
+  (if (= start end)
     nil
     (cons start (range (inc start) end))))
 
@@ -119,7 +119,7 @@
   (fold * 1 lst))
 
 (define (zero? n)
-  (eq? n 0))
+  (= n 0))
 
 (define (positive? n)
   (> n 0))
@@ -132,8 +132,8 @@
   (product (range 1 (inc n))))
 
 (define (exp base n)
-  (cond ((eq? n 1) base)
-        ((eq? n 0) 1)
+  (cond ((= n 1)   base)
+        ((= n 0)   1)
         ((even? n) (square (exp base (/ n 2))))
         (else      (* base (exp base (dec n))))))
 
@@ -155,7 +155,7 @@
         (else x)))
 
 (define (gcd a b)
-  (if (eq? b 0)
+  (if (= b 0)
     a
     (gcd b (remainder a b))))
 

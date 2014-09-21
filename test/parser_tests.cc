@@ -92,7 +92,7 @@ TEST(ParserTests, FloatNumbers) {
 }
 
 TEST(ParserTests, Booleans) {
-    std::stringstream stream("true TrUE false FalSe");
+    std::stringstream stream("#t #T #f #F");
     Parser parser(stream);
     
     // parse the stream and check the expressions
@@ -329,7 +329,7 @@ TEST(ParserTests, Quotes) {
 }
 
 TEST(ParserTests, IfExpr) {
-    std::stringstream stream("(if true 0 1)");
+    std::stringstream stream("(if #t 0 1)");
     Parser parser(stream);
     
     // parse the stream and check the expressions

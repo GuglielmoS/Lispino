@@ -6,10 +6,16 @@ namespace Lispino {
 
 namespace Builtins {
 
-Object* Remainder::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
-  if (args.size() <= 1)
-    throw Errors::RuntimeError(/*"remainder: wrong number of arguments"*/);
+std::uint32_t Remainder::getRequiredArguments() const {
+  return 2;
+}
+  
+std::string Remainder::getName() const {
+  return "remainder";
+}
 
+
+Object* Remainder::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   Object* result = args[0]->eval(env);
   for (unsigned int i = 1; i < args.size(); i++)
     result = result->remainder(args[i]->eval(env));

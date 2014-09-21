@@ -88,35 +88,39 @@ Object* Environment::get(Symbol* key) throw (Errors::RuntimeError) {
   throw Errors::RuntimeError("Environment lookup failed: key = " + key->toString());
 }
 
+void Environment::bind(BuiltinsTable& bindings, Builtins::BuiltinFunction *fun) {
+  bindings[fun->getName()] = std::unique_ptr<Builtins::BuiltinFunction>(fun);
+}
+
 BuiltinsTable Environment::initializeBuiltinFunctions() {
-  BuiltinsTable bindings;
+  BuiltinsTable table;
 
   // environment
-  bindings["set!"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Set());
+  bind(table, new Builtins::Set());
 
   // list
-  bindings["car"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Car());
-  bindings["cdr"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Cdr());
-  bindings["cons"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Cons());
+  bind(table, new Builtins::Car());
+  bind(table, new Builtins::Cdr());
+  bind(table, new Builtins::Cons());
 
   // maths
-  bindings["+"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Add());
-  bindings["-"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Sub());
-  bindings["*"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Mul());
-  bindings["/"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Div());
-  bindings["remainder"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Remainder());
+  bind(table, new Builtins::Add());
+  bind(table, new Builtins::Sub());
+  bind(table, new Builtins::Mul());
+  bind(table, new Builtins::Div());
+  bind(table, new Builtins::Remainder());
 
   // equality
-  bindings["eq?"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Equal());
-  bindings[">"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::GreaterThan());
-  bindings[">="] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::GreaterEqualThan());
-  bindings["<"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::LowerThan());
-  bindings["<="] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::LowerEqualThan());
+  bind(table, new Builtins::Equal());
+  bind(table, new Builtins::GreaterThan());
+  bind(table, new Builtins::GreaterEqualThan());
+  bind(table, new Builtins::LowerThan());
+  bind(table, new Builtins::LowerEqualThan());
 
   // I/O utils
-  bindings["display"] = std::unique_ptr<Builtins::BuiltinFunction>(new Builtins::Display());
+  bind(table, new Builtins::Display());
 
-  return bindings;
+  return table;
 }
 
 }
