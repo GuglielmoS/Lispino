@@ -67,11 +67,21 @@ int Interpreter::execute(std::string filename) {
 
   if (input_stream.is_open()) {
     Parser parser(input_stream);
+    Object *expr = VM::getAllocator().createNil();
 
-    Object *current_expr = nullptr;
-    while ((current_expr = parser.parseExpr()) != nullptr) {
-      // evaluate the current expression
-      evaluator.eval(current_expr);
+    while (expr != nullptr) {
+      // try to parse and evaluate the given expression
+      try {
+        expr = parser.parseExpr();
+        if (expr != nullptr)
+          evaluator.eval(expr);
+      } catch (Errors::CompileError& error) {
+        std::cout << error.getMessage() << std::endl; 
+        return -1;
+      } catch (Errors::RuntimeError& error) {
+        std::cout << error.getMessage() << std::endl;
+        return -1;
+      }
 
       // run the garbage collector
       VM::getMemory().cleanup();

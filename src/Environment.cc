@@ -10,6 +10,7 @@
 #include "builtins/Div.h"
 #include "builtins/Remainder.h"
 #include "builtins/Display.h"
+#include "builtins/Load.h"
 #include "builtins/Equal.h"
 #include "builtins/GreaterThan.h"
 #include "builtins/GreaterEqualThan.h"
@@ -119,6 +120,7 @@ BuiltinsTable Environment::initializeBuiltinFunctions() {
 
   // I/O utils
   bind(table, new Builtins::Display());
+  bind(table, new Builtins::Load());
 
   return table;
 }
