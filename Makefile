@@ -1,23 +1,29 @@
 OPTIMIZATION=3
 STANDARD=c++11
-CC=g++ -std=$(STANDARD) -O$(OPTIMIZATION) -Wall -Wextra -Werror -pedantic -pedantic-errors -Wstrict-aliasing
+WARNINGS=-Wall -Wextra -Werror -pedantic -pedantic-errors -Wstrict-aliasing
+CC=g++ -std=$(STANDARD) -O$(OPTIMIZATION) $(WARNINGS)
 
-bin/lispino: src/main.o src/Tokenizer.o src/Token.o src/Parser.o src/Object.o src/Nil.o src/Define.o src/Lambda.o src/Character.o src/Boolean.o src/IntNumber.o src/FloatNumber.o src/List.o src/Quote.o src/Symbol.o src/String.o src/VM.o src/Memory.o src/Allocator.o src/GarbageCollector.o src/Environment.o src/Closure.o src/Interpreter.o src/Sequence.o src/IfExpr.o src/builtins/BuiltinFunction.o src/builtins/Add.o src/builtins/Sub.o src/builtins/Mul.o src/builtins/Div.o src/builtins/Remainder.o src/builtins/LowerThan.o src/builtins/LowerEqualThan.o src/builtins/GreaterThan.o src/builtins/GreaterEqualThan.o src/builtins/Equal.o src/builtins/Car.o src/builtins/Cdr.o src/builtins/Cons.o src/builtins/Display.o src/builtins/Set.o src/builtins/Load.o src/SourceCodePosition.o src/Evaluator.o src/utils/List.o src/utils/Token.o
+TOKENIZER_OBJS=src/Tokenizer.o src/Token.o src/SourceCodePosition.o
+
+PARSER_OBJS=src/Parser.o src/Object.o src/Nil.o src/Define.o src/Lambda.o src/Character.o src/Boolean.o src/IntNumber.o src/FloatNumber.o src/List.o src/Quote.o src/Symbol.o src/String.o src/VM.o src/Memory.o src/Allocator.o src/Sequence.o src/IfExpr.o
+
+BUILTIN_FUNCTIONS_OBJS=src/builtins/BuiltinFunction.o src/builtins/Add.o src/builtins/Sub.o src/builtins/Mul.o src/builtins/Div.o src/builtins/Remainder.o src/builtins/LowerThan.o src/builtins/LowerEqualThan.o src/builtins/GreaterThan.o src/builtins/GreaterEqualThan.o src/builtins/Equal.o src/builtins/Car.o src/builtins/Cdr.o src/builtins/Cons.o src/builtins/Display.o src/builtins/Set.o src/builtins/Load.o
+
+INTERPRETER_OBJS=src/Closure.o src/GarbageCollector.o src/Environment.o src/Interpreter.o src/Evaluator.o
+
+UTILS_OBJS=src/utils/List.o src/utils/Token.o
+
+ALL_OBJS=$(TOKENIZER_OBJS) $(PARSER_OBJS) $(BUILTIN_FUNCTIONS_OBJS) $(UTILS_OBJS) $(INTERPRETER_OBJS)
+
+TEST_OBJS=test/tokenizer_tests.o test/parser_tests.o test/interpreter_tests.o 
+
+bin/lispino: src/main.o $(ALL_OBJS) 
 	$(CC) -o $@ $^
 
 test: bin/all_tests
 	bin/all_tests
 
-bin/all_tests: test/tokenizer_tests.o test/parser_tests.o test/interpreter_tests.o test/main_tests.o src/Tokenizer.o src/Token.o src/Parser.o src/Object.o src/Nil.o src/Define.o src/Lambda.o src/Boolean.o src/Character.o src/IntNumber.o src/FloatNumber.o src/List.o src/Quote.o src/Symbol.o src/String.o src/VM.o src/Memory.o src/GarbageCollector.o src/Allocator.o src/Environment.o src/Closure.o src/Sequence.o src/IfExpr.o src/builtins/BuiltinFunction.o src/builtins/Add.o src/builtins/Sub.o src/builtins/Mul.o src/builtins/Div.o src/builtins/Remainder.o src/builtins/LowerThan.o src/builtins/LowerEqualThan.o src/builtins/GreaterThan.o src/builtins/GreaterEqualThan.o src/builtins/Equal.o src/builtins/Car.o src/builtins/Cdr.o src/builtins/Cons.o src/builtins/Display.o src/builtins/Set.o src/builtins/Load.o src/SourceCodePosition.o src/Evaluator.o src/utils/List.o src/utils/Token.o
-	$(CC) -o $@ $^ -lgtest -pthread
-
-bin/tokenizer_tests: test/tokenizer_tests.o test/main_tests.o src/Tokenizer.o src/Token.o
-	$(CC) -o $@ $^ -lgtest -pthread
-
-bin/parser_tests: test/parser_tests.o test/main_tests.o src/Parser.o src/Tokenizer.o src/Token.o src/Object.o src/Nil.o src/Define.o src/Lambda.o src/Boolean.o src/Character.o src/IntNumber.o src/FloatNumber.o src/List.o src/Quote.o src/Symbol.o src/String.o src/VM.o src/Memory.o src/GarbageCollector.o src/Allocator.o src/Environment.o src/Closure.o src/Sequence.o src/IfExpr.o src/builtins/BuiltinFunction.o src/builtins/Add.o src/builtins/Sub.o src/builtins/Mul.o src/builtins/Div.o src/builtins/Remainder.o src/builtins/LowerThan.o src/builtins/LowerEqualThan.o src/builtins/GreaterThan.o src/builtins/GreaterEqualThan.o src/builtins/Equal.o src/builtins/Car.o src/builtins/Cdr.o src/builtins/Cons.o src/builtins/Display.o src/builtins/Set.o src/builtins/Load.o src/SourceCodePosition.o src/Evaluator.o src/utils/List.o src/utils/Token.o
-	$(CC) -o $@ $^ -lgtest -pthread
-
-bin/interpreter_tests: test/interpreter_tests.o test/main_tests.o src/Parser.o src/Tokenizer.o src/Token.o src/Object.o src/Nil.o src/Boolean.o src/Define.o src/Lambda.o src/Character.o src/IntNumber.o src/FloatNumber.o src/List.o src/Quote.o src/Symbol.o src/String.o src/VM.o src/Memory.o src/GarbageCollector.o src/Allocator.o src/Environment.o src/Closure.o src/Sequence.o src/IfExpr.o src/builtins/BuiltinFunction.o src/builtins/Add.o src/builtins/Sub.o src/builtins/Mul.o src/builtins/Div.o src/builtins/Remainder.o src/builtins/LowerThan.o src/builtins/LowerEqualThan.o src/builtins/GreaterThan.o src/builtins/GreaterEqualThan.o src/builtins/Equal.o src/builtins/Car.o src/builtins/Cdr.o src/builtins/Cons.o src/builtins/Display.o src/builtins/Set.o src/builtins/Load.o src/SourceCodePosition.o src/Evaluator.o src/utils/List.o src/utils/Token.o
+bin/all_tests: test/main_tests.o $(TEST_OBJS) $(ALL_OBJS)
 	$(CC) -o $@ $^ -lgtest -pthread
 
 src/VM.o: src/VM.cc
