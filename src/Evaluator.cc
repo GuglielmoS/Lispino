@@ -73,7 +73,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
 
         // since the special cases have been all treated in the previous cases,
         // a list must represent a function call. The first element evaluated
-        // is therefore a builtin function or a closure.
+        // is therefore a builtin function, a lambda or a closure.
         switch (evaluated_first->getType()) {
           case ObjectType::BUILTIN_FUNCTION: {
             Builtins::BuiltinFunction *bf = static_cast<Builtins::BuiltinFunction*>(evaluated_first);

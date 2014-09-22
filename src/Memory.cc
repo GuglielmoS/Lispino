@@ -19,7 +19,7 @@
 
 namespace Lispino {
 
-Memory::Memory(GarbageCollector& gc) : gc(gc), allocated_objects(0) {
+Memory::Memory(GarbageCollector& gc) : gc(gc) {
   nil_instance = std::unique_ptr<Nil>(new Nil());
   true_instance = std::unique_ptr<Boolean>(new Boolean(true));
   false_instance = std::unique_ptr<Boolean>(new Boolean(false));
@@ -78,20 +78,17 @@ Object* Memory::allocate(ObjectType type) {
       allocated_object = new Sequence();
       break;
     default:
-      assert(false);
+      assert(false && "Memory cannot allocate such an object!");
   }
 
   // add the allocated object to the memory linked list
   memory.push_back(std::unique_ptr<Object>(allocated_object));
 
-  // increase the counter
-  allocated_objects++;
-
   return allocated_object;
 }
 
 size_t Memory::getAllocatedObjects() const {
-  return allocated_objects;
+  return memory.size();
 }
 
 size_t Memory::cleanup() {
@@ -112,7 +109,7 @@ size_t Memory::releaseUnusedObjects() {
       }),
     memory.end());
 
-  // return the number of objects removed
+  // return the number of removed objects
   return original_memory_size - memory.size();
 }
 

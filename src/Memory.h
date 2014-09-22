@@ -40,9 +40,6 @@ class Memory {
   std::unique_ptr<Boolean> true_instance;
   std::unique_ptr<Boolean> false_instance;
 
-  // number of objects stored
-  size_t allocated_objects;
-
   // remove the unused objects and return the number of objects deleted
   size_t releaseUnusedObjects();
 };

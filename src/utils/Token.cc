@@ -28,11 +28,11 @@ std::string type2str(TokenType type) {
     case TokenType::BOOL_TRUE:    return "#t";
     case TokenType::COND:         return "COND";
     case TokenType::BEGIN:        return "BEGIN";
+    case TokenType::UNKNOWN:      return "UNKNOWN";
 
     // invalid token
-    case TokenType::UNKNOWN:
     default:
-      assert(false);
+      assert(false && "Cannot find the string for this token type!");
   }
 }
 
