@@ -21,14 +21,15 @@ Main Features
 + Checked with Valgrind Memcheck
 + REPL to interact with the interpreter (nice with rlwrap)
 + Easy way to add builtin functions
-+ Basic Scheme constructs available (see the examples)
-+ Integer, Float, String, Symbol, Boolean as possible atoms values
++ Basic Scheme constructs available (if,cond,let,begin,quote,lambda)
++ Integer, Float, Character, String, Symbol, Boolean as possible atoms values
 + A little standard library that contains basic stuff (see lib/std.scm)
 
 TODO
 ----
 
 + Implement a better errors handling mechanism
++ Macros
 
 Requirements
 ------------
