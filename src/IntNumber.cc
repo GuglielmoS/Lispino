@@ -1,4 +1,7 @@
 #include "IntNumber.h"
+
+#include <sstream>
+
 #include "FloatNumber.h"
 #include "VM.h"
 

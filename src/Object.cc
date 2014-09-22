@@ -51,6 +51,10 @@ int Object::compareSymbol(const Symbol*) const throw (Errors::RuntimeError) {
   throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
+int Object::compareCharacter(const Character*) const throw (Errors::RuntimeError) {
+  throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
+}
+
 int Object::compareString(const String*) const throw (Errors::RuntimeError) {
   throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
@@ -181,6 +185,10 @@ bool Object::isBoolean() const {
 
 bool Object::isSymbol() const {
   return type == ObjectType::SYMBOL;
+}
+
+bool Object::isCharacter() const {
+  return type == ObjectType::CHARACTER;
 }
 
 bool Object::isString() const {

@@ -28,6 +28,12 @@ Symbol* Allocator::createSymbol(std::string value) {
   return symbol;
 }
 
+Character* Allocator::createCharacter(char value) {
+  Character *character = static_cast<Character*>(memory.allocate(ObjectType::CHARACTER));
+  character->setValue(value);
+  return character;
+}
+
 String* Allocator::createString(std::string value) {
   String *str = static_cast<String*>(memory.allocate(ObjectType::STRING));
   str->setValue(value);

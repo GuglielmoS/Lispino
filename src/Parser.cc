@@ -359,6 +359,7 @@ Object* Parser::dispatch(Token *token) throw (Errors::CompileError) {
   switch (token->getType()) {
     case TokenType::NIL:          return allocator.createNil();
     case TokenType::SYMBOL:       return allocator.createSymbol(token->getSymbol());
+    case TokenType::CHARACTER:    return allocator.createCharacter(token->getCharacter());
     case TokenType::STRING:       return allocator.createString(token->getString());
     case TokenType::INT_NUMBER:   return allocator.createIntNumber(token->getIntNumber());
     case TokenType::FLOAT_NUMBER: return allocator.createFloatNumber(token->getFloatNumber());

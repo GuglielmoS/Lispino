@@ -47,6 +47,28 @@ TEST(ParserTests, Symbols) {
     ASSERT_EQ("symbol-123", sym->getValue());
 }
 
+TEST(ParserTests, Characters) {
+    std::stringstream stream;
+ 
+    // add some text to the input stream
+    for (char ch = 'a'; ch < 'z'; ch++)
+      stream << "#\\" << (char)ch << " ";
+    for (char ch = 'A'; ch < 'Z'; ch++)
+      stream << "#\\" << (char)ch << " ";
+
+    Parser parser(stream);
+    for (char ch = 'a'; ch < 'z'; ch++) {
+      Object *expr(parser.parseExpr());
+      ASSERT_TRUE(expr->isCharacter());
+      ASSERT_EQ(ch, static_cast<Character*>(expr)->getValue());
+    }
+    for (char ch = 'A'; ch < 'Z'; ch++) {
+      Object *expr(parser.parseExpr());
+      ASSERT_TRUE(expr->isCharacter());
+      ASSERT_EQ(ch, static_cast<Character*>(expr)->getValue());
+    }
+}
+
 TEST(ParserTests, IntNumbers) {
     std::stringstream stream("0 12 345 42");
     Parser parser(stream);

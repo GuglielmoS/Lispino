@@ -25,6 +25,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
       case ObjectType::BOOLEAN:
       case ObjectType::INT_NUMBER:
       case ObjectType::FLOAT_NUMBER:
+      case ObjectType::CHARACTER:
       case ObjectType::STRING:
       case ObjectType::BUILTIN_FUNCTION:
       case ObjectType::CLOSURE:
@@ -49,8 +50,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
         continue;
 
       case ObjectType::SEQUENCE:
-        current_object = evalSequence(static_cast<Sequence*>(current_object), current_env);
-        continue;
+        return evalSequence(static_cast<Sequence*>(current_object), current_env);
 
       case ObjectType::LIST: {
         List *list = static_cast<List*>(current_object);

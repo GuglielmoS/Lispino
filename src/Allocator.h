@@ -7,6 +7,7 @@
 #include "Environment.h"
 
 #include "Symbol.h"
+#include "Character.h"
 #include "String.h"
 #include "IntNumber.h"
 #include "FloatNumber.h"
@@ -28,6 +29,8 @@ class Allocator {
   Memory& getMemory();
 
   Symbol* createSymbol(std::string value);
+
+  Character* createCharacter(char value);
 
   String* createString(std::string value);
 

@@ -12,6 +12,7 @@ class Environment;
 class IntNumber;
 class FloatNumber;
 class Symbol;
+class Character;
 class String;
 class Boolean;
 class Nil;
@@ -24,6 +25,7 @@ enum class ObjectType {
   QUOTE,
   LIST,
   SYMBOL,
+  CHARACTER,
   STRING,
   INT_NUMBER, FLOAT_NUMBER,
   BOOLEAN,
@@ -61,6 +63,8 @@ class Object {
   
   virtual int compareSymbol(const Symbol* obj) const throw (Errors::RuntimeError);
   
+  virtual int compareCharacter(const Character* obj) const throw (Errors::RuntimeError);
+
   virtual int compareString(const String* obj) const throw (Errors::RuntimeError);
   
   virtual int compareBoolean(const Boolean* obj) const throw (Errors::RuntimeError);
@@ -140,6 +144,8 @@ class Object {
   bool isBoolean() const;
   
   bool isSymbol() const;
+
+  bool isCharacter() const;
   
   bool isString() const;
   

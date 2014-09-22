@@ -87,8 +87,6 @@ TEST(TokenizerTests, Characters) {
     for (char ch = 'A'; ch < 'Z'; ch++)
       stream << "#\\" << (char)ch << " ";
 
-    std::cout << stream.str() << std::endl;
-
     // create the tokenizer
     Tokenizer tokenizer(stream);
 

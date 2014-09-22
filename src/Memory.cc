@@ -4,6 +4,7 @@
 
 #include <algorithm>
 
+#include "Character.h"
 #include "Symbol.h"
 #include "IntNumber.h"
 #include "FloatNumber.h"
@@ -40,6 +41,9 @@ Object* Memory::allocate(ObjectType type) {
   Object *allocated_object = nullptr;
 
   switch (type) {
+    case ObjectType::CHARACTER:
+      allocated_object = new Character();
+      break;
     case ObjectType::SYMBOL:
       allocated_object = new Symbol();
       break;

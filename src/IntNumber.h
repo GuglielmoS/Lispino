@@ -3,7 +3,6 @@
 
 #include <cstdint>
 
-#include <sstream>
 #include <string>
 
 #include "Object.h"
