@@ -40,6 +40,8 @@ class Parser {
   Object* parseBegin() throw (Errors::CompileError);
   
   Object* dispatch(Token *token) throw (Errors::CompileError);
+
+  void check(Token *token, TokenType expected_type) throw (Errors::CompileError);
 };
 
 }
