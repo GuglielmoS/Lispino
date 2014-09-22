@@ -26,13 +26,13 @@ class Environment {
 
   std::shared_ptr<Environment> getParent();
 
-  std::shared_ptr<Environment> extend(std::shared_ptr<Environment> parent);
-
   LookupTable& getLookupTable();
 
   Object* update(Symbol* key, Object* value) throw (Errors::RuntimeError);
   Object* put(Symbol* key, Object* value);
   Object* get(Symbol* key) throw (Errors::RuntimeError);
+
+  static std::shared_ptr<Environment> extend(std::shared_ptr<Environment> env);
 
  private:
   std::shared_ptr<Environment> parent;

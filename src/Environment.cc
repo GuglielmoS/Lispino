@@ -33,16 +33,6 @@ std::shared_ptr<Environment> Environment::getParent() {
   return parent;
 }
 
-std::shared_ptr<Environment> Environment::extend(std::shared_ptr<Environment> parent) {
-  auto extended_environment = std::make_shared<Environment>();
-
-  // since the new environment is an extension of the current one,
-  // I set its parent to the current environment itself
-  extended_environment->setParent(parent);
-
-  return extended_environment;
-}
-
 LookupTable& Environment::getLookupTable() {
   return frame;
 }
@@ -86,6 +76,16 @@ Object* Environment::get(Symbol* key) throw (Errors::RuntimeError) {
 
   // the lookup has failed, thus signal an error
   throw Errors::RuntimeError("Environment lookup failed: key = " + key->getValue());
+}
+
+std::shared_ptr<Environment> Environment::extend(std::shared_ptr<Environment> env) {
+  auto extended_environment = std::make_shared<Environment>();
+
+  // since the new environment is an extension of the current one,
+  // I set its parent to the current environment itself
+  extended_environment->setParent(env);
+
+  return extended_environment;
 }
 
 void Environment::bind(BuiltinsTable& bindings, Builtins::BuiltinFunction *fun) {

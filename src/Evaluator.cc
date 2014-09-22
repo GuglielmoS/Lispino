@@ -42,15 +42,15 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
 
       case ObjectType::LAMBDA: {
         Lambda *lambda = static_cast<Lambda*>(current_object);
-        return VM::getAllocator().createClosure(lambda, current_env->extend(current_env));
+        return VM::getAllocator().createClosure(lambda, Environment::extend(current_env));
       }
+
+      case ObjectType::SEQUENCE:
+        return evalSequence(static_cast<Sequence*>(current_object), current_env);
 
       case ObjectType::IF:
         current_object = evalIf(static_cast<IfExpr*>(current_object), current_env);
         continue;
-
-      case ObjectType::SEQUENCE:
-        return evalSequence(static_cast<Sequence*>(current_object), current_env);
 
       case ObjectType::LIST: {
         List *list = static_cast<List*>(current_object);
@@ -100,7 +100,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
               evaluated_arguments.push_back(eval(current_arg, current_env));
     
             // extend the current environment with the arguments to apply
-            current_env = current_env->extend(current_env);
+            current_env = Environment::extend(current_env);
             for (unsigned int i = 0; i < evaluated_arguments.size(); i++)
               current_env->put(VM::getAllocator().createSymbol(lambda_arguments[i]), evaluated_arguments[i]);
 
@@ -122,7 +122,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
             for (auto& current_arg : arguments)
               evaluated_arguments.push_back(eval(current_arg, current_env));
          
-            // extend the current environment with the arguments to apply
+            // extend the closure's environment with the arguments to apply
             for (unsigned int i = 0; i < evaluated_arguments.size(); i++)
               closure->getEnv()->put(VM::getAllocator().createSymbol(lambda_arguments[i]), evaluated_arguments[i]);
 
