@@ -24,6 +24,8 @@ Token* Tokenizer::next() throw (Errors::CompileError) {
   // try to parse the next token
   if ((current_token = delimiter()) != nullptr)
     return current_token;
+  else if ((current_token = character()) != nullptr)
+    return current_token;
   else if ((current_token = number()) != nullptr)
     return current_token;
   else if ((current_token = symbol()) != nullptr)
@@ -31,7 +33,7 @@ Token* Tokenizer::next() throw (Errors::CompileError) {
   else if ((current_token = string()) != nullptr)
     return current_token;
   else
-    return new Token(TokenType::UNKNOWN, position);
+    return Token::create(TokenType::UNKNOWN, position);
 }
 
 int Tokenizer::get() {
@@ -88,13 +90,38 @@ bool Tokenizer::isdelimiter(char ch) const {
 Token* Tokenizer::delimiter() {
   int ch = get();
   switch (ch) {
-    case EOF:  return new Token(TokenType::EOS, position);
-    case '(':  return new Token(TokenType::OPEN_PAREN, position);
-    case ')':  return new Token(TokenType::CLOSE_PAREN, position);
-    case '.':  return new Token(TokenType::DOT, position);
-    case '\'': return new Token(TokenType::SMART_QUOTE, position);
+    case EOF:  return Token::create(TokenType::EOS, position);
+    case '(':  return Token::create(TokenType::OPEN_PAREN, position);
+    case ')':  return Token::create(TokenType::CLOSE_PAREN, position);
+    case '.':  return Token::create(TokenType::DOT, position);
+    case '\'': return Token::create(TokenType::SMART_QUOTE, position);
   }
+
   unget();
+  return nullptr;
+}
+
+Token* Tokenizer::character() {
+  char ch = nextChar();
+
+  if (ch == '#') {
+    ch = nextChar();
+    if (ch == '\\') {
+      ch = nextChar();
+      if (isalpha(ch)) {
+        return Token::createCharacter(ch, position);
+      } else {
+        unget();
+        putback('\\');
+        putback('#');
+      }
+    } else {
+      unget();
+      putback('#');
+    }
+  } else {
+    unget();
+  }
 
   return nullptr;
 }
@@ -114,7 +141,7 @@ Token* Tokenizer::symbol() {
   if (buffer.str().size() == 0)
     return nullptr;
   else
-    return new Token(TokenType::SYMBOL, buffer.str(), position);
+    return Token::createSymbol(buffer.str(), position);
 }
 
 Token* Tokenizer::number() {
@@ -163,15 +190,15 @@ Token* Tokenizer::number() {
     if (isFloat) {
       double value = std::stof(buffer.str()); 
       if (negate)
-        return new Token(-value, position);
+        return Token::createFloatNumber(-value, position);
       else
-        return new Token(value, position);
+        return Token::createFloatNumber(value, position);
     } else {
       std::int64_t value = stol(buffer.str());
       if (negate)
-        return new Token(-value, position);
+        return Token::createIntNumber(-value, position);
       else
-        return new Token(value, position);
+        return Token::createIntNumber(value, position);
     }
   }
 }
@@ -227,7 +254,7 @@ Token* Tokenizer::string() throw (Errors::CompileError) {
     }
   }
 
-  return new Token(TokenType::STRING, buffer.str(), position);
+  return Token::createString(buffer.str(), position);
 }
 
 }

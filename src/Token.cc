@@ -8,51 +8,12 @@ namespace Lispino {
 // initialize the reserved keywords map
 std::map<std::string, TokenType> Token::reserved_keywords = Token::initializeReservedKeywords();
 
-Token::Token(TokenType type, SourceCodePosition position)
-    : type(type), 
-      raw_value(std::string()), 
-      int_value(0),
-      float_value(0.0),
-      position(position) {
-  /* DO NOTHING */
-}
-
-Token::Token(std::int64_t value, SourceCodePosition position)
-    : type(TokenType::INT_NUMBER),
-      raw_value(std::string()),
-      int_value(value),
-      float_value(0.0),
-      position(position) {
-  /* DO NOTHING */
-}
-
-Token::Token(double value, SourceCodePosition position)
-    : type(TokenType::FLOAT_NUMBER),
-      raw_value(std::string()),
-      int_value(0),
-      float_value(value),
-      position(position) {
-  /* DO NOTHING */
-}
-
-Token::Token(TokenType type, std::string value, SourceCodePosition position)
-    : position(position) { 
-  std::string temp_value = value;
-  std::transform(temp_value.begin(), temp_value.end(), temp_value.begin(), ::tolower);
-
-  auto it = reserved_keywords.find(temp_value);
-  if (it != reserved_keywords.end()) {
-    this->type = it->second;
-    this->raw_value = std::string();
-  }
-  else {
-    this->type = type;
-    this->raw_value = value;
-  }
-}
-
 TokenType Token::getType() const {
   return type;
+}
+
+char Token::getCharacter() const {
+  return char_value;
 }
 
 std::string Token::getSymbol() const {
@@ -90,6 +51,65 @@ std::map<std::string, TokenType> Token::initializeReservedKeywords() {
   bindings["begin"]  = TokenType::BEGIN;
 
   return bindings;
+}
+
+Token* Token::create(TokenType type, SourceCodePosition position) {
+  Token *tok = new Token();
+
+  tok->type = type;
+  tok->position = position;
+
+  return tok;
+}
+
+Token* Token::createCharacter(char value, SourceCodePosition position) {
+  Token *tok = create(TokenType::CHARACTER, position);
+
+  tok->char_value = value;
+
+  return tok;
+}
+
+Token* Token::createIntNumber(std::int64_t value, SourceCodePosition position) {
+  Token *tok = create(TokenType::INT_NUMBER, position);
+
+  tok->int_value = value;
+
+  return tok;
+}
+
+Token* Token::createFloatNumber(double value, SourceCodePosition position) {
+  Token *tok = create(TokenType::FLOAT_NUMBER, position);
+
+  tok->float_value = value;
+
+  return tok;
+}
+
+Token* Token::createString(std::string value, SourceCodePosition position) {
+  Token *tok = create(TokenType::STRING, position);
+
+  tok->raw_value = value;
+
+  return tok;
+}
+
+Token* Token::createSymbol(std::string value, SourceCodePosition position) {
+  Token *tok = create(TokenType::SYMBOL, position);
+
+  std::string temp_value = value;
+  std::transform(temp_value.begin(), temp_value.end(), temp_value.begin(), ::tolower);
+
+  auto it = reserved_keywords.find(temp_value);
+  if (it != reserved_keywords.end()) {
+    tok->type = it->second;
+    tok->raw_value = std::string();
+  }
+  else {
+    tok->raw_value = value;
+  }
+
+  return tok;
 }
 
 }

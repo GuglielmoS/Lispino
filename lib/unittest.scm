@@ -9,7 +9,7 @@
   (show-message (= expected actual) message))
 
 (define (assert-true value message)
-  (show-message (= value true) message))
+  (show-message (= value #t) message))
 
 (define (assert-false value message)
-  (show-message (= value false) message))
+  (show-message (= value #f) message))

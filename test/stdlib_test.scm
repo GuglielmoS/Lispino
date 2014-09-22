@@ -22,26 +22,26 @@
 (define (test-not message)
   (display "TESTS FOR: " message)
   (newline)
-  (assert-false (not true) "not true is false")
-  (assert-true (not false) "not false is true"))
+  (assert-false (not #t) "not true is false")
+  (assert-true (not #f) "not false is true"))
 
 ;; test the and function
 (define (test-and message)
   (display "TESTS FOR: " message)
   (newline)
-  (assert-false (and false false) "false && false is false")
-  (assert-false (and false true) "false && true is false")
-  (assert-false (and true false) "true && false is false")
-  (assert-true (and true true) "true && true is true"))
+  (assert-false (and #f #f) "false && false is false")
+  (assert-false (and #f #t) "false && true is false")
+  (assert-false (and #t #f) "true && false is false")
+  (assert-true (and #t #t) "true && true is true"))
 
 ;; test the and function
 (define (test-or message)
   (display "TESTS FOR: " message)
   (newline)
-  (assert-false (or false false) "false || false is false")
-  (assert-true (or false true) "false || true is true")
-  (assert-true (or true false) "true || false is true")
-  (assert-true (or true true) "true || true is true"))
+  (assert-false (or #f #f) "false || false is false")
+  (assert-true (or #f #t) "false || true is true")
+  (assert-true (or #t #f) "true || false is true")
+  (assert-true (or #t #t) "true || true is true"))
 
 ;; test the length function
 (define (test-length message)

@@ -74,9 +74,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (length lst)
-  (if (null? lst)
-    0
-    (+ 1 (length (cdr lst)))))
+  (define (iter lst acc)
+    (if (null? lst)
+      acc
+      (iter (cdr lst) (inc acc))))
+  (iter lst 0))
 
 (define (any lst)
   (fold or #f lst))
@@ -108,9 +110,11 @@
   (- x 1))
 
 (define (range start end)
-  (if (= start end)
-    nil
-    (cons start (range (inc start) end))))
+  (define (iter start end acc)
+    (if (= start end)
+      (cons start acc)
+      (iter start (dec end) (cons end acc))))
+  (iter start end nil))
 
 (define (sum lst)
   (fold + 0 lst))
@@ -129,7 +133,7 @@
     (zero? (remainder x n))))
 
 (define (factorial n)
-  (product (range 1 (inc n))))
+  (product (range 1 n)))
 
 (define (exp base n)
   (cond ((= n 1)   base)
@@ -147,8 +151,7 @@
   (not (even? n)))
 
 (define (abs x)
-  (cond ((< x 0) (- x))
-        (else x)))
+  (if (< x 0) (- x) x))
 
 (define (gcd a b)
   (if (= b 0)

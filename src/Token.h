@@ -15,6 +15,7 @@ namespace Lispino {
 enum class TokenType {
   EOS,
   OPEN_PAREN, CLOSE_PAREN, DOT, SMART_QUOTE,
+  CHARACTER,
   SYMBOL,
   INT_NUMBER,
   FLOAT_NUMBER,
@@ -35,16 +36,10 @@ enum class TokenType {
 
 class Token {
  public:
-  Token(TokenType type, SourceCodePosition position);
-
-  Token(std::int64_t value, SourceCodePosition position);
-
-  Token(double value, SourceCodePosition position);
-
-  Token(TokenType type, std::string value, SourceCodePosition position);
-
   TokenType getType() const;
   
+  char getCharacter() const;
+
   std::string getSymbol() const;
   
   std::string getString() const;
@@ -55,8 +50,18 @@ class Token {
 
   SourceCodePosition getSourceCodePosition() const;
 
+  // factory methods
+  static Token* create(TokenType type, SourceCodePosition position);
+  static Token* createCharacter(char value, SourceCodePosition position);
+  static Token* createIntNumber(std::int64_t value, SourceCodePosition position);
+  static Token* createFloatNumber(double value, SourceCodePosition position);
+  static Token* createString(std::string value, SourceCodePosition position);
+  static Token* createSymbol(std::string value, SourceCodePosition position);
+
  private:
   TokenType type;
+
+  char char_value;
 
   std::string raw_value;
 

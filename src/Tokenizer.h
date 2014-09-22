@@ -43,6 +43,7 @@ class Tokenizer {
 
   // sub-tokenizers
   Token* delimiter();
+  Token* character();
   Token* symbol();
   Token* number();
   Token* string() throw (Errors::CompileError);

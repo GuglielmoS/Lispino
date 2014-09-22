@@ -78,6 +78,40 @@ TEST(TokenizerTests, Delimiters) {
     ASSERT_EQ(TokenType::EOS, token->getType());   
 }
 
+TEST(TokenizerTests, Characters) {
+    std::stringstream stream;
+
+    // add some text to the input stream
+    for (char ch = 'a'; ch < 'z'; ch++)
+      stream << "#\\" << (char)ch << " ";
+    for (char ch = 'A'; ch < 'Z'; ch++)
+      stream << "#\\" << (char)ch << " ";
+
+    std::cout << stream.str() << std::endl;
+
+    // create the tokenizer
+    Tokenizer tokenizer(stream);
+
+    // check the presence of the characters
+    std::unique_ptr<Token> token;
+
+    for (char ch = 'a'; ch < 'z'; ch++) {
+      token.reset(tokenizer.next());
+      ASSERT_EQ(TokenType::CHARACTER, token->getType());
+      ASSERT_EQ(ch, token->getCharacter());
+    }
+
+    for (char ch = 'A'; ch < 'Z'; ch++) {
+      token.reset(tokenizer.next());
+      ASSERT_EQ(TokenType::CHARACTER, token->getType());
+      ASSERT_EQ(ch, token->getCharacter());
+    }
+
+    // check the End Of Stream (EOS)
+    token.reset(tokenizer.next());
+    ASSERT_EQ(TokenType::EOS, token->getType());
+}
+
 TEST(TokenizerTests, Symbols) {
     std::stringstream stream;
 
