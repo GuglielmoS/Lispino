@@ -15,11 +15,19 @@ class CompileError : public std::exception {
  public:
 
   CompileError(const std::string&& message, const SourceCodePosition& position) {
-    buildMessage(message, position);
+    buildMessage("", message, position);
   }
 
-  CompileError(const std::string&& message, const SourceCodePosition&& position) {
-    buildMessage(message, position);
+  CompileError(const std::string&& context, const std::string&& message, const SourceCodePosition& position) {
+    buildMessage(context, message, position);
+  }
+
+  CompileError(const std::string& message, const SourceCodePosition& position) {
+    buildMessage("", message, position);
+  }
+  
+  CompileError(const std::string& context, const std::string&& message, const SourceCodePosition&& position) {
+    buildMessage(context, message, position);
   }
 
   std::string getMessage() const {
@@ -27,15 +35,23 @@ class CompileError : public std::exception {
   }
 
  private:
+  std::string context;
   std::string message;
 
-  void buildMessage(const std::string& message, const SourceCodePosition& position) {
+  void buildMessage(const std::string& context, const std::string& message, const SourceCodePosition& position) {
     std::stringstream buf;
-    buf << position.getFilename() << ":"
-        << position.getLine() << ":"
-        << position.getColumn() << ": "
-        << message;
+    buf << position.getFilename() << ":";
+    buf << position.getLine() << ":";
+    buf << position.getColumn() << ":";
+
+    if (context != "")
+      buf << context << ":";
+
+    buf << " ";
+    buf << message;
+    
     this->message = buf.str();
+    this->context = context;
   }
 };
 

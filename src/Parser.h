@@ -23,6 +23,8 @@ class Parser {
 
   Tokenizer tokenizer;
 
+  std::string current_context;
+
   Object* parseList() throw (Errors::CompileError);
 
   Object* parseIf() throw (Errors::CompileError);
@@ -42,6 +44,12 @@ class Parser {
   Object* dispatch(Token *token) throw (Errors::CompileError);
 
   void check(Token *token, TokenType expected_type) throw (Errors::CompileError);
+
+  void setContext(std::string&& context);
+
+  void resetContext();
+
+  std::string& getContext();
 };
 
 }

@@ -30,6 +30,8 @@ Object* Parser::parseExpr() throw (Errors::CompileError) {
 }
 
 Object* Parser::parseList() throw (Errors::CompileError) { 
+  setContext("LIST");
+
   std::unique_ptr<Token> token(tokenizer.next());
   Object *head = nullptr;
 
@@ -79,10 +81,13 @@ Object* Parser::parseList() throw (Errors::CompileError) {
     token.reset(tokenizer.next());
   }
 
+  resetContext();
   return result;
 }
 
 Object* Parser::parseIf() throw (Errors::CompileError) {
+  setContext("IF");
+
   // parse the condition
   Object *condition = parseExpr();
 
@@ -106,10 +111,12 @@ Object* Parser::parseIf() throw (Errors::CompileError) {
     check(token.get(), TokenType::CLOSE_PAREN);
   }
 
+  resetContext();
   return if_expr;
 }
 
 Object* Parser::parseCond() throw (Errors::CompileError) {
+  setContext("COND");
   /*
    (cond (<expr_1> <expr_1_body>)
          ...
@@ -160,10 +167,13 @@ Object* Parser::parseCond() throw (Errors::CompileError) {
   // check the final ')' of the COND expr
   check(token.get(), TokenType::CLOSE_PAREN);
 
+  resetContext();
   return first_if_expr;
 }
 
 Object* Parser::parseLambda() throw (Errors::CompileError) {
+  setContext("LAMBDA");
+
   // parse the arguments
   std::unique_ptr<Token> token(tokenizer.next());
   std::vector<std::string> params;
@@ -187,10 +197,12 @@ Object* Parser::parseLambda() throw (Errors::CompileError) {
   token.reset(tokenizer.next());
   check(token.get(), TokenType::CLOSE_PAREN);
 
+  resetContext();
   return allocator.createLambda(body, params);
 }
 
 Object* Parser::parseLet() throw (Errors::CompileError) {
+  setContext("LET");
   /*
     (let ((a 1) (b 2))
       (+ a b))
@@ -243,10 +255,13 @@ Object* Parser::parseLet() throw (Errors::CompileError) {
   Lambda *let_lambda = allocator.createLambda(body, let_symbols);
 
   // return the application of the LET values to the LET lambda
+  resetContext();
   return allocator.createList(let_lambda, Utils::vec2list(let_values));
 }
 
 Object* Parser::parseDefine() throw (Errors::CompileError) {
+  setContext("DEFINE");
+
   std::unique_ptr<Token> token(tokenizer.next());
   std::vector<std::string> params;
   std::string name;
@@ -298,6 +313,7 @@ Object* Parser::parseDefine() throw (Errors::CompileError) {
     value = allocator.createSequence(expressions);
 
   // return the proper definition object
+  resetContext();
   if (isFunction)
     return allocator.createDefine(name, allocator.createLambda(value, params));
   else
@@ -305,6 +321,8 @@ Object* Parser::parseDefine() throw (Errors::CompileError) {
 }
 
 Object* Parser::parseQuote(bool check_paren) throw (Errors::CompileError) {
+  setContext("QUOTE");
+
   Object *quote = allocator.createQuote(parseExpr());
 
   // check for the final paren ')' if needed
@@ -313,10 +331,13 @@ Object* Parser::parseQuote(bool check_paren) throw (Errors::CompileError) {
     check(token.get(), TokenType::CLOSE_PAREN);
   }
 
+  resetContext();
   return quote;
 }
 
 Object* Parser::parseBegin() throw (Errors::CompileError) {
+  setContext("BEGIN");
+
   std::unique_ptr<Token> token(tokenizer.next());
   
   // parse the expressions
@@ -338,6 +359,7 @@ Object* Parser::parseBegin() throw (Errors::CompileError) {
   else
     value = allocator.createSequence(expressions);
 
+  resetContext();
   return value;
 }
 
@@ -364,8 +386,20 @@ void Parser::check(Token *token, TokenType expected_type) throw (Errors::Compile
     std::stringstream buf;
     buf << "expected " << Utils::type2str(expected_type) << ", "
         << "found " << Utils::type2str(token->getType());
-    throw Errors::CompileError(buf.str(), token->getSourceCodePosition());
+    throw Errors::CompileError(getContext(), buf.str(), token->getSourceCodePosition());
   }
+}
+
+void Parser::setContext(std::string&& context) {
+  current_context = context;
+}
+
+void Parser::resetContext() {
+  setContext("");
+}
+
+std::string& Parser::getContext() {
+  return current_context;
 }
 
 }
