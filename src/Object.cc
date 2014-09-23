@@ -148,11 +148,11 @@ bool Object::isMarked() const {
 }
 
 bool Object::isTrue() const {
-  return !isFalse();
+  return true;
 }
 
 bool Object::isFalse() const {
-  return isNil();
+  return false;
 }
 
 bool Object::isNil() const {
