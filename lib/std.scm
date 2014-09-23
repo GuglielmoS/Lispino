@@ -106,6 +106,11 @@
 (define (reverse lst)
   (fold (flip cons) nil lst))
 
+(define (append lst1 lst2)
+  (if (null? lst1)
+    lst2
+    (cons (car lst1) (append (cdr lst1) lst2))))
+
 (define (take n lst)
   (if (or (zero? n) (null? lst))
     nil
