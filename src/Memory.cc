@@ -99,13 +99,13 @@ size_t Memory::cleanup() {
 size_t Memory::releaseUnusedObjects() {
   auto original_memory_size = memory.size();
 
-  // remove all the objects that are not marked
+  // remove all the objects that are not marked and are not symbols
   memory.erase(
     std::remove_if(
       memory.begin(),
       memory.end(),
       [&](const std::unique_ptr<Object>& object) {
-        return !object->isMarked();
+        return !object->isSymbol() && !object->isMarked();
       }),
     memory.end());
 
