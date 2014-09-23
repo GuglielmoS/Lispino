@@ -16,6 +16,7 @@
 #include "builtins/GreaterEqualThan.h"
 #include "builtins/LowerThan.h"
 #include "builtins/LowerEqualThan.h"
+#include "builtins/Apply.h"
 
 namespace Lispino {
 
@@ -80,15 +81,15 @@ Object* Environment::get(Symbol* key) throw (Errors::RuntimeError) {
 }
 
 void Environment::applyArgs(Args& arguments) {
-  // retrieve the normal arguments
-  auto normal_arguments = arguments.getArguments();
+  // retrieve the formal arguments
+  auto formal_arguments = arguments.getArguments();
 
   // retrieve the arguments names
   auto arguments_names = arguments.getArgumentsNames();
 
   // add the normal arguments to the extended environment
-  for (size_t i = 0; i < normal_arguments.size(); i++)
-    put(arguments_names[i], normal_arguments[i]);
+  for (size_t i = 0; i < formal_arguments.size(); i++)
+    put(arguments_names[i], formal_arguments[i]);
 
   // add the "catch rest" argument if needed
   if (arguments.hasCatchRest()) {
@@ -116,6 +117,9 @@ BuiltinsTable Environment::initializeBuiltinFunctions() {
 
   // environment
   bind(table, new Builtins::Set());
+
+  // evaluation
+  bind(table, new Builtins::Apply());
 
   // list
   bind(table, new Builtins::Car());

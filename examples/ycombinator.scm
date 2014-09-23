@@ -4,8 +4,8 @@
   ((lambda (x)
      (x x))
    (lambda (g)
-     (f (lambda (args)
-          ((g g) args))))))
+     (f (lambda args
+          (apply (g g) args))))))
 
 (define fac
   (Y
