@@ -5,8 +5,7 @@
 
 #include "Object.h"
 #include "Environment.h"
-#include "errors/RuntimeError.h"
-
+#include "Args.h"
 #include "IfExpr.h"
 #include "Nil.h"
 #include "IntNumber.h"
@@ -20,6 +19,7 @@
 #include "IfExpr.h"
 #include "Sequence.h"
 #include "Define.h"
+#include "errors/RuntimeError.h"
 
 namespace Lispino {
 
@@ -36,6 +36,9 @@ class Evaluator {
   Object* evalIf(IfExpr *expr, std::shared_ptr<Environment> env) throw (Errors::RuntimeError);
   Object* evalSequence(Sequence *expr, std::shared_ptr<Environment> env) throw (Errors::RuntimeError);
   Object* evalDefine(Define *expr, std::shared_ptr<Environment> env) throw (Errors::RuntimeError);
+
+  Args extractAndEvalArgs(Lambda *lambda, std::vector<Object*> raw_args, std::shared_ptr<Environment> env);
+  bool validateArguments(Lambda *lambda, std::vector<Object*>& raw_args) const;
 };
 
 }

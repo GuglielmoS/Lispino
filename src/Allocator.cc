@@ -67,10 +67,11 @@ List* Allocator::createList(Object* first, Object* rest) {
   return list;
 }
 
-Lambda* Allocator::createLambda(Object* body, std::vector<std::string>& arguments) {
+Lambda* Allocator::createLambda(Object* body, std::vector<std::string>& arguments, bool catch_rest_flag) {
   Lambda *lambda = static_cast<Lambda*>(memory.allocate(ObjectType::LAMBDA));
   lambda->setBody(body);
   lambda->setArguments(arguments);
+  lambda->setCatchRestFlag(catch_rest_flag);
 
   return lambda;
 }

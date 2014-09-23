@@ -6,12 +6,18 @@
 
 namespace Lispino {
 
-Lambda::Lambda() : Object(ObjectType::LAMBDA), body(nullptr) {
+Lambda::Lambda() 
+    : Object(ObjectType::LAMBDA),
+      body(nullptr),
+      catch_rest_flag(false) {
   /* DO NOTHING */
 }
 
 Lambda::Lambda(Object* body, std::vector<std::string> arguments)
-    : Object(ObjectType::LAMBDA), body(body), arguments(arguments) {
+    : Object(ObjectType::LAMBDA),
+      body(body), 
+      arguments(arguments),
+      catch_rest_flag(false) {
   /* DO NOTHING */
 }
 
@@ -23,12 +29,24 @@ void Lambda::setArguments(std::vector<std::string> arguments) {
   this->arguments = arguments;
 }
 
+void Lambda::setCatchRestFlag(bool catch_rest_flag) {
+  this->catch_rest_flag = catch_rest_flag;
+}
+
 Object* Lambda::getBody() {
   return body;
 }
 
 std::vector<std::string> Lambda::getArguments() {
   return arguments;
+}
+
+std::uint32_t Lambda::getRequiredArguments() const {
+  return arguments.size();
+}
+
+bool Lambda::hasCatchRest() const {
+  return catch_rest_flag;
 }
 
 void Lambda::mark() {

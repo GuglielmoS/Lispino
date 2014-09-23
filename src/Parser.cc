@@ -181,10 +181,28 @@ Object* Parser::parseLambda() throw (Errors::CompileError) {
   // check the '('
   check(token.get(), TokenType::OPEN_PAREN);
 
+  // check if there is an initial "catch rest" argument
+  bool catch_rest_flag = false;
   token.reset(tokenizer.next());
+  if (token->getType() == TokenType::DOT) {
+    catch_rest_flag = true;
+    token.reset(tokenizer.next());
+  }
+
+  // parse the arguments
   while (token->getType() == TokenType::SYMBOL) {
     params.push_back(token->getSymbol());
     token.reset(tokenizer.next());
+
+    // exit if the catch_rest argument has been catched
+    if (catch_rest_flag)
+      break;
+
+    // check if there is a "catch rest" argument 
+    if (token->getType() == TokenType::DOT) {
+      catch_rest_flag = true;
+      token.reset(tokenizer.next());
+    }
   }
 
   // check the ')'
@@ -198,7 +216,7 @@ Object* Parser::parseLambda() throw (Errors::CompileError) {
   check(token.get(), TokenType::CLOSE_PAREN);
 
   resetContext();
-  return allocator.createLambda(body, params);
+  return allocator.createLambda(body, params, catch_rest_flag);
 }
 
 Object* Parser::parseLet() throw (Errors::CompileError) {
@@ -266,6 +284,7 @@ Object* Parser::parseDefine() throw (Errors::CompileError) {
   std::vector<std::string> params;
   std::string name;
   bool isFunction = true;
+  bool catch_rest_flag = false;
 
   if (token->getType() == TokenType::OPEN_PAREN) {
     bool isFirst = true;
@@ -279,7 +298,18 @@ Object* Parser::parseDefine() throw (Errors::CompileError) {
         params.push_back(token->getSymbol());
       }
 
+      // get the next token
       token.reset(tokenizer.next());
+
+      // exit if the "catch rest" argument has been parsed
+      if (catch_rest_flag)
+        break;
+
+      // check if there is a "catch rest" argument 
+      if (token->getType() == TokenType::DOT) {
+        catch_rest_flag = true;
+        token.reset(tokenizer.next());
+      }
     }
 
     if (isFirst)
@@ -315,7 +345,7 @@ Object* Parser::parseDefine() throw (Errors::CompileError) {
   // return the proper definition object
   resetContext();
   if (isFunction)
-    return allocator.createDefine(name, allocator.createLambda(value, params));
+    return allocator.createDefine(name, allocator.createLambda(value, params, catch_rest_flag));
   else
     return allocator.createDefine(name, value);
 }

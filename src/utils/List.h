@@ -1,6 +1,8 @@
 #ifndef LISPINO_UTILS_LIST_H_
 #define LISPINO_UTILS_LIST_H_
 
+#include <cstdint>
+
 #include <vector>
 
 #include "../Object.h"

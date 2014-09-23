@@ -42,7 +42,7 @@ class Allocator {
 
   List* createList(Object* first, Object* rest);
 
-  Lambda* createLambda(Object* body, std::vector<std::string>& arguments);
+  Lambda* createLambda(Object* body, std::vector<std::string>& arguments, bool catch_rest_flag=false);
 
   Closure* createClosure(Lambda *lambda, std::shared_ptr<Environment> env);
 

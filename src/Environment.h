@@ -10,6 +10,7 @@
 
 #include "Object.h"
 #include "Symbol.h"
+#include "Args.h"
 #include "builtins/BuiltinFunction.h"
 #include "errors/RuntimeError.h"
 
@@ -31,6 +32,8 @@ class Environment {
   Object* update(Symbol* key, Object* value) throw (Errors::RuntimeError);
   Object* put(Symbol* key, Object* value);
   Object* get(Symbol* key) throw (Errors::RuntimeError);
+
+  void applyArgs(Args& arguments);
 
   static std::shared_ptr<Environment> extend(std::shared_ptr<Environment> env);
 

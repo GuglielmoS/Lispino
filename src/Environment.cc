@@ -79,6 +79,24 @@ Object* Environment::get(Symbol* key) throw (Errors::RuntimeError) {
   throw Errors::RuntimeError("Environment lookup failed: key = " + key->getValue());
 }
 
+void Environment::applyArgs(Args& arguments) {
+  // retrieve the normal arguments
+  auto normal_arguments = arguments.getArguments();
+
+  // retrieve the arguments names
+  auto arguments_names = arguments.getArgumentsNames();
+
+  // add the normal arguments to the extended environment
+  for (size_t i = 0; i < normal_arguments.size(); i++)
+    put(arguments_names[i], normal_arguments[i]);
+
+  // add the "catch rest" argument if needed
+  if (arguments.hasCatchRest()) {
+    auto last_arg = arguments_names.size()-1;
+    put(arguments_names[last_arg], arguments.getCatchRest());
+  }
+}
+
 std::shared_ptr<Environment> Environment::extend(std::shared_ptr<Environment> env) {
   auto extended_environment = std::make_shared<Environment>();
 

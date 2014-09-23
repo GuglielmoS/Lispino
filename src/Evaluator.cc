@@ -1,6 +1,9 @@
 #include "Evaluator.h"
 
+#include <cassert>
+
 #include "VM.h"
+#include "Args.h"
 #include "builtins/BuiltinFunction.h"
 #include "utils/List.h"
 
@@ -74,72 +77,51 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
         // since the special cases have been all treated in the previous cases,
         // a list must represent a function call. The first element evaluated
         // is therefore a builtin function, a lambda or a closure.
-        switch (evaluated_first->getType()) {
-          case ObjectType::BUILTIN_FUNCTION: {
-            Builtins::BuiltinFunction *bf = static_cast<Builtins::BuiltinFunction*>(evaluated_first);
-            
-            // check that there are enough arguments for the specified builtin function
-            if (arguments.size() < bf->getRequiredArguments())
-              throw Errors::RuntimeError("Invalid function call: wrong number of arguments");
+        if (evaluated_first->isBuiltinFunction()) {
+          Builtins::BuiltinFunction *bf = static_cast<Builtins::BuiltinFunction*>(evaluated_first);
+          
+          // check that there are enough arguments for the specified builtin function
+          if (arguments.size() < bf->getRequiredArguments())
+            throw Errors::RuntimeError("Invalid function call: wrong number of arguments");
 
-            // execute the builtin function and return the result
-            return bf->apply(arguments, current_env); 
-          }
-
-          case ObjectType::LAMBDA: {
-            Lambda *lambda = static_cast<Lambda*>(evaluated_first);
-
-            // check that there are enough arguments for the specified lambda code
-            auto lambda_arguments = lambda->getArguments();
-            if (lambda_arguments.size() != arguments.size())
-              throw Errors::RuntimeError("Invalid function call: wrong number of arguments");
-
-            // evaluate each argument
-            std::vector<Object*> evaluated_arguments;
-            for (auto& current_arg : arguments)
-              evaluated_arguments.push_back(eval(current_arg, current_env));
-    
-            // extend the current environment with the arguments to apply
-            current_env = Environment::extend(current_env);
-            for (unsigned int i = 0; i < evaluated_arguments.size(); i++)
-              current_env->put(VM::getAllocator().createSymbol(lambda_arguments[i]), evaluated_arguments[i]);
-
-            // evaluate the code associated to this lambda
-            current_object = lambda->getBody();
-            continue;
-          }
-
-          case ObjectType::CLOSURE: {
-            Closure *closure = static_cast<Closure*>(evaluated_first);
-
-            // check that there are enough arguments for the specified lambda code
-            auto lambda_arguments = closure->getLambda()->getArguments();
-            if (lambda_arguments.size() != arguments.size())
-              throw Errors::RuntimeError("Invalid function call: wrong number of arguments");
-
-            // evaluate each argument
-            std::vector<Object*> evaluated_arguments;
-            for (auto& current_arg : arguments)
-              evaluated_arguments.push_back(eval(current_arg, current_env));
-         
-            // extend the closure's environment with the arguments to apply
-            for (unsigned int i = 0; i < evaluated_arguments.size(); i++)
-              closure->getEnv()->put(VM::getAllocator().createSymbol(lambda_arguments[i]), evaluated_arguments[i]);
-
-            // evaluate the code associated to this lambda in the extended environment
-            current_object = closure->getLambda()->getBody();
-            current_env = closure->getEnv();
-
-            continue;
-          }
-
-          default:
+          // execute the builtin function and return the result
+          return bf->apply(arguments, current_env); 
+        } else {
+          // extract the lambda object to execute
+          Lambda *lambda = nullptr;
+          if (evaluated_first->isLambda()) {
+            lambda = static_cast<Lambda*>(evaluated_first);
+          } else if (evaluated_first->isClosure()) {
+            lambda = static_cast<Lambda*>(static_cast<Closure*>(evaluated_first)->getLambda());
+          } else { 
             throw Errors::RuntimeError("Invalid function call: non-callable object given");
+          }
+
+          // check that there are enough arguments for the specified lambda code
+          if (!validateArguments(lambda, arguments))
+            throw Errors::RuntimeError("Invalid function call: wrong number of arguments");
+
+          // extract and evaluate the arguments from the raw list of arguments
+          Args evaluated_arguments = extractAndEvalArgs(lambda, arguments, current_env);
+
+          // extend the current environment
+          if (evaluated_first->isLambda())
+            current_env = Environment::extend(current_env);
+          else
+            current_env = static_cast<Closure*>(evaluated_first)->getEnv();
+
+          // apply the arguments to the current environment
+          current_env->applyArgs(evaluated_arguments);
+
+          // evaluate the code associated to the lambda
+          current_object = lambda->getBody();
+
+          continue;
         }
       }
 
       default:
-        throw Errors::RuntimeError("Invalid object given, evaluation suspended!");
+        assert(false && "Invalid object given, evaluation suspended!");
     }
   }
 }
@@ -166,6 +148,46 @@ Object* Evaluator::evalDefine(Define *expr, std::shared_ptr<Environment> env) th
     return env->put(expr->getSymbol(), expr->getValue());
   else
     return env->put(expr->getSymbol(), eval(expr->getValue(), env));
+}
+
+Args Evaluator::extractAndEvalArgs(Lambda *lambda, std::vector<Object*> raw_args, std::shared_ptr<Environment> env) {
+  auto lambda_arguments = lambda->getArguments();
+
+  // check if there is a "catch rest" argument
+  bool has_catch_rest = lambda->hasCatchRest(); 
+
+  // compute the minimun arguments number and the position
+  // of the last arguments
+  size_t min_args = lambda_arguments.size();
+  if (has_catch_rest && min_args > 0)
+    min_args--;
+
+  // evaluate each argument
+  std::vector<Object*> first_arguments;
+  std::vector<Object*> catch_rest_arguments;
+  for (size_t i = 0; i < min_args; i++)
+    first_arguments.push_back(eval(raw_args[i], env));
+  if (has_catch_rest) {
+    for (size_t i = min_args; i < raw_args.size(); i++)
+      catch_rest_arguments.push_back(eval(raw_args[i], env));
+  }
+
+  // transform the arguments names in symbols
+  std::vector<Symbol*> arguments_names;
+  for (auto& arg : lambda_arguments)
+    arguments_names.push_back(VM::getAllocator().createSymbol(arg));
+
+  // build the arguments to apply accordingly to the fact that there
+  // can be a "catch rest" argument
+  Args evaluated_arguments(first_arguments, arguments_names);
+  if (has_catch_rest)
+    evaluated_arguments.setCatchRest(Utils::vec2list(catch_rest_arguments));
+
+  return evaluated_arguments;
+}
+
+bool Evaluator::validateArguments(Lambda *lambda, std::vector<Object*>& raw_args) const {
+  return raw_args.size() >= lambda->getRequiredArguments();
 }
 
 }

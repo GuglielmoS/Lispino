@@ -1,6 +1,8 @@
 #ifndef LISPINO_LAMBDA_H_
 #define LISPINO_LAMBDA_H_
 
+#include <cstdint>
+
 #include <vector>
 #include <string>
 
@@ -21,9 +23,15 @@ class Lambda : public Object {
 
   void setArguments(std::vector<std::string> arguments);
 
+  void setCatchRestFlag(bool catch_rest_flag);
+
   Object* getBody();
 
   std::vector<std::string> getArguments();
+
+  std::uint32_t getRequiredArguments() const;
+
+  bool hasCatchRest() const;
 
   void mark() override;
 
@@ -31,7 +39,10 @@ class Lambda : public Object {
 
  private:
   Object *body;
+
   std::vector<std::string> arguments;
+
+  bool catch_rest_flag;
 };
 
 }

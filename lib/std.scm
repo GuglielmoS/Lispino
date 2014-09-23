@@ -21,11 +21,11 @@
 (define (not p)
   (if p #f #t))
 
-(define (and p1 p2)
-  (if p1 p2 #f))
+(define (and . values)
+  (fold (lambda (x y) (if x y #f)) #t values))
 
-(define (or p1 p2)
-  (if p1 #t p2))
+(define (or . values)
+  (fold (lambda (x y) (if x #t y)) #f values))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::::::::::::::
 ;; Higher order functions                                                    ;;
@@ -148,13 +148,13 @@
   (zero? (remainder n 2)))
 
 (define (odd? n)
-  (not (even? n)))
+  (not (zero? (remainder n 2))))
 
 (define (abs x)
   (if (< x 0) (- x) x))
 
 (define (gcd a b)
-  (if (= b 0)
+  (if (zero? b)
     a
     (gcd b (remainder a b))))
 

@@ -9,7 +9,7 @@ PARSER_OBJS=src/Parser.o src/Object.o src/Nil.o src/Define.o src/Lambda.o src/Ch
 
 BUILTIN_FUNCTIONS_OBJS=src/builtins/BuiltinFunction.o src/builtins/Add.o src/builtins/Sub.o src/builtins/Mul.o src/builtins/Div.o src/builtins/Remainder.o src/builtins/LowerThan.o src/builtins/LowerEqualThan.o src/builtins/GreaterThan.o src/builtins/GreaterEqualThan.o src/builtins/Equal.o src/builtins/Car.o src/builtins/Cdr.o src/builtins/Cons.o src/builtins/Display.o src/builtins/Set.o src/builtins/Load.o
 
-INTERPRETER_OBJS=src/Closure.o src/GarbageCollector.o src/Environment.o src/Interpreter.o src/Evaluator.o
+INTERPRETER_OBJS=src/Closure.o src/GarbageCollector.o src/Environment.o src/Interpreter.o src/Evaluator.o src/Args.o
 
 UTILS_OBJS=src/utils/List.o src/utils/Token.o
 
