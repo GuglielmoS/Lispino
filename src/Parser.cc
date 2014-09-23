@@ -177,36 +177,36 @@ Object* Parser::parseLambda() throw (Errors::CompileError) {
   // parse the arguments
   std::unique_ptr<Token> token(tokenizer.next());
   std::vector<std::string> params;
-
-  // check the '('
-  check(token.get(), TokenType::OPEN_PAREN);
-
-  // check if there is an initial "catch rest" argument
   bool catch_rest_flag = false;
-  token.reset(tokenizer.next());
-  if (token->getType() == TokenType::DOT) {
+
+  // if there is a "catch rest" argument
+  if (token->getType() == TokenType::SYMBOL) {
     catch_rest_flag = true;
-    token.reset(tokenizer.next());
-  }
-
-  // parse the arguments
-  while (token->getType() == TokenType::SYMBOL) {
     params.push_back(token->getSymbol());
+  } else {
+    // check the '('
+    check(token.get(), TokenType::OPEN_PAREN);
+
+    // parse the arguments
     token.reset(tokenizer.next());
-
-    // exit if the catch_rest argument has been catched
-    if (catch_rest_flag)
-      break;
-
-    // check if there is a "catch rest" argument 
-    if (token->getType() == TokenType::DOT) {
-      catch_rest_flag = true;
+    while (token->getType() == TokenType::SYMBOL) {
+      params.push_back(token->getSymbol());
       token.reset(tokenizer.next());
-    }
-  }
 
-  // check the ')'
-  check(token.get(), TokenType::CLOSE_PAREN);
+      // exit if the catch_rest argument has been catched
+      if (catch_rest_flag)
+        break;
+
+      // check if there is a "catch rest" argument 
+      if (token->getType() == TokenType::DOT) {
+        catch_rest_flag = true;
+        token.reset(tokenizer.next());
+      }
+    }
+
+    // check the ')'
+    check(token.get(), TokenType::CLOSE_PAREN);
+  }
 
   // parse the body
   Object *body = parseExpr();
