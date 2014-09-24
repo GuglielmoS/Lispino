@@ -6,6 +6,10 @@ namespace Lispino {
 
 namespace Builtins {
 
+bool LowerThan::hasExactArguments() const {
+  return false;
+}
+
 std::uint32_t LowerThan::getRequiredArguments() const {
   return 2;
 }

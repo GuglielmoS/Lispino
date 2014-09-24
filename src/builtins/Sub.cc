@@ -8,6 +8,10 @@ namespace Lispino {
 
 namespace Builtins {
 
+bool Sub::hasExactArguments() const {
+  return false;
+}
+
 std::uint32_t Sub::getRequiredArguments() const {
   return 1;
 }

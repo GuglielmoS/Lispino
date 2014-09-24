@@ -81,11 +81,14 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
           Builtins::BuiltinFunction *bf = static_cast<Builtins::BuiltinFunction*>(evaluated_first);
           
           // check that there are enough arguments for the specified builtin function
-          if (arguments.size() < bf->getRequiredArguments())
-            throw Errors::RuntimeError("Invalid function call: wrong number of arguments");
-
-          // execute the builtin function and return the result
-          return bf->apply(arguments, current_env); 
+          if (arguments.size() >= bf->getRequiredArguments()) {
+            if (bf->hasExactArguments() && arguments.size() > bf->getRequiredArguments())
+              throw Errors::RuntimeError(bf->getName() + ": too many arguments");
+            else
+              return bf->apply(arguments, current_env); 
+          } else {
+            throw Errors::RuntimeError(bf->getName() + ": too few arguments");
+          }
         } else {
           // extract the lambda object to execute
           Lambda *lambda = nullptr;
@@ -187,7 +190,14 @@ Args Evaluator::extractAndEvalArgs(Lambda *lambda, std::vector<Object*> raw_args
 }
 
 bool Evaluator::validateArguments(Lambda *lambda, std::vector<Object*>& raw_args) const {
-  return raw_args.size() >= lambda->getRequiredArguments();
+  if (raw_args.size() >= lambda->getRequiredArguments()) {
+    if (!lambda->hasCatchRest())
+      return raw_args.size() == lambda->getRequiredArguments();
+    else
+      return true;
+  }
+
+  return false;
 }
 
 }

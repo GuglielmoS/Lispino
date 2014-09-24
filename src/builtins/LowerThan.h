@@ -9,6 +9,8 @@ namespace Builtins {
 
 class LowerThan : public BuiltinFunction {
  public:
+  bool hasExactArguments() const override;
+
   std::uint32_t getRequiredArguments() const override;
   
   std::string getName() const override;

@@ -6,6 +6,10 @@ namespace Lispino {
 
 namespace Builtins {
 
+bool Div::hasExactArguments() const {
+  return false;
+}
+
 std::uint32_t Div::getRequiredArguments() const {
   return 2;
 }

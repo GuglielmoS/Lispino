@@ -6,6 +6,10 @@ namespace Lispino {
 
 namespace Builtins {
 
+bool Remainder::hasExactArguments() const {
+  return false;
+}
+
 std::uint32_t Remainder::getRequiredArguments() const {
   return 2;
 }
