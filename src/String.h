@@ -26,6 +26,8 @@ class String : public Object {
 
  private:
   std::string value;
+
+  std::string escape(std::string string) const;
 };
 
 }

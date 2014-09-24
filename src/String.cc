@@ -31,7 +31,29 @@ int String::compareString(const String* obj) const throw (Errors::RuntimeError) 
 
 std::string String::toString() const {
   std::stringstream buf;
-  buf << "\"" << value << "\"";
+  buf << "\"" << escape(value) << "\"";
+  return buf.str();
+}
+
+std::string String::escape(std::string str) const {
+  std::stringstream buf;
+
+  for (const auto& ch : str) {
+    switch (ch) {
+      case '\n':
+        buf << "\\n";
+        break;
+      case '\\':
+        buf << "\\";
+        break;
+      case '\"':
+        buf << "\\\"";
+        break;
+      default:
+        buf << ch;
+    }
+  }
+
   return buf.str();
 }
 
