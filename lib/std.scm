@@ -6,7 +6,7 @@
   x)
 
 (define (null? val)
-  (= val nil))
+  (eq? val nil))
 
 (define (newline)
   (display "\n"))
