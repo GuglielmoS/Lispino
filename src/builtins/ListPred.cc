@@ -15,8 +15,15 @@ std::string ListPred::getName() const {
 }
 
 Object* ListPred::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
-  Object* result = args[0]->eval(env);
-  return VM::getAllocator().createBoolean(result->isList());
+  bool pred_result = false;
+  Object* arg = args[0]->eval(env);
+
+  if (arg->isList()) {
+    Object *rest = static_cast<List*>(arg)->getRest();
+    pred_result = rest->isNil() || rest->isList();
+  }
+
+  return VM::getAllocator().createBoolean(pred_result);
 }
 
 }

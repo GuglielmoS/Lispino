@@ -562,7 +562,7 @@ TEST(InterpreterTests, BuiltinPairPred) {
 
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
 
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
@@ -628,14 +628,14 @@ TEST(InterpreterTests, BuiltinListPred) {
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
     ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
 
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
-
-    expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
 
     expr = parser.parseExpr()->eval();
@@ -661,4 +661,14 @@ TEST(InterpreterTests, BuiltinListPred) {
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+}
+
+TEST(InterpreterTests, BuiltinError) {
+    std::stringstream stream("(error \"this is an error\")");
+
+    Parser parser(stream);
+
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr());
+    ASSERT_THROW(expr->eval(), Errors::RuntimeError);
 }

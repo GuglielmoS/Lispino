@@ -16,9 +16,7 @@ std::string PairPred::getName() const {
 
 Object* PairPred::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   Object* result = args[0]->eval(env);
-  return VM::getAllocator().createBoolean(result->isList() && 
-                                          !static_cast<List*>(result)->getRest()->isNil() &&
-                                          !static_cast<List*>(result)->getRest()->isList());
+  return VM::getAllocator().createBoolean(result->isList());
 }
 
 }

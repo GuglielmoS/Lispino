@@ -36,14 +36,14 @@
         (else (list '* m1 m2))))
 
 (define (sum? x)
-  (and (list? x) (= (car x) '+)))
+  (and (pair? x) (= (car x) '+)))
 
 (define (addend s) (car (cdr s)))
 
 (define (augend s) (car (cdr (cdr s))))
 
 (define (product? x)
-  (and (list? x) (= (car x) '*)))
+  (and (pair? x) (= (car x) '*)))
 
 (define (multiplier p) (car (cdr p)))
 
