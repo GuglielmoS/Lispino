@@ -190,7 +190,7 @@ TEST(ParserTests, Lists) {
 }
 
 TEST(ParserTests, Lambdas) {
-    std::stringstream stream("(lambda (x) (+ x x))");
+    std::stringstream stream("(lambda (x) (+ x x)) (lambda args (apply + args))");
     Parser parser(stream);
     
     // parse the stream and check the expressions
@@ -219,6 +219,12 @@ TEST(ParserTests, Lambdas) {
     temp = static_cast<List*>(temp->getRest());
     ASSERT_TRUE(temp->getFirst()->isSymbol());
     ASSERT_EQ("x", static_cast<Symbol*>(temp->getFirst())->getValue());
+
+    // parse the second lambda with the catch rest argument
+    expr = parser.parseExpr();
+    ASSERT_TRUE(expr->isLambda());
+    lambda = static_cast<Lambda*>(expr);
+    ASSERT_TRUE(lambda->hasCatchRest());
 }
 
 TEST(ParserTests, Let) {
