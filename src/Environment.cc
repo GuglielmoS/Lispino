@@ -25,6 +25,8 @@
 #include "builtins/StringPred.h"
 #include "builtins/ProcedurePred.h"
 #include "builtins/ListPred.h"
+#include "builtins/And.h"
+#include "builtins/Or.h"
 
 namespace Lispino {
 
@@ -129,6 +131,10 @@ BuiltinsTable Environment::initializeBuiltinFunctions() {
   // evaluation
   bind(table, new Builtins::Apply());
 
+  // boolean
+  bind(table, new Builtins::And());
+  bind(table, new Builtins::Or());
+
   // list
   bind(table, new Builtins::Car());
   bind(table, new Builtins::Cdr());
@@ -148,7 +154,7 @@ BuiltinsTable Environment::initializeBuiltinFunctions() {
   bind(table, new Builtins::LowerThan());
   bind(table, new Builtins::LowerEqualThan());
 
-  // Identity Predicates
+  // identity predicates
   bind(table, new Builtins::NumberPred());
   bind(table, new Builtins::BooleanPred());
   bind(table, new Builtins::PairPred());

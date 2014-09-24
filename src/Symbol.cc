@@ -34,9 +34,7 @@ int Symbol::compareSymbol(const Symbol* obj) const throw (Errors::RuntimeError) 
 }
 
 std::string Symbol::toString() const {
-  std::stringstream buf;
-  buf << "<#SYMBOL:" << this << ">";
-  return buf.str();
+  return value;
 }
 
 }

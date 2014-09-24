@@ -26,7 +26,7 @@
         (else (list '+ a1 a2))))
 
 (define (=number? expr num)
-  (if (number? expr) (= expr num) #f))
+  (and (number? expr) (= expr num)))
 
 (define (make-product m1 m2)
   (cond ((or (=number? m1 0) (=number? m2 0)) 0)

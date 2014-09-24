@@ -21,18 +21,6 @@
 (define (not p)
   (if p #f #t))
 
-(define (&& x y)
-  (if x y #f))
-
-(define (|| x y)
-  (if x #t y))
-
-(define (and . values)
-  (fold && #t values))
-
-(define (or . values)
-  (fold || #f values))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::::::::::::::
 ;; functional                                                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -125,10 +113,10 @@
   (zipWith cons lst1 lst2))
 
 (define (any lst)
-  (fold || #f lst))
+  (fold or #f lst))
 
 (define (all lst)
-  (fold && #t lst))
+  (fold and #t lst))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::::::::::::::
 ;; Math                                                                      ;;
