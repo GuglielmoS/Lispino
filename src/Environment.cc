@@ -27,6 +27,7 @@
 #include "builtins/ListPred.h"
 #include "builtins/And.h"
 #include "builtins/Or.h"
+#include "builtins/Error.h"
 
 namespace Lispino {
 
@@ -167,6 +168,9 @@ BuiltinsTable Environment::initializeBuiltinFunctions() {
   // I/O utils
   bind(table, new Builtins::Display());
   bind(table, new Builtins::Load());
+
+  // execution control
+  bind(table, new Builtins::Error());
 
   return table;
 }
