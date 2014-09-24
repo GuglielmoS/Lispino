@@ -17,13 +17,14 @@ Main Features
 + Simple Recursive Descent Parser
 + Tail Call Reduction
 + Stop-The-World, Mark & Sweep Garbage Collection  
++ Takes advantage of C++11 features (shared_ptr, unique_ptr, lambda, ...)
 + Unit tests covered
 + Checked with Valgrind Memcheck
-+ REPL to interact with the interpreter (nice with rlwrap)
-+ Easy way to add builtin functions
-+ Basic Scheme constructs available (if,cond,let,begin,quote,lambda)
-+ Integer, Float, Character, String, Symbol, Boolean as possible atoms values
++ Values: Integer, Float, Character, String, Symbol, Boolean 
++ Basic Scheme constructs: define, if, cond, let, begin, quote, lambda
++ Identity predicates: list?, symbol?, char?, string?, pair?, number?, boolean?, procedure?, null?
 + A little standard library that contains basic stuff (see lib/std.scm)
++ REPL to interact with the interpreter (nice with rlwrap)
 
 TODO
 ----

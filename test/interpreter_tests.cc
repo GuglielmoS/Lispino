@@ -562,7 +562,7 @@ TEST(InterpreterTests, BuiltinPairPred) {
 
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
 
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
@@ -606,6 +606,49 @@ TEST(InterpreterTests, BuiltinProcedurePred) {
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+}
+
+TEST(InterpreterTests, BuiltinListPred) {
+    std::stringstream stream("(list? '(1 . 2)) (list? '(1 2)) (list? \"ciao\") (list? #t) (list? #f) (list? 'x) (list? nil) (list? 1) (list? 1.5)");
+
+    Parser parser(stream);
+
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr()->eval());
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
 
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isBoolean());

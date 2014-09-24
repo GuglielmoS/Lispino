@@ -24,6 +24,7 @@
 #include "builtins/CharPred.h"
 #include "builtins/StringPred.h"
 #include "builtins/ProcedurePred.h"
+#include "builtins/ListPred.h"
 
 namespace Lispino {
 
@@ -155,6 +156,7 @@ BuiltinsTable Environment::initializeBuiltinFunctions() {
   bind(table, new Builtins::CharPred());
   bind(table, new Builtins::StringPred());
   bind(table, new Builtins::ProcedurePred());
+  bind(table, new Builtins::ListPred());
 
   // I/O utils
   bind(table, new Builtins::Display());
