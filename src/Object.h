@@ -51,6 +51,30 @@ class Object {
    * Equality
    */
 
+  // EQ?
+
+  bool eq(const Object* obj) const;
+
+  // EQV?
+
+  virtual bool eqv(const Object* obj) const;
+
+  virtual bool eqvInt(const IntNumber* obj) const;
+
+  virtual bool eqvFloat(const FloatNumber* obj) const;
+
+  virtual bool eqvCharacter(const Character* obj) const;
+
+  // EQUAL?
+
+  virtual bool equal(const Object* obj) const;
+
+  virtual bool equalString(const String* obj) const;
+
+  virtual bool equalList(const List* obj) const;
+
+  // COMPARE FOR =, >, >=, <, <=
+
   virtual int compare(const Object* obj) const throw (Errors::RuntimeError);
   
   virtual int compareNil(const Nil* obj) const throw (Errors::RuntimeError);

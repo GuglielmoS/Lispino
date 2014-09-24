@@ -22,6 +22,14 @@ double FloatNumber::getValue() const {
   return value;
 }
 
+bool FloatNumber::eqv(const Object* obj) const {
+  return obj->eqvFloat(this);
+}
+
+bool FloatNumber::eqvFloat(const FloatNumber* obj) const {
+  return value == obj->value;
+}
+
 int FloatNumber::compare(const Object* obj) const throw (Errors::RuntimeError) {
   if (obj == this)
     return 0;

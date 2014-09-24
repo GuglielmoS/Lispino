@@ -18,6 +18,10 @@ class String : public Object {
 
   std::string getValue() const;
 
+  bool equal(const Object* obj) const override;
+
+  bool equalString(const String* obj) const override;
+
   int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
   int compareString(const String* obj) const throw (Errors::RuntimeError) override;

@@ -33,6 +33,18 @@ Object* List::getRest() {
   return tail;
 }
 
+bool List::equal(const Object* obj) const {
+  return obj->equalList(this);
+}
+
+bool List::equalList(const List* obj) const {
+  if (head->eqv(obj->head)) {
+    return tail->equal(obj->tail);
+  }
+
+  return false;
+}
+
 int List::compare(const Object* obj) const throw (Errors::RuntimeError) {
   return obj->compareList(this);
 }

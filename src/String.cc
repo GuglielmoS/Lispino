@@ -18,6 +18,14 @@ std::string String::getValue() const {
   return value;
 }
 
+bool String::equal(const Object* obj) const {
+  return obj->equalString(this);
+}
+
+bool String::equalString(const String* obj) const {
+  return value == obj->value;
+}
+
 int String::compare(const Object* obj) const throw (Errors::RuntimeError) {
   if (this == obj)
     return 0;

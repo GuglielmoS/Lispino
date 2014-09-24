@@ -23,6 +23,14 @@ std::int64_t IntNumber::getValue() const {
   return value;
 }
 
+bool IntNumber::eqv(const Object* obj) const {
+  return obj->eqvInt(this);
+}
+
+bool IntNumber::eqvInt(const IntNumber* obj) const {
+  return value == obj->value;
+}
+
 int IntNumber::compare(const Object* obj) const throw (Errors::RuntimeError) {
   if (obj == this)
     return 0;

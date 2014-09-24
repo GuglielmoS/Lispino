@@ -17,7 +17,7 @@
 (define (variable? x) (symbol? x))
 
 (define (same-variable? v1 v2)
-  (and (variable? v1) (variable? v2) (= v1 v2)))
+  (and (variable? v1) (variable? v2) (eq? v1 v2)))
 
 (define (make-sum a1 a2)
   (cond ((=number? a1 0) a2)
@@ -36,14 +36,14 @@
         (else (list '* m1 m2))))
 
 (define (sum? x)
-  (and (pair? x) (= (car x) '+)))
+  (and (pair? x) (eq? (car x) '+)))
 
 (define (addend s) (car (cdr s)))
 
 (define (augend s) (car (cdr (cdr s))))
 
 (define (product? x)
-  (and (pair? x) (= (car x) '*)))
+  (and (pair? x) (eq? (car x) '*)))
 
 (define (multiplier p) (car (cdr p)))
 

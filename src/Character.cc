@@ -20,6 +20,14 @@ char Character::getValue() const {
   return this->value;
 }
 
+bool Character::eqv(const Object* obj) const {
+  return obj->eqvCharacter(this);
+}
+
+bool Character::eqvCharacter(const Character* obj) const {
+  return value == obj->value;
+}
+
 int Character::compare(const Object* obj) const throw (Errors::RuntimeError) {
   if (obj == this)
     return 0;

@@ -19,6 +19,10 @@ class IntNumber : public Object {
 
   std::int64_t getValue() const;
 
+  bool eqv(const Object* obj) const override;
+
+  bool eqvInt(const IntNumber* obj) const override;
+
   int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
   int compareInt(const IntNumber* obj) const throw (Errors::RuntimeError) override;

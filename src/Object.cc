@@ -27,6 +27,38 @@ Object* Object::eval(std::shared_ptr<Environment> env) throw (Errors::RuntimeErr
   return VM::getEvaluator().eval(this, env);
 }
 
+bool Object::eq(const Object* obj) const {
+  return this == obj;
+}
+
+bool Object::eqv(const Object* obj) const {
+  return this->eq(obj);
+}
+
+bool Object::eqvInt(const IntNumber* obj) const {
+  return this->eq(obj);
+}
+
+bool Object::eqvFloat(const FloatNumber* obj) const {
+  return this->eq(obj);
+}
+
+bool Object::eqvCharacter(const Character* obj) const {
+  return this->eq(obj);
+}
+
+bool Object::equal(const Object* obj) const {
+  return this->eqv(obj);
+}
+
+bool Object::equalString(const String* obj) const {
+  return this->eqv(obj);
+}
+
+bool Object::equalList(const List* obj) const {
+  return this->eqv(obj);
+}
+
 int Object::compare(const Object*) const throw (Errors::RuntimeError) {
   throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }

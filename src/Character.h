@@ -15,6 +15,10 @@ class Character : public Object {
 
   char getValue() const;
 
+  bool eqv(const Object* obj) const override;
+
+  bool eqvCharacter(const Character* obj) const override;
+
   int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
   int compareCharacter(const Character* obj) const throw (Errors::RuntimeError) override;

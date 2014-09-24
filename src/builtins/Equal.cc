@@ -15,12 +15,14 @@ std::uint32_t Equal::getRequiredArguments() const {
 }
   
 std::string Equal::getName() const {
-  return "=";
+  return "equal?";
 }
 
 Object* Equal::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   for (unsigned int i = 0; i < args.size()-1; i++) {
-    if (args[i]->eval(env)->compare(args[i+1]->eval(env)) != 0)
+    Object *cur_obj = args[i]->eval(env);
+    Object *next_obj = args[i+1]->eval(env);
+    if (!cur_obj->equal(next_obj))
       return VM::getAllocator().createBoolean(false);
   }
 

@@ -1,22 +1,22 @@
 #include "Environment.h"
 
 #include "builtins/Set.h"
+
 #include "builtins/Car.h"
 #include "builtins/Cdr.h"
 #include "builtins/Cons.h"
+
 #include "builtins/Add.h"
 #include "builtins/Sub.h"
 #include "builtins/Mul.h"
 #include "builtins/Div.h"
 #include "builtins/Remainder.h"
-#include "builtins/Display.h"
+
 #include "builtins/Load.h"
-#include "builtins/Equal.h"
-#include "builtins/GreaterThan.h"
-#include "builtins/GreaterEqualThan.h"
-#include "builtins/LowerThan.h"
-#include "builtins/LowerEqualThan.h"
+#include "builtins/Display.h"
+
 #include "builtins/Apply.h"
+
 #include "builtins/NumberPred.h"
 #include "builtins/BooleanPred.h"
 #include "builtins/PairPred.h"
@@ -25,9 +25,21 @@
 #include "builtins/StringPred.h"
 #include "builtins/ProcedurePred.h"
 #include "builtins/ListPred.h"
+
 #include "builtins/And.h"
 #include "builtins/Or.h"
+
 #include "builtins/Error.h"
+
+#include "builtins/Eq.h"
+#include "builtins/Eqv.h"
+#include "builtins/Equal.h"
+
+#include "builtins/NumberEqual.h"
+#include "builtins/GreaterThan.h"
+#include "builtins/GreaterEqualThan.h"
+#include "builtins/LowerThan.h"
+#include "builtins/LowerEqualThan.h"
 
 namespace Lispino {
 
@@ -149,7 +161,10 @@ BuiltinsTable Environment::initializeBuiltinFunctions() {
   bind(table, new Builtins::Remainder());
 
   // equality
+  bind(table, new Builtins::Eq());
+  bind(table, new Builtins::Eqv());
   bind(table, new Builtins::Equal());
+  bind(table, new Builtins::NumberEqual());
   bind(table, new Builtins::GreaterThan());
   bind(table, new Builtins::GreaterEqualThan());
   bind(table, new Builtins::LowerThan());

@@ -18,6 +18,10 @@ class FloatNumber : public Object {
 
   double getValue() const;
 
+  bool eqv(const Object* obj) const override;
+
+  bool eqvFloat(const FloatNumber* obj) const override;
+
   int compare(const Object* obj) const throw (Errors::RuntimeError) override;
 
   int compareInt(const IntNumber* obj) const throw (Errors::RuntimeError) override;
