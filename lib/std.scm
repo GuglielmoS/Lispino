@@ -66,7 +66,7 @@
 (define (foldl f acc lst)
   (if (null? lst)
     acc
-    (fold f (f (car lst) acc) (cdr lst))))
+    (fold f (f acc (car lst)) (cdr lst))))
 
 (define (foldr f init lst)
   (if (null? lst)
@@ -89,10 +89,10 @@
   values)
 
 (define (length lst)
-  (fold (lambda (x acc) (inc acc)) 0 lst))
+  (fold (lambda (acc x) (inc acc)) 0 lst))
 
 (define (reverse lst)
-  (foldl cons nil lst))
+  (fold (flip cons) nil lst))
 
 (define (append lst1 lst2)
   (if (null? lst1)
@@ -129,10 +129,10 @@
   (- x 1))
 
 (define (min first . rest)
-  (fold (lambda (new old) (if (< new old) new old)) first rest))
+  (fold (lambda (old new) (if (< new old) new old)) first rest))
 
 (define (max first . rest)
-  (fold (lambda (new old) (if (> new old) new old)) first rest))
+  (fold (lambda (old new) (if (> new old) new old)) first rest))
 
 (define (range start end)
   (define (iter start end acc)
