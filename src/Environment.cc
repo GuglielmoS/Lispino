@@ -17,6 +17,13 @@
 #include "builtins/LowerThan.h"
 #include "builtins/LowerEqualThan.h"
 #include "builtins/Apply.h"
+#include "builtins/NumberPred.h"
+#include "builtins/BooleanPred.h"
+#include "builtins/PairPred.h"
+#include "builtins/SymbolPred.h"
+#include "builtins/CharPred.h"
+#include "builtins/StringPred.h"
+#include "builtins/ProcedurePred.h"
 
 namespace Lispino {
 
@@ -139,6 +146,15 @@ BuiltinsTable Environment::initializeBuiltinFunctions() {
   bind(table, new Builtins::GreaterEqualThan());
   bind(table, new Builtins::LowerThan());
   bind(table, new Builtins::LowerEqualThan());
+
+  // Identity Predicates
+  bind(table, new Builtins::NumberPred());
+  bind(table, new Builtins::BooleanPred());
+  bind(table, new Builtins::PairPred());
+  bind(table, new Builtins::SymbolPred());
+  bind(table, new Builtins::CharPred());
+  bind(table, new Builtins::StringPred());
+  bind(table, new Builtins::ProcedurePred());
 
   // I/O utils
   bind(table, new Builtins::Display());
