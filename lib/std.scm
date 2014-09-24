@@ -39,7 +39,7 @@
 
 (define (flip f)
   (lambda (x y)
-    (f x y)))
+    (f y x)))
 
 (define (curry f x)
   (lambda (y)
@@ -104,7 +104,7 @@
   (fold (lambda (x acc) (inc acc)) 0 lst))
 
 (define (reverse lst)
-  (fold (flip cons) nil lst))
+  (foldl cons nil lst))
 
 (define (append lst1 lst2)
   (if (null? lst1)
