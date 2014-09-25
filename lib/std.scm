@@ -160,11 +160,11 @@
 (define (factorial n)
   (product (range 1 n)))
 
-(define (exp base n)
+(define (expt base n)
   (cond ((= n 1)   base)
         ((= n 0)   1)
-        ((even? n) (square (exp base (/ n 2))))
-        (else      (* base (exp base (dec n))))))
+        ((even? n) (square (expt base (/ n 2))))
+        (else      (* base (expt base (dec n))))))
 
 (define (square n)
   (* n n))
