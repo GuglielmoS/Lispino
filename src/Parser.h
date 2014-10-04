@@ -45,6 +45,8 @@ class Parser {
 
   void check(Token *token, TokenType expected_type) throw (Errors::CompileError);
 
+  void checkExpr(Token* token, TokenType suggested_type) throw (Errors::CompileError);
+
   void setContext(std::string&& context);
 
   void resetContext();

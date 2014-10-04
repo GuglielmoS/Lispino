@@ -326,6 +326,10 @@ Object* Parser::parseDefine() throw (Errors::CompileError) {
   std::vector<Object*> expressions;
   token.reset(tokenizer.next());
   while (token->getType() != TokenType::CLOSE_PAREN) {
+    // check that there is a valid expr
+    checkExpr(token.get(), TokenType::CLOSE_PAREN);
+
+    // store the expr
     expressions.push_back(dispatch(token.get()));
     token.reset(tokenizer.next());
   }
@@ -373,6 +377,9 @@ Object* Parser::parseBegin() throw (Errors::CompileError) {
   // parse the expressions
   std::vector<Object*> expressions;
   while (token->getType() != TokenType::CLOSE_PAREN) {
+    // check that there is a valid expr
+    checkExpr(token.get(), TokenType::CLOSE_PAREN);
+
     expressions.push_back(dispatch(token.get()));
     token.reset(tokenizer.next());
   }
@@ -415,6 +422,17 @@ void Parser::check(Token *token, TokenType expected_type) throw (Errors::Compile
   if (token == nullptr || token->getType() != expected_type) {
     std::stringstream buf;
     buf << "expected " << Utils::type2str(expected_type) << ", "
+        << "found " << Utils::type2str(token->getType());
+    throw Errors::CompileError(getContext(), buf.str(), token->getSourceCodePosition());
+  }
+}
+
+void Parser::checkExpr(Token *token, TokenType suggested_type) throw (Errors::CompileError) {
+  if (token == nullptr ||
+      token->getType() == TokenType::EOS ||
+      token->getType() == TokenType::UNKNOWN) {
+    std::stringstream buf;
+    buf << "expected an expression or " << Utils::type2str(suggested_type) << ", "
         << "found " << Utils::type2str(token->getType());
     throw Errors::CompileError(getContext(), buf.str(), token->getSourceCodePosition());
   }
