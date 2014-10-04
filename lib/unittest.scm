@@ -6,10 +6,10 @@
   (newline))
 
 (define (assert-equals expected actual message)
-  (show-message (= expected actual) message))
+  (show-message (equal? expected actual) message))
 
 (define (assert-true value message)
-  (show-message (= value #t) message))
+  (show-message (equal? value #t) message))
 
 (define (assert-false value message)
-  (show-message (= value #f) message))
+  (show-message (equal? value #f) message))

@@ -16,6 +16,9 @@ class BuiltinFunction : public Object {
  public:
   BuiltinFunction() : Object(ObjectType::BUILTIN_FUNCTION) {}
 
+  void check(Object *object, ObjectType expected_type) const throw (Errors::RuntimeError);
+  void check(Object *object, std::initializer_list<ObjectType> expected_types) const throw (Errors::RuntimeError);
+
   virtual bool hasExactArguments() const;
   virtual std::uint32_t getRequiredArguments() const = 0;
   virtual std::string getName() const = 0;
