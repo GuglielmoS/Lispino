@@ -18,11 +18,6 @@ Object* Quote::getValue() {
   return value;
 }
 
-void Quote::mark() {
-  Object::mark();
-  value->mark();
-}
-
 std::string Quote::toString() const {
   return "'" + value->toString();
 }

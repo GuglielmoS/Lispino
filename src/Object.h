@@ -18,6 +18,7 @@ class Boolean;
 class Nil;
 class List;
 class Sequence;
+class Promise;
 
 enum class ObjectType {
   NIL,
@@ -32,6 +33,7 @@ enum class ObjectType {
   IF,
   LAMBDA,
   CLOSURE,
+  PROMISE,
   SEQUENCE,
   BUILTIN_FUNCTION
 };
@@ -137,9 +139,7 @@ class Object {
    * Garbage collection related methods 
    */
 
-  // this is virtual because it's easier to recursively
-  // mark objects by overriding this method
-  virtual void mark();
+  void mark();
   
   void unmark(); 
 
@@ -160,6 +160,8 @@ class Object {
   bool isLambda() const;
   
   bool isClosure() const;
+
+  bool isPromise() const;
   
   bool isIntNumber() const;
   

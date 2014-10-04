@@ -34,13 +34,6 @@ Object* IfExpr::getAlternative() {
   return alternative;
 }
 
-void IfExpr::mark() {
-  Object::mark();
-  condition->mark();
-  consequent->mark();
-  alternative->mark();
-}
-
 std::string IfExpr::toString() const {
   return "IF";
 }

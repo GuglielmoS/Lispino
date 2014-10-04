@@ -30,18 +30,11 @@ class List : public Object {
 
   int compareList(const List* obj) const throw (Errors::RuntimeError) override;
 
-  void mark() override;
-
   std::string toString() const override;
 
  private:
   Object *head;
-
   Object *tail;
-
-  std::vector<Object*> args;
-
-  bool cachedArgs;
 
   std::string toStringHelper(bool parentheses) const;
 };

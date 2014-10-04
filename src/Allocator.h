@@ -14,6 +14,7 @@
 #include "List.h"
 #include "Lambda.h"
 #include "Closure.h"
+#include "Promise.h"
 #include "Define.h"
 #include "Quote.h"
 #include "IfExpr.h"
@@ -44,7 +45,9 @@ class Allocator {
 
   Lambda* createLambda(Object* body, std::vector<std::string>& arguments, bool catch_rest_flag=false);
 
-  Closure* createClosure(Lambda *lambda, std::shared_ptr<Environment> env);
+  Closure* createClosure(Lambda* lambda, std::shared_ptr<Environment> env);
+
+  Promise* createPromise(Object* body, std::shared_ptr<Environment> env);
 
   Define* createDefine(std::string name, Object* value);
 

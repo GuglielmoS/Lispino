@@ -49,11 +49,6 @@ bool Lambda::hasCatchRest() const {
   return catch_rest_flag;
 }
 
-void Lambda::mark() {
-  Object::mark();
-  body->mark();
-}
-
 std::string Lambda::toString() const {
   std::stringstream buf;
   buf << "<#LAMBDA:" << this << ">";

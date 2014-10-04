@@ -23,7 +23,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
 
   while (true) {
     switch (current_object->getType()) {
-      // self evaluating expression
+      // self evaluating expressions
       case ObjectType::NIL:
       case ObjectType::BOOLEAN:
       case ObjectType::INT_NUMBER:
@@ -32,6 +32,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
       case ObjectType::STRING:
       case ObjectType::BUILTIN_FUNCTION:
       case ObjectType::CLOSURE:
+      case ObjectType::PROMISE:
         return current_object;
 
       case ObjectType::SYMBOL:

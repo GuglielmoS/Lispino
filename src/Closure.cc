@@ -26,11 +26,6 @@ std::shared_ptr<Environment> Closure::getEnv() {
   return env;
 }
 
-void Closure::mark() {
-  Object::mark();
-  lambda->mark();
-}
-
 std::string Closure::toString() const {
   std::stringstream buf;
   buf << "<#CLOSURE:" << this << ">";

@@ -33,8 +33,6 @@ class Lambda : public Object {
 
   bool hasCatchRest() const;
 
-  void mark() override;
-
   std::string toString() const override;
 
  private:

@@ -41,6 +41,10 @@
 #include "builtins/LowerThan.h"
 #include "builtins/LowerEqualThan.h"
 
+#include "builtins/Delay.h"
+#include "builtins/Force.h"
+#include "builtins/LazyCons.h"
+
 namespace Lispino {
 
 // initialize the builtin functions
@@ -186,6 +190,11 @@ BuiltinsTable Environment::initializeBuiltinFunctions() {
 
   // execution control
   bind(table, new Builtins::Error());
+
+  // lazy evaluation
+  bind(table, new Builtins::Delay());
+  bind(table, new Builtins::Force());
+  bind(table, new Builtins::LazyCons());
 
   return table;
 }

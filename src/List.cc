@@ -7,12 +7,12 @@
 namespace Lispino {
 
 List::List() 
-    : Object(ObjectType::LIST), head(nullptr), tail(nullptr), cachedArgs(false) {
+    : Object(ObjectType::LIST), head(nullptr), tail(nullptr) {
   /* DO NOTHING */
 }
 
 List::List(Object* head, Object* tail)
-    : Object(ObjectType::LIST), head(head), tail(tail), cachedArgs(false) {
+    : Object(ObjectType::LIST), head(head), tail(tail) {
   /* DO NOTHING */
 }
 
@@ -22,7 +22,6 @@ void List::setFirst(Object *first) {
 
 void List::setRest(Object *rest) {
   tail = rest;
-  cachedArgs = false;
 }
 
 Object* List::getFirst() {
@@ -38,9 +37,8 @@ bool List::equal(const Object* obj) const {
 }
 
 bool List::equalList(const List* obj) const {
-  if (head->eqv(obj->head)) {
+  if (head->eqv(obj->head))
     return tail->equal(obj->tail);
-  }
 
   return false;
 }
@@ -54,17 +52,6 @@ int List::compareList(const List* obj) const throw (Errors::RuntimeError) {
     return 0;
   else
     return -1;
-}
-
-void List::mark() {
-  // mark the current object
-  Object::mark();
-
-  // mark its sub-components
-  head->mark();
-  tail->mark();
-  for (auto& current_arg : args)
-    current_arg->mark();
 }
 
 std::string List::toString() const {

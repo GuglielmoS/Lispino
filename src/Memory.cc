@@ -12,6 +12,7 @@
 #include "String.h"
 #include "Lambda.h"
 #include "Closure.h"
+#include "Promise.h"
 #include "Quote.h"
 #include "Define.h"
 #include "IfExpr.h"
@@ -65,6 +66,9 @@ Object* Memory::allocate(ObjectType type) {
     case ObjectType::CLOSURE:
       allocated_object = new Closure();
       break;
+    case ObjectType::PROMISE:
+      allocated_object = new Promise();
+      break;
     case ObjectType::QUOTE:
       allocated_object = new Quote();
       break;
@@ -108,6 +112,10 @@ size_t Memory::releaseUnusedObjects() {
         return !object->isSymbol() && !object->isMarked();
       }),
     memory.end());
+
+  // remove the mark from the remained objects
+  for (auto& object : memory)
+    object->unmark();
 
   // return the number of removed objects
   return original_memory_size - memory.size();

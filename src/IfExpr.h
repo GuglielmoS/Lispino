@@ -21,8 +21,6 @@ class IfExpr : public Object {
 
   Object* getAlternative();
 
-  void mark() override;
-
   std::string toString() const override;
 
  private:

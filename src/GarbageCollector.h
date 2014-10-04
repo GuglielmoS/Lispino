@@ -20,6 +20,7 @@ class GarbageCollector {
 
   bool alreadyMarked(std::shared_ptr<Environment> env, std::vector<Environment*>& marked_envs);
 
+  void markObject(Object *object, std::vector<Environment*>& marked_envs);
   void markVisibleObjects(std::shared_ptr<Environment> env, std::vector<Environment*>& marked_envs);
 };
 

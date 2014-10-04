@@ -32,12 +32,6 @@ Object* Define::getValue() {
   return value;
 }
 
-void Define::mark() {
-  Object::mark();
-  name->mark();
-  value->mark();
-}
-
 std::string Define::toString() const {
   return "DEFINE";
 }

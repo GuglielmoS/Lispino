@@ -17,8 +17,6 @@ class Quote : public Object {
   
   Object* getValue();
 
-  void mark() override;
-
   std::string toString() const override;
 
  private:

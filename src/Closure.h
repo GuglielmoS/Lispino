@@ -21,8 +21,6 @@ class Closure : public Object {
 
   std::shared_ptr<Environment> getEnv();
 
-  void mark() override;
-
   std::string toString() const override;
 
  private:

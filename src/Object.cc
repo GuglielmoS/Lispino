@@ -203,6 +203,10 @@ bool Object::isClosure() const {
   return type == ObjectType::CLOSURE;
 }
 
+bool Object::isPromise() const {
+  return type == ObjectType::PROMISE;
+}
+
 bool Object::isIntNumber() const {
   return type == ObjectType::INT_NUMBER;
 }

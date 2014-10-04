@@ -15,8 +15,6 @@ class Sequence : public Object {
 
   std::vector<Object*>& getValue();
 
-  void mark() override;
-
   std::string toString() const override;
 
  private:

@@ -76,12 +76,20 @@ Lambda* Allocator::createLambda(Object* body, std::vector<std::string>& argument
   return lambda;
 }
 
-Closure* Allocator::createClosure(Lambda *lambda, std::shared_ptr<Environment> env) {
+Closure* Allocator::createClosure(Lambda* lambda, std::shared_ptr<Environment> env) {
   Closure *closure = static_cast<Closure*>(memory.allocate(ObjectType::CLOSURE));
   closure->setLambda(lambda);
   closure->setEnv(env);
 
   return closure;
+}
+
+Promise* Allocator::createPromise(Object* body, std::shared_ptr<Environment> env) {
+  Promise *promise = static_cast<Promise*>(memory.allocate(ObjectType::PROMISE));
+  promise->setBody(body);
+  promise->setEnv(env);
+
+  return promise;
 }
 
 Define* Allocator::createDefine(std::string name, Object* value) {
