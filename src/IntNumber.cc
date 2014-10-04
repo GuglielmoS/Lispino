@@ -101,10 +101,16 @@ Number* IntNumber::div(Number* obj) throw (Errors::RuntimeError) {
 }
 
 Number* IntNumber::divInt(IntNumber* obj) throw (Errors::RuntimeError) {
+  if (value == 0)
+    throw Errors::RuntimeError("error: division by zero");
+
   return VM::getAllocator().createIntNumber(obj->value / value);
 }
 
 Number* IntNumber::divFloat(FloatNumber* obj) throw (Errors::RuntimeError) {
+  if (value == 0)
+    throw Errors::RuntimeError("error: division by zero");
+
   return VM::getAllocator().createFloatNumber(obj->getValue() / value);
 }
 
@@ -113,10 +119,16 @@ Number* IntNumber::remainder(Number* obj) throw (Errors::RuntimeError) {
 }
 
 Number* IntNumber::remainderInt(IntNumber* obj) throw (Errors::RuntimeError) {
+  if (value == 0)
+    throw Errors::RuntimeError("error: division by zero");
+
   return VM::getAllocator().createIntNumber(obj->value % value);
 }
 
 Number* IntNumber::remainderFloat(FloatNumber* obj) throw (Errors::RuntimeError) {
+  if (value == 0)
+    throw Errors::RuntimeError("error: division by zero");
+
   return VM::getAllocator().createIntNumber(fmod(obj->getValue(), value));
 }
 

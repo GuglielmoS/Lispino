@@ -11,7 +11,7 @@ BUILTIN_FUNCTIONS_OBJS=src/builtins/BuiltinFunction.o src/builtins/Add.o src/bui
 
 INTERPRETER_OBJS=src/Closure.o src/Promise.o src/GarbageCollector.o src/Environment.o src/Interpreter.o src/Evaluator.o src/Args.o
 
-UTILS_OBJS=src/utils/List.o src/utils/Token.o
+UTILS_OBJS=src/utils/List.o src/utils/Token.o src/utils/Object.o
 
 ALL_OBJS=$(TOKENIZER_OBJS) $(PARSER_OBJS) $(BUILTIN_FUNCTIONS_OBJS) $(UTILS_OBJS) $(INTERPRETER_OBJS)
 

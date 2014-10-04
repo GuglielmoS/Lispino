@@ -421,8 +421,12 @@ Object* Parser::dispatch(Token *token) throw (Errors::CompileError) {
 void Parser::check(Token *token, TokenType expected_type) throw (Errors::CompileError) {
   if (token == nullptr || token->getType() != expected_type) {
     std::stringstream buf;
-    buf << "expected " << Utils::type2str(expected_type) << ", "
-        << "found " << Utils::type2str(token->getType());
+    buf << "expected " << Utils::type2str(expected_type) << ", ";
+    if (token != nullptr)
+      buf << "found " << Utils::type2str(token->getType());
+    else
+      buf << "found NULL";
+
     throw Errors::CompileError(getContext(), buf.str(), token->getSourceCodePosition());
   }
 }
@@ -432,8 +436,12 @@ void Parser::checkExpr(Token *token, TokenType suggested_type) throw (Errors::Co
       token->getType() == TokenType::EOS ||
       token->getType() == TokenType::UNKNOWN) {
     std::stringstream buf;
-    buf << "expected an expression or " << Utils::type2str(suggested_type) << ", "
-        << "found " << Utils::type2str(token->getType());
+    buf << "expected an expression or " << Utils::type2str(suggested_type) << ", ";
+    if (token != nullptr)
+      buf << "found " << Utils::type2str(token->getType());
+    else
+      buf << "found NULL";
+
     throw Errors::CompileError(getContext(), buf.str(), token->getSourceCodePosition());
   }
 }

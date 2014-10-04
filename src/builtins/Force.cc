@@ -17,10 +17,7 @@ std::string Force::getName() const {
 Object* Force::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   // evaluate the first argument
   Object *first_arg = args[0]->eval(env);
-
-  // check that the given argument is a promise
-  if (!first_arg->isPromise())
-    throw Errors::RuntimeError("force: expected a promise, given something else");
+  check(first_arg, ObjectType::PROMISE);
 
   Promise *promise = static_cast<Promise*>(first_arg);
 

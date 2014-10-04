@@ -21,17 +21,15 @@ Object* Apply::apply(std::vector<Object*>& args, std::shared_ptr<Environment> en
   Object *procedure = args[0]->eval(env);
 
   // check if the procedure is callable
-  if (!procedure->isLambda()
-        && !procedure->isClosure()
-        && !procedure->isBuiltinFunction())
-    throw Errors::RuntimeError("apply: the first argument must be a callable object");
+  check(procedure, {ObjectType::LAMBDA, 
+                    ObjectType::CLOSURE,
+                    ObjectType::BUILTIN_FUNCTION});
 
   // extract the arguments to apply
   Object *arguments_to_apply = args[1]->eval(env);
 
   // check that the arguments are provided as a list
-  if (!arguments_to_apply->isList())
-    throw Errors::RuntimeError("apply: the second argument must be a list");
+  check(arguments_to_apply, ObjectType::LIST); 
 
   // evaluate the application of the procedure on the given arguments
   return VM::getAllocator().createList(procedure, arguments_to_apply)->eval(env); 

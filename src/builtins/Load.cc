@@ -20,8 +20,7 @@ std::string Load::getName() const {
 
 Object* Load::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) throw (Errors::RuntimeError) {
   // check that the given argument is a string
-  if (!args[0]->isString())
-    throw Errors::RuntimeError("load: the parameter must be a string");
+  check(args[0], ObjectType::STRING);
 
   // evaluate the code from the given file
   std::string filename = static_cast<String*>(args[0])->getValue();
@@ -43,7 +42,7 @@ Object* Load::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) th
     
     return VM::getAllocator().createBoolean(true);
   } else {
-    throw Errors::RuntimeError("load: can't open the given file");
+    throw Errors::RuntimeError(getName() + ": can't open the given file");
   }
 }
 

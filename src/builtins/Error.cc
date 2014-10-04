@@ -18,11 +18,10 @@ Object* Error::apply(std::vector<Object*>& args, std::shared_ptr<Environment> en
   Object *error_message = args[0]->eval(env);
 
   // check that the argument given is a String
-  if (!error_message->isString())
-    throw Errors::RuntimeError("error: the message must be a string");
+  check(error_message, ObjectType::STRING);
 
   // throw the specified runtime error
-  throw Errors::RuntimeError("ERROR: " + error_message->toString()); 
+  throw Errors::RuntimeError("USER-ERROR: " + error_message->toString()); 
 }
 
 }

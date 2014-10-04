@@ -16,8 +16,7 @@ std::string Car::getName() const {
 
 Object* Car::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   Object *value = args[0]->eval(env);
-  if (!value->isList())
-    throw Errors::RuntimeError("car: invalid argument");
+  check(value, ObjectType::LIST);
 
   return static_cast<List*>(value)->getFirst();
 }

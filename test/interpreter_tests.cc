@@ -139,7 +139,7 @@ TEST(InterpreterTests, BuiltinMul) {
 }
 
 TEST(InterpreterTests, BuiltinDiv) {
-    std::stringstream stream("(/ 0 1) (/ 1 2) (/ 4 2)");
+    std::stringstream stream("(/ 0 1) (/ 1 2) (/ 4 2) (/ 1 0) (/ 1.0 0.0) (/ 1.0 0) (/ 0 0)");
     Parser parser(stream);
 
     // parse the stream and check the expressions
@@ -154,6 +154,20 @@ TEST(InterpreterTests, BuiltinDiv) {
     expr = parser.parseExpr()->eval();
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(2, static_cast<IntNumber*>(expr)->getValue());
+
+    // Division by zero exception
+
+    // (/ 1 0)
+    ASSERT_THROW(parser.parseExpr()->eval(), Errors::RuntimeError);
+
+    // (/ 1.0 0.0)
+    ASSERT_THROW(parser.parseExpr()->eval(), Errors::RuntimeError);
+
+    // (/ 1.0 0)
+    ASSERT_THROW(parser.parseExpr()->eval(), Errors::RuntimeError);
+
+    // (/ 1 0.0)
+    ASSERT_THROW(parser.parseExpr()->eval(), Errors::RuntimeError);
 }
 
 TEST(InterpreterTests, BuiltinRemainder) {

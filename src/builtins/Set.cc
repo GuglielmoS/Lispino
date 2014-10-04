@@ -16,16 +16,13 @@ std::string Set::getName() const {
 }
 
 Object* Set::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
-  if (!args[0]->isSymbol())
-    throw Errors::RuntimeError("set!: the first argument must be a symbol");
+  check(args[0], ObjectType::SYMBOL);
 
   // evaluate the expression to assing
   Object *result = args[1]->eval(env);
 
   // update the given symbol
-  env->update(static_cast<Symbol*>(args[0]), result);
-
-  return result;
+  return env->update(static_cast<Symbol*>(args[0]), result);
 }
 
 }
