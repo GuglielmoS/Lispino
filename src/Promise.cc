@@ -45,9 +45,13 @@ bool Promise::hasCachedResult() const {
 }
 
 std::string Promise::toString() const {
-  std::stringstream buf;
-  buf << "<#PROMISE:" << this << ">";
-  return buf.str();
+  if (hasCachedResult()) {
+    return result->toString();
+  } else {
+    std::stringstream buf;
+    buf << "<#PROMISE:" << this << ">";
+    return buf.str();
+  }
 }
 
 }

@@ -96,7 +96,10 @@ size_t Memory::getAllocatedObjects() const {
 }
 
 size_t Memory::cleanup() {
+  // perform a collection of the garbage
   gc.collect();
+
+  // remove the unused objects found during the collection
   return releaseUnusedObjects();
 }
 
