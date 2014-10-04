@@ -618,6 +618,44 @@ TEST(InterpreterTests, BuiltinListPred) {
     ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
 }
 
+TEST(InterpreterTests, BuiltinPromisePred) {
+    std::stringstream stream("(promise? (delay 1)) (promise? (cdr (lazy-cons 1 2))) (promise? '(1 . 2)) (promise? '(1 2)) (promise? \"ciao\") (promise? #t) (promise? #f) (promise? 'x) (promise? nil) (promise? 1) (promise? 1.5)");
+
+    Parser parser(stream);
+
+    // parse the stream and check the expressions
+    Object *expr(parser.parseExpr()->eval());
+    ASSERT_TRUE(expr->isBoolean());
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+
+    expr = parser.parseExpr()->eval();
+    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+}
+
 TEST(InterpreterTests, BuiltinError) {
     std::stringstream stream("(error \"this is an error\")");
 

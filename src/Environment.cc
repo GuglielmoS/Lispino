@@ -25,6 +25,7 @@
 #include "builtins/StringPred.h"
 #include "builtins/ProcedurePred.h"
 #include "builtins/ListPred.h"
+#include "builtins/PromisePred.h"
 
 #include "builtins/And.h"
 #include "builtins/Or.h"
@@ -183,6 +184,7 @@ BuiltinsTable Environment::initializeBuiltinFunctions() {
   bind(table, new Builtins::StringPred());
   bind(table, new Builtins::ProcedurePred());
   bind(table, new Builtins::ListPred());
+  bind(table, new Builtins::PromisePred());
 
   // I/O utils
   bind(table, new Builtins::Display());
