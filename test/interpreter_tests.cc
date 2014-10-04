@@ -434,40 +434,31 @@ TEST(InterpreterTests, BuiltinBooleanPred) {
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    ASSERT_TRUE(expr->isTrue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    ASSERT_TRUE(expr->isTrue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    ASSERT_TRUE(expr->isTrue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    ASSERT_TRUE(expr->isTrue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 }
 
 TEST(InterpreterTests, BuiltinStringPred) {
@@ -477,32 +468,25 @@ TEST(InterpreterTests, BuiltinStringPred) {
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    ASSERT_TRUE(expr->isTrue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 }
 
 TEST(InterpreterTests, BuiltinPairPred) {
@@ -512,40 +496,31 @@ TEST(InterpreterTests, BuiltinPairPred) {
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    ASSERT_TRUE(expr->isTrue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    ASSERT_TRUE(expr->isTrue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 }
 
 TEST(InterpreterTests, BuiltinProcedurePred) {
@@ -555,24 +530,19 @@ TEST(InterpreterTests, BuiltinProcedurePred) {
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    ASSERT_TRUE(expr->isTrue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    ASSERT_TRUE(expr->isTrue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 }
 
 TEST(InterpreterTests, BuiltinListPred) {
@@ -582,40 +552,31 @@ TEST(InterpreterTests, BuiltinListPred) {
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    ASSERT_TRUE(expr->isTrue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 }
 
 TEST(InterpreterTests, BuiltinPromisePred) {
@@ -626,34 +587,34 @@ TEST(InterpreterTests, BuiltinPromisePred) {
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr()->eval());
     ASSERT_TRUE(expr->isBoolean());
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    ASSERT_TRUE(expr->isTrue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isTrue());
+    ASSERT_TRUE(expr->isTrue());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 
     expr = parser.parseExpr()->eval();
-    ASSERT_TRUE(static_cast<Boolean*>(expr)->isFalse());
+    ASSERT_TRUE(expr->isFalse());
 }
 
 TEST(InterpreterTests, BuiltinError) {
