@@ -22,7 +22,7 @@ Main Features
 + Checked with Valgrind Memcheck
 + Values: Integer, Float, Character, String, Symbol, Boolean 
 + Basic Scheme forms: define, if, cond, let, begin, quote, lambda
-+ Identity predicates: list?, symbol?, char?, string?, pair?, number?, boolean?, procedure?, null?
++ Identity predicates: list?, symbol?, char?, string?, pair?, number?, boolean?, procedure?, null?, promise?
 + Equality operators: eq?, eqv?, equal?
 + Lazy evaluation with promises: delay, force, lazy-cons
 + A little standard library that contains basic stuff (see lib/std.scm)
