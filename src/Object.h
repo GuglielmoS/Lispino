@@ -44,7 +44,9 @@ class Object {
 
   virtual ~Object();
 
-  ObjectType getType() const;
+  inline ObjectType getType() const {
+    return type;
+  }
 
   Object* eval() throw (Errors::RuntimeError);
   Object* eval(std::shared_ptr<Environment> env) throw (Errors::RuntimeError);
@@ -55,7 +57,9 @@ class Object {
 
   // EQ?
 
-  bool eq(const Object* obj) const;
+  inline bool eq(const Object* obj) const {
+    return this == obj;
+  }
 
   // EQV?
 
@@ -139,12 +143,18 @@ class Object {
    * Garbage collection related methods 
    */
 
-  void mark();
+  inline void mark() {
+    markFlag = true;
+  }
+
+  inline void unmark() {
+    markFlag = false;
+  }
+
+  inline bool isMarked() const {
+    return markFlag;
+  } 
   
-  void unmark(); 
-
-  bool isMarked() const;
-
   /*
    * Useful methods 
    */
@@ -153,37 +163,69 @@ class Object {
 
   virtual bool isFalse() const;
 
-  bool isNil() const;
-  
-  bool isList() const;
-  
-  bool isLambda() const;
-  
-  bool isClosure() const;
+  inline bool isNil() const {
+    return type == ObjectType::NIL;
+  }
 
-  bool isPromise() const;
-  
-  bool isIntNumber() const;
-  
-  bool isFloatNumber() const;
-  
-  bool isBoolean() const;
-  
-  bool isSymbol() const;
+  inline bool isList() const {
+    return type == ObjectType::LIST;
+  }
 
-  bool isCharacter() const;
-  
-  bool isString() const;
-  
-  bool isQuote() const;
-  
-  bool isDefine() const;
-  
-  bool isIfExpr() const;
-  
-  bool isBuiltinFunction() const;
-  
-  bool isSequence() const;
+  inline bool isLambda() const {
+    return type == ObjectType::LAMBDA;
+  }
+
+  inline bool isClosure() const {
+    return type == ObjectType::CLOSURE;
+  }
+
+  inline bool isPromise() const {
+    return type == ObjectType::PROMISE;
+  }
+
+  inline bool isIntNumber() const {
+    return type == ObjectType::INT_NUMBER;
+  }
+
+  inline bool isFloatNumber() const {
+    return type == ObjectType::FLOAT_NUMBER;
+  }
+
+  inline bool isBoolean() const {
+    return type == ObjectType::BOOLEAN;
+  }
+
+  inline bool isSymbol() const {
+    return type == ObjectType::SYMBOL;
+  }
+
+  inline bool isCharacter() const {
+    return type == ObjectType::CHARACTER;
+  }
+
+  inline bool isString() const {
+    return type == ObjectType::STRING;
+  }
+
+  inline bool isQuote() const {
+    return type == ObjectType::QUOTE;
+  }
+
+  inline bool isDefine() const {
+    return type == ObjectType::DEFINE;
+  }
+
+  inline bool isIfExpr() const {
+    return type == ObjectType::IF;
+  }
+
+  inline bool isBuiltinFunction() const {
+    return type == ObjectType::BUILTIN_FUNCTION;
+  }
+
+  inline bool isSequence() const {
+    return type == ObjectType::SEQUENCE;
+  }
 
   /// provides a string representation of the object
   virtual std::string toString() const = 0;

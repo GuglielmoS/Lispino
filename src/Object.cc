@@ -15,20 +15,12 @@ Object::~Object() {
   /* DO NOTHING */
 }
 
-ObjectType Object::getType() const {
-  return type;
-}
-
 Object* Object::eval() throw (Errors::RuntimeError) {
   return VM::getEvaluator().eval(this);
 }
 
 Object* Object::eval(std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   return VM::getEvaluator().eval(this, env);
-}
-
-bool Object::eq(const Object* obj) const {
-  return this == obj;
 }
 
 bool Object::eqv(const Object* obj) const {
@@ -167,88 +159,12 @@ Object* Object::remainderFloat(FloatNumber*) throw (Errors::RuntimeError) {
   throw Errors::RuntimeError(/*"Cannot calculate the remainder between apples and pears!"*/);
 }
 
-void Object::mark() {
-  markFlag = true;
-}
-
-void Object::unmark() {
-  markFlag = false;
-}
-
-bool Object::isMarked() const {
-  return markFlag;
-}
-
 bool Object::isTrue() const {
   return true;
 }
 
 bool Object::isFalse() const {
   return false;
-}
-
-bool Object::isNil() const {
-  return type == ObjectType::NIL;
-}
-
-bool Object::isList() const {
-  return type == ObjectType::LIST;
-}
-
-bool Object::isLambda() const {
-  return type == ObjectType::LAMBDA;
-}
-
-bool Object::isClosure() const {
-  return type == ObjectType::CLOSURE;
-}
-
-bool Object::isPromise() const {
-  return type == ObjectType::PROMISE;
-}
-
-bool Object::isIntNumber() const {
-  return type == ObjectType::INT_NUMBER;
-}
-
-bool Object::isFloatNumber() const {
-  return type == ObjectType::FLOAT_NUMBER;
-}
-
-bool Object::isBoolean() const {
-  return type == ObjectType::BOOLEAN;
-}
-
-bool Object::isSymbol() const {
-  return type == ObjectType::SYMBOL;
-}
-
-bool Object::isCharacter() const {
-  return type == ObjectType::CHARACTER;
-}
-
-bool Object::isString() const {
-  return type == ObjectType::STRING;
-}
-
-bool Object::isQuote() const {
-  return type == ObjectType::QUOTE;
-}
-
-bool Object::isDefine() const {
-  return type == ObjectType::DEFINE;
-}
-
-bool Object::isIfExpr() const {
-  return type == ObjectType::IF;
-}
-
-bool Object::isBuiltinFunction() const {
-  return type == ObjectType::BUILTIN_FUNCTION;
-}
-
-bool Object::isSequence() const {
-  return type == ObjectType::SEQUENCE;
 }
 
 }
