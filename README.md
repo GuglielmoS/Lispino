@@ -24,6 +24,7 @@ Main Features
 + Basic Scheme forms: define, if, cond, let, begin, quote, lambda
 + Identity predicates: list?, symbol?, char?, string?, pair?, number?, boolean?, procedure?, null?
 + Equality operators: eq?, eqv?, equal?
++ Lazy evaluation with promises: delay, force, lazy-cons
 + A little standard library that contains basic stuff (see lib/std.scm)
 + REPL to interact with the interpreter (nice with rlwrap)
 
