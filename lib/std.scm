@@ -165,6 +165,12 @@
     (begin (proc (stream-car s))
            (stream-for-each proc (stream-cdr s)))))
 
+(define (stream-zipWith proc s1 s2)
+  (if (or (stream-null? s1) (stream-null? s2))
+    the-empty-stream
+    (lazy-cons (proc (stream-car s1) (stream-car s2))
+               (stream-zipWith proc (stream-cdr s1) (stream-cdr s2)))))
+
 (define (stream-take s n)
   (if (= n 0)
     the-empty-stream
