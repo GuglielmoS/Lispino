@@ -102,44 +102,6 @@ class Object {
   virtual int compareSequence(const Sequence* obj) const throw (Errors::RuntimeError);
 
   /*
-   * Common operations between objects
-   */
-
-  virtual Object* negate() throw (Errors::RuntimeError);
-
-  virtual Object* add(Object* obj) throw (Errors::RuntimeError);
-  
-  virtual Object* addInt(IntNumber* obj) throw (Errors::RuntimeError);
-  
-  virtual Object* addFloat(FloatNumber* obj) throw (Errors::RuntimeError);
-  
-  virtual Object* addString(String* obj) throw (Errors::RuntimeError);
-  
-  virtual Object* sub(Object* obj) throw (Errors::RuntimeError);
-  
-  virtual Object* subInt(IntNumber* obj) throw (Errors::RuntimeError);
-  
-  virtual Object* subFloat(FloatNumber* obj) throw (Errors::RuntimeError);
-
-  virtual Object* mul(Object* obj) throw (Errors::RuntimeError);  
-
-  virtual Object* mulInt(IntNumber* obj) throw (Errors::RuntimeError);
-  
-  virtual Object* mulFloat(FloatNumber* obj) throw (Errors::RuntimeError);
-  
-  virtual Object* div(Object* obj) throw (Errors::RuntimeError);
-  
-  virtual Object* divInt(IntNumber* obj) throw (Errors::RuntimeError);
-  
-  virtual Object* divFloat(FloatNumber* obj) throw (Errors::RuntimeError); 
-  
-  virtual Object* remainder(Object* obj) throw (Errors::RuntimeError);
-  
-  virtual Object* remainderInt(IntNumber* obj) throw (Errors::RuntimeError);
-  
-  virtual Object* remainderFloat(FloatNumber* obj) throw (Errors::RuntimeError);
-
-  /*
    * Garbage collection related methods 
    */
 
@@ -181,6 +143,10 @@ class Object {
 
   inline bool isPromise() const {
     return type == ObjectType::PROMISE;
+  }
+
+  inline bool isNumber() const {
+    return isIntNumber() || isFloatNumber();
   }
 
   inline bool isIntNumber() const {

@@ -3,13 +3,11 @@
 
 #include <cstdint>
 
-#include <string>
-
-#include "Object.h"
+#include "Number.h"
 
 namespace Lispino {
 
-class IntNumber : public Object {
+class IntNumber : public Number {
  public:
   IntNumber();
 
@@ -31,33 +29,35 @@ class IntNumber : public Object {
   
   Object* negate() throw (Errors::RuntimeError) override;
 
-  Object* add(Object* obj) throw (Errors::RuntimeError) override;
+  Number* add(Number* obj) throw (Errors::RuntimeError) override;
 
-  Object* addInt(IntNumber* obj) throw (Errors::RuntimeError) override;
+  Number* addInt(IntNumber* obj) throw (Errors::RuntimeError) override;
 
-  Object* addFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
+  Number* addFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
 
-  Object* sub(Object* obj) throw (Errors::RuntimeError) override;
+  Number* sub(Number* obj) throw (Errors::RuntimeError) override;
   
-  Object* subInt(IntNumber* obj) throw (Errors::RuntimeError) override;
+  Number* subInt(IntNumber* obj) throw (Errors::RuntimeError) override;
   
-  Object* subFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
+  Number* subFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
   
-  Object* mul(Object* obj) throw (Errors::RuntimeError) override;
+  Number* mul(Number* obj) throw (Errors::RuntimeError) override;
   
-  Object* mulInt(IntNumber* obj) throw (Errors::RuntimeError) override;
+  Number* mulInt(IntNumber* obj) throw (Errors::RuntimeError) override;
   
-  Object* mulFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
+  Number* mulFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
   
-  Object* div(Object* obj) throw (Errors::RuntimeError) override;
+  Number* div(Number* obj) throw (Errors::RuntimeError) override;
   
-  Object* divInt(IntNumber* obj) throw (Errors::RuntimeError) override;
+  Number* divInt(IntNumber* obj) throw (Errors::RuntimeError) override;
   
-  Object* divFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
+  Number* divFloat(FloatNumber* obj) throw (Errors::RuntimeError) override;
   
-  Object* remainder(Object* obj) throw (Errors::RuntimeError) override;
-  
-  Object* remainderInt(IntNumber* obj) throw (Errors::RuntimeError) override;
+  Number* remainder(Number* obj) throw (Errors::RuntimeError) override;
+
+  Number* remainderInt(IntNumber* obj) throw (Errors::RuntimeError) override;
+
+  Number* remainderFloat(FloatNumber* obj) throw (Errors::RuntimeError);
 
   std::string toString() const override;
 

@@ -19,9 +19,24 @@ std::string Mul::getName() const {
 }
 
 Object* Mul::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
-  Object* result = args[0]->eval(env);
-  for (unsigned int i = 1; i < args.size(); i++)
-    result = result->mul(args[i]->eval(env));
+  // evaluate the first argument
+  Object* first_arg = args[0]->eval(env);
+
+  // check that the first argument is a number
+  if (!first_arg->isNumber())
+    throw Errors::RuntimeError("+: expected number, found something else");
+
+  Number *result = static_cast<Number*>(first_arg);
+  for (unsigned int i = 1; i < args.size(); i++) {
+    Object *cur_obj = args[i]->eval(env);
+
+    // check that the current object is a number
+    if (!cur_obj->isNumber())
+      throw Errors::RuntimeError("+: expected number, found something else");
+
+    // add it to the accumulator
+    result = result->mul(static_cast<Number*>(cur_obj));
+  }
 
   return result;
 }
