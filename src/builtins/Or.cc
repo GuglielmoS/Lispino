@@ -20,7 +20,7 @@ std::string Or::getName() const {
 
 Object* Or::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   for (auto& arg : args) {
-    if (arg->eval(env)->isTrue())
+    if (eval(arg, env)->isTrue())
       return VM::getAllocator().createBoolean(true);
   }
 

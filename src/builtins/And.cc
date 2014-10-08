@@ -20,7 +20,7 @@ std::string And::getName() const {
 
 Object* And::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   for (auto& arg : args) {
-    if (arg->eval(env)->isFalse())
+    if (eval(arg, env)->isFalse())
       return VM::getAllocator().createBoolean(false);
   }
 

@@ -15,7 +15,7 @@ std::string LazyCons::getName() const {
 }
 
 Object* LazyCons::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
-  Object *first_element = args[0]->eval(env);
+  Object *first_element = eval(args[0], env);
   Promise *delayed_object = VM::getAllocator().createPromise(args[1], env);
   return VM::getAllocator().createList(first_element, delayed_object);
 }

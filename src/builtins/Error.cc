@@ -15,7 +15,7 @@ std::string Error::getName() const {
 }
 
 Object* Error::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
-  Object *error_message = args[0]->eval(env);
+  Object *error_message = eval(args[0], env);
 
   // check that the argument given is a String
   check(error_message, ObjectType::STRING);

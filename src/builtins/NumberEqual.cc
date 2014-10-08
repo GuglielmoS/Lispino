@@ -20,7 +20,7 @@ std::string NumberEqual::getName() const {
 
 Object* NumberEqual::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   for (unsigned int i = 0; i < args.size()-1; i++) {
-    if (args[i]->eval(env)->compare(args[i+1]->eval(env)) != 0)
+    if (eval(args[i], env)->compare(eval(args[i+1], env)) != 0)
       return VM::getAllocator().createBoolean(false);
   }
 

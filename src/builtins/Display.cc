@@ -28,7 +28,7 @@ Object* Display::apply(std::vector<Object*>& args, std::shared_ptr<Environment> 
   Object *current_object;
 
   for (auto& current_arg : args) {
-    current_object = current_arg->eval(env);
+    current_object = eval(current_arg, env);
 
     if (current_object->isString())
       current_value = static_cast<String*>(current_object)->getValue();

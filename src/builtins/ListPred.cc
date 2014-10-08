@@ -16,7 +16,7 @@ std::string ListPred::getName() const {
 
 Object* ListPred::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   bool pred_result = false;
-  Object* arg = args[0]->eval(env);
+  Object* arg = eval(args[0], env);
 
   if (arg->isList()) {
     Object *rest = static_cast<List*>(arg)->getRest();

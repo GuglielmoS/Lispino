@@ -16,7 +16,7 @@ std::string Force::getName() const {
 
 Object* Force::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   // evaluate the first argument
-  Object *first_arg = args[0]->eval(env);
+  Object *first_arg = eval(args[0], env);
   check(first_arg, ObjectType::PROMISE);
 
   Promise *promise = static_cast<Promise*>(first_arg);
@@ -26,7 +26,7 @@ Object* Force::apply(std::vector<Object*>& args, std::shared_ptr<Environment> en
     return promise->getCachedResult();
   } else {
     // evaluate the promise code in its original environment
-    Object *result = promise->getBody()->eval(promise->getEnv());
+    Object *result = eval(promise->getBody(), promise->getEnv());
     promise->setCachedResult(result);
     return result;
   }

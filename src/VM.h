@@ -11,6 +11,9 @@
 
 namespace Lispino {
 
+Object* eval(Object *expr);
+Object* eval(Object *expr, std::shared_ptr<Environment> env);
+
 class VM {
  public:
   static std::shared_ptr<Environment> getGlobalEnv();

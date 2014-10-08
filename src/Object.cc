@@ -15,14 +15,6 @@ Object::~Object() {
   /* DO NOTHING */
 }
 
-Object* Object::eval() throw (Errors::RuntimeError) {
-  return VM::getEvaluator().eval(this);
-}
-
-Object* Object::eval(std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
-  return VM::getEvaluator().eval(this, env);
-}
-
 bool Object::eqv(const Object* obj) const {
   return this->eq(obj);
 }

@@ -5,6 +5,14 @@ namespace Lispino {
 // singleton instance
 VM VM::instance;
 
+Object* eval(Object *expr) {
+  return VM::getEvaluator().eval(expr);
+}
+
+Object* eval(Object *expr, std::shared_ptr<Environment> env) {
+  return VM::getEvaluator().eval(expr, env);
+}
+
 VM::VM() 
     : global_env(std::make_shared<Environment>()),
       memory(gc), 

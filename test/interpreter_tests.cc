@@ -10,6 +10,7 @@
 #include "../src/Lambda.h"
 #include "../src/Define.h"
 #include "../src/Quote.h"
+#include "../src/VM.h"
 
 // GTest headers
 #include <gtest/gtest.h>
@@ -25,7 +26,7 @@ TEST(InterpreterTests, NIL) {
     
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
-    ASSERT_TRUE(expr->eval()->isNil());
+    ASSERT_TRUE(eval(expr)->isNil());
 }
 
 TEST(InterpreterTests, IfExpr) {
@@ -33,10 +34,10 @@ TEST(InterpreterTests, IfExpr) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(0, static_cast<IntNumber*>(expr)->getValue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(1, static_cast<IntNumber*>(expr)->getValue());
 }
@@ -46,7 +47,7 @@ TEST(InterpreterTests, BuiltinCar) {
     Parser parser(stream);
     
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(1, static_cast<IntNumber*>(expr)->getValue());
 }
@@ -56,7 +57,7 @@ TEST(InterpreterTests, BuiltinCdr) {
     Parser parser(stream);
     
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isList());
     ASSERT_TRUE(static_cast<List*>(expr)->getFirst()->isIntNumber());
     ASSERT_EQ(2, static_cast<IntNumber*>(static_cast<List*>(expr)->getFirst())->getValue());
@@ -67,14 +68,14 @@ TEST(InterpreterTests, BuiltinCons) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isList());
     ASSERT_TRUE(static_cast<List*>(expr)->getFirst()->isIntNumber());
     ASSERT_EQ(1, static_cast<IntNumber*>(static_cast<List*>(expr)->getFirst())->getValue());
     ASSERT_TRUE(static_cast<List*>(expr)->getRest()->isIntNumber());
     ASSERT_EQ(2, static_cast<IntNumber*>(static_cast<List*>(expr)->getRest())->getValue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isList());
     ASSERT_TRUE(static_cast<List*>(expr)->getFirst()->isIntNumber());
     ASSERT_EQ(1, static_cast<IntNumber*>(static_cast<List*>(expr)->getFirst())->getValue());
@@ -89,15 +90,15 @@ TEST(InterpreterTests, BuiltinAdd) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(2, static_cast<IntNumber*>(expr)->getValue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(4, static_cast<IntNumber*>(expr)->getValue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFloatNumber());
     ASSERT_FLOAT_EQ(1.5, static_cast<FloatNumber*>(expr)->getValue());
 }
@@ -107,15 +108,15 @@ TEST(InterpreterTests, BuiltinSub) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(0, static_cast<IntNumber*>(expr)->getValue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(0, static_cast<IntNumber*>(expr)->getValue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFloatNumber());
     ASSERT_EQ(0.5, static_cast<FloatNumber*>(expr)->getValue());
 }
@@ -125,15 +126,15 @@ TEST(InterpreterTests, BuiltinMul) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(0, static_cast<IntNumber*>(expr)->getValue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(24, static_cast<IntNumber*>(expr)->getValue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFloatNumber());
     ASSERT_FLOAT_EQ(0.5, static_cast<FloatNumber*>(expr)->getValue());
 }
@@ -143,31 +144,31 @@ TEST(InterpreterTests, BuiltinDiv) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(0, static_cast<IntNumber*>(expr)->getValue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(0, static_cast<IntNumber*>(expr)->getValue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(2, static_cast<IntNumber*>(expr)->getValue());
 
     // Division by zero exception
 
     // (/ 1 0)
-    ASSERT_THROW(parser.parseExpr()->eval(), Errors::RuntimeError);
+    ASSERT_THROW(eval(parser.parseExpr()), Errors::RuntimeError);
 
     // (/ 1.0 0.0)
-    ASSERT_THROW(parser.parseExpr()->eval(), Errors::RuntimeError);
+    ASSERT_THROW(eval(parser.parseExpr()), Errors::RuntimeError);
 
     // (/ 1.0 0)
-    ASSERT_THROW(parser.parseExpr()->eval(), Errors::RuntimeError);
+    ASSERT_THROW(eval(parser.parseExpr()), Errors::RuntimeError);
 
     // (/ 1 0.0)
-    ASSERT_THROW(parser.parseExpr()->eval(), Errors::RuntimeError);
+    ASSERT_THROW(eval(parser.parseExpr()), Errors::RuntimeError);
 }
 
 TEST(InterpreterTests, BuiltinRemainder) {
@@ -175,15 +176,15 @@ TEST(InterpreterTests, BuiltinRemainder) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(1, static_cast<IntNumber*>(expr)->getValue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(1, static_cast<IntNumber*>(expr)->getValue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(0, static_cast<IntNumber*>(expr)->getValue());
 }
@@ -193,11 +194,11 @@ TEST(InterpreterTests, BuiltinDisplay) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isString());
     ASSERT_EQ("123", static_cast<String*>(expr)->getValue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isString());
     ASSERT_EQ("(+ 1 1) = 2", static_cast<String*>(expr)->getValue());
 }
@@ -207,17 +208,17 @@ TEST(InterpreterTests, Environment) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
 
     // check 'x'
     ASSERT_TRUE(expr->isIntNumber());
 
     // check 'y'
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
 
     // check 'z'
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isList());
     ASSERT_TRUE(static_cast<List*>(expr)->getFirst()->isIntNumber());
     ASSERT_EQ(1, static_cast<IntNumber*>(static_cast<List*>(expr)->getFirst())->getValue());
@@ -225,12 +226,12 @@ TEST(InterpreterTests, Environment) {
     ASSERT_EQ(2, static_cast<IntNumber*>(static_cast<List*>(expr)->getRest())->getValue());
 
     // parse the define with the catch rest argument
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isLambda());
     ASSERT_TRUE(static_cast<Lambda*>(expr)->hasCatchRest());
 
     // parse the execution of the defined lambda
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(6, static_cast<IntNumber*>(expr)->getValue());
 }
@@ -240,34 +241,34 @@ TEST(InterpreterTests, Closure) {
     Parser parser(stream);
 
     // check 'make-adder'
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isLambda());
 
     // check 'add-one'
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isClosure());
 
     // check 'add-two'
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isClosure());
 
     // check 'add-one' result
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(1, static_cast<IntNumber*>(expr)->getValue());
 
     // check 'add-two' result
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(2, static_cast<IntNumber*>(expr)->getValue());
 
     // check 'add-one' result
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(1, static_cast<IntNumber*>(expr)->getValue());
 
     // check 'add-one' & 'add-two' result
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(3, static_cast<IntNumber*>(expr)->getValue());
 }
@@ -277,16 +278,16 @@ TEST(InterpreterTests, BuiltinNumberEqual) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 }
 
@@ -295,17 +296,17 @@ TEST(InterpreterTests, BuiltinGreaterThan) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isFalse());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 }
 
@@ -314,17 +315,17 @@ TEST(InterpreterTests, BuiltinGreaterEqualThan) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 }
 
@@ -333,17 +334,17 @@ TEST(InterpreterTests, BuiltinLowerThan) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isFalse());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 }
 
@@ -352,17 +353,17 @@ TEST(InterpreterTests, BuiltinLowerEqualThan) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 }
 
@@ -371,7 +372,7 @@ TEST(InterpreterTests, BuiltinApply) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isIntNumber());
     ASSERT_EQ(55, static_cast<IntNumber*>(expr)->getValue());
 }
@@ -381,19 +382,19 @@ TEST(InterpreterTests, BuiltinNumberPred) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 }
 
@@ -402,22 +403,22 @@ TEST(InterpreterTests, BuiltinCharPred) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 }
 
@@ -426,19 +427,19 @@ TEST(InterpreterTests, BuiltinSymbolPred) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 }
 
@@ -447,31 +448,31 @@ TEST(InterpreterTests, BuiltinBooleanPred) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 }
 
@@ -481,25 +482,25 @@ TEST(InterpreterTests, BuiltinStringPred) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 }
 
@@ -509,31 +510,31 @@ TEST(InterpreterTests, BuiltinPairPred) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 }
 
@@ -543,19 +544,19 @@ TEST(InterpreterTests, BuiltinProcedurePred) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 }
 
@@ -565,31 +566,31 @@ TEST(InterpreterTests, BuiltinListPred) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 }
 
@@ -599,35 +600,35 @@ TEST(InterpreterTests, BuiltinPromisePred) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
     ASSERT_TRUE(expr->isBoolean());
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 }
 
@@ -638,7 +639,7 @@ TEST(InterpreterTests, BuiltinError) {
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
-    ASSERT_THROW(expr->eval(), Errors::RuntimeError);
+    ASSERT_THROW(eval(expr), Errors::RuntimeError);
 }
 
 TEST(InterpreterTests, BuiltinEq) {
@@ -647,29 +648,29 @@ TEST(InterpreterTests, BuiltinEq) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
 
     // (eq? 'x 'x)
     ASSERT_TRUE(expr->isTrue());
 
     // (eq? 'x 'y)
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
     // (eq? #\a #\a)
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
     // (eq? 1 1)
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
     // (eq? 2.5 2.5)
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
     // (eq? "a" "a")
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 }
 
@@ -679,29 +680,29 @@ TEST(InterpreterTests, BuiltinEqv) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
 
     // (eqv? 'x 'x)
     ASSERT_TRUE(expr->isTrue());
 
     // (eqv? #\a #\a)
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
     // (eqv? 1 1)
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
     // (eqv? 2.5 2.5)
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
     // (eqv? '(1) '(1))
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 
     // (eq? "a" "a")
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isFalse());
 }
 
@@ -711,16 +712,16 @@ TEST(InterpreterTests, BuiltinEqual) {
     Parser parser(stream);
 
     // parse the stream and check the expressions
-    Object *expr(parser.parseExpr()->eval());
+    Object *expr(eval(parser.parseExpr()));
 
     // (eqv? '(1 2 3) '(1 2 3))
     ASSERT_TRUE(expr->isTrue());
 
     // (eqv? "a" "a")
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 
     // (eqv? 1 1)
-    expr = parser.parseExpr()->eval();
+    expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 }

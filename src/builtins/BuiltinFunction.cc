@@ -2,11 +2,20 @@
 
 #include <sstream>
 
+#include "../VM.h"
 #include "../utils/Object.h"
 
 namespace Lispino {
 
 namespace Builtins {
+
+bool BuiltinFunction::hasExactArguments() const {
+  return true;
+}
+
+std::string BuiltinFunction::toString() const {
+  return "#<BUILTIN-FUNCTION:" + getName() + ">";
+}
 
 void BuiltinFunction::check(Object *object, ObjectType expected_type) const throw (Errors::RuntimeError) {
   if (object->getType() != expected_type) {
@@ -45,14 +54,6 @@ void BuiltinFunction::check(Object *object, std::initializer_list<ObjectType> ex
   buf << ", found " << Utils::objtype2str(object->getType());
 
   throw Errors::RuntimeError(getName() + ": " + buf.str());
-}
-
-bool BuiltinFunction::hasExactArguments() const {
-  return true;
-}
-
-std::string BuiltinFunction::toString() const {
-  return "#<BUILTIN-FUNCTION:" + getName() + ">";
 }
 
 }

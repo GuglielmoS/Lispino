@@ -15,7 +15,7 @@ std::string Cdr::getName() const {
 }
 
 Object* Cdr::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
-  Object *value = args[0]->eval(env);
+  Object *value = eval(args[0], env);
   check(value, ObjectType::LIST);
 
   return static_cast<List*>(value)->getRest();

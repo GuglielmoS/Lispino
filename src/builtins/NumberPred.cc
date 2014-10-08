@@ -15,8 +15,8 @@ std::string NumberPred::getName() const {
 }
 
 Object* NumberPred::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
-  Object* result = args[0]->eval(env);
-  return VM::getAllocator().createBoolean(result->isIntNumber() || result->isFloatNumber());
+  Object* result = eval(args[0], env);
+  return VM::getAllocator().createBoolean(result->isNumber());
 }
 
 }

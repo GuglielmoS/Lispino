@@ -21,14 +21,14 @@ std::string Remainder::getName() const {
 
 Object* Remainder::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
   // evaluate the first argument
-  Object* first_arg = args[0]->eval(env);
+  Object* first_arg = eval(args[0], env);
 
   // check that the first argument is a number
   check(first_arg, {ObjectType::INT_NUMBER, ObjectType::FLOAT_NUMBER});
 
   Number *result = static_cast<Number*>(first_arg);
   for (unsigned int i = 1; i < args.size(); i++) {
-    Object *cur_obj = args[i]->eval(env);
+    Object *cur_obj = eval(args[i], env);
 
     // check that the current object is a number
     check(cur_obj, {ObjectType::INT_NUMBER, ObjectType::FLOAT_NUMBER});

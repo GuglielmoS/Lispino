@@ -48,9 +48,6 @@ class Object {
     return type;
   }
 
-  Object* eval() throw (Errors::RuntimeError);
-  Object* eval(std::shared_ptr<Environment> env) throw (Errors::RuntimeError);
-
   /*
    * Equality
    */

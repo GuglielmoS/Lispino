@@ -15,7 +15,7 @@ std::string ProcedurePred::getName() const {
 }
 
 Object* ProcedurePred::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
-  Object* result = args[0]->eval(env);
+  Object* result = eval(args[0], env);
   return VM::getAllocator().createBoolean(result->isLambda() || result->isClosure());
 }
 
