@@ -1,6 +1,8 @@
 #include "Environment.h"
 
 #include "builtins/Set.h"
+#include "builtins/SetCar.h"
+#include "builtins/SetCdr.h"
 
 #include "builtins/Car.h"
 #include "builtins/Cdr.h"
@@ -143,8 +145,10 @@ void Environment::bind(BuiltinsTable& bindings, Builtins::BuiltinFunction *fun) 
 BuiltinsTable Environment::initializeBuiltinFunctions() {
   BuiltinsTable table;
 
-  // environment
+  // set functions
   bind(table, new Builtins::Set());
+  bind(table, new Builtins::SetCar());
+  bind(table, new Builtins::SetCdr());
 
   // evaluation
   bind(table, new Builtins::Apply());

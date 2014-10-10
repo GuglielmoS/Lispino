@@ -725,3 +725,42 @@ TEST(InterpreterTests, BuiltinEqual) {
     expr = eval(parser.parseExpr());
     ASSERT_TRUE(expr->isTrue());
 }
+
+TEST(InterpreterTests, BuiltinSetCar) {
+    std::stringstream stream("(define x '(1 2 3)) (set-car! x 9) (car x)");
+
+    Parser parser(stream);
+
+    // parse the stream and check the expressions
+    Object *expr(eval(parser.parseExpr()));
+
+    // (set-car! x 9)
+    expr = eval(parser.parseExpr());
+    ASSERT_TRUE(expr->isIntNumber());
+    ASSERT_EQ(9, static_cast<IntNumber*>(expr)->getValue());
+
+    // (car x)
+    expr = eval(parser.parseExpr());
+    ASSERT_TRUE(expr->isIntNumber());
+    ASSERT_EQ(9, static_cast<IntNumber*>(expr)->getValue());
+}
+
+TEST(InterpreterTests, BuiltinSetCdr) {
+    std::stringstream stream("(define x '(1)) (set-cdr! x 2) (cdr x)");
+
+    Parser parser(stream);
+
+    // parse the stream and check the expressions
+    Object *expr(eval(parser.parseExpr()));
+
+    // (set-cdr! x 2)
+    expr = eval(parser.parseExpr());
+    ASSERT_TRUE(expr->isIntNumber());
+    ASSERT_EQ(2, static_cast<IntNumber*>(expr)->getValue());
+
+    // (cdr x)
+    expr = eval(parser.parseExpr());
+    ASSERT_TRUE(expr->isIntNumber());
+    ASSERT_EQ(2, static_cast<IntNumber*>(expr)->getValue());
+}
+
