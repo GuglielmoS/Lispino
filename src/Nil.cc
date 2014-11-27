@@ -34,10 +34,6 @@ int Nil::compareBoolean(const Boolean*) const throw (Errors::RuntimeError) {
   return -1;
 }
 
-int Nil::compareSequence(const Sequence*) const throw (Errors::RuntimeError) {
-  return -1;
-}
-
 std::string Nil::toString() const {
   return "nil";
 }

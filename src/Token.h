@@ -71,6 +71,10 @@ class Token {
 
   SourceCodePosition position;
 
+  // the constructor is private because only the specialized static methods 
+  // must be used for creating a Token
+  Token();
+
   // it contains all the reserved keywords and their relative TokenType
   static std::map<std::string, TokenType> reserved_keywords;
 

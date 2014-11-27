@@ -61,7 +61,7 @@ void Environment::setParent(std::shared_ptr<Environment> env) {
   this->parent = env;
 }
 
-std::shared_ptr<Environment> Environment::getParent() {
+std::shared_ptr<Environment> Environment::getParent() const {
   return parent;
 }
 

@@ -36,7 +36,7 @@ Object* Promise::getCachedResult() {
   return result;
 }
 
-std::shared_ptr<Environment> Promise::getEnv() {
+std::shared_ptr<Environment> Promise::getEnv() const {
   return env;
 }
 

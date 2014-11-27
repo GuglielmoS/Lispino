@@ -25,7 +25,7 @@ class Environment {
 
   void setParent(std::shared_ptr<Environment> env);
 
-  std::shared_ptr<Environment> getParent();
+  std::shared_ptr<Environment> getParent() const;
 
   LookupTable& getLookupTable();
 

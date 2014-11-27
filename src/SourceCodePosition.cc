@@ -14,12 +14,12 @@ SourceCodePosition::SourceCodePosition(const std::string&& filename)
 }
 
 SourceCodePosition::SourceCodePosition(uint32_t line, uint32_t column)
-    : filename("stdin"), line(line), column(column) {
+    : filename("stdin"), line(line), column(column), last_char(0x00) {
   /* DO NOTHING */
 }
 
 SourceCodePosition::SourceCodePosition(const std::string&& filename, uint32_t line, uint32_t column)
-    : filename(filename), line(line), column(column) {
+    : filename(filename), line(line), column(column), last_char(0x00) {
   /* DO NOTHING */
 }
 

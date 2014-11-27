@@ -91,10 +91,6 @@ Object* Memory::allocate(ObjectType type) {
   return allocated_object;
 }
 
-size_t Memory::getAllocatedObjects() const {
-  return memory.size();
-}
-
 size_t Memory::cleanup() {
   // perform a collection of the garbage
   gc.collect();

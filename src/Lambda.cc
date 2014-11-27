@@ -37,7 +37,7 @@ Object* Lambda::getBody() {
   return body;
 }
 
-std::vector<std::string> Lambda::getArguments() {
+std::vector<std::string> Lambda::getArguments() const {
   return arguments;
 }
 

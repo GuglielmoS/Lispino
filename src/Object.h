@@ -96,8 +96,6 @@ class Object {
   
   virtual int compareBoolean(const Boolean* obj) const throw (Errors::RuntimeError);
   
-  virtual int compareSequence(const Sequence* obj) const throw (Errors::RuntimeError);
-
   /*
    * Garbage collection related methods 
    */

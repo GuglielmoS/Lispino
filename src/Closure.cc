@@ -22,7 +22,7 @@ Lambda* Closure::getLambda() {
   return lambda;
 }
 
-std::shared_ptr<Environment> Closure::getEnv() {
+std::shared_ptr<Environment> Closure::getEnv() const {
   return env;
 }
 

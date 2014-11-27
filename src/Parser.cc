@@ -339,7 +339,7 @@ Object* Parser::parseDefine() throw (Errors::CompileError) {
 
   // create and optimize the define body if possible
   Object* value = nullptr;
-  if (expressions.size() == 0)
+  if (expressions.empty())
     throw Errors::CompileError("Malformed DEFINE body, it's empty", token->getSourceCodePosition());
   else if (expressions.size() == 1)
     value = expressions[0];
@@ -389,7 +389,7 @@ Object* Parser::parseBegin() throw (Errors::CompileError) {
 
   // create and optimize the begin if possible
   Object* value = nullptr;
-  if (expressions.size() == 0)
+  if (expressions.empty())
     throw Errors::CompileError("Malformed BEGIN, it's empty", token->getSourceCodePosition());
   else if (expressions.size() == 1)
     value = expressions[0];

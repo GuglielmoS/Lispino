@@ -112,4 +112,9 @@ Token* Token::createSymbol(std::string value, SourceCodePosition position) {
   return tok;
 }
 
+// private constructor
+Token::Token() {
+  // DO NOTHING
+}
+
 }

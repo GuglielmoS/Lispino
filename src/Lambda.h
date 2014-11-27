@@ -27,7 +27,7 @@ class Lambda : public Object {
 
   Object* getBody();
 
-  std::vector<std::string> getArguments();
+  std::vector<std::string> getArguments() const;
 
   std::uint32_t getRequiredArguments() const;
 

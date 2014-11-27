@@ -79,10 +79,6 @@ int Object::compareBoolean(const Boolean*) const throw (Errors::RuntimeError) {
   throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareSequence(const Sequence*) const throw (Errors::RuntimeError) {
-  throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
-}
-
 bool Object::isTrue() const {
   return true;
 }

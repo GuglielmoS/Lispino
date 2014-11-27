@@ -22,7 +22,7 @@ class Promise : public Object {
 
   Object* getCachedResult();
 
-  std::shared_ptr<Environment> getEnv();
+  std::shared_ptr<Environment> getEnv() const;
 
   bool hasCachedResult() const;
 

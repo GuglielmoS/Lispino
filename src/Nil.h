@@ -25,8 +25,6 @@ class Nil : public Object {
   
   int compareBoolean(const Boolean* obj) const throw (Errors::RuntimeError) override;
   
-  int compareSequence(const Sequence* obj) const throw (Errors::RuntimeError) override;
-
   std::string toString() const override;
 };
 

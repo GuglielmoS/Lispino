@@ -24,8 +24,6 @@ class Memory {
 
   Object* allocate(ObjectType type);
 
-  size_t getAllocatedObjects() const;
-
   size_t cleanup();
 
  private:

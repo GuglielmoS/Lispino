@@ -19,7 +19,7 @@ class Closure : public Object {
 
   Lambda* getLambda();
 
-  std::shared_ptr<Environment> getEnv();
+  std::shared_ptr<Environment> getEnv() const;
 
   std::string toString() const override;
 
