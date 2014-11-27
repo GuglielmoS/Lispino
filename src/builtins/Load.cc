@@ -13,12 +13,12 @@ namespace Builtins {
 std::uint32_t Load::getRequiredArguments() const {
   return 1;
 }
-  
+
 std::string Load::getName() const {
   return "load";
 }
 
-Object* Load::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) throw (Errors::RuntimeError) {
+Object* Load::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) throw(Errors::RuntimeError) {
   // check that the given argument is a string
   check(args[0], ObjectType::STRING);
 
@@ -39,13 +39,11 @@ Object* Load::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) th
     }
 
     input_stream.close();
-    
+
     return VM::getAllocator().createBoolean(true);
   } else {
     throw Errors::RuntimeError(getName() + ": can't open the given file");
   }
 }
-
 }
-
 }

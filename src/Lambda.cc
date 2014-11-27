@@ -6,7 +6,7 @@
 
 namespace Lispino {
 
-Lambda::Lambda() 
+Lambda::Lambda()
     : Object(ObjectType::LAMBDA),
       body(nullptr),
       catch_rest_flag(false) {
@@ -15,7 +15,7 @@ Lambda::Lambda()
 
 Lambda::Lambda(Object* body, std::vector<std::string> arguments)
     : Object(ObjectType::LAMBDA),
-      body(body), 
+      body(body),
       arguments(arguments),
       catch_rest_flag(false) {
   /* DO NOTHING */
@@ -54,5 +54,4 @@ std::string Lambda::toString() const {
   buf << "<#LAMBDA:" << this << ">";
   return buf.str();
 }
-
 }

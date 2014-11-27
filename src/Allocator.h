@@ -2,6 +2,7 @@
 #define LISPINO_ALLOCATOR_H_
 
 #include <unordered_map>
+#include <cstdint>
 
 #include "Memory.h"
 #include "Environment.h"
@@ -25,7 +26,7 @@ namespace Lispino {
 
 class Allocator {
  public:
-  Allocator(Memory& memory);
+  explicit Allocator(Memory& memory);
 
   Memory& getMemory();
 
@@ -35,7 +36,7 @@ class Allocator {
 
   String* createString(std::string value);
 
-  IntNumber* createIntNumber(long int value);
+  IntNumber* createIntNumber(std::int32_t value);
 
   FloatNumber* createFloatNumber(float value);
 
@@ -43,7 +44,7 @@ class Allocator {
 
   List* createList(Object* first, Object* rest);
 
-  Lambda* createLambda(Object* body, std::vector<std::string>& arguments, bool catch_rest_flag=false);
+  Lambda* createLambda(Object* body, std::vector<std::string>& arguments, bool catch_rest_flag = false);
 
   Closure* createClosure(Lambda* lambda, std::shared_ptr<Environment> env);
 
@@ -68,7 +69,6 @@ class Allocator {
 
   bool isSymbolCached(std::string& value) const;
 };
-
 }
 
 #endif // LISPINO_ALLOCATOR_H_

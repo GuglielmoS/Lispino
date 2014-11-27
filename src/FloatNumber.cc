@@ -33,14 +33,14 @@ bool FloatNumber::eqvFloat(const FloatNumber* obj) const {
   return value == obj->value;
 }
 
-int FloatNumber::compare(const Object* obj) const throw (Errors::RuntimeError) {
+int FloatNumber::compare(const Object* obj) const throw(Errors::RuntimeError) {
   if (obj == this)
     return 0;
   else
     return obj->compareFloat(this);
 }
 
-int FloatNumber::compareInt(const IntNumber* obj) const throw (Errors::RuntimeError) {
+int FloatNumber::compareInt(const IntNumber* obj) const throw(Errors::RuntimeError) {
   float temp = obj->getValue() - value;
 
   if (temp > 0.0)
@@ -51,7 +51,7 @@ int FloatNumber::compareInt(const IntNumber* obj) const throw (Errors::RuntimeEr
     return 0;
 }
 
-int FloatNumber::compareFloat(const FloatNumber* obj) const throw (Errors::RuntimeError) {
+int FloatNumber::compareFloat(const FloatNumber* obj) const throw(Errors::RuntimeError) {
   float temp = obj->value - value;
 
   if (temp > 0.0)
@@ -62,76 +62,76 @@ int FloatNumber::compareFloat(const FloatNumber* obj) const throw (Errors::Runti
     return 0;
 }
 
-Number* FloatNumber::negate() throw (Errors::RuntimeError) {
+Number* FloatNumber::negate() throw(Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(-value);
 }
 
-Number* FloatNumber::add(Number* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::add(Number* obj) throw(Errors::RuntimeError) {
   return obj->addFloat(this);
 }
 
-Number* FloatNumber::addInt(IntNumber* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::addInt(IntNumber* obj) throw(Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(value + obj->getValue());
 }
 
-Number* FloatNumber::addFloat(FloatNumber* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::addFloat(FloatNumber* obj) throw(Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(value + obj->value);
 }
 
-Number* FloatNumber::sub(Number* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::sub(Number* obj) throw(Errors::RuntimeError) {
   return obj->subFloat(this);
 }
 
-Number* FloatNumber::subInt(IntNumber* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::subInt(IntNumber* obj) throw(Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(obj->getValue() - value);
 }
 
-Number* FloatNumber::subFloat(FloatNumber* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::subFloat(FloatNumber* obj) throw(Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(obj->value - value);
 }
 
-Number* FloatNumber::mul(Number* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::mul(Number* obj) throw(Errors::RuntimeError) {
   return obj->mulFloat(this);
 }
 
-Number* FloatNumber::mulInt(IntNumber* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::mulInt(IntNumber* obj) throw(Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(obj->getValue() * value);
 }
 
-Number* FloatNumber::mulFloat(FloatNumber* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::mulFloat(FloatNumber* obj) throw(Errors::RuntimeError) {
   return VM::getAllocator().createFloatNumber(obj->value * value);
 }
 
-Number* FloatNumber::div(Number* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::div(Number* obj) throw(Errors::RuntimeError) {
   return obj->divFloat(this);
 }
 
-Number* FloatNumber::divInt(IntNumber* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::divInt(IntNumber* obj) throw(Errors::RuntimeError) {
   if (value == 0)
     throw Errors::RuntimeError("error: division by zero");
 
   return VM::getAllocator().createFloatNumber(obj->getValue() / value);
 }
 
-Number* FloatNumber::divFloat(FloatNumber* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::divFloat(FloatNumber* obj) throw(Errors::RuntimeError) {
   if (value == 0)
     throw Errors::RuntimeError("error: division by zero");
 
   return VM::getAllocator().createFloatNumber(obj->value / value);
 }
 
-Number* FloatNumber::remainder(Number* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::remainder(Number* obj) throw(Errors::RuntimeError) {
   return obj->remainderFloat(this);
 }
 
-Number* FloatNumber::remainderInt(IntNumber* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::remainderInt(IntNumber* obj) throw(Errors::RuntimeError) {
   if (value == 0)
     throw Errors::RuntimeError("error: division by zero");
 
   return VM::getAllocator().createIntNumber(fmod(obj->getValue(), value));
 }
 
-Number* FloatNumber::remainderFloat(FloatNumber* obj) throw (Errors::RuntimeError) {
+Number* FloatNumber::remainderFloat(FloatNumber* obj) throw(Errors::RuntimeError) {
   if (value == 0)
     throw Errors::RuntimeError("error: division by zero");
 
@@ -143,5 +143,4 @@ std::string FloatNumber::toString() const {
   buf << value;
   return buf.str();
 }
-
 }

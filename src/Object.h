@@ -40,7 +40,7 @@ enum class ObjectType {
 
 class Object {
  public:
-  Object(ObjectType type);
+  explicit Object(ObjectType type);
 
   virtual ~Object();
 
@@ -78,24 +78,24 @@ class Object {
 
   // COMPARE FOR =, >, >=, <, <=
 
-  virtual int compare(const Object* obj) const throw (Errors::RuntimeError);
-  
-  virtual int compareNil(const Nil* obj) const throw (Errors::RuntimeError);
-  
-  virtual int compareList(const List* obj) const throw (Errors::RuntimeError);
-  
-  virtual int compareInt(const IntNumber* obj) const throw (Errors::RuntimeError);
-  
-  virtual int compareFloat(const FloatNumber* obj) const throw (Errors::RuntimeError);
-  
-  virtual int compareSymbol(const Symbol* obj) const throw (Errors::RuntimeError);
-  
-  virtual int compareCharacter(const Character* obj) const throw (Errors::RuntimeError);
+  virtual int compare(const Object* obj) const throw(Errors::RuntimeError);
 
-  virtual int compareString(const String* obj) const throw (Errors::RuntimeError);
-  
-  virtual int compareBoolean(const Boolean* obj) const throw (Errors::RuntimeError);
-  
+  virtual int compareNil(const Nil* obj) const throw(Errors::RuntimeError);
+
+  virtual int compareList(const List* obj) const throw(Errors::RuntimeError);
+
+  virtual int compareInt(const IntNumber* obj) const throw(Errors::RuntimeError);
+
+  virtual int compareFloat(const FloatNumber* obj) const throw(Errors::RuntimeError);
+
+  virtual int compareSymbol(const Symbol* obj) const throw(Errors::RuntimeError);
+
+  virtual int compareCharacter(const Character* obj) const throw(Errors::RuntimeError);
+
+  virtual int compareString(const String* obj) const throw(Errors::RuntimeError);
+
+  virtual int compareBoolean(const Boolean* obj) const throw(Errors::RuntimeError);
+
   /*
    * Garbage collection related methods 
    */
@@ -110,8 +110,8 @@ class Object {
 
   inline bool isMarked() const {
     return markFlag;
-  } 
-  
+  }
+
   /*
    * Useful methods 
    */
@@ -198,7 +198,6 @@ class Object {
   // flag used for the garbage collection
   bool markFlag;
 };
-
 }
 
 #endif // LISPINO_OBJECT_H_

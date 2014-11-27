@@ -14,7 +14,7 @@ namespace Lispino {
 
 class Memory {
  public:
-  Memory(GarbageCollector& gc);
+  explicit Memory(GarbageCollector& gc);
 
   Nil* getNilInstance();
 
@@ -41,7 +41,6 @@ class Memory {
   // remove the unused objects and return the number of objects deleted
   size_t releaseUnusedObjects();
 };
-
 }
 
 #endif // LISPINO_MEMORY_H_

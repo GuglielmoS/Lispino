@@ -17,7 +17,7 @@ std::string BuiltinFunction::toString() const {
   return "#<BUILTIN-FUNCTION:" + getName() + ">";
 }
 
-void BuiltinFunction::check(Object *object, ObjectType expected_type) const throw (Errors::RuntimeError) {
+void BuiltinFunction::check(Object *object, ObjectType expected_type) const throw(Errors::RuntimeError) {
   if (object->getType() != expected_type) {
     std::stringstream buf;
     buf << "expected " << Utils::objtype2str(expected_type) << ", "
@@ -26,9 +26,9 @@ void BuiltinFunction::check(Object *object, ObjectType expected_type) const thro
   }
 }
 
-void BuiltinFunction::check(Object *object, std::initializer_list<ObjectType> expected_types) const throw (Errors::RuntimeError) {
+void BuiltinFunction::check(Object *object, std::initializer_list<ObjectType> expected_types) const throw(Errors::RuntimeError) {
   // check for one of the expected types
-  for (const auto& type : expected_types) {
+  for (auto const& type : expected_types) {
     if (object->getType() == type)
       return;
   }
@@ -50,12 +50,10 @@ void BuiltinFunction::check(Object *object, std::initializer_list<ObjectType> ex
 
   if (multiple_types)
     buf << Utils::objtype2str(*(expected_types.end()-1));
-  
+
   buf << ", found " << Utils::objtype2str(object->getType());
 
   throw Errors::RuntimeError(getName() + ": " + buf.str());
 }
-
 }
-
 }

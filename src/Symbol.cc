@@ -22,19 +22,18 @@ std::string Symbol::getValue() const {
   return value;
 }
 
-int Symbol::compare(const Object* obj) const throw (Errors::RuntimeError) {
+int Symbol::compare(const Object* obj) const throw(Errors::RuntimeError) {
   if (obj == this)
     return 0;
-  else 
+  else
     return obj->compareSymbol(this);
 }
 
-int Symbol::compareSymbol(const Symbol* obj) const throw (Errors::RuntimeError) {
+int Symbol::compareSymbol(const Symbol* obj) const throw(Errors::RuntimeError) {
   return obj->getValue().compare(value);
 }
 
 std::string Symbol::toString() const {
   return value;
 }
-
 }

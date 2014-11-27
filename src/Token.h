@@ -37,15 +37,15 @@ enum class TokenType {
 class Token {
  public:
   TokenType getType() const;
-  
+
   char getCharacter() const;
 
   std::string getSymbol() const;
-  
+
   std::string getString() const;
-  
+
   std::int64_t getIntNumber() const;
-  
+
   double getFloatNumber() const;
 
   SourceCodePosition getSourceCodePosition() const;
@@ -71,7 +71,7 @@ class Token {
 
   SourceCodePosition position;
 
-  // the constructor is private because only the specialized static methods 
+  // the constructor is private because only the specialized static methods
   // must be used for creating a Token
   Token();
 
@@ -81,7 +81,6 @@ class Token {
   // populates the reserved keywords map
   static std::map<std::string, TokenType> initializeReservedKeywords();
 };
-
 }
 
 #endif // LISPINO_TOKEN_H_

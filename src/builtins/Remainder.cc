@@ -13,13 +13,12 @@ bool Remainder::hasExactArguments() const {
 std::uint32_t Remainder::getRequiredArguments() const {
   return 2;
 }
-  
+
 std::string Remainder::getName() const {
   return "remainder";
 }
 
-
-Object* Remainder::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* Remainder::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   // evaluate the first argument
   Object* first_arg = eval(args[0], env);
 
@@ -39,7 +38,5 @@ Object* Remainder::apply(std::vector<Object*>& args, std::shared_ptr<Environment
 
   return result;
 }
-
 }
-
 }

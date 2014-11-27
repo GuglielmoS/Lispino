@@ -26,9 +26,9 @@ class List : public Object {
 
   bool equalList(const List* obj) const override;
 
-  int compare(const Object* obj) const throw (Errors::RuntimeError) override;
+  int compare(const Object* obj) const throw(Errors::RuntimeError) override;
 
-  int compareList(const List* obj) const throw (Errors::RuntimeError) override;
+  int compareList(const List* obj) const throw(Errors::RuntimeError) override;
 
   std::string toString() const override;
 
@@ -38,7 +38,6 @@ class List : public Object {
 
   std::string toStringHelper(bool parentheses) const;
 };
-
 }
 
 #endif // LISPINO_LIST_H_

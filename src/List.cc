@@ -6,7 +6,7 @@
 
 namespace Lispino {
 
-List::List() 
+List::List()
     : Object(ObjectType::LIST), head(nullptr), tail(nullptr) {
   /* DO NOTHING */
 }
@@ -43,11 +43,11 @@ bool List::equalList(const List* obj) const {
   return false;
 }
 
-int List::compare(const Object* obj) const throw (Errors::RuntimeError) {
+int List::compare(const Object* obj) const throw(Errors::RuntimeError) {
   return obj->compareList(this);
 }
 
-int List::compareList(const List* obj) const throw (Errors::RuntimeError) {
+int List::compareList(const List* obj) const throw(Errors::RuntimeError) {
   if (obj == this)
     return 0;
   else
@@ -81,7 +81,6 @@ std::string List::toStringHelper(bool parentheses) const {
   if (parentheses)
     buf << ")";
 
-  return buf.str();   
-} 
-
+  return buf.str();
+}
 }

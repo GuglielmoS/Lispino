@@ -12,7 +12,7 @@ class String : public Object {
  public:
   String();
 
-  String(std::string value);
+  explicit String(std::string value);
 
   void setValue(std::string value);
 
@@ -22,9 +22,9 @@ class String : public Object {
 
   bool equalString(const String* obj) const override;
 
-  int compare(const Object* obj) const throw (Errors::RuntimeError) override;
+  int compare(const Object* obj) const throw(Errors::RuntimeError) override;
 
-  int compareString(const String* obj) const throw (Errors::RuntimeError) override;
+  int compareString(const String* obj) const throw(Errors::RuntimeError) override;
 
   std::string toString() const override;
 
@@ -33,7 +33,6 @@ class String : public Object {
 
   std::string escape(std::string string) const;
 };
-
 }
 
 #endif // LISPINO_STRING_H_

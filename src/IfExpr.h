@@ -28,7 +28,6 @@ class IfExpr : public Object {
   Object *consequent;
   Object *alternative;
 };
-
 }
 
 #endif // LISPINO_IFEXPR_H_

@@ -17,12 +17,12 @@ bool Display::hasExactArguments() const {
 std::uint32_t Display::getRequiredArguments() const {
   return 1;
 }
-  
+
 std::string Display::getName() const {
   return "display";
 }
 
-Object* Display::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* Display::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   std::stringstream buf;
   std::string current_value;
   Object *current_object;
@@ -41,7 +41,5 @@ Object* Display::apply(std::vector<Object*>& args, std::shared_ptr<Environment> 
 
   return VM::getAllocator().createString(buf.str());
 }
-
 }
-
 }

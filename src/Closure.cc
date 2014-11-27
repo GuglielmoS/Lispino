@@ -31,5 +31,4 @@ std::string Closure::toString() const {
   buf << "<#CLOSURE:" << this << ">";
   return buf.str();
 }
-
 }

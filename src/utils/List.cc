@@ -53,7 +53,5 @@ List* vec2list(std::vector<Object*>& objects) {
   else
     return first_cons;
 }
-
 }
-
 }

@@ -9,12 +9,12 @@ namespace Builtins {
 std::uint32_t ListPred::getRequiredArguments() const {
   return 1;
 }
-  
+
 std::string ListPred::getName() const {
   return "list?";
 }
 
-Object* ListPred::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* ListPred::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   bool pred_result = false;
   Object* arg = eval(args[0], env);
 
@@ -25,7 +25,5 @@ Object* ListPred::apply(std::vector<Object*>& args, std::shared_ptr<Environment>
 
   return VM::getAllocator().createBoolean(pred_result);
 }
-
 }
-
 }

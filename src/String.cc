@@ -26,14 +26,14 @@ bool String::equalString(const String* obj) const {
   return value == obj->value;
 }
 
-int String::compare(const Object* obj) const throw (Errors::RuntimeError) {
+int String::compare(const Object* obj) const throw(Errors::RuntimeError) {
   if (this == obj)
     return 0;
   else
     return obj->compareString(this);
 }
 
-int String::compareString(const String* obj) const throw (Errors::RuntimeError) {
+int String::compareString(const String* obj) const throw(Errors::RuntimeError) {
   return obj->getValue().compare(value);
 }
 
@@ -46,7 +46,7 @@ std::string String::toString() const {
 std::string String::escape(std::string str) const {
   std::stringstream buf;
 
-  for (const auto& ch : str) {
+  for (auto const& ch : str) {
     switch (ch) {
       case '\n':
         buf << "\\n";
@@ -64,5 +64,4 @@ std::string String::escape(std::string str) const {
 
   return buf.str();
 }
-
 }

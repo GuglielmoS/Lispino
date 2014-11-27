@@ -27,7 +27,6 @@ class Closure : public Object {
   Lambda *lambda;
   std::shared_ptr<Environment> env;
 };
-
 }
 
 #endif // LISPINO_CLOSURE_H_

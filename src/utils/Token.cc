@@ -35,7 +35,5 @@ std::string type2str(TokenType type) {
       assert(false && "Cannot find the string for this token type!");
   }
 }
-
 }
-
 }

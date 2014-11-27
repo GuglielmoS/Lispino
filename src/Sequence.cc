@@ -15,5 +15,4 @@ std::vector<Object*>& Sequence::getValue() {
 std::string Sequence::toString() const {
   return "SEQUENCE";
 }
-
 }

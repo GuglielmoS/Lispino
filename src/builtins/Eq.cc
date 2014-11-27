@@ -13,12 +13,12 @@ bool Eq::hasExactArguments() const {
 std::uint32_t Eq::getRequiredArguments() const {
   return 2;
 }
-  
+
 std::string Eq::getName() const {
   return "eq?";
 }
 
-Object* Eq::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* Eq::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   for (unsigned int i = 0; i < args.size()-1; i++) {
     auto cur_obj = eval(args[i], env);
     auto next_obj = eval(args[i+1], env);
@@ -29,7 +29,5 @@ Object* Eq::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) 
 
   return VM::getAllocator().createBoolean(true);
 }
-
 }
-
 }

@@ -34,7 +34,6 @@ class Promise : public Object {
   bool cached_result_flag;
   std::shared_ptr<Environment> env;
 };
-
 }
 
 #endif // LISPINO_PROMISE_H_

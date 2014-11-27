@@ -67,14 +67,14 @@ void GarbageCollector::markObject(Object *object, std::vector<Environment*>& mar
       case ObjectType::QUOTE: {
         Quote *quote = static_cast<Quote*>(object);
         markObject(quote->getValue(), marked_envs);
-        break;                        
+        break;
       }
 
       case ObjectType::LIST: {
         List *list = static_cast<List*>(object);
         markObject(list->getFirst(), marked_envs);
         markObject(list->getRest(), marked_envs);
-        break;                      
+        break;
       }
 
       case ObjectType::SEQUENCE: {
@@ -103,7 +103,7 @@ void GarbageCollector::markObject(Object *object, std::vector<Environment*>& mar
         if (promise->hasCachedResult())
           markObject(promise->getCachedResult(), marked_envs);
         markVisibleObjects(promise->getEnv(), marked_envs);
-        break;                          
+        break;
       }
     }
   }
@@ -130,5 +130,4 @@ void GarbageCollector::markVisibleObjects(std::shared_ptr<Environment> env, std:
   if (parent_env)
     markVisibleObjects(parent_env, marked_envs);
 }
-
 }

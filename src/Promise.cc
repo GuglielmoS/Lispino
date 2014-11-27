@@ -6,9 +6,9 @@
 
 namespace Lispino {
 
-Promise::Promise() 
-    : Object(ObjectType::PROMISE), 
-      body(nullptr), 
+Promise::Promise()
+    : Object(ObjectType::PROMISE),
+      body(nullptr),
       result(nullptr),
       cached_result_flag(false),
       env(nullptr) {
@@ -53,5 +53,4 @@ std::string Promise::toString() const {
     return buf.str();
   }
 }
-
 }

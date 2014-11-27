@@ -12,11 +12,11 @@ namespace Lispino {
 
 class Parser {
  public:
-  Parser(std::istream& input_stream);
+  explicit Parser(std::istream& input_stream);
 
-  Object* parse() throw (Errors::CompileError);
+  Object* parse() throw(Errors::CompileError);
 
-  Object* parseExpr() throw (Errors::CompileError);
+  Object* parseExpr() throw(Errors::CompileError);
 
  private:
   Allocator &allocator;
@@ -25,27 +25,27 @@ class Parser {
 
   std::string current_context;
 
-  Object* parseList() throw (Errors::CompileError);
+  Object* parseList() throw(Errors::CompileError);
 
-  Object* parseIf() throw (Errors::CompileError);
+  Object* parseIf() throw(Errors::CompileError);
 
-  Object* parseCond() throw (Errors::CompileError);
-  
-  Object* parseLambda() throw (Errors::CompileError);
+  Object* parseCond() throw(Errors::CompileError);
 
-  Object* parseLet() throw (Errors::CompileError);
-  
-  Object* parseDefine() throw (Errors::CompileError);
-  
-  Object* parseQuote(bool check_paren = true) throw (Errors::CompileError);
+  Object* parseLambda() throw(Errors::CompileError);
 
-  Object* parseBegin() throw (Errors::CompileError);
-  
-  Object* dispatch(Token *token) throw (Errors::CompileError);
+  Object* parseLet() throw(Errors::CompileError);
 
-  void check(Token *token, TokenType expected_type) throw (Errors::CompileError);
+  Object* parseDefine() throw(Errors::CompileError);
 
-  void checkExpr(Token* token, TokenType suggested_type) throw (Errors::CompileError);
+  Object* parseQuote(bool check_paren = true) throw(Errors::CompileError);
+
+  Object* parseBegin() throw(Errors::CompileError);
+
+  Object* dispatch(Token *token) throw(Errors::CompileError);
+
+  void check(Token *token, TokenType expected_type) throw(Errors::CompileError);
+
+  void checkExpr(Token* token, TokenType suggested_type) throw(Errors::CompileError);
 
   void setContext(std::string&& context);
 
@@ -53,7 +53,6 @@ class Parser {
 
   std::string& getContext();
 };
-
 }
 
 #endif // LISPINO_PARSER_H_

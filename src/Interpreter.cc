@@ -14,7 +14,7 @@
 namespace Lispino {
 
 Interpreter::Interpreter() : evaluator(VM::getEvaluator()) {
-  /* DO NOTHING */ 
+  /* DO NOTHING */
 }
 
 void Interpreter::init() {
@@ -48,9 +48,9 @@ int Interpreter::repl() {
         auto expr = Parser(stream).parse();
         auto result = evaluator.eval(expr);
         std::cout << result->toString() << std::endl;
-      } catch (Errors::CompileError& error) {
-        std::cout << error.getMessage() << std::endl; 
-      } catch (Errors::RuntimeError& error) {
+      } catch(Errors::CompileError& error) {
+        std::cout << error.getMessage() << std::endl;
+      } catch(Errors::RuntimeError& error) {
         std::cout << error.getMessage() << std::endl;
       }
 
@@ -75,10 +75,10 @@ int Interpreter::execute(std::string filename) {
         expr = parser.parseExpr();
         if (expr != nullptr)
           evaluator.eval(expr);
-      } catch (Errors::CompileError& error) {
-        std::cout << error.getMessage() << std::endl; 
+      } catch(Errors::CompileError& error) {
+        std::cout << error.getMessage() << std::endl;
         return -1;
-      } catch (Errors::RuntimeError& error) {
+      } catch(Errors::RuntimeError& error) {
         std::cout << error.getMessage() << std::endl;
         return -1;
       }
@@ -90,11 +90,9 @@ int Interpreter::execute(std::string filename) {
     input_stream.close();
 
     return 0;
-  }
-  else {
+  } else {
     std::cerr << "File not found: " << filename << std::endl;
     return 1;
   }
 }
-
 }

@@ -37,5 +37,4 @@ Object* IfExpr::getAlternative() {
 std::string IfExpr::toString() const {
   return "IF";
 }
-
 }

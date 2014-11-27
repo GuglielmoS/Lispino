@@ -11,10 +11,10 @@ class Quote : public Object {
  public:
   Quote();
 
-  Quote(Object* value);
+  explicit Quote(Object* value);
 
   void setValue(Object* value);
-  
+
   Object* getValue();
 
   std::string toString() const override;
@@ -22,7 +22,6 @@ class Quote : public Object {
  private:
   Object *value;
 };
-
 }
 
 #endif // LISPINO_QUOTE_H_

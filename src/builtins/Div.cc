@@ -13,12 +13,12 @@ bool Div::hasExactArguments() const {
 std::uint32_t Div::getRequiredArguments() const {
   return 2;
 }
-  
+
 std::string Div::getName() const {
   return "/";
 }
 
-Object* Div::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* Div::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   // evaluate the first argument
   Object* first_arg = eval(args[0], env);
 
@@ -38,7 +38,5 @@ Object* Div::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env)
 
   return result;
 }
-
 }
-
 }

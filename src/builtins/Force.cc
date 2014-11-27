@@ -9,12 +9,12 @@ namespace Builtins {
 std::uint32_t Force::getRequiredArguments() const {
   return 1;
 }
-  
+
 std::string Force::getName() const {
   return "force";
 }
 
-Object* Force::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* Force::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   // evaluate the first argument
   Object *first_arg = eval(args[0], env);
   check(first_arg, ObjectType::PROMISE);
@@ -31,7 +31,5 @@ Object* Force::apply(std::vector<Object*>& args, std::shared_ptr<Environment> en
     return result;
   }
 }
-
 }
-
 }

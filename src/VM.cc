@@ -13,11 +13,11 @@ Object* eval(Object *expr, std::shared_ptr<Environment> env) {
   return VM::getEvaluator().eval(expr, env);
 }
 
-VM::VM() 
+VM::VM()
     : global_env(std::make_shared<Environment>()),
-      memory(gc), 
-      allocator(memory), 
-      gc(global_env), 
+      memory(gc),
+      allocator(memory),
+      gc(global_env),
       evaluator(global_env) {
   /* DO NOTHING */
 }
@@ -37,5 +37,4 @@ Memory& VM::getMemory() {
 Evaluator& VM::getEvaluator() {
   return instance.evaluator;
 }
-
 }

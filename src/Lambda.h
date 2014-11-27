@@ -42,7 +42,6 @@ class Lambda : public Object {
 
   bool catch_rest_flag;
 };
-
 }
 
 #endif // LISPINO_LAMBDA_H_

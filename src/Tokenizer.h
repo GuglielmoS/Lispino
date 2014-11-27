@@ -10,10 +10,10 @@ namespace Lispino {
 
 class Tokenizer {
  public:
-  Tokenizer(std::istream& input_stream);
+  explicit Tokenizer(std::istream& input_stream);
 
   // parses and returns the next token
-  Token* next() throw (Errors::CompileError);
+  Token* next() throw(Errors::CompileError);
 
  private:
   // the reference to the stream from which the tokens will be parsed
@@ -46,9 +46,8 @@ class Tokenizer {
   Token* character();
   Token* symbol();
   Token* number();
-  Token* string() throw (Errors::CompileError);
+  Token* string() throw(Errors::CompileError);
 };
-
 }
 
 #endif // LISPINO_TOKENIZER_H_

@@ -28,14 +28,14 @@ bool Character::eqvCharacter(const Character* obj) const {
   return value == obj->value;
 }
 
-int Character::compare(const Object* obj) const throw (Errors::RuntimeError) {
+int Character::compare(const Object* obj) const throw(Errors::RuntimeError) {
   if (obj == this)
     return 0;
   else
     return obj->compareCharacter(this);
 }
 
-int Character::compareCharacter(const Character* obj) const throw (Errors::RuntimeError) {
+int Character::compareCharacter(const Character* obj) const throw(Errors::RuntimeError) {
   if (obj->value == value)
     return 0;
   else if (obj->value > value)
@@ -49,5 +49,4 @@ std::string Character::toString() const {
   buf << "#\\" << value;
   return buf.str();
 }
-
 }

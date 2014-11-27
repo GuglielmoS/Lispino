@@ -21,5 +21,4 @@ Object* Quote::getValue() {
 std::string Quote::toString() const {
   return "'" + value->toString();
 }
-
 }

@@ -9,7 +9,7 @@ class Character : public Object {
  public:
   Character();
 
-  Character(char value);
+  explicit Character(char value);
 
   void setValue(char value);
 
@@ -19,16 +19,15 @@ class Character : public Object {
 
   bool eqvCharacter(const Character* obj) const override;
 
-  int compare(const Object* obj) const throw (Errors::RuntimeError) override;
+  int compare(const Object* obj) const throw(Errors::RuntimeError) override;
 
-  int compareCharacter(const Character* obj) const throw (Errors::RuntimeError) override;
+  int compareCharacter(const Character* obj) const throw(Errors::RuntimeError) override;
 
   std::string toString() const override;
 
  private:
   char value;
 };
-
 }
 
 #endif // LISPINO_CHARACTER_H_

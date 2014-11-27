@@ -13,12 +13,12 @@ bool Mul::hasExactArguments() const {
 std::uint32_t Mul::getRequiredArguments() const {
   return 1;
 }
-  
+
 std::string Mul::getName() const {
   return "*";
 }
 
-Object* Mul::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* Mul::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   // evaluate the first argument
   Object* first_arg = eval(args[0], env);
 
@@ -38,7 +38,5 @@ Object* Mul::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env)
 
   return result;
 }
-
 }
-
 }

@@ -26,7 +26,7 @@ class SourceCodePosition {
   std::string getFilename() const;
 
   uint32_t getLine() const;
- 
+
   uint32_t getColumn() const;
 
  private:
@@ -36,7 +36,6 @@ class SourceCodePosition {
   uint32_t last_column;
   char last_char;
 };
-
 }
 
 #endif // LISPINO_SOURCECODEPOSITION_H_

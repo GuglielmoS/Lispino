@@ -13,12 +13,12 @@ bool Or::hasExactArguments() const {
 std::uint32_t Or::getRequiredArguments() const {
   return 2;
 }
-  
+
 std::string Or::getName() const {
   return "or";
 }
 
-Object* Or::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* Or::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   for (auto& arg : args) {
     if (eval(arg, env)->isTrue())
       return VM::getAllocator().createBoolean(true);
@@ -26,7 +26,5 @@ Object* Or::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) 
 
   return VM::getAllocator().createBoolean(false);
 }
-
 }
-
 }

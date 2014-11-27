@@ -20,7 +20,6 @@ class Sequence : public Object {
  private:
   std::vector<Object*> expressions;
 };
-
 }
 
 #endif // LISPINO_SEQUENCE_H_

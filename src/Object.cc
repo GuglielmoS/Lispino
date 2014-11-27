@@ -43,39 +43,39 @@ bool Object::equalList(const List* obj) const {
   return this->eqv(obj);
 }
 
-int Object::compare(const Object*) const throw (Errors::RuntimeError) {
+int Object::compare(const Object*) const throw(Errors::RuntimeError) {
   throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareNil(const Nil*) const throw (Errors::RuntimeError) {
+int Object::compareNil(const Nil*) const throw(Errors::RuntimeError) {
   return -1;
 }
 
-int Object::compareList(const List*) const throw (Errors::RuntimeError) {
+int Object::compareList(const List*) const throw(Errors::RuntimeError) {
   throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareInt(const IntNumber*) const throw (Errors::RuntimeError) {
+int Object::compareInt(const IntNumber*) const throw(Errors::RuntimeError) {
   throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareFloat(const FloatNumber*) const throw (Errors::RuntimeError) {
+int Object::compareFloat(const FloatNumber*) const throw(Errors::RuntimeError) {
   throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareSymbol(const Symbol*) const throw (Errors::RuntimeError) {
+int Object::compareSymbol(const Symbol*) const throw(Errors::RuntimeError) {
   throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareCharacter(const Character*) const throw (Errors::RuntimeError) {
+int Object::compareCharacter(const Character*) const throw(Errors::RuntimeError) {
   throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareString(const String*) const throw (Errors::RuntimeError) {
+int Object::compareString(const String*) const throw(Errors::RuntimeError) {
   throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
-int Object::compareBoolean(const Boolean*) const throw (Errors::RuntimeError) {
+int Object::compareBoolean(const Boolean*) const throw(Errors::RuntimeError) {
   throw Errors::RuntimeError(/*"Cannot compare apples and pears!"*/);
 }
 
@@ -86,5 +86,4 @@ bool Object::isTrue() const {
 bool Object::isFalse() const {
   return false;
 }
-
 }

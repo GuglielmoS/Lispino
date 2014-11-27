@@ -25,7 +25,7 @@ SourceCodePosition::SourceCodePosition(const std::string&& filename, uint32_t li
 
 void SourceCodePosition::addChar(char ch) {
   last_column = column;
-  
+
   switch (ch) {
     case '\n':
       line++;
@@ -66,5 +66,4 @@ uint32_t SourceCodePosition::getLine() const {
 uint32_t SourceCodePosition::getColumn() const {
   return column;
 }
-
 }

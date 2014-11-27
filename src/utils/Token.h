@@ -10,9 +10,7 @@ namespace Lispino {
 namespace Utils {
 
 std::string type2str(TokenType type);
-
 }
-
 }
 
 #endif // LISPINO_UTILS_TOKEN_H_

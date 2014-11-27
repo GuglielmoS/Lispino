@@ -24,13 +24,13 @@ class VM {
  private:
   VM();
 
-  // environment that contains the global definitions 
+  // environment that contains the global definitions
   std::shared_ptr<Environment> global_env;
 
   // memory used at runtime by the objects
   Memory memory;
 
-  // used when at runtime when a new object is needed 
+  // used when at runtime when a new object is needed
   Allocator allocator;
 
   // gc used by the memory when needed
@@ -42,7 +42,6 @@ class VM {
   // singleton instance
   static VM instance;
 };
-
 }
 
 #endif // LISPINO_VM_H_

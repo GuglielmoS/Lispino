@@ -30,7 +30,5 @@ std::string objtype2str(ObjectType type) {
       assert(false && "Cannot find the string for this object type!");
   }
 }
-
 }
-
 }

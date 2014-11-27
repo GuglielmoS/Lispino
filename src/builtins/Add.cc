@@ -13,12 +13,12 @@ bool Add::hasExactArguments() const {
 std::uint32_t Add::getRequiredArguments() const {
   return 1;
 }
-  
+
 std::string Add::getName() const {
   return "+";
 }
 
-Object* Add::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* Add::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   // evaluate the first argument
   Object* first_arg = eval(args[0], env);
 
@@ -38,7 +38,5 @@ Object* Add::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env)
 
   return result;
 }
-
 }
-
 }

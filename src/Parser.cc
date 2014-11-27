@@ -9,12 +9,12 @@
 namespace Lispino {
 
 Parser::Parser(std::istream& input_stream)
-    : allocator(VM::getAllocator()), 
+    : allocator(VM::getAllocator()),
       tokenizer(input_stream) {
-  /* DO NOTHING */    
+  /* DO NOTHING */
 }
 
-Object* Parser::parse() throw (Errors::CompileError) {
+Object* Parser::parse() throw(Errors::CompileError) {
   Object *expr = parseExpr();
 
   // check for the End Of Stream
@@ -24,12 +24,12 @@ Object* Parser::parse() throw (Errors::CompileError) {
   return expr;
 }
 
-Object* Parser::parseExpr() throw (Errors::CompileError) {
+Object* Parser::parseExpr() throw(Errors::CompileError) {
   std::unique_ptr<Token> token(tokenizer.next());
   return dispatch(token.get());
 }
 
-Object* Parser::parseList() throw (Errors::CompileError) { 
+Object* Parser::parseList() throw(Errors::CompileError) {
   setContext("LIST");
 
   std::unique_ptr<Token> token(tokenizer.next());
@@ -72,8 +72,7 @@ Object* Parser::parseList() throw (Errors::CompileError) {
     if (improper_list) {
       current->setRest(nextExpr);
       improper_list = false;
-    }
-    else {
+    } else {
       current->setRest(allocator.createList(nextExpr, allocator.createNil()));
       current = static_cast<List*>(current->getRest());
     }
@@ -85,7 +84,7 @@ Object* Parser::parseList() throw (Errors::CompileError) {
   return result;
 }
 
-Object* Parser::parseIf() throw (Errors::CompileError) {
+Object* Parser::parseIf() throw(Errors::CompileError) {
   setContext("IF");
 
   // parse the condition
@@ -115,7 +114,7 @@ Object* Parser::parseIf() throw (Errors::CompileError) {
   return if_expr;
 }
 
-Object* Parser::parseCond() throw (Errors::CompileError) {
+Object* Parser::parseCond() throw(Errors::CompileError) {
   setContext("COND");
   /*
    (cond (<expr_1> <expr_1_body>)
@@ -134,7 +133,7 @@ Object* Parser::parseCond() throw (Errors::CompileError) {
   std::unique_ptr<Token> token(tokenizer.next());
   IfExpr *first_if_expr = nullptr;
   IfExpr *current_if_expr = nullptr;
-  
+
   // skip to the next token
   //token.reset(tokenizer.next());
   while (token->getType() == TokenType::OPEN_PAREN) {
@@ -171,7 +170,7 @@ Object* Parser::parseCond() throw (Errors::CompileError) {
   return first_if_expr;
 }
 
-Object* Parser::parseLambda() throw (Errors::CompileError) {
+Object* Parser::parseLambda() throw(Errors::CompileError) {
   setContext("LAMBDA");
 
   // parse the arguments
@@ -197,7 +196,7 @@ Object* Parser::parseLambda() throw (Errors::CompileError) {
       if (catch_rest_flag)
         break;
 
-      // check if there is a "catch rest" argument 
+      // check if there is a "catch rest" argument
       if (token->getType() == TokenType::DOT) {
         catch_rest_flag = true;
         token.reset(tokenizer.next());
@@ -219,7 +218,7 @@ Object* Parser::parseLambda() throw (Errors::CompileError) {
   return allocator.createLambda(body, params, catch_rest_flag);
 }
 
-Object* Parser::parseLet() throw (Errors::CompileError) {
+Object* Parser::parseLet() throw(Errors::CompileError) {
   setContext("LET");
   /*
     (let ((a 1) (b 2))
@@ -277,7 +276,7 @@ Object* Parser::parseLet() throw (Errors::CompileError) {
   return allocator.createList(let_lambda, Utils::vec2list(let_values));
 }
 
-Object* Parser::parseDefine() throw (Errors::CompileError) {
+Object* Parser::parseDefine() throw(Errors::CompileError) {
   setContext("DEFINE");
 
   std::unique_ptr<Token> token(tokenizer.next());
@@ -305,7 +304,7 @@ Object* Parser::parseDefine() throw (Errors::CompileError) {
       if (catch_rest_flag)
         break;
 
-      // check if there is a "catch rest" argument 
+      // check if there is a "catch rest" argument
       if (token->getType() == TokenType::DOT) {
         catch_rest_flag = true;
         token.reset(tokenizer.next());
@@ -320,7 +319,7 @@ Object* Parser::parseDefine() throw (Errors::CompileError) {
     check(token.get(), TokenType::SYMBOL);
     isFunction = false;
     name = token->getSymbol();
-  } 
+  }
 
   // parse the define expressions
   std::vector<Object*> expressions;
@@ -354,7 +353,7 @@ Object* Parser::parseDefine() throw (Errors::CompileError) {
     return allocator.createDefine(name, value);
 }
 
-Object* Parser::parseQuote(bool check_paren) throw (Errors::CompileError) {
+Object* Parser::parseQuote(bool check_paren) throw(Errors::CompileError) {
   setContext("QUOTE");
 
   Object *quote = allocator.createQuote(parseExpr());
@@ -369,11 +368,11 @@ Object* Parser::parseQuote(bool check_paren) throw (Errors::CompileError) {
   return quote;
 }
 
-Object* Parser::parseBegin() throw (Errors::CompileError) {
+Object* Parser::parseBegin() throw(Errors::CompileError) {
   setContext("BEGIN");
 
   std::unique_ptr<Token> token(tokenizer.next());
-  
+
   // parse the expressions
   std::vector<Object*> expressions;
   while (token->getType() != TokenType::CLOSE_PAREN) {
@@ -400,7 +399,7 @@ Object* Parser::parseBegin() throw (Errors::CompileError) {
   return value;
 }
 
-Object* Parser::dispatch(Token *token) throw (Errors::CompileError) {
+Object* Parser::dispatch(Token *token) throw(Errors::CompileError) {
   switch (token->getType()) {
     case TokenType::NIL:          return allocator.createNil();
     case TokenType::SYMBOL:       return allocator.createSymbol(token->getSymbol());
@@ -418,7 +417,7 @@ Object* Parser::dispatch(Token *token) throw (Errors::CompileError) {
   }
 }
 
-void Parser::check(Token *token, TokenType expected_type) throw (Errors::CompileError) {
+void Parser::check(Token *token, TokenType expected_type) throw(Errors::CompileError) {
   if (token == nullptr || token->getType() != expected_type) {
     std::stringstream buf;
     buf << "expected " << Utils::type2str(expected_type) << ", ";
@@ -431,7 +430,7 @@ void Parser::check(Token *token, TokenType expected_type) throw (Errors::Compile
   }
 }
 
-void Parser::checkExpr(Token *token, TokenType suggested_type) throw (Errors::CompileError) {
+void Parser::checkExpr(Token *token, TokenType suggested_type) throw(Errors::CompileError) {
   if (token == nullptr ||
       token->getType() == TokenType::EOS ||
       token->getType() == TokenType::UNKNOWN) {
@@ -457,5 +456,4 @@ void Parser::resetContext() {
 std::string& Parser::getContext() {
   return current_context;
 }
-
 }

@@ -15,9 +15,7 @@ namespace Utils {
 std::vector<Object*> list2vec(List* list);
 
 List* vec2list(std::vector<Object*>& vec);
-
 }
-
 }
 
 #endif // LISPINO_UTILS_LIST_H_

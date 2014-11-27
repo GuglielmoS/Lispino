@@ -15,7 +15,7 @@ Tokenizer::Tokenizer(std::istream& input_stream) : stream(input_stream) {
   /* DO NOTHING */
 }
 
-Token* Tokenizer::next() throw (Errors::CompileError) {
+Token* Tokenizer::next() throw(Errors::CompileError) {
   Token *current_token = nullptr;
 
   // skip the comments (;; blah blah) and the various spaces (\n, ' ', \t ...)
@@ -58,7 +58,7 @@ void Tokenizer::putback(int ch) {
 }
 
 void Tokenizer::skipSpaces() {
-  while (isspace(nextChar())) continue; 
+  while (isspace(nextChar())) continue;
   unget();
 }
 
@@ -81,9 +81,9 @@ void Tokenizer::skipCommentsAndSpaces() {
 
 bool Tokenizer::isdelimiter(char ch) const {
   return ch == EOF ||
-         ch == '(' || 
-         ch == ')' || 
-         ch == '.' || 
+         ch == '(' ||
+         ch == ')' ||
+         ch == '.' ||
          ch == '\'';
 }
 
@@ -184,11 +184,11 @@ Token* Tokenizer::number() {
   // recover the stream status
   unget();
 
-  if (buffer.str().size() == 0) { 
+  if (buffer.str().size() == 0) {
     return nullptr;
   } else {
     if (isFloat) {
-      double value = std::stof(buffer.str()); 
+      double value = std::stof(buffer.str());
       if (negate)
         return Token::createFloatNumber(-value, position);
       else
@@ -203,7 +203,7 @@ Token* Tokenizer::number() {
   }
 }
 
-Token* Tokenizer::string() throw (Errors::CompileError) {
+Token* Tokenizer::string() throw(Errors::CompileError) {
   std::stringstream buffer;
 
   if (nextChar() != '"') {
@@ -235,7 +235,7 @@ Token* Tokenizer::string() throw (Errors::CompileError) {
         escape = false;
 
         switch (ch) {
-          case 'n':  
+          case 'n':
             ch_to_put = '\n';
             break;
           case 'r':
@@ -256,5 +256,4 @@ Token* Tokenizer::string() throw (Errors::CompileError) {
 
   return Token::createString(buffer.str(), position);
 }
-
 }

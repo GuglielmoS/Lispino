@@ -69,7 +69,7 @@ LookupTable& Environment::getLookupTable() {
   return frame;
 }
 
-Object* Environment::update(Symbol* key, Object* value) throw (Errors::RuntimeError) {
+Object* Environment::update(Symbol* key, Object* value) throw(Errors::RuntimeError) {
   auto iter = frame.find(key->getValue());
 
   if (iter == frame.end()) {
@@ -79,19 +79,19 @@ Object* Environment::update(Symbol* key, Object* value) throw (Errors::RuntimeEr
       throw Errors::RuntimeError(/*"Environment update failed with key: " + key->toString()*/);
     }
   } else {
-    frame[key->getValue()] = std::make_pair(key,value);
+    frame[key->getValue()] = std::make_pair(key, value);
   }
 
   return value;
 }
 
 Object* Environment::put(Symbol* key, Object* value) {
-  frame[key->getValue()] = std::make_pair(key,value);
+  frame[key->getValue()] = std::make_pair(key, value);
 
   return value;
 }
 
-Object* Environment::get(Symbol* key) throw (Errors::RuntimeError) {
+Object* Environment::get(Symbol* key) throw(Errors::RuntimeError) {
   // check for builtin functions
   auto bf_iter = builtin_functions.find(key->getValue());
   if (bf_iter != builtin_functions.end())
@@ -204,5 +204,4 @@ BuiltinsTable Environment::initializeBuiltinFunctions() {
 
   return table;
 }
-
 }

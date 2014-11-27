@@ -10,7 +10,7 @@ namespace Lispino {
 
 class GarbageCollector {
  public:
-  GarbageCollector(std::shared_ptr<Environment> env);
+  explicit GarbageCollector(std::shared_ptr<Environment> env);
 
   void collect();
 
@@ -23,7 +23,6 @@ class GarbageCollector {
   void markObject(Object *object, std::vector<Environment*>& marked_envs);
   void markVisibleObjects(std::shared_ptr<Environment> env, std::vector<Environment*>& marked_envs);
 };
-
 }
 
 #endif // LISPINO_GARBAGECOLLECTOR_H_

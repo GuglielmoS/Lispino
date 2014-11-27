@@ -119,5 +119,4 @@ size_t Memory::releaseUnusedObjects() {
   // return the number of removed objects
   return original_memory_size - memory.size();
 }
-
 }

@@ -12,7 +12,7 @@ Memory& Allocator::getMemory() {
 
 Symbol* Allocator::createSymbol(std::string value) {
   Symbol *symbol = nullptr;
-  
+
   // update the cache if needed
   if (!isSymbolCached(value)) {
     // create the new symbol
@@ -21,7 +21,7 @@ Symbol* Allocator::createSymbol(std::string value) {
 
     // add the symbol to the cache
     symbols_cache[value] = symbol;
-  } else {    
+  } else {
     symbol = symbols_cache[value];
   }
 
@@ -41,7 +41,7 @@ String* Allocator::createString(std::string value) {
   return str;
 }
 
-IntNumber* Allocator::createIntNumber(long int value) {
+IntNumber* Allocator::createIntNumber(std::int32_t value) {
   IntNumber *num = static_cast<IntNumber*>(memory.allocate(ObjectType::INT_NUMBER));
   num->setValue(value);
 
@@ -131,5 +131,4 @@ bool Allocator::isSymbolCached(std::string& value) const {
   auto iter = symbols_cache.find(value);
   return iter != symbols_cache.end();
 }
-
 }

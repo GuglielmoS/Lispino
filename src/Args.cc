@@ -43,5 +43,4 @@ List* Args::getCatchRest() {
 bool Args::hasCatchRest() const {
   return catch_rest != nullptr;
 }
-
 }

@@ -10,9 +10,7 @@ namespace Lispino {
 namespace Utils {
 
 std::string objtype2str(ObjectType type);
-
 }
-
 }
 
 #endif // LISPINO_UTILS_OBJECT_H_

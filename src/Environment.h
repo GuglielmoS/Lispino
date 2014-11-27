@@ -17,9 +17,9 @@
 namespace Lispino {
 
 typedef std::unordered_map<std::string, std::pair<Symbol*, Object*>> LookupTable;
-typedef std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> BuiltinsTable; 
+typedef std::unordered_map<std::string, std::unique_ptr<Builtins::BuiltinFunction>> BuiltinsTable;
 
-class Environment {   
+class Environment {
  public:
   Environment();
 
@@ -29,9 +29,9 @@ class Environment {
 
   LookupTable& getLookupTable();
 
-  Object* update(Symbol* key, Object* value) throw (Errors::RuntimeError);
+  Object* update(Symbol* key, Object* value) throw(Errors::RuntimeError);
   Object* put(Symbol* key, Object* value);
-  Object* get(Symbol* key) throw (Errors::RuntimeError);
+  Object* get(Symbol* key) throw(Errors::RuntimeError);
 
   void applyArgs(Args& arguments);
 
@@ -46,7 +46,6 @@ class Environment {
   static BuiltinsTable initializeBuiltinFunctions();
   static void bind(BuiltinsTable& bindings, Builtins::BuiltinFunction *fun);
 };
-
 }
 
 #endif // LISPINO_ENVIRONMENT_H_

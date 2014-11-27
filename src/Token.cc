@@ -104,8 +104,7 @@ Token* Token::createSymbol(std::string value, SourceCodePosition position) {
   if (it != reserved_keywords.end()) {
     tok->type = it->second;
     tok->raw_value = std::string();
-  }
-  else {
+  } else {
     tok->raw_value = value;
   }
 
@@ -116,5 +115,4 @@ Token* Token::createSymbol(std::string value, SourceCodePosition position) {
 Token::Token() {
   // DO NOTHING
 }
-
 }

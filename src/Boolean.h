@@ -9,15 +9,15 @@ class Boolean : public Object {
  public:
   Boolean();
 
-  Boolean(bool value);
+  explicit Boolean(bool value);
 
   void setValue(bool value);
 
   bool getValue() const;
 
-  int compare(const Object* obj) const throw (Errors::RuntimeError) override;
+  int compare(const Object* obj) const throw(Errors::RuntimeError) override;
 
-  int compareBoolean(const Boolean* obj) const throw (Errors::RuntimeError) override;
+  int compareBoolean(const Boolean* obj) const throw(Errors::RuntimeError) override;
 
   bool isTrue() const override;
 
@@ -29,7 +29,6 @@ class Boolean : public Object {
   // the value that the object represents
   bool value;
 };
-
 }
 
 #endif // LISPINO_BOOLEAN_H_

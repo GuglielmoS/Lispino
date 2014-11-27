@@ -13,11 +13,11 @@ Evaluator::Evaluator(std::shared_ptr<Environment> env) : global_env(env) {
   /* DO NOTHING */
 }
 
-Object* Evaluator::eval(Object* expr) throw (Errors::RuntimeError) {
+Object* Evaluator::eval(Object* expr) throw(Errors::RuntimeError) {
   return eval(expr, global_env);
 }
 
-Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   Object *current_object = expr;
   std::shared_ptr<Environment> current_env = env;
 
@@ -40,7 +40,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
 
       case ObjectType::QUOTE:
         return static_cast<Quote*>(current_object)->getValue();
-    
+
       case ObjectType::DEFINE:
         return evalDefine(static_cast<Define*>(current_object), current_env);
 
@@ -69,7 +69,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
         std::vector<Object*> arguments;
         if (list->getRest()->isList()) {
           arguments = Utils::list2vec(static_cast<List*>(list));
-        } else if (list->getRest()->isNil()) { 
+        } else if (list->getRest()->isNil()) {
           // DO NOTHING, there are zero arguments
         } else {
           throw Errors::RuntimeError("Invalid function call: malformed arguments given");
@@ -80,13 +80,13 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
         // is therefore a builtin function, a lambda or a closure.
         if (evaluated_first->isBuiltinFunction()) {
           Builtins::BuiltinFunction *bf = static_cast<Builtins::BuiltinFunction*>(evaluated_first);
-          
+
           // check that there are enough arguments for the specified builtin function
           if (arguments.size() >= bf->getRequiredArguments()) {
             if (bf->hasExactArguments() && arguments.size() > bf->getRequiredArguments())
               throw Errors::RuntimeError(bf->getName() + ": too many arguments");
             else
-              return bf->apply(arguments, current_env); 
+              return bf->apply(arguments, current_env);
           } else {
             throw Errors::RuntimeError(bf->getName() + ": too few arguments");
           }
@@ -97,7 +97,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
             lambda = static_cast<Lambda*>(evaluated_first);
           } else if (evaluated_first->isClosure()) {
             lambda = static_cast<Lambda*>(static_cast<Closure*>(evaluated_first)->getLambda());
-          } else { 
+          } else {
             throw Errors::RuntimeError("Invalid function call, non-callable object given: " + evaluated_first->toString());
           }
 
@@ -130,16 +130,16 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw (E
   }
 }
 
-Object* Evaluator::evalIf(IfExpr* expr, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* Evaluator::evalIf(IfExpr* expr, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   Object *condition_result = eval(expr->getCondition(), env);
 
   if (condition_result->isTrue())
     return expr->getConsequent();
   else
-    return expr->getAlternative(); 
+    return expr->getAlternative();
 }
 
-Object* Evaluator::evalSequence(Sequence* expr, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* Evaluator::evalSequence(Sequence* expr, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   Object *result = VM::getAllocator().createNil();
   for (auto& cur_expr : expr->getValue())
     result = eval(cur_expr, env);
@@ -147,7 +147,7 @@ Object* Evaluator::evalSequence(Sequence* expr, std::shared_ptr<Environment> env
   return result;
 }
 
-Object* Evaluator::evalDefine(Define *expr, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* Evaluator::evalDefine(Define *expr, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   if (expr->getValue()->isLambda())
     return env->put(expr->getSymbol(), expr->getValue());
   else
@@ -158,7 +158,7 @@ Args Evaluator::extractAndEvalArgs(Lambda *lambda, std::vector<Object*> raw_args
   auto lambda_arguments = lambda->getArguments();
 
   // check if there is a "catch rest" argument
-  bool has_catch_rest = lambda->hasCatchRest(); 
+  bool has_catch_rest = lambda->hasCatchRest();
 
   // compute the minimun arguments number and the position
   // of the last arguments
@@ -200,5 +200,4 @@ bool Evaluator::validateArguments(Lambda *lambda, std::vector<Object*>& raw_args
 
   return false;
 }
-
 }

@@ -18,11 +18,11 @@ bool Boolean::getValue() const {
   return value;
 }
 
-int Boolean::compare(const Object* obj) const throw (Errors::RuntimeError) {
+int Boolean::compare(const Object* obj) const throw(Errors::RuntimeError) {
   return obj->compareBoolean(this);
 }
 
-int Boolean::compareBoolean(const Boolean* obj) const throw (Errors::RuntimeError) {
+int Boolean::compareBoolean(const Boolean* obj) const throw(Errors::RuntimeError) {
   if (value == obj->value)
     return 0;
   else if (value == false)
@@ -42,5 +42,4 @@ bool Boolean::isFalse() const {
 std::string Boolean::toString() const {
   return value ? "#t" : "#f";
 }
-
 }

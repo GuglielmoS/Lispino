@@ -12,8 +12,7 @@ class Environment;
 
 class Define : public Object {
  public:
-
-  Define(); 
+  Define();
 
   Define(Symbol* name, Object* value);
 
@@ -33,7 +32,6 @@ class Define : public Object {
   Symbol *name;
   Object *value;
 };
-
 }
 
 #endif // LISPINO_DEFINE_H_

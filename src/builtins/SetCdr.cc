@@ -9,12 +9,12 @@ namespace Builtins {
 std::uint32_t SetCdr::getRequiredArguments() const {
   return 2;
 }
-  
+
 std::string SetCdr::getName() const {
   return "set-cdr!";
 }
 
-Object* SetCdr::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* SetCdr::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   Object *first_arg = eval(args[0], env);
 
   // check that the first argument is a list
@@ -29,7 +29,5 @@ Object* SetCdr::apply(std::vector<Object*>& args, std::shared_ptr<Environment> e
 
   return result;
 }
-
 }
-
 }

@@ -15,7 +15,7 @@ Define::Define(Symbol* name, Object* value) : Object(ObjectType::DEFINE), name(n
 void Define::setName(Symbol* name) {
   this->name = name;
 }
- 
+
 void Define::setValue(Object* value) {
   this->value = value;
 }
@@ -35,5 +35,4 @@ Object* Define::getValue() {
 std::string Define::toString() const {
   return "DEFINE";
 }
-
 }

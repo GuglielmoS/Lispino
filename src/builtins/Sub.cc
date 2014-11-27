@@ -15,12 +15,12 @@ bool Sub::hasExactArguments() const {
 std::uint32_t Sub::getRequiredArguments() const {
   return 1;
 }
-  
+
 std::string Sub::getName() const {
   return "-";
 }
 
-Object* Sub::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw (Errors::RuntimeError) {
+Object* Sub::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(Errors::RuntimeError) {
   // evaluate the first argument
   Object* first_arg = eval(args[0], env);
 
@@ -43,7 +43,5 @@ Object* Sub::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env)
   else
     return result;
 }
-
 }
-
 }

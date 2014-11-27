@@ -24,7 +24,6 @@ class Interpreter {
  private:
   Evaluator& evaluator;
 };
-
 }
 
 #endif // LISPINO_INTERPRETER_H_

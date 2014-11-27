@@ -13,7 +13,6 @@ namespace Errors {
 
 class CompileError : public std::exception {
  public:
-
   CompileError(const std::string&& message, const SourceCodePosition& position) {
     buildMessage("", message, position);
   }
@@ -25,7 +24,7 @@ class CompileError : public std::exception {
   CompileError(const std::string& message, const SourceCodePosition& position) {
     buildMessage("", message, position);
   }
-  
+
   CompileError(const std::string& context, const std::string&& message, const SourceCodePosition&& position) {
     buildMessage(context, message, position);
   }
@@ -49,14 +48,12 @@ class CompileError : public std::exception {
 
     buf << " ";
     buf << message;
-    
+
     this->message = buf.str();
     this->context = context;
   }
 };
-
 }
-
 }
 
 #endif // LISPINO_ERRORS_COMPILEERROR_H_

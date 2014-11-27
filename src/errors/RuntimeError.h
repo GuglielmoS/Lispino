@@ -10,9 +10,13 @@ namespace Errors {
 
 class RuntimeError : public std::exception {
  public:
-  RuntimeError() : message("Generic runtime error") {}
+  RuntimeError() : message("Generic runtime error") {
+    /* DO NOTHING */
+  }
 
-  RuntimeError(const std::string&& message) : message(message) {}
+  explicit RuntimeError(const std::string&& message) : message(message) {
+    /* DO NOTHING */
+  }
 
   std::string getMessage() const {
     return message;
@@ -21,9 +25,7 @@ class RuntimeError : public std::exception {
  private:
   std::string message;
 };
-
 }
-
 }
 
 #endif // LISPINO_ERRORS_RUNTIMEERROR_H_
