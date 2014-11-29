@@ -18,4 +18,4 @@ class Car : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_CAR_H_
+#endif  // LISPINO_BUILTINS_CAR_H_

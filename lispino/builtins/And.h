@@ -20,4 +20,4 @@ class And : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_AND_H_
+#endif  // LISPINO_BUILTINS_AND_H_

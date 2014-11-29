@@ -55,4 +55,4 @@ class Parser {
 };
 }
 
-#endif // LISPINO_PARSER_H_
+#endif  // LISPINO_PARSER_H_

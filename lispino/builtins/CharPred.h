@@ -18,4 +18,4 @@ class CharPred : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_CHARPRED_H_
+#endif  // LISPINO_BUILTINS_CHARPRED_H_

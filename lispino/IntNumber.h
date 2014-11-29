@@ -1,6 +1,7 @@
 #ifndef LISPINO_INTNUMBER_H_
 #define LISPINO_INTNUMBER_H_
 
+#include <string>
 #include <cstdint>
 
 #include "Number.h"
@@ -66,4 +67,4 @@ class IntNumber : public Number {
 };
 }
 
-#endif // LISPINO_INTNUMBER_H_
+#endif  // LISPINO_INTNUMBER_H_

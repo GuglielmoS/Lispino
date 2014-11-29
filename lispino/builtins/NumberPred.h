@@ -18,4 +18,4 @@ class NumberPred : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_NUMBERPRED_H_
+#endif  // LISPINO_BUILTINS_NUMBERPRED_H_

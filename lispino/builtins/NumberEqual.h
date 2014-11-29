@@ -20,4 +20,4 @@ class NumberEqual : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_NUMBEREQUAL_H_
+#endif  // LISPINO_BUILTINS_NUMBEREQUAL_H_

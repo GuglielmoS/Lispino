@@ -20,4 +20,4 @@ class LowerThan : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_LOWERTHAN_H_
+#endif  // LISPINO_BUILTINS_LOWERTHAN_H_

@@ -20,4 +20,4 @@ class Eqv : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_EQV_H_
+#endif  // LISPINO_BUILTINS_EQV_H_

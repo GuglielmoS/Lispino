@@ -35,4 +35,4 @@ class String : public Object {
 };
 }
 
-#endif // LISPINO_STRING_H_
+#endif  // LISPINO_STRING_H_

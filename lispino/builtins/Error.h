@@ -18,4 +18,4 @@ class Error : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_ERROR_H_
+#endif  // LISPINO_BUILTINS_ERROR_H_

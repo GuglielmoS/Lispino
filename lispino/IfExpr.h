@@ -1,6 +1,8 @@
 #ifndef LISPINO_IFEXPR_H_
 #define LISPINO_IFEXPR_H_
 
+#include <string>
+
 #include "Object.h"
 
 namespace lispino {
@@ -30,4 +32,4 @@ class IfExpr : public Object {
 };
 }
 
-#endif // LISPINO_IFEXPR_H_
+#endif  // LISPINO_IFEXPR_H_

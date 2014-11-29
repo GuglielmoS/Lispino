@@ -1,6 +1,8 @@
 #ifndef LISPINO_FLOATNUMBER_H_
 #define LISPINO_FLOATNUMBER_H_
 
+#include <string>
+
 #include "Number.h"
 
 namespace lispino {
@@ -64,4 +66,4 @@ class FloatNumber : public Number {
 };
 }
 
-#endif // LISPINO_FLOATNUMBER_H_
+#endif  // LISPINO_FLOATNUMBER_H_

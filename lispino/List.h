@@ -40,4 +40,4 @@ class List : public Object {
 };
 }
 
-#endif // LISPINO_LIST_H_
+#endif  // LISPINO_LIST_H_

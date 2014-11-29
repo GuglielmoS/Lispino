@@ -1,6 +1,8 @@
 #ifndef LISPINO_BOOLEAN_H_
 #define LISPINO_BOOLEAN_H_
 
+#include <string>
+
 #include "Object.h"
 
 namespace lispino {
@@ -31,4 +33,4 @@ class Boolean : public Object {
 };
 }
 
-#endif // LISPINO_BOOLEAN_H_
+#endif  // LISPINO_BOOLEAN_H_

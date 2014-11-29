@@ -44,4 +44,4 @@ class Lambda : public Object {
 };
 }
 
-#endif // LISPINO_LAMBDA_H_
+#endif  // LISPINO_LAMBDA_H_

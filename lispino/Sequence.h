@@ -22,4 +22,4 @@ class Sequence : public Object {
 };
 }
 
-#endif // LISPINO_SEQUENCE_H_
+#endif  // LISPINO_SEQUENCE_H_

@@ -50,4 +50,4 @@ class Tokenizer {
 };
 }
 
-#endif // LISPINO_TOKENIZER_H_
+#endif  // LISPINO_TOKENIZER_H_

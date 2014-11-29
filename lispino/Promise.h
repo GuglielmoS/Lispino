@@ -36,4 +36,4 @@ class Promise : public Object {
 };
 }
 
-#endif // LISPINO_PROMISE_H_
+#endif  // LISPINO_PROMISE_H_

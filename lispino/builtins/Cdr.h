@@ -18,4 +18,4 @@ class Cdr : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_CDR_H_
+#endif  // LISPINO_BUILTINS_CDR_H_

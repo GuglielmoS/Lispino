@@ -56,4 +56,4 @@ class CompileError : public std::exception {
 }
 }
 
-#endif // LISPINO_ERRORS_COMPILEERROR_H_
+#endif  // LISPINO_ERRORS_COMPILEERROR_H_

@@ -18,4 +18,4 @@ class SetCdr : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_SETCDR_H_
+#endif  // LISPINO_BUILTINS_SETCDR_H_

@@ -18,4 +18,4 @@ class SetCar : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_SETCAR_H_
+#endif  // LISPINO_BUILTINS_SETCAR_H_

@@ -1,6 +1,8 @@
 #ifndef LISPINO_CHARACTER_H_
 #define LISPINO_CHARACTER_H_
 
+#include <string>
+
 #include "Object.h"
 
 namespace lispino {
@@ -30,4 +32,4 @@ class Character : public Object {
 };
 }
 
-#endif // LISPINO_CHARACTER_H_
+#endif  // LISPINO_CHARACTER_H_

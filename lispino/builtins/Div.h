@@ -20,4 +20,4 @@ class Div : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_DIV_H_
+#endif  // LISPINO_BUILTINS_DIV_H_

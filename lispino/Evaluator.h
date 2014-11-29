@@ -1,6 +1,7 @@
 #ifndef LISPINO_EVALUATOR_H_
 #define LISPINO_EVALUATOR_H_
 
+#include <vector>
 #include <memory>
 
 #include "Object.h"
@@ -16,7 +17,6 @@
 #include "List.h"
 #include "Lambda.h"
 #include "Quote.h"
-#include "IfExpr.h"
 #include "Sequence.h"
 #include "Define.h"
 #include "errors/RuntimeError.h"
@@ -42,4 +42,4 @@ class Evaluator {
 };
 }
 
-#endif // LISPINO_EVALUATOR_H__
+#endif  // LISPINO_EVALUATOR_H__

@@ -33,4 +33,4 @@ class BuiltinFunction : public Object {
 }
 }
 
-#endif // LISPINO_BUILTINS_BUILTINFUNCTION_H_
+#endif  // LISPINO_BUILTINS_BUILTINFUNCTION_H_

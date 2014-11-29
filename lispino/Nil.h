@@ -29,4 +29,4 @@ class Nil : public Object {
 };
 }
 
-#endif // LISPINO_NIL_H_
+#endif  // LISPINO_NIL_H_

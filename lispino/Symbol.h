@@ -28,4 +28,4 @@ class Symbol : public Object {
 };
 }
 
-#endif // LISPINO_SYMBOL_H_
+#endif  // LISPINO_SYMBOL_H_

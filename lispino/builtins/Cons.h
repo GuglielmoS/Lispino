@@ -18,4 +18,4 @@ class Cons : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_CONS_H_
+#endif  // LISPINO_BUILTINS_CONS_H_

@@ -1,8 +1,10 @@
 #ifndef LISPINO_ALLOCATOR_H_
 #define LISPINO_ALLOCATOR_H_
 
-#include <unordered_map>
+#include <string>
+#include <vector>
 #include <cstdint>
+#include <unordered_map>
 
 #include "Memory.h"
 #include "Environment.h"
@@ -71,4 +73,4 @@ class Allocator {
 };
 }
 
-#endif // LISPINO_ALLOCATOR_H_
+#endif  // LISPINO_ALLOCATOR_H_

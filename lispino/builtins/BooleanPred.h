@@ -18,4 +18,4 @@ class BooleanPred : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_BOOLEANPRED_H_
+#endif  // LISPINO_BUILTINS_BOOLEANPRED_H_

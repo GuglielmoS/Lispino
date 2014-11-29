@@ -20,4 +20,4 @@ class Remainder : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_REMAINDER_H_
+#endif  // LISPINO_BUILTINS_REMAINDER_H_

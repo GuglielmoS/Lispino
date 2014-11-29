@@ -22,4 +22,4 @@ class Display : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_DISPLAY_H_
+#endif  // LISPINO_BUILTINS_DISPLAY_H_

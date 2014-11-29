@@ -18,4 +18,4 @@ class Set : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_SET_H_
+#endif  // LISPINO_BUILTINS_SET_H_

@@ -20,4 +20,4 @@ class Or : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_OR_H_
+#endif  // LISPINO_BUILTINS_OR_H_

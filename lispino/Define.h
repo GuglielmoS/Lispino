@@ -34,4 +34,4 @@ class Define : public Object {
 };
 }
 
-#endif // LISPINO_DEFINE_H_
+#endif  // LISPINO_DEFINE_H_

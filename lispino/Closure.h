@@ -1,6 +1,7 @@
 #ifndef LISPINO_CLOSURE_H_
 #define LISPINO_CLOSURE_H_
 
+#include <string>
 #include <memory>
 
 #include "Object.h"
@@ -29,4 +30,4 @@ class Closure : public Object {
 };
 }
 
-#endif // LISPINO_CLOSURE_H_
+#endif  // LISPINO_CLOSURE_H_

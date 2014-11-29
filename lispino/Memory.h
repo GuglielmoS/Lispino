@@ -43,4 +43,4 @@ class Memory {
 };
 }
 
-#endif // LISPINO_MEMORY_H_
+#endif  // LISPINO_MEMORY_H_

@@ -200,4 +200,4 @@ class Object {
 };
 }
 
-#endif // LISPINO_OBJECT_H_
+#endif  // LISPINO_OBJECT_H_

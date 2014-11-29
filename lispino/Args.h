@@ -37,4 +37,4 @@ class Args {
 };
 }
 
-#endif // LISPINO_ARGS_H_
+#endif  // LISPINO_ARGS_H_

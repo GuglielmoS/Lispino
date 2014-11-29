@@ -28,4 +28,4 @@ class RuntimeError : public std::exception {
 }
 }
 
-#endif // LISPINO_ERRORS_RUNTIMEERROR_H_
+#endif  // LISPINO_ERRORS_RUNTIMEERROR_H_

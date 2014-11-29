@@ -24,4 +24,4 @@ class Quote : public Object {
 };
 }
 
-#endif // LISPINO_QUOTE_H_
+#endif  // LISPINO_QUOTE_H_

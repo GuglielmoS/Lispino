@@ -18,4 +18,4 @@ class Force : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_FORCE_H_
+#endif  // LISPINO_BUILTINS_FORCE_H_

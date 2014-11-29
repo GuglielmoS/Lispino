@@ -20,4 +20,4 @@ class Add : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_ADD_H_
+#endif  // LISPINO_BUILTINS_ADD_H_

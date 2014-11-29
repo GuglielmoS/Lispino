@@ -13,4 +13,4 @@ std::string type2str(TokenType type);
 }
 }
 
-#endif // LISPINO_UTILS_TOKEN_H_
+#endif  // LISPINO_UTILS_TOKEN_H_

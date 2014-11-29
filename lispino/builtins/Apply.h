@@ -18,4 +18,4 @@ class Apply : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_APPLY_H_
+#endif  // LISPINO_BUILTINS_APPLY_H_

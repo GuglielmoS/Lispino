@@ -18,4 +18,4 @@ List* vec2list(std::vector<Object*>& vec);
 }
 }
 
-#endif // LISPINO_UTILS_LIST_H_
+#endif  // LISPINO_UTILS_LIST_H_

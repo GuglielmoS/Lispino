@@ -18,4 +18,4 @@ class LazyCons : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_LAZYCONS_H_
+#endif  // LISPINO_BUILTINS_LAZYCONS_H_

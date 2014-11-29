@@ -38,4 +38,4 @@ class SourceCodePosition {
 };
 }
 
-#endif // LISPINO_SOURCECODEPOSITION_H_
+#endif  // LISPINO_SOURCECODEPOSITION_H_

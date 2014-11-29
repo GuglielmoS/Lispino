@@ -18,4 +18,4 @@ class Delay : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_DELAY_H_
+#endif  // LISPINO_BUILTINS_DELAY_H_

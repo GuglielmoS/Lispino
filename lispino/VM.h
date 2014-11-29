@@ -44,4 +44,4 @@ class VM {
 };
 }
 
-#endif // LISPINO_VM_H_
+#endif  // LISPINO_VM_H_

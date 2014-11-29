@@ -18,4 +18,4 @@ class Load : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_LOAD_H_
+#endif  // LISPINO_BUILTINS_LOAD_H_

@@ -18,4 +18,4 @@ class PairPred : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_PAIRPRED_H_
+#endif  // LISPINO_BUILTINS_PAIRPRED_H_

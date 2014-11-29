@@ -20,4 +20,4 @@ class Sub : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_SUB_H_
+#endif  // LISPINO_BUILTINS_SUB_H_

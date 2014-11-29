@@ -83,4 +83,4 @@ class Token {
 };
 }
 
-#endif // LISPINO_TOKEN_H_
+#endif  // LISPINO_TOKEN_H_

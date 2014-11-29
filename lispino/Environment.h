@@ -1,12 +1,13 @@
 #ifndef LISPINO_ENVIRONMENT_H_
 #define LISPINO_ENVIRONMENT_H_
 
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <memory>
+#include <utility>
 #include <map>
 #include <unordered_map>
-#include <string>
-#include <sstream>
-#include <iostream>
-#include <memory>
 
 #include "Object.h"
 #include "Symbol.h"
@@ -48,4 +49,4 @@ class Environment {
 };
 }
 
-#endif // LISPINO_ENVIRONMENT_H_
+#endif  // LISPINO_ENVIRONMENT_H_

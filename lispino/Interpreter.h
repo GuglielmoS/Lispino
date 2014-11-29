@@ -26,4 +26,4 @@ class Interpreter {
 };
 }
 
-#endif // LISPINO_INTERPRETER_H_
+#endif  // LISPINO_INTERPRETER_H_

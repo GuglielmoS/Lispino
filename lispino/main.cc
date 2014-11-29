@@ -1,7 +1,8 @@
 #include "Interpreter.h"
 
-#include <iostream>
 #include <cstring>
+
+#include <iostream>
 
 int main(int argc, char *argv[]) {
   lispino::Interpreter interpreter;

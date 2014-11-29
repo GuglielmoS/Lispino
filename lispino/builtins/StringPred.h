@@ -18,4 +18,4 @@ class StringPred : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_STRINGPRED_H_
+#endif  // LISPINO_BUILTINS_STRINGPRED_H_

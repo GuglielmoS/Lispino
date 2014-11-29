@@ -18,4 +18,4 @@ class SymbolPred : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_SYMBOLPRED_H_
+#endif  // LISPINO_BUILTINS_SYMBOLPRED_H_

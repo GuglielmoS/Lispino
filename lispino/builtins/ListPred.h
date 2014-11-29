@@ -18,4 +18,4 @@ class ListPred : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_LISTPRED_H_
+#endif  // LISPINO_BUILTINS_LISTPRED_H_

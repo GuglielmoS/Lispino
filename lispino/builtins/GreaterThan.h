@@ -20,4 +20,4 @@ class GreaterThan : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_GREATERTHAN_H_
+#endif  // LISPINO_BUILTINS_GREATERTHAN_H_

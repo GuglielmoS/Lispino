@@ -1,4 +1,4 @@
-#ifndef LISPINO_BUILTINS_PROMISePRED_H_
+#ifndef LISPINO_BUILTINS_PROMISEPRED_H_
 #define LISPINO_BUILTINS_PROMISEPRED_H_
 
 #include "BuiltinFunction.h"
@@ -18,4 +18,4 @@ class PromisePred : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_PROMISEPRED_H_
+#endif  // LISPINO_BUILTINS_PROMISEPRED_H_

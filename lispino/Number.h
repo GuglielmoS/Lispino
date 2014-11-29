@@ -43,4 +43,4 @@ class Number : public Object {
 };
 }
 
-#endif // LISPINO_NUMBER_H_
+#endif  // LISPINO_NUMBER_H_

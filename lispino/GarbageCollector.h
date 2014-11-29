@@ -25,4 +25,4 @@ class GarbageCollector {
 };
 }
 
-#endif // LISPINO_GARBAGECOLLECTOR_H_
+#endif  // LISPINO_GARBAGECOLLECTOR_H_

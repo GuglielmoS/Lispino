@@ -13,4 +13,4 @@ std::string objtype2str(ObjectType type);
 }
 }
 
-#endif // LISPINO_UTILS_OBJECT_H_
+#endif  // LISPINO_UTILS_OBJECT_H_

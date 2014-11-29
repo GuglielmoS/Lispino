@@ -20,4 +20,4 @@ class Mul : public BuiltinFunction {
 }
 }
 
-#endif // LISPINO_BUILTINS_MUL_H_
+#endif  // LISPINO_BUILTINS_MUL_H_
