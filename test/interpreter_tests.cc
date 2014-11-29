@@ -1,16 +1,16 @@
 // Internal headers
-#include "../src/Parser.h"
-#include "../src/Object.h"
-#include "../src/Nil.h"
-#include "../src/Symbol.h"
-#include "../src/String.h"
-#include "../src/IntNumber.h"
-#include "../src/FloatNumber.h"
-#include "../src/List.h"
-#include "../src/Lambda.h"
-#include "../src/Define.h"
-#include "../src/Quote.h"
-#include "../src/VM.h"
+#include "../lispino/Parser.h"
+#include "../lispino/Object.h"
+#include "../lispino/Nil.h"
+#include "../lispino/Symbol.h"
+#include "../lispino/String.h"
+#include "../lispino/IntNumber.h"
+#include "../lispino/FloatNumber.h"
+#include "../lispino/List.h"
+#include "../lispino/Lambda.h"
+#include "../lispino/Define.h"
+#include "../lispino/Quote.h"
+#include "../lispino/VM.h"
 
 // GTest headers
 #include <gtest/gtest.h>
@@ -18,7 +18,7 @@
 // Standard C++ headers
 #include <sstream>
 
-using namespace Lispino;
+using namespace lispino;
 
 TEST(InterpreterTests, NIL) {
     std::stringstream stream("nil");
@@ -159,16 +159,16 @@ TEST(InterpreterTests, BuiltinDiv) {
     // Division by zero exception
 
     // (/ 1 0)
-    ASSERT_THROW(eval(parser.parseExpr()), Errors::RuntimeError);
+    ASSERT_THROW(eval(parser.parseExpr()), errors::RuntimeError);
 
     // (/ 1.0 0.0)
-    ASSERT_THROW(eval(parser.parseExpr()), Errors::RuntimeError);
+    ASSERT_THROW(eval(parser.parseExpr()), errors::RuntimeError);
 
     // (/ 1.0 0)
-    ASSERT_THROW(eval(parser.parseExpr()), Errors::RuntimeError);
+    ASSERT_THROW(eval(parser.parseExpr()), errors::RuntimeError);
 
     // (/ 1 0.0)
-    ASSERT_THROW(eval(parser.parseExpr()), Errors::RuntimeError);
+    ASSERT_THROW(eval(parser.parseExpr()), errors::RuntimeError);
 }
 
 TEST(InterpreterTests, BuiltinRemainder) {
@@ -639,7 +639,7 @@ TEST(InterpreterTests, BuiltinError) {
 
     // parse the stream and check the expressions
     Object *expr(parser.parseExpr());
-    ASSERT_THROW(eval(expr), Errors::RuntimeError);
+    ASSERT_THROW(eval(expr), errors::RuntimeError);
 }
 
 TEST(InterpreterTests, BuiltinEq) {

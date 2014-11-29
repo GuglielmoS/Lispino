@@ -3,21 +3,21 @@ STANDARD=c++11
 WARNINGS=-Wall -Wextra -Werror -pedantic -pedantic-errors -Wstrict-aliasing
 CC=g++ -std=$(STANDARD) -O$(OPTIMIZATION) $(WARNINGS)
 
-TOKENIZER_OBJS=src/Tokenizer.o src/Token.o src/SourceCodePosition.o
+TOKENIZER_OBJS=lispino/Tokenizer.o lispino/Token.o lispino/SourceCodePosition.o
 
-PARSER_OBJS=src/Parser.o src/Object.o src/Nil.o src/Define.o src/Lambda.o src/Character.o src/Boolean.o src/Number.o src/IntNumber.o src/FloatNumber.o src/List.o src/Quote.o src/Symbol.o src/String.o src/VM.o src/Memory.o src/Allocator.o src/Sequence.o src/IfExpr.o
+PARSER_OBJS=lispino/Parser.o lispino/Object.o lispino/Nil.o lispino/Define.o lispino/Lambda.o lispino/Character.o lispino/Boolean.o lispino/Number.o lispino/IntNumber.o lispino/FloatNumber.o lispino/List.o lispino/Quote.o lispino/Symbol.o lispino/String.o lispino/VM.o lispino/Memory.o lispino/Allocator.o lispino/Sequence.o lispino/IfExpr.o
 
-BUILTIN_FUNCTIONS_OBJS=src/builtins/BuiltinFunction.o src/builtins/Add.o src/builtins/Sub.o src/builtins/Mul.o src/builtins/Div.o src/builtins/Remainder.o src/builtins/LowerThan.o src/builtins/LowerEqualThan.o src/builtins/GreaterThan.o src/builtins/GreaterEqualThan.o src/builtins/NumberEqual.o src/builtins/Car.o src/builtins/Cdr.o src/builtins/Cons.o src/builtins/Display.o src/builtins/Set.o src/builtins/Load.o src/builtins/Apply.o src/builtins/NumberPred.o src/builtins/BooleanPred.o src/builtins/PairPred.o src/builtins/SymbolPred.o src/builtins/CharPred.o src/builtins/StringPred.o src/builtins/ProcedurePred.o src/builtins/ListPred.o src/builtins/PromisePred.o src/builtins/And.o src/builtins/Or.o src/builtins/Error.o src/builtins/Eq.o src/builtins/Eqv.o src/builtins/Equal.o src/builtins/Delay.o src/builtins/Force.o src/builtins/LazyCons.o src/builtins/SetCar.o src/builtins/SetCdr.o
+BUILTIN_FUNCTIONS_OBJS=lispino/builtins/BuiltinFunction.o lispino/builtins/Add.o lispino/builtins/Sub.o lispino/builtins/Mul.o lispino/builtins/Div.o lispino/builtins/Remainder.o lispino/builtins/LowerThan.o lispino/builtins/LowerEqualThan.o lispino/builtins/GreaterThan.o lispino/builtins/GreaterEqualThan.o lispino/builtins/NumberEqual.o lispino/builtins/Car.o lispino/builtins/Cdr.o lispino/builtins/Cons.o lispino/builtins/Display.o lispino/builtins/Set.o lispino/builtins/Load.o lispino/builtins/Apply.o lispino/builtins/NumberPred.o lispino/builtins/BooleanPred.o lispino/builtins/PairPred.o lispino/builtins/SymbolPred.o lispino/builtins/CharPred.o lispino/builtins/StringPred.o lispino/builtins/ProcedurePred.o lispino/builtins/ListPred.o lispino/builtins/PromisePred.o lispino/builtins/And.o lispino/builtins/Or.o lispino/builtins/Error.o lispino/builtins/Eq.o lispino/builtins/Eqv.o lispino/builtins/Equal.o lispino/builtins/Delay.o lispino/builtins/Force.o lispino/builtins/LazyCons.o lispino/builtins/SetCar.o lispino/builtins/SetCdr.o
 
-INTERPRETER_OBJS=src/Closure.o src/Promise.o src/GarbageCollector.o src/Environment.o src/Interpreter.o src/Evaluator.o src/Args.o
+INTERPRETER_OBJS=lispino/Closure.o lispino/Promise.o lispino/GarbageCollector.o lispino/Environment.o lispino/Interpreter.o lispino/Evaluator.o lispino/Args.o
 
-UTILS_OBJS=src/utils/List.o src/utils/Token.o src/utils/Object.o
+UTILS_OBJS=lispino/utils/List.o lispino/utils/Token.o lispino/utils/Object.o
 
 ALL_OBJS=$(TOKENIZER_OBJS) $(PARSER_OBJS) $(BUILTIN_FUNCTIONS_OBJS) $(UTILS_OBJS) $(INTERPRETER_OBJS)
 
 TEST_OBJS=test/tokenizer_tests.o test/parser_tests.o test/interpreter_tests.o 
 
-bin/lispino: src/main.o $(ALL_OBJS) 
+bin/lispino: lispino/main.o $(ALL_OBJS) 
 	$(CC) -o $@ $^
 
 test: bin/all_tests
@@ -26,14 +26,14 @@ test: bin/all_tests
 bin/all_tests: test/main_tests.o $(TEST_OBJS) $(ALL_OBJS)
 	$(CC) -o $@ $^ -lgtest -pthread
 
-src/VM.o: src/VM.cc
+lispino/VM.o: lispino/VM.cc
 	$(CC) -c $< -o $@
 
-src/%.o: src/%.cc src/VM.o
+lispino/%.o: lispino/%.cc lispino/VM.o
 	$(CC) -c $< -o $@
 
-test/%.o: test/%.cc src/VM.o
+test/%.o: test/%.cc lispino/VM.o
 	$(CC) -c $< -o $@
 
 clean:
-	rm -rf bin/lispino bin/all_tests src/*.o src/builtins/*.o src/errors/*.o src/utils/*.o test/*.o
+	rm -rf bin/lispino bin/all_tests lispino/*.o lispino/builtins/*.o lispino/errors/*.o lispino/utils/*.o test/*.o

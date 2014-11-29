@@ -1,17 +1,17 @@
 // Internal headers
-#include "../src/Parser.h"
-#include "../src/Object.h"
-#include "../src/Nil.h"
-#include "../src/Symbol.h"
-#include "../src/String.h"
-#include "../src/IntNumber.h"
-#include "../src/FloatNumber.h"
-#include "../src/Boolean.h"
-#include "../src/List.h"
-#include "../src/Lambda.h"
-#include "../src/Define.h"
-#include "../src/Quote.h"
-#include "../src/IfExpr.h"
+#include "../lispino/Parser.h"
+#include "../lispino/Object.h"
+#include "../lispino/Nil.h"
+#include "../lispino/Symbol.h"
+#include "../lispino/String.h"
+#include "../lispino/IntNumber.h"
+#include "../lispino/FloatNumber.h"
+#include "../lispino/Boolean.h"
+#include "../lispino/List.h"
+#include "../lispino/Lambda.h"
+#include "../lispino/Define.h"
+#include "../lispino/Quote.h"
+#include "../lispino/IfExpr.h"
 
 // GTest headers
 #include <gtest/gtest.h>
@@ -19,7 +19,7 @@
 // Standard C++ headers
 #include <sstream>
 
-using namespace Lispino;
+using namespace lispino;
 
 TEST(ParserTests, NIL) {
     std::stringstream stream("nil");

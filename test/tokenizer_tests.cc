@@ -1,5 +1,5 @@
 // Internal headers
-#include "../src/Tokenizer.h"
+#include "../lispino/Tokenizer.h"
 
 // GTest headers
 #include <gtest/gtest.h>
@@ -8,7 +8,7 @@
 #include <sstream>
 #include <memory>
 
-using namespace Lispino;
+using namespace lispino;
 
 TEST(TokenizerTests, SkipSpaces) {
     std::stringstream stream;
