@@ -63,6 +63,7 @@ Object* eval(Object *expr, std::shared_ptr<Environment> env) {
 
 void VM::bind(builtins::BuiltinFunction *fun) {
   Symbol *fun_name = getAllocator().createSymbol(fun->getName());
+  getMemory().registerBuiltinFunction(fun);
   global_env->put(fun_name, fun);
 }
 

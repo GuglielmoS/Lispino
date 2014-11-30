@@ -9,6 +9,7 @@
 #include "Nil.h"
 #include "Boolean.h"
 #include "GarbageCollector.h"
+#include "builtins/BuiltinFunction.h"
 
 namespace lispino {
 
@@ -23,6 +24,8 @@ class Memory {
   Boolean* getFalseInstance();
 
   Object* allocate(ObjectType type);
+
+  void registerBuiltinFunction(builtins::BuiltinFunction* fun);
 
   size_t cleanup();
 

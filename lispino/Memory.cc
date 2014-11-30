@@ -91,6 +91,10 @@ Object* Memory::allocate(ObjectType type) {
   return allocated_object;
 }
 
+void Memory::registerBuiltinFunction(builtins::BuiltinFunction* fun) {
+  memory.push_back(std::unique_ptr<Object>(fun));
+}
+
 size_t Memory::cleanup() {
   // perform a collection of the garbage
   gc.collect();
