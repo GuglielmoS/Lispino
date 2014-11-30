@@ -8,6 +8,7 @@
 #include "GarbageCollector.h"
 #include "Environment.h"
 #include "Evaluator.h"
+#include "builtins/BuiltinFunction.h"
 
 namespace lispino {
 
@@ -23,6 +24,9 @@ class VM {
 
  private:
   VM();
+
+  // add builitin functions
+  void bind(builtins::BuiltinFunction* fun);
 
   // environment that contains the global definitions
   std::shared_ptr<Environment> global_env;

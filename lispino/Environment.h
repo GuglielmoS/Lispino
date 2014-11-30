@@ -12,13 +12,11 @@
 #include "Object.h"
 #include "Symbol.h"
 #include "Args.h"
-#include "builtins/BuiltinFunction.h"
 #include "errors/RuntimeError.h"
 
 namespace lispino {
 
 typedef std::unordered_map<std::string, std::pair<Symbol*, Object*>> LookupTable;
-typedef std::unordered_map<std::string, std::unique_ptr<builtins::BuiltinFunction>> BuiltinsTable;
 
 class Environment {
  public:
@@ -39,13 +37,8 @@ class Environment {
   static std::shared_ptr<Environment> extend(std::shared_ptr<Environment> env);
 
  private:
-  std::shared_ptr<Environment> parent;
   LookupTable frame;
-
-  // builtin functions
-  static BuiltinsTable builtin_functions;
-  static BuiltinsTable initializeBuiltinFunctions();
-  static void bind(BuiltinsTable& bindings, builtins::BuiltinFunction *fun);
+  std::shared_ptr<Environment> parent;
 };
 }
 
