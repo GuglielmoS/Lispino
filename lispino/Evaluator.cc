@@ -96,7 +96,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw(er
           if (evaluated_first->isLambda()) {
             lambda = static_cast<Lambda*>(evaluated_first);
           } else if (evaluated_first->isClosure()) {
-            lambda = static_cast<Lambda*>(static_cast<Closure*>(evaluated_first)->getLambda());
+            lambda = static_cast<Closure*>(evaluated_first)->getLambda();
           } else {
             throw errors::RuntimeError("Invalid function call, non-callable object given: " + evaluated_first->toString());
           }
