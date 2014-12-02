@@ -28,7 +28,6 @@ void Interpreter::init() {
 int Interpreter::repl() {
   bool terminated = false;
 
-
   // Read - Eval - Print - Loop
   while (not terminated) {
     std::string input_expr;

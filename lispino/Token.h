@@ -57,6 +57,7 @@ class Token {
   static Token* createFloatNumber(double value, SourceCodePosition position);
   static Token* createString(std::string value, SourceCodePosition position);
   static Token* createSymbol(std::string value, SourceCodePosition position);
+  static Token* createSymbolOrKeyword(std::string value, SourceCodePosition position);
 
  private:
   TokenType type;

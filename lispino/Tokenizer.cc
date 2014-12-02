@@ -11,8 +11,18 @@
 
 namespace lispino {
 
-Tokenizer::Tokenizer(std::istream& input_stream) : stream(input_stream) {
+Tokenizer::Tokenizer(std::istream& input_stream) : 
+    stream(input_stream),
+    quotationEnabled(false) {
   /* DO NOTHING */
+}
+
+void Tokenizer::enableQuotation() {
+  quotationEnabled = true;
+}
+
+void Tokenizer::disableQuotation() {
+  quotationEnabled = false;
 }
 
 Token* Tokenizer::next() throw(errors::CompileError) {
@@ -138,10 +148,14 @@ Token* Tokenizer::symbol() {
   }
   unget();
 
-  if (buffer.str().size() == 0)
+  if (buffer.str().size() == 0) {
     return nullptr;
-  else
-    return Token::createSymbol(buffer.str(), position);
+  } else {
+    if (quotationEnabled)
+      return Token::createSymbol(buffer.str(), position);
+    else
+      return Token::createSymbolOrKeyword(buffer.str(), position);
+  }
 }
 
 Token* Tokenizer::number() {

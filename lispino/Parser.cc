@@ -356,6 +356,9 @@ Object* Parser::parseDefine() throw(errors::CompileError) {
 Object* Parser::parseQuote(bool check_paren) throw(errors::CompileError) {
   setContext("QUOTE");
 
+  // signal the tokenizer to treat the next expression as a quotation
+  tokenizer.enableQuotation();
+
   Object *quote = allocator.createQuote(parseExpr());
 
   // check for the final paren ')' if needed
@@ -363,6 +366,9 @@ Object* Parser::parseQuote(bool check_paren) throw(errors::CompileError) {
     std::unique_ptr<Token> token(tokenizer.next());
     check(token.get(), TokenType::CLOSE_PAREN);
   }
+
+  // reset the tokenizer's state
+  tokenizer.disableQuotation();
 
   resetContext();
   return quote;

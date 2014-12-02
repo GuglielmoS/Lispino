@@ -12,6 +12,9 @@ class Tokenizer {
  public:
   explicit Tokenizer(std::istream& input_stream);
 
+  void enableQuotation();
+  void disableQuotation();
+
   // parses and returns the next token
   Token* next() throw(errors::CompileError);
 
@@ -21,6 +24,9 @@ class Tokenizer {
 
   // the current position in the source code
   SourceCodePosition position;
+
+  // flag used to control the quotation
+  bool quotationEnabled;
 
   // retrieve the next element from the input stream
   int get();

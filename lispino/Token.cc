@@ -96,6 +96,13 @@ Token* Token::createString(std::string value, SourceCodePosition position) {
 
 Token* Token::createSymbol(std::string value, SourceCodePosition position) {
   Token *tok = create(TokenType::SYMBOL, position);
+  tok->raw_value = value;
+
+  return tok;
+}
+
+Token* Token::createSymbolOrKeyword(std::string value, SourceCodePosition position) {
+  Token *tok = create(TokenType::SYMBOL, position);
 
   std::string temp_value = value;
   std::transform(temp_value.begin(), temp_value.end(), temp_value.begin(), ::tolower);

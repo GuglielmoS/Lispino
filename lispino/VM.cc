@@ -17,6 +17,7 @@
 #include "builtins/Load.h"
 #include "builtins/Display.h"
 
+#include "builtins/Read.h"
 #include "builtins/Apply.h"
 
 #include "builtins/NumberPred.h"
@@ -84,6 +85,7 @@ VM::VM()
   bind(new builtins::SetCdr());
 
   // evaluation
+  bind(new builtins::Read());
   bind(new builtins::Apply());
 
   // boolean
