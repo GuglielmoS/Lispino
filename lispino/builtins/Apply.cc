@@ -16,23 +16,17 @@ std::string Apply::getName() const {
   return "apply";
 }
 
-Object* Apply::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(errors::RuntimeError) {
-  // extract the procedure
-  Object *procedure = eval(args[0], env);
-
+Object* Apply::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) throw(errors::RuntimeError) {
   // check if the procedure is callable
-  check(procedure, {ObjectType::LAMBDA,
-                    ObjectType::CLOSURE,
-                    ObjectType::BUILTIN_FUNCTION});
-
-  // extract the arguments to apply
-  Object *arguments_to_apply = eval(args[1], env);
+  check(args[0], {ObjectType::LAMBDA,
+                  ObjectType::CLOSURE,
+                  ObjectType::BUILTIN_FUNCTION});
 
   // check that the arguments are provided as a list
-  check(arguments_to_apply, ObjectType::LIST);
+  check(args[1], ObjectType::LIST);
 
   // evaluate the application of the procedure on the given arguments
-  return eval(VM::getAllocator().createList(procedure, arguments_to_apply), env);
+  return eval(VM::getAllocator().createList(args[0], args[1]));
 }
 }
 }

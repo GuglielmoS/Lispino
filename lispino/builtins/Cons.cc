@@ -14,8 +14,8 @@ std::string Cons::getName() const {
   return "cons";
 }
 
-Object* Cons::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(errors::RuntimeError) {
-  return VM::getAllocator().createList(eval(args[0], env), eval(args[1], env));
+Object* Cons::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) throw(errors::RuntimeError) {
+  return VM::getAllocator().createList(args[0], args[1]);
 }
 }
 }

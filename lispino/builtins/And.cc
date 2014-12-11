@@ -6,6 +6,10 @@ namespace lispino {
 
 namespace builtins {
 
+And::And() : BuiltinFunction(true) {
+  /* DO NOTHING */
+}
+
 bool And::hasExactArguments() const {
   return false;
 }

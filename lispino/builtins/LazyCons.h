@@ -9,6 +9,8 @@ namespace builtins {
 
 class LazyCons : public BuiltinFunction {
  public:
+  LazyCons();
+
   std::uint32_t getRequiredArguments() const override;
 
   std::string getName() const override;

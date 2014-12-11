@@ -29,6 +29,7 @@
 #include "builtins/ProcedurePred.h"
 #include "builtins/ListPred.h"
 #include "builtins/PromisePred.h"
+#include "builtins/QuotePred.h"
 
 #include "builtins/And.h"
 #include "builtins/Or.h"
@@ -124,6 +125,7 @@ VM::VM()
   bind(new builtins::ProcedurePred());
   bind(new builtins::ListPred());
   bind(new builtins::PromisePred());
+  bind(new builtins::QuotePred());
 
   // I/O utils
   bind(new builtins::Display());

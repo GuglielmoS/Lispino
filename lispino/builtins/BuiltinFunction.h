@@ -14,7 +14,11 @@ namespace builtins {
 
 class BuiltinFunction : public Object {
  public:
-  BuiltinFunction() : Object(ObjectType::BUILTIN_FUNCTION) {}
+  BuiltinFunction();
+
+  BuiltinFunction(bool lazyEvalFlag); 
+
+  bool isLazy() const;
 
   virtual bool hasExactArguments() const;
 
@@ -29,6 +33,9 @@ class BuiltinFunction : public Object {
  protected:
   void check(Object *object, ObjectType expected_type) const throw(errors::RuntimeError);
   void check(Object *object, std::initializer_list<ObjectType> expected_types) const throw(errors::RuntimeError);
+
+ private:
+  bool lazyEvalFlag;
 };
 }
 }

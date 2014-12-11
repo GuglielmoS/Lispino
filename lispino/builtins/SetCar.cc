@@ -14,20 +14,15 @@ std::string SetCar::getName() const {
   return "set-car!";
 }
 
-Object* SetCar::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(errors::RuntimeError) {
-  Object *first_arg = eval(args[0], env);
-
+Object* SetCar::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) throw(errors::RuntimeError) {
   // check that the first argument is a list
-  check(first_arg, ObjectType::LIST);
-  List *list = static_cast<List*>(first_arg);
-
-  // evaluate the expression to assign
-  Object *result = eval(args[1], env);
+  check(args[0], ObjectType::LIST);
+  List *list = static_cast<List*>(args[0]);
 
   // update the CAR of the given list
-  list->setFirst(result);
+  list->setFirst(args[1]);
 
-  return result;
+  return args[1];
 }
 }
 }

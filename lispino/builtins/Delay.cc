@@ -6,6 +6,10 @@ namespace lispino {
 
 namespace builtins {
 
+Delay::Delay() : BuiltinFunction(true) {
+  /* DO NOTHING */
+}
+
 std::uint32_t Delay::getRequiredArguments() const {
   return 1;
 }

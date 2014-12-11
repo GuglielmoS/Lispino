@@ -9,6 +9,22 @@ namespace lispino {
 
 namespace builtins {
 
+BuiltinFunction::BuiltinFunction() : 
+    Object(ObjectType::BUILTIN_FUNCTION),
+    lazyEvalFlag(false) {
+  /* DO NOTHING */    
+}
+
+BuiltinFunction::BuiltinFunction(bool lazyEvalFlag) : 
+    Object(ObjectType::BUILTIN_FUNCTION),
+    lazyEvalFlag(lazyEvalFlag) {
+  /* DO NOTHING */    
+}
+
+bool BuiltinFunction::isLazy() const {
+  return lazyEvalFlag;
+}
+
 bool BuiltinFunction::hasExactArguments() const {
   return true;
 }

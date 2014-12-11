@@ -14,9 +14,8 @@ std::string CharPred::getName() const {
   return "char?";
 }
 
-Object* CharPred::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(errors::RuntimeError) {
-  Object* result = eval(args[0], env);
-  return VM::getAllocator().createBoolean(result->isCharacter());
+Object* CharPred::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) throw(errors::RuntimeError) {
+  return VM::getAllocator().createBoolean(args[0]->isCharacter());
 }
 }
 }

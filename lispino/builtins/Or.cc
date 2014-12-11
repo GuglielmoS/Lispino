@@ -6,6 +6,10 @@ namespace lispino {
 
 namespace builtins {
 
+Or::Or() : BuiltinFunction(true) {
+  /* DO NOTHING */
+}
+
 bool Or::hasExactArguments() const {
   return false;
 }

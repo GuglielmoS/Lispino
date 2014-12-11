@@ -9,6 +9,8 @@ namespace builtins {
 
 class Set : public BuiltinFunction {
  public:
+  Set();
+
   std::uint32_t getRequiredArguments() const override;
 
   std::string getName() const override;

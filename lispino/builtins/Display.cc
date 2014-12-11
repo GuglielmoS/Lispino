@@ -22,18 +22,15 @@ std::string Display::getName() const {
   return "display";
 }
 
-Object* Display::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(errors::RuntimeError) {
+Object* Display::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) throw(errors::RuntimeError) {
   std::stringstream buf;
   std::string current_value;
-  Object *current_object;
 
   for (auto& current_arg : args) {
-    current_object = eval(current_arg, env);
-
-    if (current_object->isString())
-      current_value = static_cast<String*>(current_object)->getValue();
+    if (current_arg->isString())
+      current_value = static_cast<String*>(current_arg)->getValue();
     else
-      current_value = current_object->toString();
+      current_value = current_arg->toString();
 
     std::cout << current_value;
     buf << current_value;

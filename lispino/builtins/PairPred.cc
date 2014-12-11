@@ -14,9 +14,8 @@ std::string PairPred::getName() const {
   return "pair?";
 }
 
-Object* PairPred::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(errors::RuntimeError) {
-  Object* result = eval(args[0], env);
-  return VM::getAllocator().createBoolean(result->isList());
+Object* PairPred::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) throw(errors::RuntimeError) {
+  return VM::getAllocator().createBoolean(args[0]->isList());
 }
 }
 }

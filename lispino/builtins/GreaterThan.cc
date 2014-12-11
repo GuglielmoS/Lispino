@@ -18,9 +18,9 @@ std::string GreaterThan::getName() const {
   return ">";
 }
 
-Object* GreaterThan::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(errors::RuntimeError) {
+Object* GreaterThan::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) throw(errors::RuntimeError) {
   for (unsigned int i = 0; i < args.size()-1; i++) {
-    if (eval(args[i], env)->compare(eval(args[i+1], env)) <= 0)
+    if (args[i]->compare(args[i+1]) <= 0)
       return VM::getAllocator().createBoolean(false);
   }
 

@@ -6,6 +6,10 @@ namespace lispino {
 
 namespace builtins {
 
+LazyCons::LazyCons() : BuiltinFunction(true) {
+  /* DO NOTHING */
+}
+
 std::uint32_t LazyCons::getRequiredArguments() const {
   return 2;
 }

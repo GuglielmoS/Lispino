@@ -9,6 +9,8 @@ namespace builtins {
 
 class Or : public BuiltinFunction {
  public:
+  Or();
+
   bool hasExactArguments() const override;
 
   std::uint32_t getRequiredArguments() const override;

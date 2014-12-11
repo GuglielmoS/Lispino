@@ -7,6 +7,10 @@ namespace lispino {
 
 namespace builtins {
 
+Set::Set() : BuiltinFunction(true) {
+  /* DO NOTHING */
+}
+
 std::uint32_t Set::getRequiredArguments() const {
   return 2;
 }

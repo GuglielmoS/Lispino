@@ -83,10 +83,19 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw(er
 
           // check that there are enough arguments for the specified builtin function
           if (arguments.size() >= bf->getRequiredArguments()) {
-            if (bf->hasExactArguments() && arguments.size() > bf->getRequiredArguments())
+            if (bf->hasExactArguments() && arguments.size() > bf->getRequiredArguments()) {
               throw errors::RuntimeError(bf->getName() + ": too many arguments");
-            else
-              return bf->apply(arguments, current_env);
+            } else {
+              // evaluate the arguments in the current environment only if needed
+              if (!bf->isLazy()) {
+                std::vector<Object*> bf_arguments;
+                for (auto& arg : arguments)
+                  bf_arguments.push_back(eval(arg, current_env));
+                return bf->apply(bf_arguments, current_env);
+              } else {
+                return bf->apply(arguments, current_env);
+              }
+            }
           } else {
             throw errors::RuntimeError(bf->getName() + ": too few arguments");
           }

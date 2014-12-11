@@ -9,6 +9,8 @@ namespace builtins {
 
 class And : public BuiltinFunction {
  public:
+  And();
+
   bool hasExactArguments() const override;
 
   std::uint32_t getRequiredArguments() const override;

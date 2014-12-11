@@ -14,12 +14,11 @@ std::string ListPred::getName() const {
   return "list?";
 }
 
-Object* ListPred::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(errors::RuntimeError) {
+Object* ListPred::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) throw(errors::RuntimeError) {
   bool pred_result = false;
-  Object* arg = eval(args[0], env);
 
-  if (arg->isList()) {
-    Object *rest = static_cast<List*>(arg)->getRest();
+  if (args[0]->isList()) {
+    Object *rest = static_cast<List*>(args[0])->getRest();
     pred_result = rest->isNil() || rest->isList();
   }
 

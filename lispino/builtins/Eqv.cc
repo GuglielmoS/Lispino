@@ -18,12 +18,9 @@ std::string Eqv::getName() const {
   return "eqv?";
 }
 
-Object* Eqv::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(errors::RuntimeError) {
+Object* Eqv::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) throw(errors::RuntimeError) {
   for (unsigned int i = 0; i < args.size()-1; i++) {
-    auto cur_obj = eval(args[i], env);
-    auto next_obj = eval(args[i+1], env);
-
-    if (!cur_obj->eqv(next_obj))
+    if (!args[i]->eqv(args[i+1]))
       return VM::getAllocator().createBoolean(false);
   }
 

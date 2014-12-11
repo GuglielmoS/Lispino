@@ -18,11 +18,9 @@ std::string Equal::getName() const {
   return "equal?";
 }
 
-Object* Equal::apply(std::vector<Object*>& args, std::shared_ptr<Environment> env) throw(errors::RuntimeError) {
+Object* Equal::apply(std::vector<Object*>& args, std::shared_ptr<Environment>) throw(errors::RuntimeError) {
   for (unsigned int i = 0; i < args.size()-1; i++) {
-    Object *cur_obj = eval(args[i], env);
-    Object *next_obj = eval(args[i+1], env);
-    if (!cur_obj->equal(next_obj))
+    if (!args[i]->equal(args[i+1]))
       return VM::getAllocator().createBoolean(false);
   }
 
