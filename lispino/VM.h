@@ -13,7 +13,7 @@
 namespace lispino {
 
 Object* eval(Object *expr);
-Object* eval(Object *expr, std::shared_ptr<Environment> env);
+Object* eval(Object *expr, std::shared_ptr<Environment> env, bool evalArgs = false);
 
 class VM {
  public:

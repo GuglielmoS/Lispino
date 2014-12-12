@@ -58,8 +58,8 @@ Object* eval(Object *expr) {
   return VM::getEvaluator().eval(expr);
 }
 
-Object* eval(Object *expr, std::shared_ptr<Environment> env) {
-  return VM::getEvaluator().eval(expr, env);
+Object* eval(Object *expr, std::shared_ptr<Environment> env, bool evalArgs) {
+  return VM::getEvaluator().eval(expr, env, evalArgs);
 }
 
 void VM::bind(builtins::BuiltinFunction *fun) {

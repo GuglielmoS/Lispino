@@ -17,7 +17,7 @@ Object* Evaluator::eval(Object* expr) throw(errors::RuntimeError) {
   return eval(expr, global_env);
 }
 
-Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw(errors::RuntimeError) {
+Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env, bool evalArgsFlag) throw(errors::RuntimeError) {
   Object *current_object = expr;
   std::shared_ptr<Environment> current_env = env;
 
@@ -87,7 +87,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw(er
               throw errors::RuntimeError(bf->getName() + ": too many arguments");
             } else {
               // evaluate the arguments in the current environment only if needed
-              if (!bf->isLazy()) {
+              if (!bf->isLazy() && evalArgsFlag) {
                 std::vector<Object*> bf_arguments;
                 for (auto& arg : arguments)
                   bf_arguments.push_back(eval(arg, current_env));
@@ -115,7 +115,7 @@ Object* Evaluator::eval(Object *expr, std::shared_ptr<Environment> env) throw(er
             throw errors::RuntimeError("Invalid function call: wrong number of arguments");
 
           // extract and evaluate the arguments from the raw list of arguments
-          Args evaluated_arguments = extractAndEvalArgs(lambda, arguments, current_env);
+          Args evaluated_arguments = extractArgs(lambda, arguments, current_env, evalArgsFlag);
 
           // extend the current environment
           if (evaluated_first->isLambda())
@@ -163,7 +163,7 @@ Object* Evaluator::evalDefine(Define *expr, std::shared_ptr<Environment> env) th
     return env->put(expr->getSymbol(), eval(expr->getValue(), env));
 }
 
-Args Evaluator::extractAndEvalArgs(Lambda *lambda, std::vector<Object*> raw_args, std::shared_ptr<Environment> env) {
+Args Evaluator::extractArgs(Lambda *lambda, std::vector<Object*> raw_args, std::shared_ptr<Environment> env, bool evalArgsFlag) {
   auto lambda_arguments = lambda->getArguments();
 
   // check if there is a "catch rest" argument
@@ -178,11 +178,19 @@ Args Evaluator::extractAndEvalArgs(Lambda *lambda, std::vector<Object*> raw_args
   // evaluate each argument
   std::vector<Object*> first_arguments;
   std::vector<Object*> catch_rest_arguments;
-  for (size_t i = 0; i < min_args; i++)
-    first_arguments.push_back(eval(raw_args[i], env));
+  for (size_t i = 0; i < min_args; i++) {
+    if (evalArgsFlag)
+      first_arguments.push_back(eval(raw_args[i], env));
+    else
+      first_arguments.push_back(raw_args[i]);
+  }
   if (has_catch_rest) {
-    for (size_t i = min_args; i < raw_args.size(); i++)
-      catch_rest_arguments.push_back(eval(raw_args[i], env));
+    for (size_t i = min_args; i < raw_args.size(); i++) {
+      if (evalArgsFlag)
+        catch_rest_arguments.push_back(eval(raw_args[i], env));
+      else
+        catch_rest_arguments.push_back(raw_args[i]);
+    }
   }
 
   // transform the arguments names in symbols

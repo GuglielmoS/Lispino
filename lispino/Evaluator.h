@@ -28,7 +28,7 @@ class Evaluator {
   explicit Evaluator(std::shared_ptr<Environment> env);
 
   Object* eval(Object* expr) throw(errors::RuntimeError);
-  Object* eval(Object* expr, std::shared_ptr<Environment> env) throw(errors::RuntimeError);
+  Object* eval(Object* expr, std::shared_ptr<Environment> env, bool evalArgsFlag = true) throw(errors::RuntimeError);
 
  private:
   std::shared_ptr<Environment> global_env;
@@ -37,7 +37,7 @@ class Evaluator {
   Object* evalSequence(Sequence *expr, std::shared_ptr<Environment> env) throw(errors::RuntimeError);
   Object* evalDefine(Define *expr, std::shared_ptr<Environment> env) throw(errors::RuntimeError);
 
-  Args extractAndEvalArgs(Lambda *lambda, std::vector<Object*> raw_args, std::shared_ptr<Environment> env);
+  Args extractArgs(Lambda *lambda, std::vector<Object*> raw_args, std::shared_ptr<Environment> env, bool evalArgsFlag);
   bool validateArguments(Lambda *lambda, std::vector<Object*>& raw_args) const;
 };
 }
